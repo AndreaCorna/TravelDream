@@ -2,6 +2,22 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="TravelDreamEJB" transaction-type="JTA">
 		<jta-data-source>jdbc/TravelDreamDB</jta-data-source>
+		<class>it.polimi.traveldream.ejb.entities.Aereo</class>
+		<class>it.polimi.traveldream.ejb.entities.Amministratore</class>
+		<class>it.polimi.traveldream.ejb.entities.Anagrafica</class>
+		<class>it.polimi.traveldream.ejb.entities.Camera</class>
+		<class>it.polimi.traveldream.ejb.entities.Condivisione</class>
+		<class>it.polimi.traveldream.ejb.entities.Escursione</class>
+		<class>it.polimi.traveldream.ejb.entities.Escursioni_in_Prenotazione</class>
+		<class>it.polimi.traveldream.ejb.entities.Escursioni_in_PrenotazionePK</class>
+		<class>it.polimi.traveldream.ejb.entities.Gruppo</class>
+		<class>it.polimi.traveldream.ejb.entities.Gruppo_Utente</class>
+		<class>it.polimi.traveldream.ejb.entities.Gruppo_UtentePK</class>
+		<class>it.polimi.traveldream.ejb.entities.Hotel</class>
+		<class>it.polimi.traveldream.ejb.entities.Pacchetto</class>
+		<class>it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto</class>
+		<class>it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio</class>
+		<class>it.polimi.traveldream.ejb.entities.Utente</class>
 		<properties>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 		</properties>
