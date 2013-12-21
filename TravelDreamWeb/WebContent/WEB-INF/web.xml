@@ -9,7 +9,16 @@
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
+    <url-pattern>*.xhtml</url-pattern>
+	<url-pattern>*.jsf</url-pattern>
   </servlet-mapping>
+  <login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.xhtml</form-login-page>
+			<form-error-page>/loginError.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
   <security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Admins Pages</web-resource-name>
