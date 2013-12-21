@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<glassfish-application>
+	<security-role-mapping>
+		<role-name>UTENTE</role-name>
+		<group-name>UTENTE</group-name>
+	</security-role-mapping>
+	<security-role-mapping>
+		<role-name>AMMINISTRATORE</role-name>
+		<group-name>AMMINISTRATORE</group-name>
+	</security-role-mapping>
+	<security-role-mapping>
+		<role-name>DIPENDENTE</role-name>
+		<group-name>DIPENDENTE</group-name>
+	</security-role-mapping>
+	<realm>authTravelDreamRealm</realm>
+</glassfish-application>
