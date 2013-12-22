@@ -4,13 +4,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    >
 <h:head>
+	<script type="text/javascript">
+		function selectLogin() { 
+			value = document.getElementById('prova').value;
+			if (value.indexOf("@dip") != -1){
+				alert("go to employee pages");
+				window.location="employee/index";
+			}	
+			else if (value.indexOf("@admin") != -1){
+				alert("go to admin pages");
+				window.location="admin/index";
+			}
+			else{
+				alert("go to user pages");
+				window.location="user/index";
+			}
+		}
+	</script>
 </h:head>
 <h:body>
-        Select where you want to go: <br />
+       Welcome: <br />
         <h:link outcome="register.xhtml" value="Clicca per registrati" /> <br />
-        <h:link outcome="admin/index" value="To the admin section" /> <br /> 
-        <h:link outcome="user/index?user=true" value="To the user section" />
-    </h:body>
+        Username: <input type="text" id="username" />
+        Password: <input type="password" name="password" /> 
+		<h:commandButton value="Login" action="javascript:selectLogin();" id="button" />
+</h:body>
 </html>
