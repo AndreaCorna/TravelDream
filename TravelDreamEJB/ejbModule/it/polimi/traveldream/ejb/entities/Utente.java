@@ -32,23 +32,23 @@ public class Utente implements Serializable {
 
 	//bi-directional many-to-one association to Condivisione
 	@OneToMany(mappedBy="utente")
-	private List<Condivisione> condivisiones;
+	private List<Condivisione> condivisioni;
 
 	//bi-directional many-to-one association to Gruppo_Utente
 	@OneToMany(mappedBy="utente")
-	private List<Gruppo_Utente> gruppoUtentes;
+	private List<Gruppo_Utente> gruppiUtente;
 
 	//bi-directional many-to-one association to Pacchetto
 	@OneToMany(mappedBy="utente")
-	private List<Pacchetto> pacchettos;
+	private List<Pacchetto> pacchetti;
 
 	//bi-directional many-to-one association to Prenotazione_Pacchetto
 	@OneToMany(mappedBy="utente")
-	private List<Prenotazione_Pacchetto> prenotazionePacchettos;
+	private List<Prenotazione_Pacchetto> prenotazionePacchetti;
 
 	//bi-directional many-to-one association to Prenotazione_Viaggio
 	@OneToMany(mappedBy="utente")
-	private List<Prenotazione_Viaggio> prenotazioneViaggios;
+	private List<Prenotazione_Viaggio> prenotazioneViaggi;
 
 	//bi-directional many-to-one association to Amministratore
 	@ManyToOne
@@ -104,11 +104,11 @@ public class Utente implements Serializable {
 	}
 
 	public List<Condivisione> getCondivisiones() {
-		return this.condivisiones;
+		return this.condivisioni;
 	}
 
 	public void setCondivisiones(List<Condivisione> condivisiones) {
-		this.condivisiones = condivisiones;
+		this.condivisioni = condivisiones;
 	}
 
 	public Condivisione addCondivisione(Condivisione condivisione) {
@@ -126,11 +126,11 @@ public class Utente implements Serializable {
 	}
 
 	public List<Gruppo_Utente> getGruppoUtentes() {
-		return this.gruppoUtentes;
+		return this.gruppiUtente;
 	}
 
 	public void setGruppoUtentes(List<Gruppo_Utente> gruppoUtentes) {
-		this.gruppoUtentes = gruppoUtentes;
+		this.gruppiUtente = gruppoUtentes;
 	}
 
 	public Gruppo_Utente addGruppoUtente(Gruppo_Utente gruppoUtente) {
@@ -148,11 +148,11 @@ public class Utente implements Serializable {
 	}
 
 	public List<Pacchetto> getPacchettos() {
-		return this.pacchettos;
+		return this.pacchetti;
 	}
 
 	public void setPacchettos(List<Pacchetto> pacchettos) {
-		this.pacchettos = pacchettos;
+		this.pacchetti = pacchettos;
 	}
 
 	public Pacchetto addPacchetto(Pacchetto pacchetto) {
@@ -170,11 +170,11 @@ public class Utente implements Serializable {
 	}
 
 	public List<Prenotazione_Pacchetto> getPrenotazionePacchettos() {
-		return this.prenotazionePacchettos;
+		return this.prenotazionePacchetti;
 	}
 
 	public void setPrenotazionePacchettos(List<Prenotazione_Pacchetto> prenotazionePacchettos) {
-		this.prenotazionePacchettos = prenotazionePacchettos;
+		this.prenotazionePacchetti = prenotazionePacchettos;
 	}
 
 	public Prenotazione_Pacchetto addPrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
@@ -192,11 +192,11 @@ public class Utente implements Serializable {
 	}
 
 	public List<Prenotazione_Viaggio> getPrenotazioneViaggios() {
-		return this.prenotazioneViaggios;
+		return this.prenotazioneViaggi;
 	}
 
 	public void setPrenotazioneViaggios(List<Prenotazione_Viaggio> prenotazioneViaggios) {
-		this.prenotazioneViaggios = prenotazioneViaggios;
+		this.prenotazioneViaggi = prenotazioneViaggios;
 	}
 
 	public Prenotazione_Viaggio addPrenotazioneViaggio(Prenotazione_Viaggio prenotazioneViaggio) {
