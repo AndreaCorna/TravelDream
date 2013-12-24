@@ -33,7 +33,7 @@ public class RegistrazioneManagedBean {
 	}
 	
 	public String registra(){
-		//gestioneUtente.aggiungiNuovoUtente(utente,anagrafica);
+		gestioneUtente.aggiungiNuovoUtente(utente,anagrafica);
 		return "home?faces-redirect=true";
 	}
 

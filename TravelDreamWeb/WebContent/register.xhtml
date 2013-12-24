@@ -12,6 +12,7 @@
 	<h:form>
 		<p:panel header="Form di Registrazione">
 			<h:panelGrid columns="3" id="regGrid">
+			
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
 				<p:inputText id="nome" value="#{registra.anagrafica.nome}" />
 				<p:message for="nome" value="Inserisci il nome"/>
@@ -19,11 +20,7 @@
 				<h:outputLabel for="cognome">Cognome:</h:outputLabel>
 				<p:inputText id="cognome" value="#{registra.anagrafica.cognome}" />
 				<p:message for="cognome" />
-				
-				<h:outputLabel for="data_nascita">Data di Nascita:</h:outputLabel>
-				<p:inputText id="data_nascita" value="#{registra.anagrafica.dataNascita}" />
-				<p:message for="data_nascita" />
-				
+										
 				<h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
 				<p:inputText id="luogo_nascita" value="#{registra.anagrafica.luogoNascita}" />
 				<p:message for="luogo_nascita" />
@@ -55,6 +52,9 @@
 
 				<h:outputLabel for="pwd2">Conferma Password:</h:outputLabel>
 				<p:password id="pwd2" label="Confirm Password" value="#{registra.utente.password}"/>
+				
+				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
+				<p:calendar id="data_nascita" value="#{registra.anagrafica.dataNascita}" navigator="true" display="inline"/>
 			</h:panelGrid>
 			<p:commandButton value="Registra" id="ajax"  
              action="#{registra.registra()}" styleClass="ui-priority-primary"/>  
