@@ -15,8 +15,8 @@ public class Utente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	@Column(name="Username")
+	private String username;
 
 	@Column(name="Email")
 	private String email;
@@ -27,9 +27,6 @@ public class Utente implements Serializable {
 	@Column(name="Telefono")
 	private int telefono;
 
-	@Column(name="Username")
-	private String username;
-
 	//bi-directional many-to-one association to Condivisione
 	@OneToMany(mappedBy="utente")
 	private List<Condivisione> condivisioni;
@@ -39,7 +36,7 @@ public class Utente implements Serializable {
 	@JoinTable(
 		name="Gruppo_Utente"
 		, joinColumns={
-			@JoinColumn(name="id_Gruppo")
+			@JoinColumn(name="id_Utente")
 			}
 		, inverseJoinColumns={
 			@JoinColumn(name="id_Gruppo")
@@ -57,7 +54,7 @@ public class Utente implements Serializable {
 
 	//bi-directional many-to-one association to Prenotazione_Viaggio
 	@OneToMany(mappedBy="utente")
-	private List<Prenotazione_Viaggio> prenotazioniViaggio;
+	private List<Prenotazione_Viaggio> prenotazioniViaggi;
 
 	//bi-directional many-to-one association to Amministratore
 	@ManyToOne
@@ -72,12 +69,12 @@ public class Utente implements Serializable {
 	public Utente() {
 	}
 
-	public int getId() {
-		return this.id;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -102,14 +99,6 @@ public class Utente implements Serializable {
 
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
-	}
-
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public List<Condivisione> getCondivisioni() {
@@ -186,26 +175,26 @@ public class Utente implements Serializable {
 		return prenotazioniPacchetto;
 	}
 
-	public List<Prenotazione_Viaggio> getPrenotazioniViaggio() {
-		return this.prenotazioniViaggio;
+	public List<Prenotazione_Viaggio> getPrenotazioniViaggi() {
+		return this.prenotazioniViaggi;
 	}
 
-	public void setPrenotazioniViaggio(List<Prenotazione_Viaggio> prenotazioniViaggio) {
-		this.prenotazioniViaggio = prenotazioniViaggio;
+	public void setPrenotazioniViaggi(List<Prenotazione_Viaggio> prenotazioniViaggi) {
+		this.prenotazioniViaggi = prenotazioniViaggi;
 	}
 
-	public Prenotazione_Viaggio addPrenotazioniViaggio(Prenotazione_Viaggio prenotazioniViaggio) {
-		getPrenotazioniViaggio().add(prenotazioniViaggio);
-		prenotazioniViaggio.setUtente(this);
+	public Prenotazione_Viaggio addPrenotazioniViaggi(Prenotazione_Viaggio prenotazioniViaggi) {
+		getPrenotazioniViaggi().add(prenotazioniViaggi);
+		prenotazioniViaggi.setUtente(this);
 
-		return prenotazioniViaggio;
+		return prenotazioniViaggi;
 	}
 
-	public Prenotazione_Viaggio removePrenotazioniViaggio(Prenotazione_Viaggio prenotazioniViaggio) {
-		getPrenotazioniViaggio().remove(prenotazioniViaggio);
-		prenotazioniViaggio.setUtente(null);
+	public Prenotazione_Viaggio removePrenotazioniViaggi(Prenotazione_Viaggio prenotazioniViaggi) {
+		getPrenotazioniViaggi().remove(prenotazioniViaggi);
+		prenotazioniViaggi.setUtente(null);
 
-		return prenotazioniViaggio;
+		return prenotazioniViaggi;
 	}
 
 	public Amministratore getAmministratore() {

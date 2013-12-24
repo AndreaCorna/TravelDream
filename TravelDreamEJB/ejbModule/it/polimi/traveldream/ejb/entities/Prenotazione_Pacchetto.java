@@ -46,19 +46,8 @@ public class Prenotazione_Pacchetto implements Serializable {
 	@JoinColumn(name="id_Aereo_Ritorno")
 	private Aereo aereo2;
 
-	//bi-directional many-to-many association to Escursione
-	@ManyToMany
-	@JoinTable(
-		name="Escursioni_in_Prenotazione_Pacchetto"
-		, joinColumns={
-			@JoinColumn(name="id_Prenotazione")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_Escursione")
-			}
-		)
-	private List<Escursione> escursiones2;
-
+	
+	
 	//uni-directional many-to-one association to Hotel
 	@ManyToOne
 	@JoinColumn(name="id_Hotel")
@@ -93,13 +82,7 @@ public class Prenotazione_Pacchetto implements Serializable {
 		this.data = data;
 	}
 
-	public List<Escursione> getEscursioni() {
-		return this.escursioni;
-	}
-
-	public void setEscursioni(List<Escursione> escursioni) {
-		this.escursioni = escursioni;
-	}
+	
 
 	public Aereo getAereo1() {
 		return this.aereo1;
@@ -117,12 +100,12 @@ public class Prenotazione_Pacchetto implements Serializable {
 		this.aereo2 = aereo2;
 	}
 
-	public List<Escursione> getEscursiones2() {
-		return this.escursiones2;
+	public List<Escursione> getEscursioni() {
+		return this.escursioni;
 	}
 
-	public void setEscursiones2(List<Escursione> escursiones2) {
-		this.escursiones2 = escursiones2;
+	public void setEscursioni(List<Escursione> escursioni) {
+		this.escursioni = escursioni;
 	}
 
 	public Hotel getHotel() {

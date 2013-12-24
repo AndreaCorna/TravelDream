@@ -28,16 +28,14 @@
 </h:head>
 <h:body>
        Welcome: <br />
-        <h:link outcome="register.xhtml" value="Clicca per registrati" /> <br />
-        <h:link outcome="admin/index" value="To the admin section" /> <br /> 
-        <h:link outcome="user/index" value="To the user section" />
-        
+        <h:link outcome="user/index?user=true" value="To the user section" />
+        <p><a href="user/index.xhtml">Login User</a></p>
         <p:panel header="Visualizza la tua Condivisione">
 		<h:form id="condivisione">
 			<h:panelGrid columns="2">
 				<p:outputLabel for="link" value="Link" />
 				<p:inputText id="link" name="link" />
-				<p:commandButton id="find" value="Visualizza" action="/register.xhtml"/>
+				<p:commandButton id="find" value="Visualizza" action="/register?faces-redirect=true"/>
 			</h:panelGrid>
 		</h:form>
 		</p:panel>

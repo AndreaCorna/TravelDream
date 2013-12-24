@@ -36,8 +36,8 @@ public class Aereo implements Serializable {
 	private int posti_Disponibili;
 
 	//bi-directional many-to-many association to Pacchetto
-	@ManyToMany(mappedBy="aereos")
-	private List<Pacchetto> pacchettos;
+	@ManyToMany(mappedBy="aerei")
+	private List<Pacchetto> pacchetti;
 
 	public Aereo() {
 	}
@@ -90,12 +90,12 @@ public class Aereo implements Serializable {
 		this.posti_Disponibili = posti_Disponibili;
 	}
 
-	public List<Pacchetto> getPacchettos() {
-		return this.pacchettos;
+	public List<Pacchetto> getPacchetti() {
+		return this.pacchetti;
 	}
 
-	public void setPacchettos(List<Pacchetto> pacchettos) {
-		this.pacchettos = pacchettos;
+	public void setPacchetti(List<Pacchetto> pacchetti) {
+		this.pacchetti = pacchetti;
 	}
 
 }

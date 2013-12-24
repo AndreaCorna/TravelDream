@@ -30,12 +30,8 @@ public class Escursione implements Serializable {
 	private int prezzo;
 
 	//bi-directional many-to-many association to Pacchetto
-	@ManyToMany(mappedBy="escursiones")
-	private List<Pacchetto> pacchettos;
-
-	//bi-directional many-to-many association to Prenotazione_Pacchetto
-	@ManyToMany(mappedBy="escursiones2")
-	private List<Prenotazione_Pacchetto> prenotazionePacchettos;
+	@ManyToMany(mappedBy="escursioni")
+	private List<Pacchetto> pacchetti;
 
 	public Escursione() {
 	}
@@ -72,20 +68,12 @@ public class Escursione implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public List<Pacchetto> getPacchettos() {
-		return this.pacchettos;
+	public List<Pacchetto> getPacchetti() {
+		return this.pacchetti;
 	}
 
-	public void setPacchettos(List<Pacchetto> pacchettos) {
-		this.pacchettos = pacchettos;
-	}
-
-	public List<Prenotazione_Pacchetto> getPrenotazionePacchettos() {
-		return this.prenotazionePacchettos;
-	}
-
-	public void setPrenotazionePacchettos(List<Prenotazione_Pacchetto> prenotazionePacchettos) {
-		this.prenotazionePacchettos = prenotazionePacchettos;
+	public void setPacchetti(List<Pacchetto> pacchetti) {
+		this.pacchetti = pacchetti;
 	}
 
 }

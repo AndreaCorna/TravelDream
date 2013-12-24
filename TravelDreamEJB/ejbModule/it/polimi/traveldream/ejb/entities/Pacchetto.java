@@ -40,7 +40,7 @@ public class Pacchetto implements Serializable {
 			@JoinColumn(name="id_Volo")
 			}
 		)
-	private List<Aereo> aereos;
+	private List<Aereo> aerei;
 
 	//bi-directional many-to-many association to Escursione
 	@ManyToMany
@@ -53,7 +53,7 @@ public class Pacchetto implements Serializable {
 			@JoinColumn(name="id_Escursione")
 			}
 		)
-	private List<Escursione> escursiones;
+	private List<Escursione> escursioni;
 
 	//bi-directional many-to-many association to Hotel
 	@ManyToMany
@@ -108,20 +108,20 @@ public class Pacchetto implements Serializable {
 		this.inizio_Validità = inizio_Validità;
 	}
 
-	public List<Aereo> getAereos() {
-		return this.aereos;
+	public List<Aereo> getAerei() {
+		return this.aerei;
 	}
 
-	public void setAereos(List<Aereo> aereos) {
-		this.aereos = aereos;
+	public void setAerei(List<Aereo> aerei) {
+		this.aerei = aerei;
 	}
 
-	public List<Escursione> getEscursiones() {
-		return this.escursiones;
+	public List<Escursione> getEscursioni() {
+		return this.escursioni;
 	}
 
-	public void setEscursiones(List<Escursione> escursiones) {
-		this.escursiones = escursiones;
+	public void setEscursioni(List<Escursione> escursioni) {
+		this.escursioni = escursioni;
 	}
 
 	public List<Hotel> getHotelInPacchetto() {
