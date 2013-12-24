@@ -7,7 +7,7 @@
   <module>
     <web>
       <web-uri>TravelDreamWeb.war</web-uri>
-      <context-root>TravelDreamWeb</context-root>
+      <context-root>/TravelDreamWeb</context-root>
     </web>
   </module>
 </application>
