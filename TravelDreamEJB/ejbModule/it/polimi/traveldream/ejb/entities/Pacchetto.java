@@ -66,16 +66,12 @@ public class Pacchetto implements Serializable {
 			@JoinColumn(name="id_Hotel")
 			}
 		)
-	private List<Hotel> hotels;
+	private List<Hotel> hotelInPacchetto;
 
 	//bi-directional many-to-one association to Utente
 	@ManyToOne
 	@JoinColumn(name="id_Dipendente")
 	private Utente utente;
-
-	//bi-directional many-to-one association to Prenotazione_Pacchetto
-	@OneToMany(mappedBy="pacchetto")
-	private List<Prenotazione_Pacchetto> prenotazionePacchettos;
 
 	public Pacchetto() {
 	}
@@ -128,12 +124,12 @@ public class Pacchetto implements Serializable {
 		this.escursiones = escursiones;
 	}
 
-	public List<Hotel> getHotels() {
-		return this.hotels;
+	public List<Hotel> getHotelInPacchetto() {
+		return this.hotelInPacchetto;
 	}
 
-	public void setHotels(List<Hotel> hotels) {
-		this.hotels = hotels;
+	public void setHotelInPacchetto(List<Hotel> hotelInPacchetto) {
+		this.hotelInPacchetto = hotelInPacchetto;
 	}
 
 	public Utente getUtente() {
@@ -142,28 +138,6 @@ public class Pacchetto implements Serializable {
 
 	public void setUtente(Utente utente) {
 		this.utente = utente;
-	}
-
-	public List<Prenotazione_Pacchetto> getPrenotazionePacchettos() {
-		return this.prenotazionePacchettos;
-	}
-
-	public void setPrenotazionePacchettos(List<Prenotazione_Pacchetto> prenotazionePacchettos) {
-		this.prenotazionePacchettos = prenotazionePacchettos;
-	}
-
-	public Prenotazione_Pacchetto addPrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
-		getPrenotazionePacchettos().add(prenotazionePacchetto);
-		prenotazionePacchetto.setPacchetto(this);
-
-		return prenotazionePacchetto;
-	}
-
-	public Prenotazione_Pacchetto removePrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
-		getPrenotazionePacchettos().remove(prenotazionePacchetto);
-		prenotazionePacchetto.setPacchetto(null);
-
-		return prenotazionePacchetto;
 	}
 
 }

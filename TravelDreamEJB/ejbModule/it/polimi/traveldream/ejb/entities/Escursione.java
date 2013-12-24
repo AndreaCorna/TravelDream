@@ -29,13 +29,13 @@ public class Escursione implements Serializable {
 	@Column(name="Prezzo")
 	private int prezzo;
 
-	//bi-directional many-to-one association to Escursioni_in_Prenotazione
-	@OneToMany(mappedBy="escursione")
-	private List<Escursioni_in_Prenotazione> escursioniInPrenotaziones;
-
 	//bi-directional many-to-many association to Pacchetto
 	@ManyToMany(mappedBy="escursiones")
 	private List<Pacchetto> pacchettos;
+
+	//bi-directional many-to-many association to Prenotazione_Pacchetto
+	@ManyToMany(mappedBy="escursiones2")
+	private List<Prenotazione_Pacchetto> prenotazionePacchettos;
 
 	public Escursione() {
 	}
@@ -72,34 +72,20 @@ public class Escursione implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public List<Escursioni_in_Prenotazione> getEscursioniInPrenotaziones() {
-		return this.escursioniInPrenotaziones;
-	}
-
-	public void setEscursioniInPrenotaziones(List<Escursioni_in_Prenotazione> escursioniInPrenotaziones) {
-		this.escursioniInPrenotaziones = escursioniInPrenotaziones;
-	}
-
-	public Escursioni_in_Prenotazione addEscursioniInPrenotazione(Escursioni_in_Prenotazione escursioniInPrenotazione) {
-		getEscursioniInPrenotaziones().add(escursioniInPrenotazione);
-		escursioniInPrenotazione.setEscursione(this);
-
-		return escursioniInPrenotazione;
-	}
-
-	public Escursioni_in_Prenotazione removeEscursioniInPrenotazione(Escursioni_in_Prenotazione escursioniInPrenotazione) {
-		getEscursioniInPrenotaziones().remove(escursioniInPrenotazione);
-		escursioniInPrenotazione.setEscursione(null);
-
-		return escursioniInPrenotazione;
-	}
-
 	public List<Pacchetto> getPacchettos() {
 		return this.pacchettos;
 	}
 
 	public void setPacchettos(List<Pacchetto> pacchettos) {
 		this.pacchettos = pacchettos;
+	}
+
+	public List<Prenotazione_Pacchetto> getPrenotazionePacchettos() {
+		return this.prenotazionePacchettos;
+	}
+
+	public void setPrenotazionePacchettos(List<Prenotazione_Pacchetto> prenotazionePacchettos) {
+		this.prenotazionePacchettos = prenotazionePacchettos;
 	}
 
 }

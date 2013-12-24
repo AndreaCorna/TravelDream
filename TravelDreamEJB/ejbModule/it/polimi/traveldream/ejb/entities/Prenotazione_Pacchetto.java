@@ -23,30 +23,48 @@ public class Prenotazione_Pacchetto implements Serializable {
 	@Column(name="Data")
 	private Date data;
 
-	//bi-directional many-to-one association to Condivisione
-	@OneToMany(mappedBy="prenotazionePacchetto")
-	private List<Condivisione> condivisiones;
+	//uni-directional many-to-many association to Escursione
+	@ManyToMany
+	@JoinTable(
+		name="Escursioni_in_Prenotazione_Pacchetto"
+		, joinColumns={
+			@JoinColumn(name="id_Prenotazione")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_Escursione")
+			}
+		)
+	private List<Escursione> escursioni;
 
-	//bi-directional many-to-one association to Escursioni_in_Prenotazione
-	@OneToMany(mappedBy="prenotazionePacchetto")
-	private List<Escursioni_in_Prenotazione> escursioniInPrenotaziones;
-
-	//bi-directional many-to-one association to Aereo
+	//uni-directional many-to-one association to Aereo
 	@ManyToOne
 	@JoinColumn(name="id_Aereo_Andata")
 	private Aereo aereo1;
 
-	//bi-directional many-to-one association to Aereo
+	//uni-directional many-to-one association to Aereo
 	@ManyToOne
 	@JoinColumn(name="id_Aereo_Ritorno")
 	private Aereo aereo2;
 
-	//bi-directional many-to-one association to Hotel
+	//bi-directional many-to-many association to Escursione
+	@ManyToMany
+	@JoinTable(
+		name="Escursioni_in_Prenotazione_Pacchetto"
+		, joinColumns={
+			@JoinColumn(name="id_Prenotazione")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_Escursione")
+			}
+		)
+	private List<Escursione> escursiones2;
+
+	//uni-directional many-to-one association to Hotel
 	@ManyToOne
 	@JoinColumn(name="id_Hotel")
 	private Hotel hotel;
 
-	//bi-directional many-to-one association to Pacchetto
+	//uni-directional many-to-one association to Pacchetto
 	@ManyToOne
 	@JoinColumn(name="id_Pacchetto")
 	private Pacchetto pacchetto;
@@ -75,48 +93,12 @@ public class Prenotazione_Pacchetto implements Serializable {
 		this.data = data;
 	}
 
-	public List<Condivisione> getCondivisiones() {
-		return this.condivisiones;
+	public List<Escursione> getEscursioni() {
+		return this.escursioni;
 	}
 
-	public void setCondivisiones(List<Condivisione> condivisiones) {
-		this.condivisiones = condivisiones;
-	}
-
-	public Condivisione addCondivisione(Condivisione condivisione) {
-		getCondivisiones().add(condivisione);
-		condivisione.setPrenotazionePacchetto(this);
-
-		return condivisione;
-	}
-
-	public Condivisione removeCondivisione(Condivisione condivisione) {
-		getCondivisiones().remove(condivisione);
-		condivisione.setPrenotazionePacchetto(null);
-
-		return condivisione;
-	}
-
-	public List<Escursioni_in_Prenotazione> getEscursioniInPrenotaziones() {
-		return this.escursioniInPrenotaziones;
-	}
-
-	public void setEscursioniInPrenotaziones(List<Escursioni_in_Prenotazione> escursioniInPrenotaziones) {
-		this.escursioniInPrenotaziones = escursioniInPrenotaziones;
-	}
-
-	public Escursioni_in_Prenotazione addEscursioniInPrenotazione(Escursioni_in_Prenotazione escursioniInPrenotazione) {
-		getEscursioniInPrenotaziones().add(escursioniInPrenotazione);
-		escursioniInPrenotazione.setPrenotazionePacchetto(this);
-
-		return escursioniInPrenotazione;
-	}
-
-	public Escursioni_in_Prenotazione removeEscursioniInPrenotazione(Escursioni_in_Prenotazione escursioniInPrenotazione) {
-		getEscursioniInPrenotaziones().remove(escursioniInPrenotazione);
-		escursioniInPrenotazione.setPrenotazionePacchetto(null);
-
-		return escursioniInPrenotazione;
+	public void setEscursioni(List<Escursione> escursioni) {
+		this.escursioni = escursioni;
 	}
 
 	public Aereo getAereo1() {
@@ -133,6 +115,14 @@ public class Prenotazione_Pacchetto implements Serializable {
 
 	public void setAereo2(Aereo aereo2) {
 		this.aereo2 = aereo2;
+	}
+
+	public List<Escursione> getEscursiones2() {
+		return this.escursiones2;
+	}
+
+	public void setEscursiones2(List<Escursione> escursiones2) {
+		this.escursiones2 = escursiones2;
 	}
 
 	public Hotel getHotel() {

@@ -8,18 +8,11 @@
 		<class>it.polimi.traveldream.ejb.entities.Camera</class>
 		<class>it.polimi.traveldream.ejb.entities.Condivisione</class>
 		<class>it.polimi.traveldream.ejb.entities.Escursione</class>
-		<class>it.polimi.traveldream.ejb.entities.Escursioni_in_Prenotazione</class>
-		<class>it.polimi.traveldream.ejb.entities.Escursioni_in_PrenotazionePK</class>
 		<class>it.polimi.traveldream.ejb.entities.Gruppo</class>
-		<class>it.polimi.traveldream.ejb.entities.Gruppo_Utente</class>
-		<class>it.polimi.traveldream.ejb.entities.Gruppo_UtentePK</class>
 		<class>it.polimi.traveldream.ejb.entities.Hotel</class>
 		<class>it.polimi.traveldream.ejb.entities.Pacchetto</class>
 		<class>it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto</class>
 		<class>it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio</class>
 		<class>it.polimi.traveldream.ejb.entities.Utente</class>
-		<properties>
-			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
-		</properties>
 	</persistence-unit>
 </persistence>

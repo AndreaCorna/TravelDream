@@ -23,21 +23,30 @@ public class Prenotazione_Viaggio implements Serializable {
 	@Column(name="Data")
 	private Date data;
 
-	//bi-directional many-to-one association to Escursioni_in_Prenotazione
-	@OneToMany(mappedBy="prenotazioneViaggio")
-	private List<Escursioni_in_Prenotazione> escursioniInPrenotaziones;
-
-	//bi-directional many-to-one association to Aereo
+	//uni-directional many-to-one association to Aereo
 	@ManyToOne
 	@JoinColumn(name="id_Aereo_Andata")
 	private Aereo aereo1;
 
-	//bi-directional many-to-one association to Aereo
+	//uni-directional many-to-one association to Aereo
 	@ManyToOne
 	@JoinColumn(name="id_Aereo_Ritorno")
 	private Aereo aereo2;
 
-	//bi-directional many-to-one association to Hotel
+	//uni-directional many-to-many association to Escursione
+	@ManyToMany
+	@JoinTable(
+		name="Escursioni_in_Prenotazione_Viaggio"
+		, joinColumns={
+			@JoinColumn(name="id_Prenotazione")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_Escursione")
+			}
+		)
+	private List<Escursione> escursioni;
+
+	//uni-directional many-to-one association to Hotel
 	@ManyToOne
 	@JoinColumn(name="id_Hotel")
 	private Hotel hotel;
@@ -66,28 +75,6 @@ public class Prenotazione_Viaggio implements Serializable {
 		this.data = data;
 	}
 
-	public List<Escursioni_in_Prenotazione> getEscursioniInPrenotaziones() {
-		return this.escursioniInPrenotaziones;
-	}
-
-	public void setEscursioniInPrenotaziones(List<Escursioni_in_Prenotazione> escursioniInPrenotaziones) {
-		this.escursioniInPrenotaziones = escursioniInPrenotaziones;
-	}
-
-	public Escursioni_in_Prenotazione addEscursioniInPrenotazione(Escursioni_in_Prenotazione escursioniInPrenotazione) {
-		getEscursioniInPrenotaziones().add(escursioniInPrenotazione);
-		escursioniInPrenotazione.setPrenotazioneViaggio(this);
-
-		return escursioniInPrenotazione;
-	}
-
-	public Escursioni_in_Prenotazione removeEscursioniInPrenotazione(Escursioni_in_Prenotazione escursioniInPrenotazione) {
-		getEscursioniInPrenotaziones().remove(escursioniInPrenotazione);
-		escursioniInPrenotazione.setPrenotazioneViaggio(null);
-
-		return escursioniInPrenotazione;
-	}
-
 	public Aereo getAereo1() {
 		return this.aereo1;
 	}
@@ -102,6 +89,14 @@ public class Prenotazione_Viaggio implements Serializable {
 
 	public void setAereo2(Aereo aereo2) {
 		this.aereo2 = aereo2;
+	}
+
+	public List<Escursione> getEscursioni() {
+		return this.escursioni;
+	}
+
+	public void setEscursioni(List<Escursione> escursioni) {
+		this.escursioni = escursioni;
 	}
 
 	public Hotel getHotel() {

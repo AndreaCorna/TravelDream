@@ -34,29 +34,38 @@ public class Utente implements Serializable {
 	@OneToMany(mappedBy="utente")
 	private List<Condivisione> condivisioni;
 
-	//bi-directional many-to-one association to Gruppo_Utente
-	@OneToMany(mappedBy="utente")
-	private List<Gruppo_Utente> gruppiUtente;
+	//uni-directional many-to-many association to Gruppo
+	@ManyToMany
+	@JoinTable(
+		name="Gruppo_Utente"
+		, joinColumns={
+			@JoinColumn(name="id_Gruppo")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_Gruppo")
+			}
+		)
+	private List<Gruppo> gruppi;
 
 	//bi-directional many-to-one association to Pacchetto
 	@OneToMany(mappedBy="utente")
-	private List<Pacchetto> pacchetti;
+	private List<Pacchetto> pacchettiCreati;
 
 	//bi-directional many-to-one association to Prenotazione_Pacchetto
 	@OneToMany(mappedBy="utente")
-	private List<Prenotazione_Pacchetto> prenotazionePacchetti;
+	private List<Prenotazione_Pacchetto> prenotazioniPacchetto;
 
 	//bi-directional many-to-one association to Prenotazione_Viaggio
 	@OneToMany(mappedBy="utente")
-	private List<Prenotazione_Viaggio> prenotazioneViaggi;
+	private List<Prenotazione_Viaggio> prenotazioniViaggio;
 
 	//bi-directional many-to-one association to Amministratore
 	@ManyToOne
 	@JoinColumn(name="id_Amministratore")
 	private Amministratore amministratore;
 
-	//bi-directional many-to-one association to Anagrafica
-	@ManyToOne
+	//uni-directional one-to-one association to Anagrafica
+	@OneToOne
 	@JoinColumn(name="id_Anagrafica")
 	private Anagrafica anagrafica;
 
@@ -103,114 +112,100 @@ public class Utente implements Serializable {
 		this.username = username;
 	}
 
-	public List<Condivisione> getCondivisiones() {
+	public List<Condivisione> getCondivisioni() {
 		return this.condivisioni;
 	}
 
-	public void setCondivisiones(List<Condivisione> condivisiones) {
-		this.condivisioni = condivisiones;
+	public void setCondivisioni(List<Condivisione> condivisioni) {
+		this.condivisioni = condivisioni;
 	}
 
-	public Condivisione addCondivisione(Condivisione condivisione) {
-		getCondivisiones().add(condivisione);
-		condivisione.setUtente(this);
+	public Condivisione addCondivisioni(Condivisione condivisioni) {
+		getCondivisioni().add(condivisioni);
+		condivisioni.setUtente(this);
 
-		return condivisione;
+		return condivisioni;
 	}
 
-	public Condivisione removeCondivisione(Condivisione condivisione) {
-		getCondivisiones().remove(condivisione);
-		condivisione.setUtente(null);
+	public Condivisione removeCondivisioni(Condivisione condivisioni) {
+		getCondivisioni().remove(condivisioni);
+		condivisioni.setUtente(null);
 
-		return condivisione;
+		return condivisioni;
 	}
 
-	public List<Gruppo_Utente> getGruppoUtentes() {
-		return this.gruppiUtente;
+	public List<Gruppo> getGruppi() {
+		return this.gruppi;
 	}
 
-	public void setGruppoUtentes(List<Gruppo_Utente> gruppoUtentes) {
-		this.gruppiUtente = gruppoUtentes;
+	public void setGruppi(List<Gruppo> gruppi) {
+		this.gruppi = gruppi;
 	}
 
-	public Gruppo_Utente addGruppoUtente(Gruppo_Utente gruppoUtente) {
-		getGruppoUtentes().add(gruppoUtente);
-		gruppoUtente.setUtente(this);
-
-		return gruppoUtente;
+	public List<Pacchetto> getPacchettiCreati() {
+		return this.pacchettiCreati;
 	}
 
-	public Gruppo_Utente removeGruppoUtente(Gruppo_Utente gruppoUtente) {
-		getGruppoUtentes().remove(gruppoUtente);
-		gruppoUtente.setUtente(null);
-
-		return gruppoUtente;
+	public void setPacchettiCreati(List<Pacchetto> pacchettiCreati) {
+		this.pacchettiCreati = pacchettiCreati;
 	}
 
-	public List<Pacchetto> getPacchettos() {
-		return this.pacchetti;
+	public Pacchetto addPacchettiCreati(Pacchetto pacchettiCreati) {
+		getPacchettiCreati().add(pacchettiCreati);
+		pacchettiCreati.setUtente(this);
+
+		return pacchettiCreati;
 	}
 
-	public void setPacchettos(List<Pacchetto> pacchettos) {
-		this.pacchetti = pacchettos;
+	public Pacchetto removePacchettiCreati(Pacchetto pacchettiCreati) {
+		getPacchettiCreati().remove(pacchettiCreati);
+		pacchettiCreati.setUtente(null);
+
+		return pacchettiCreati;
 	}
 
-	public Pacchetto addPacchetto(Pacchetto pacchetto) {
-		getPacchettos().add(pacchetto);
-		pacchetto.setUtente(this);
-
-		return pacchetto;
+	public List<Prenotazione_Pacchetto> getPrenotazioniPacchetto() {
+		return this.prenotazioniPacchetto;
 	}
 
-	public Pacchetto removePacchetto(Pacchetto pacchetto) {
-		getPacchettos().remove(pacchetto);
-		pacchetto.setUtente(null);
-
-		return pacchetto;
+	public void setPrenotazioniPacchetto(List<Prenotazione_Pacchetto> prenotazioniPacchetto) {
+		this.prenotazioniPacchetto = prenotazioniPacchetto;
 	}
 
-	public List<Prenotazione_Pacchetto> getPrenotazionePacchettos() {
-		return this.prenotazionePacchetti;
+	public Prenotazione_Pacchetto addPrenotazioniPacchetto(Prenotazione_Pacchetto prenotazioniPacchetto) {
+		getPrenotazioniPacchetto().add(prenotazioniPacchetto);
+		prenotazioniPacchetto.setUtente(this);
+
+		return prenotazioniPacchetto;
 	}
 
-	public void setPrenotazionePacchettos(List<Prenotazione_Pacchetto> prenotazionePacchettos) {
-		this.prenotazionePacchetti = prenotazionePacchettos;
+	public Prenotazione_Pacchetto removePrenotazioniPacchetto(Prenotazione_Pacchetto prenotazioniPacchetto) {
+		getPrenotazioniPacchetto().remove(prenotazioniPacchetto);
+		prenotazioniPacchetto.setUtente(null);
+
+		return prenotazioniPacchetto;
 	}
 
-	public Prenotazione_Pacchetto addPrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
-		getPrenotazionePacchettos().add(prenotazionePacchetto);
-		prenotazionePacchetto.setUtente(this);
-
-		return prenotazionePacchetto;
+	public List<Prenotazione_Viaggio> getPrenotazioniViaggio() {
+		return this.prenotazioniViaggio;
 	}
 
-	public Prenotazione_Pacchetto removePrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
-		getPrenotazionePacchettos().remove(prenotazionePacchetto);
-		prenotazionePacchetto.setUtente(null);
-
-		return prenotazionePacchetto;
+	public void setPrenotazioniViaggio(List<Prenotazione_Viaggio> prenotazioniViaggio) {
+		this.prenotazioniViaggio = prenotazioniViaggio;
 	}
 
-	public List<Prenotazione_Viaggio> getPrenotazioneViaggios() {
-		return this.prenotazioneViaggi;
+	public Prenotazione_Viaggio addPrenotazioniViaggio(Prenotazione_Viaggio prenotazioniViaggio) {
+		getPrenotazioniViaggio().add(prenotazioniViaggio);
+		prenotazioniViaggio.setUtente(this);
+
+		return prenotazioniViaggio;
 	}
 
-	public void setPrenotazioneViaggios(List<Prenotazione_Viaggio> prenotazioneViaggios) {
-		this.prenotazioneViaggi = prenotazioneViaggios;
-	}
+	public Prenotazione_Viaggio removePrenotazioniViaggio(Prenotazione_Viaggio prenotazioniViaggio) {
+		getPrenotazioniViaggio().remove(prenotazioniViaggio);
+		prenotazioniViaggio.setUtente(null);
 
-	public Prenotazione_Viaggio addPrenotazioneViaggio(Prenotazione_Viaggio prenotazioneViaggio) {
-		getPrenotazioneViaggios().add(prenotazioneViaggio);
-		prenotazioneViaggio.setUtente(this);
-
-		return prenotazioneViaggio;
-	}
-
-	public Prenotazione_Viaggio removePrenotazioneViaggio(Prenotazione_Viaggio prenotazioneViaggio) {
-		getPrenotazioneViaggios().remove(prenotazioneViaggio);
-		prenotazioneViaggio.setUtente(null);
-
-		return prenotazioneViaggio;
+		return prenotazioniViaggio;
 	}
 
 	public Amministratore getAmministratore() {

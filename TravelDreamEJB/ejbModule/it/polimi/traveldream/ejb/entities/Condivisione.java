@@ -22,13 +22,10 @@ public class Condivisione implements Serializable {
 	@Column(name="Data")
 	private Date data;
 
+	private int id_Prenotazione;
+
 	@Column(name="Link")
 	private String link;
-
-	//bi-directional many-to-one association to Prenotazione_Pacchetto
-	@ManyToOne
-	@JoinColumn(name="id_Prenotazione")
-	private Prenotazione_Pacchetto prenotazionePacchetto;
 
 	//bi-directional many-to-one association to Utente
 	@ManyToOne
@@ -54,20 +51,20 @@ public class Condivisione implements Serializable {
 		this.data = data;
 	}
 
+	public int getId_Prenotazione() {
+		return this.id_Prenotazione;
+	}
+
+	public void setId_Prenotazione(int id_Prenotazione) {
+		this.id_Prenotazione = id_Prenotazione;
+	}
+
 	public String getLink() {
 		return this.link;
 	}
 
 	public void setLink(String link) {
 		this.link = link;
-	}
-
-	public Prenotazione_Pacchetto getPrenotazionePacchetto() {
-		return this.prenotazionePacchetto;
-	}
-
-	public void setPrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
-		this.prenotazionePacchetto = prenotazionePacchetto;
 	}
 
 	public Utente getUtente() {

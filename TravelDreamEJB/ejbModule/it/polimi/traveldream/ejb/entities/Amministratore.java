@@ -24,18 +24,14 @@ public class Amministratore implements Serializable {
 	@Column(name="Username")
 	private String username;
 
-	//bi-directional many-to-one association to Anagrafica
-	@ManyToOne
+	//uni-directional one-to-one association to Anagrafica
+	@OneToOne
 	@JoinColumn(name="id_Anagrafica")
 	private Anagrafica anagrafica;
 
-	//bi-directional many-to-one association to Gruppo_Utente
-	@OneToMany(mappedBy="amministratore")
-	private List<Gruppo_Utente> gruppoUtentes;
-
 	//bi-directional many-to-one association to Utente
 	@OneToMany(mappedBy="amministratore")
-	private List<Utente> utentes;
+	private List<Utente> dipendentiAggiunti;
 
 	public Amministratore() {
 	}
@@ -72,48 +68,26 @@ public class Amministratore implements Serializable {
 		this.anagrafica = anagrafica;
 	}
 
-	public List<Gruppo_Utente> getGruppoUtentes() {
-		return this.gruppoUtentes;
+	public List<Utente> getDipendentiAggiunti() {
+		return this.dipendentiAggiunti;
 	}
 
-	public void setGruppoUtentes(List<Gruppo_Utente> gruppoUtentes) {
-		this.gruppoUtentes = gruppoUtentes;
+	public void setDipendentiAggiunti(List<Utente> dipendentiAggiunti) {
+		this.dipendentiAggiunti = dipendentiAggiunti;
 	}
 
-	public Gruppo_Utente addGruppoUtente(Gruppo_Utente gruppoUtente) {
-		getGruppoUtentes().add(gruppoUtente);
-		gruppoUtente.setAmministratore(this);
+	public Utente addDipendentiAggiunti(Utente dipendentiAggiunti) {
+		getDipendentiAggiunti().add(dipendentiAggiunti);
+		dipendentiAggiunti.setAmministratore(this);
 
-		return gruppoUtente;
+		return dipendentiAggiunti;
 	}
 
-	public Gruppo_Utente removeGruppoUtente(Gruppo_Utente gruppoUtente) {
-		getGruppoUtentes().remove(gruppoUtente);
-		gruppoUtente.setAmministratore(null);
+	public Utente removeDipendentiAggiunti(Utente dipendentiAggiunti) {
+		getDipendentiAggiunti().remove(dipendentiAggiunti);
+		dipendentiAggiunti.setAmministratore(null);
 
-		return gruppoUtente;
-	}
-
-	public List<Utente> getUtentes() {
-		return this.utentes;
-	}
-
-	public void setUtentes(List<Utente> utentes) {
-		this.utentes = utentes;
-	}
-
-	public Utente addUtente(Utente utente) {
-		getUtentes().add(utente);
-		utente.setAmministratore(this);
-
-		return utente;
-	}
-
-	public Utente removeUtente(Utente utente) {
-		getUtentes().remove(utente);
-		utente.setAmministratore(null);
-
-		return utente;
+		return dipendentiAggiunti;
 	}
 
 }

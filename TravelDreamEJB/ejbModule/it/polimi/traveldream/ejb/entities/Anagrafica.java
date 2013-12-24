@@ -3,7 +3,6 @@ package it.polimi.traveldream.ejb.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -35,14 +34,6 @@ public class Anagrafica implements Serializable {
 
 	@Column(name="Residenza")
 	private String residenza;
-
-	//bi-directional many-to-one association to Amministratore
-	@OneToMany(mappedBy="anagrafica")
-	private List<Amministratore> amministratores;
-
-	//bi-directional many-to-one association to Utente
-	@OneToMany(mappedBy="anagrafica")
-	private List<Utente> utentes;
 
 	public Anagrafica() {
 	}
@@ -93,50 +84,6 @@ public class Anagrafica implements Serializable {
 
 	public void setResidenza(String residenza) {
 		this.residenza = residenza;
-	}
-
-	public List<Amministratore> getAmministratores() {
-		return this.amministratores;
-	}
-
-	public void setAmministratores(List<Amministratore> amministratores) {
-		this.amministratores = amministratores;
-	}
-
-	public Amministratore addAmministratore(Amministratore amministratore) {
-		getAmministratores().add(amministratore);
-		amministratore.setAnagrafica(this);
-
-		return amministratore;
-	}
-
-	public Amministratore removeAmministratore(Amministratore amministratore) {
-		getAmministratores().remove(amministratore);
-		amministratore.setAnagrafica(null);
-
-		return amministratore;
-	}
-
-	public List<Utente> getUtentes() {
-		return this.utentes;
-	}
-
-	public void setUtentes(List<Utente> utentes) {
-		this.utentes = utentes;
-	}
-
-	public Utente addUtente(Utente utente) {
-		getUtentes().add(utente);
-		utente.setAnagrafica(this);
-
-		return utente;
-	}
-
-	public Utente removeUtente(Utente utente) {
-		getUtentes().remove(utente);
-		utente.setAnagrafica(null);
-
-		return utente;
 	}
 
 }
