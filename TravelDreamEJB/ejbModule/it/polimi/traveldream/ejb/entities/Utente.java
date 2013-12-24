@@ -15,6 +15,7 @@ public class Utente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="Username")
 	private String username;
 
@@ -65,6 +66,19 @@ public class Utente implements Serializable {
 	@OneToOne
 	@JoinColumn(name="id_Anagrafica")
 	private Anagrafica anagrafica;
+
+	//bi-directional many-to-many association to Gruppo
+	@ManyToMany
+	@JoinTable(
+		name="Gruppo_Utente"
+		, joinColumns={
+			@JoinColumn(name="id_Utente")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_Gruppo")
+			}
+		)
+	private List<Gruppo> gruppos2;
 
 	public Utente() {
 	}
@@ -211,6 +225,14 @@ public class Utente implements Serializable {
 
 	public void setAnagrafica(Anagrafica anagrafica) {
 		this.anagrafica = anagrafica;
+	}
+
+	public List<Gruppo> getGruppos2() {
+		return this.gruppos2;
+	}
+
+	public void setGruppos2(List<Gruppo> gruppos2) {
+		this.gruppos2 = gruppos2;
 	}
 
 }

@@ -1,7 +1,11 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -15,7 +19,7 @@ public class Anagrafica implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="CF")
 	private String cf;
 
@@ -36,6 +40,10 @@ public class Anagrafica implements Serializable {
 	private String residenza;
 
 	public Anagrafica() {
+	}
+	
+	public Anagrafica(AnagraficaDTO anagrafica){
+		
 	}
 
 	public String getCf() {
