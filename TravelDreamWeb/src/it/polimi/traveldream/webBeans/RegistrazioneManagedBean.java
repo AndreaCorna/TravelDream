@@ -10,14 +10,14 @@ import javax.faces.bean.RequestScoped;
 
 @ManagedBean(name="registra")
 @RequestScoped
-public class RegistrazioneBean {
+public class RegistrazioneManagedBean {
 
 	@EJB
 	private GestioneUtenteBean gestioneUtente;
 	
 	private UtenteDTO utente;
 	
-	public RegistrazioneBean(){
+	public RegistrazioneManagedBean(){
 		setUtente(new UtenteDTO());
 	}
 
