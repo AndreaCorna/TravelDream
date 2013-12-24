@@ -12,14 +12,15 @@
     <url-pattern>*.xhtml</url-pattern>
 	<url-pattern>*.jsf</url-pattern>
   </servlet-mapping>
-  <login-config>
+ 
+<login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/login.xhtml</form-login-page>
 			<form-error-page>/loginError.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
-  <security-constraint>
+	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Admins Pages</web-resource-name>
 			<description />
@@ -37,12 +38,11 @@
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>UTENTE</role-name>
-			<role-name>DIPENDENTE</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Employees Pages</web-resource-name>
+			<web-resource-name>Employee Pages</web-resource-name>
 			<description />
 			<url-pattern>/employee/*</url-pattern>
 		</web-resource-collection>
@@ -50,6 +50,7 @@
 			<role-name>DIPENDENTE</role-name>
 		</auth-constraint>
 	</security-constraint>
+
   <welcome-file-list>
 		<welcome-file>home.xhtml</welcome-file>
 	</welcome-file-list>
