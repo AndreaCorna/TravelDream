@@ -17,8 +17,11 @@ public class RegistrazioneManagedBean {
 	
 	private UtenteDTO utente;
 	
+	private AnagraficaDTO anagrafica;
+	
 	public RegistrazioneManagedBean(){
 		setUtente(new UtenteDTO());
+		setAnagrafica(new AnagraficaDTO());
 	}
 
 	public UtenteDTO getUtente() {
@@ -30,8 +33,16 @@ public class RegistrazioneManagedBean {
 	}
 	
 	public String registra(){
-		gestioneUtente.aggiungiNuovoUtente(utente);
+		gestioneUtente.aggiungiNuovoUtente(utente,anagrafica);
 		return "home?faces-redirect=true";
+	}
+
+	public AnagraficaDTO getAnagrafica() {
+		return anagrafica;
+	}
+
+	public void setAnagrafica(AnagraficaDTO anagrafica) {
+		this.anagrafica = anagrafica;
 	}
 	
 	

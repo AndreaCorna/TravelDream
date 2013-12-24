@@ -13,23 +13,27 @@
 		<p:panel header="Form di Registrazione">
 			<h:panelGrid columns="3" id="regGrid">
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
-				<p:inputText id="nome" value="#{registra.utente.nome}" />
+				<p:inputText id="nome" value="#{registra.anagrafica.nome}" />
 				<p:message for="nome" />
 
 				<h:outputLabel for="cognome">Cognome:</h:outputLabel>
-				<p:inputText id="cognome" value="#{registra.utente.cognome}" />
+				<p:inputText id="cognome" value="#{registra.anagrafica.cognome}" />
 				<p:message for="cognome" />
-
+				
 				<h:outputLabel for="data_nascita">Data di Nascita:</h:outputLabel>
-				<p:inputText id="data_nascita" value="#{registra.utente.dataNascita}" />
+				<p:inputText id="data_nascita" value="#{registra.anagrafica.dataNascita}" />
 				<p:message for="data_nascita" />
 				
 				<h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
-				<p:inputText id="luogo_nascita" value="#{registra.utente.luogoNascita}" />
+				<p:inputText id="luogo_nascita" value="#{registra.anagrafica.luogoNascita}" />
 				<p:message for="luogo_nascita" />
 				
+				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
+				<p:inputText id="cf" value="#{registra.anagrafica.codiceFiscale}" />
+				<p:message for="cf" />
+				
 				<h:outputLabel for="residenza">Residenza:</h:outputLabel>
-				<p:inputText id="residenza" value="#{registra.utente.residenza}" />
+				<p:inputText id="residenza" value="#{registra.anagrafica.residenza}" />
 				<p:message for="residenza" />
 				
 				<h:outputLabel for="email">Email:</h:outputLabel>

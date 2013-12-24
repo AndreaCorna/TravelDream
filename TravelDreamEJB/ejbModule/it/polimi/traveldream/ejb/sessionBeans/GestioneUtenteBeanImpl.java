@@ -1,5 +1,6 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
+import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 
 import javax.annotation.Resource;
@@ -22,7 +23,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     
 	
     @Override
-	public void aggiungiNuovoUtente(UtenteDTO utente) {
+	public void aggiungiNuovoUtente(UtenteDTO utente, AnagraficaDTO anagrafica) {
 		
 		
 	}
