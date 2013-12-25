@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -10,12 +12,13 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="Camera")
 @NamedQuery(name="Camera.findAll", query="SELECT c FROM Camera c")
 public class Camera implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(name="Costo")
@@ -30,7 +33,7 @@ public class Camera implements Serializable {
 	private Date data_Checkout;
 
 	@Column(name="Occupata")
-	private byte occupata;
+	private Boolean occupata;
 
 	@Column(name="Posti")
 	private int posti;
@@ -75,11 +78,11 @@ public class Camera implements Serializable {
 		this.data_Checkout = data_Checkout;
 	}
 
-	public byte getOccupata() {
+	public Boolean getOccupata() {
 		return this.occupata;
 	}
 
-	public void setOccupata(byte occupata) {
+	public void setOccupata(Boolean occupata) {
 		this.occupata = occupata;
 	}
 

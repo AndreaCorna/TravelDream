@@ -1,6 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -9,12 +10,13 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="Gruppo")
 @NamedQuery(name="Gruppo.findAll", query="SELECT g FROM Gruppo g")
 public class Gruppo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String nome;
 
 	public Gruppo() {

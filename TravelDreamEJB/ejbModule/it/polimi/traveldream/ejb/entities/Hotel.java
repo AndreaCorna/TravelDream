@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,12 +12,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Hotel")
 @NamedQuery(name="Hotel.findAll", query="SELECT h FROM Hotel h")
 public class Hotel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(name="Camere_Disponibili")
@@ -27,10 +30,6 @@ public class Hotel implements Serializable {
 	//bi-directional many-to-one association to Camera
 	@OneToMany(mappedBy="hotel")
 	private List<Camera> camere;
-
-	//bi-directional many-to-many association to Pacchetto
-	@ManyToMany(mappedBy="hotelInPacchetto")
-	private List<Pacchetto> pacchettiConHotel;
 
 	public Hotel() {
 	}
@@ -79,14 +78,6 @@ public class Hotel implements Serializable {
 		camere.setHotel(null);
 
 		return camere;
-	}
-
-	public List<Pacchetto> getPacchettiConHotel() {
-		return this.pacchettiConHotel;
-	}
-
-	public void setPacchettiConHotel(List<Pacchetto> pacchettiConHotel) {
-		this.pacchettiConHotel = pacchettiConHotel;
 	}
 
 }

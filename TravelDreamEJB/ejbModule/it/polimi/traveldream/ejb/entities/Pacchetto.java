@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +13,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Pacchetto")
 @NamedQuery(name="Pacchetto.findAll", query="SELECT p FROM Pacchetto p")
 public class Pacchetto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(name="Destinazione")
@@ -29,7 +32,7 @@ public class Pacchetto implements Serializable {
 	@Column(name="Inizio_Validità")
 	private Date inizio_Validità;
 
-	//bi-directional many-to-many association to Aereo
+	//uni-directional many-to-many association to Aereo
 	@ManyToMany
 	@JoinTable(
 		name="Aereo_in_Pacchetto"
@@ -42,7 +45,7 @@ public class Pacchetto implements Serializable {
 		)
 	private List<Aereo> aerei;
 
-	//bi-directional many-to-many association to Escursione
+	//uni-directional many-to-many association to Escursione
 	@ManyToMany
 	@JoinTable(
 		name="Escursione_in_Pacchetto"
@@ -55,7 +58,7 @@ public class Pacchetto implements Serializable {
 		)
 	private List<Escursione> escursioni;
 
-	//bi-directional many-to-many association to Hotel
+	//uni-directional many-to-many association to Hotel
 	@ManyToMany
 	@JoinTable(
 		name="Hotel_in_Pacchetto"
@@ -66,12 +69,12 @@ public class Pacchetto implements Serializable {
 			@JoinColumn(name="id_Hotel")
 			}
 		)
-	private List<Hotel> hotelInPacchetto;
+	private List<Hotel> hotels;
 
 	//bi-directional many-to-one association to Utente
 	@ManyToOne
 	@JoinColumn(name="id_Dipendente")
-	private Utente utente;
+	private Utente dipendente;
 
 	public Pacchetto() {
 	}
@@ -124,20 +127,20 @@ public class Pacchetto implements Serializable {
 		this.escursioni = escursioni;
 	}
 
-	public List<Hotel> getHotelInPacchetto() {
-		return this.hotelInPacchetto;
+	public List<Hotel> getHotels() {
+		return this.hotels;
 	}
 
-	public void setHotelInPacchetto(List<Hotel> hotelInPacchetto) {
-		this.hotelInPacchetto = hotelInPacchetto;
+	public void setHotels(List<Hotel> hotels) {
+		this.hotels = hotels;
 	}
 
-	public Utente getUtente() {
-		return this.utente;
+	public Utente getDipendente() {
+		return this.dipendente;
 	}
 
-	public void setUtente(Utente utente) {
-		this.utente = utente;
+	public void setDipendente(Utente dipendente) {
+		this.dipendente = dipendente;
 	}
 
 }

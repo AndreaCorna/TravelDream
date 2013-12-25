@@ -1,9 +1,10 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -11,12 +12,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Aereo")
 @NamedQuery(name="Aereo.findAll", query="SELECT a FROM Aereo a")
 public class Aereo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(name="Atterraggio")
@@ -34,10 +36,6 @@ public class Aereo implements Serializable {
 
 	@Column(name="Posti_Disponibili")
 	private int posti_Disponibili;
-
-	//bi-directional many-to-many association to Pacchetto
-	@ManyToMany(mappedBy="aerei")
-	private List<Pacchetto> pacchetti;
 
 	public Aereo() {
 	}
@@ -88,14 +86,6 @@ public class Aereo implements Serializable {
 
 	public void setPosti_Disponibili(int posti_Disponibili) {
 		this.posti_Disponibili = posti_Disponibili;
-	}
-
-	public List<Pacchetto> getPacchetti() {
-		return this.pacchetti;
-	}
-
-	public void setPacchetti(List<Pacchetto> pacchetti) {
-		this.pacchetti = pacchetti;
 	}
 
 }

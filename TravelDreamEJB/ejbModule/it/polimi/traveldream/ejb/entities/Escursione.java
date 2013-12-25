@@ -1,9 +1,10 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -11,12 +12,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Escursione")
 @NamedQuery(name="Escursione.findAll", query="SELECT e FROM Escursione e")
 public class Escursione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -28,10 +30,6 @@ public class Escursione implements Serializable {
 
 	@Column(name="Prezzo")
 	private int prezzo;
-
-	//bi-directional many-to-many association to Pacchetto
-	@ManyToMany(mappedBy="escursioni")
-	private List<Pacchetto> pacchetti;
 
 	public Escursione() {
 	}
@@ -66,14 +64,6 @@ public class Escursione implements Serializable {
 
 	public void setPrezzo(int prezzo) {
 		this.prezzo = prezzo;
-	}
-
-	public List<Pacchetto> getPacchetti() {
-		return this.pacchetti;
-	}
-
-	public void setPacchetti(List<Pacchetto> pacchetti) {
-		this.pacchetti = pacchetti;
 	}
 
 }

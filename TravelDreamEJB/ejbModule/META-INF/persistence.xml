@@ -3,7 +3,6 @@
 	<persistence-unit name="TravelDreamEJB" transaction-type="JTA">
 		<jta-data-source>jdbc/TravelDreamDB</jta-data-source>
 		<class>it.polimi.traveldream.ejb.entities.Aereo</class>
-		<class>it.polimi.traveldream.ejb.entities.Amministratore</class>
 		<class>it.polimi.traveldream.ejb.entities.Anagrafica</class>
 		<class>it.polimi.traveldream.ejb.entities.Camera</class>
 		<class>it.polimi.traveldream.ejb.entities.Condivisione</class>

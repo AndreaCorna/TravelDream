@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,17 +13,22 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Prenotazione_Pacchetto")
 @NamedQuery(name="Prenotazione_Pacchetto.findAll", query="SELECT p FROM Prenotazione_Pacchetto p")
 public class Prenotazione_Pacchetto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Data")
 	private Date data;
+
+	//bi-directional many-to-one association to Condivisione
+	@OneToMany(mappedBy="prenotazionePacchetto")
+	private List<Condivisione> condivisioni;
 
 	//uni-directional many-to-many association to Escursione
 	@ManyToMany
@@ -46,8 +53,6 @@ public class Prenotazione_Pacchetto implements Serializable {
 	@JoinColumn(name="id_Aereo_Ritorno")
 	private Aereo aereo2;
 
-	
-	
 	//uni-directional many-to-one association to Hotel
 	@ManyToOne
 	@JoinColumn(name="id_Hotel")
@@ -82,7 +87,35 @@ public class Prenotazione_Pacchetto implements Serializable {
 		this.data = data;
 	}
 
-	
+	public List<Condivisione> getCondivisioni() {
+		return this.condivisioni;
+	}
+
+	public void setCondivisioni(List<Condivisione> condivisioni) {
+		this.condivisioni = condivisioni;
+	}
+
+	public Condivisione addCondivisioni(Condivisione condivisioni) {
+		getCondivisioni().add(condivisioni);
+		condivisioni.setPrenotazionePacchetto(this);
+
+		return condivisioni;
+	}
+
+	public Condivisione removeCondivisioni(Condivisione condivisioni) {
+		getCondivisioni().remove(condivisioni);
+		condivisioni.setPrenotazionePacchetto(null);
+
+		return condivisioni;
+	}
+
+	public List<Escursione> getEscursioni() {
+		return this.escursioni;
+	}
+
+	public void setEscursioni(List<Escursione> escursioni) {
+		this.escursioni = escursioni;
+	}
 
 	public Aereo getAereo1() {
 		return this.aereo1;
@@ -98,14 +131,6 @@ public class Prenotazione_Pacchetto implements Serializable {
 
 	public void setAereo2(Aereo aereo2) {
 		this.aereo2 = aereo2;
-	}
-
-	public List<Escursione> getEscursioni() {
-		return this.escursioni;
-	}
-
-	public void setEscursioni(List<Escursione> escursioni) {
-		this.escursioni = escursioni;
 	}
 
 	public Hotel getHotel() {

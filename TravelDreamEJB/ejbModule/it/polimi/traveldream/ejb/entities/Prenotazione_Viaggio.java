@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +13,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Prenotazione_Viaggio")
 @NamedQuery(name="Prenotazione_Viaggio.findAll", query="SELECT p FROM Prenotazione_Viaggio p")
 public class Prenotazione_Viaggio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)

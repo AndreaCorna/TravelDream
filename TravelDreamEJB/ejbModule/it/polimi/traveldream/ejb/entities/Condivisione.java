@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -10,22 +12,26 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="Condivisione")
 @NamedQuery(name="Condivisione.findAll", query="SELECT c FROM Condivisione c")
 public class Condivisione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Data")
 	private Date data;
 
-	private int id_Prenotazione;
-
 	@Column(name="Link")
 	private String link;
+
+	//bi-directional many-to-one association to Prenotazione_Pacchetto
+	@ManyToOne
+	@JoinColumn(name="id_Prenotazione")
+	private Prenotazione_Pacchetto prenotazionePacchetto;
 
 	//bi-directional many-to-one association to Utente
 	@ManyToOne
@@ -51,20 +57,20 @@ public class Condivisione implements Serializable {
 		this.data = data;
 	}
 
-	public int getId_Prenotazione() {
-		return this.id_Prenotazione;
-	}
-
-	public void setId_Prenotazione(int id_Prenotazione) {
-		this.id_Prenotazione = id_Prenotazione;
-	}
-
 	public String getLink() {
 		return this.link;
 	}
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Prenotazione_Pacchetto getPrenotazionePacchetto() {
+		return this.prenotazionePacchetto;
+	}
+
+	public void setPrenotazionePacchetto(Prenotazione_Pacchetto prenotazionePacchetto) {
+		this.prenotazionePacchetto = prenotazionePacchetto;
 	}
 
 	public Utente getUtente() {

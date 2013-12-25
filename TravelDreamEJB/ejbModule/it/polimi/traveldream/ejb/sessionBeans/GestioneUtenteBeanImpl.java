@@ -1,8 +1,13 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
+import it.polimi.traveldream.ejb.entities.Gruppo;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import javax.annotation.Resource;
@@ -29,6 +34,11 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		Anagrafica nuovaAnagrafica = new Anagrafica(anagrafica);
 		em.persist(nuovaAnagrafica);
 		Utente nuovoUtente = new Utente(utente, nuovaAnagrafica);
+		List<Gruppo> gruppi = new ArrayList<Gruppo>();
+		Gruppo nuovoGruppo = new Gruppo();
+		nuovoGruppo.setNome("UTENTE");
+		gruppi.add(nuovoGruppo);
+		nuovoUtente.setGruppi(gruppi);
 		em.persist(nuovoUtente);
 		
 	}

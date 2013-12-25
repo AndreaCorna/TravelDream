@@ -53,43 +53,34 @@ public class Utente implements Serializable {
 	private List<Gruppo> gruppi;
 
 	//bi-directional many-to-one association to Pacchetto
-	@OneToMany(mappedBy="utente")
+	@OneToMany(mappedBy="dipendente")
 	private List<Pacchetto> pacchettiCreati;
 
 	//bi-directional many-to-one association to Prenotazione_Pacchetto
 	@OneToMany(mappedBy="utente")
-	private List<Prenotazione_Pacchetto> prenotazioniPacchetto;
+	private List<Prenotazione_Pacchetto> prenotazioniPacchetti;
 
 	//bi-directional many-to-one association to Prenotazione_Viaggio
 	@OneToMany(mappedBy="utente")
 	private List<Prenotazione_Viaggio> prenotazioniViaggi;
 
-	//bi-directional many-to-one association to Amministratore
+	//uni-directional many-to-one association to Anagrafica
 	@ManyToOne
-	@JoinColumn(name="id_Amministratore")
-	private Amministratore amministratore;
-
-	//uni-directional one-to-one association to Anagrafica
-	@OneToOne
 	@JoinColumn(name="id_Anagrafica")
 	private Anagrafica anagrafica;
 
-	//bi-directional many-to-many association to Gruppo
-	@ManyToMany
-	@JoinTable(
-		name="Gruppo_Utente"
-		, joinColumns={
-			@JoinColumn(name="id_Utente")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_Gruppo")
-			}
-		)
-	private List<Gruppo> gruppos2;
+	//bi-directional many-to-one association to Utente
+	@ManyToOne
+	@JoinColumn(name="id_Amministratore")
+	private Utente amministratoreCreatore;
+
+	//bi-directional many-to-one association to Utente
+	@OneToMany(mappedBy="amministratoreCreatore")
+	private List<Utente> dipendentiAggiunti;
 
 	public Utente() {
 	}
-	
+
 	public Utente(UtenteDTO utente, Anagrafica anagrafica){
 		this.email = utente.getEmail();
 		this.username = utente.getUsername();
@@ -97,7 +88,7 @@ public class Utente implements Serializable {
 		this.password = DigestUtils.sha256Hex(utente.getPassword());
 		this.anagrafica = anagrafica;
 	}
-
+	
 	public String getUsername() {
 		return this.username;
 	}
@@ -170,38 +161,38 @@ public class Utente implements Serializable {
 
 	public Pacchetto addPacchettiCreati(Pacchetto pacchettiCreati) {
 		getPacchettiCreati().add(pacchettiCreati);
-		pacchettiCreati.setUtente(this);
+		pacchettiCreati.setDipendente(this);
 
 		return pacchettiCreati;
 	}
 
 	public Pacchetto removePacchettiCreati(Pacchetto pacchettiCreati) {
 		getPacchettiCreati().remove(pacchettiCreati);
-		pacchettiCreati.setUtente(null);
+		pacchettiCreati.setDipendente(null);
 
 		return pacchettiCreati;
 	}
 
-	public List<Prenotazione_Pacchetto> getPrenotazioniPacchetto() {
-		return this.prenotazioniPacchetto;
+	public List<Prenotazione_Pacchetto> getPrenotazioniPacchetti() {
+		return this.prenotazioniPacchetti;
 	}
 
-	public void setPrenotazioniPacchetto(List<Prenotazione_Pacchetto> prenotazioniPacchetto) {
-		this.prenotazioniPacchetto = prenotazioniPacchetto;
+	public void setPrenotazioniPacchetti(List<Prenotazione_Pacchetto> prenotazioniPacchetti) {
+		this.prenotazioniPacchetti = prenotazioniPacchetti;
 	}
 
-	public Prenotazione_Pacchetto addPrenotazioniPacchetto(Prenotazione_Pacchetto prenotazioniPacchetto) {
-		getPrenotazioniPacchetto().add(prenotazioniPacchetto);
-		prenotazioniPacchetto.setUtente(this);
+	public Prenotazione_Pacchetto addPrenotazioniPacchetti(Prenotazione_Pacchetto prenotazioniPacchetti) {
+		getPrenotazioniPacchetti().add(prenotazioniPacchetti);
+		prenotazioniPacchetti.setUtente(this);
 
-		return prenotazioniPacchetto;
+		return prenotazioniPacchetti;
 	}
 
-	public Prenotazione_Pacchetto removePrenotazioniPacchetto(Prenotazione_Pacchetto prenotazioniPacchetto) {
-		getPrenotazioniPacchetto().remove(prenotazioniPacchetto);
-		prenotazioniPacchetto.setUtente(null);
+	public Prenotazione_Pacchetto removePrenotazioniPacchetti(Prenotazione_Pacchetto prenotazioniPacchetti) {
+		getPrenotazioniPacchetti().remove(prenotazioniPacchetti);
+		prenotazioniPacchetti.setUtente(null);
 
-		return prenotazioniPacchetto;
+		return prenotazioniPacchetti;
 	}
 
 	public List<Prenotazione_Viaggio> getPrenotazioniViaggi() {
@@ -226,14 +217,6 @@ public class Utente implements Serializable {
 		return prenotazioniViaggi;
 	}
 
-	public Amministratore getAmministratore() {
-		return this.amministratore;
-	}
-
-	public void setAmministratore(Amministratore amministratore) {
-		this.amministratore = amministratore;
-	}
-
 	public Anagrafica getAnagrafica() {
 		return this.anagrafica;
 	}
@@ -242,12 +225,34 @@ public class Utente implements Serializable {
 		this.anagrafica = anagrafica;
 	}
 
-	public List<Gruppo> getGruppos2() {
-		return this.gruppos2;
+	public Utente getAmministratoreCreatore() {
+		return this.amministratoreCreatore;
 	}
 
-	public void setGruppos2(List<Gruppo> gruppos2) {
-		this.gruppos2 = gruppos2;
+	public void setAmministratoreCreatore(Utente amministratoreCreatore) {
+		this.amministratoreCreatore = amministratoreCreatore;
+	}
+
+	public List<Utente> getDipendentiAggiunti() {
+		return this.dipendentiAggiunti;
+	}
+
+	public void setDipendentiAggiunti(List<Utente> dipendentiAggiunti) {
+		this.dipendentiAggiunti = dipendentiAggiunti;
+	}
+
+	public Utente addDipendentiAggiunti(Utente dipendentiAggiunti) {
+		getDipendentiAggiunti().add(dipendentiAggiunti);
+		dipendentiAggiunti.setAmministratoreCreatore(this);
+
+		return dipendentiAggiunti;
+	}
+
+	public Utente removeDipendentiAggiunti(Utente dipendentiAggiunti) {
+		getDipendentiAggiunti().remove(dipendentiAggiunti);
+		dipendentiAggiunti.setAmministratoreCreatore(null);
+
+		return dipendentiAggiunti;
 	}
 
 }
