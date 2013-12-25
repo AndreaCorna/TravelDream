@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+<!-- 
+<script type="text/javascript">
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?]+([^=]+)=([^]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+</script>
+<script type="text/javascript">
+var first = getUrlVars()["link"];
+ 
+alert(first);
+
+</script>
+ -->
+</h:head> 
+<body> 
+<p:panel header="La tua Condivisione">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Link"/> <p:outputLabel value="#{condivisione.link}"/>
+				<p:outputLabel value="Utente"/> <p:outputLabel value="#{condivisione.link}"/>
+				<p:outputLabel value="Prenotazione"/> <p:outputLabel value="#{condivisione.link}"/>
+				<p:outputLabel value="Data"/> <p:outputLabel value="#{condivisione.link}"/>
+				<p></p>
+				<!-- 
+				<script language="JavaScript">
+					document.write(first);
+				</script>
+				 -->
+				<p></p>
+				<p><a href="home.xhtml">Homepage</a></p>
+			</h:panelGrid>
+			
+			
+</p:panel>
+</body> 
+</html>

@@ -48,11 +48,11 @@
 		<h:form id="condivisione">
 			<h:panelGrid columns="2">
 				<p:outputLabel for="link" value="Link" />
-				<p:inputText id="link" name="link" />
-				<p:commandButton id="find" value="Visualizza" action="/register?faces-redirect=true"/>
+				<p:inputText id="link" name="link" value="#{condivisione.link}"/>
+				<p:commandButton id="find" value="Visualizza" action="#{condivisione.visualizzaCondivisione()}"/>
 			</h:panelGrid>
 		</h:form>
-		</p:panel>
+	</p:panel>
 </p:panel>	
 </h:body>
 </html>
