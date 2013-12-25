@@ -14,7 +14,7 @@ public class AnagraficaDTO {
 	private String cognome;
 	@NotEmpty
 	private String luogoNascita;
-	@NotEmpty
+
 	private Date dataNascita;
 	@NotEmpty
 	private String residenza;

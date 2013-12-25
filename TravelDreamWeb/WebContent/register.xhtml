@@ -25,6 +25,10 @@
 				<p:inputText id="luogo_nascita" value="#{registra.anagrafica.luogoNascita}" />
 				<p:message for="luogo_nascita" />
 				
+				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
+				<p:calendar id="data_nascita" value="#{registra.anagrafica.dataNascita}" navigator="true" display="inline"/>
+				<p></p>
+				
 				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
 				<p:inputText id="cf" value="#{registra.anagrafica.codiceFiscale}" />
 				<p:message for="cf" />
@@ -52,9 +56,10 @@
 
 				<h:outputLabel for="pwd2">Conferma Password:</h:outputLabel>
 				<p:password id="pwd2" label="Confirm Password" value="#{registra.utente.password}"/>
+				<p></p>
 				
-				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
-				<p:calendar id="data_nascita" value="#{registra.anagrafica.dataNascita}" navigator="true" display="inline"/>
+				
+				
 			</h:panelGrid>
 			<p:commandButton value="Registra" id="ajax"  
              action="#{registra.registra()}" styleClass="ui-priority-primary"/>  

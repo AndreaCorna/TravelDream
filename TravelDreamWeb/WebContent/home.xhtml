@@ -27,16 +27,24 @@
 	</script>
 </h:head>
 <h:body>
-       Welcome: <br />
+<p:panel>
+		<p:outputLabel value="Benvenuto in TravelDream"/>
+		<p></p>
+       <p:outputLabel value="Sono le"/>
+		<p:clock /> 
+		<p></p>
+       <p:panel header="Login">
+       
+       <h:link outcome="admin/index" value="Login Amministratore" />
+       <p></p>
+       <h:link outcome="employee/index" value="Login Dipendente" />
+       <p></p>
+       <h:link outcome="user/index" value="Login Utente" />
+       <p></p>
        <p><a href="register.xhtml">Registrati</a></p>
-       <h:link outcome="admin/index" value="To the admin section" />
-       <p></p>
-       <h:link outcome="employee/index" value="To the employee section" />
-       <p></p>
-       <h:link outcome="user/index?user=true" value="To the user section" />
-       <p></p>
-       <p><a href="user/index.xhtml">Login User</a></p>
-        <p:panel header="Visualizza la tua Condivisione">
+		<p></p>
+       </p:panel>
+       <p:panel header="Visualizza la tua Condivisione">
 		<h:form id="condivisione">
 			<h:panelGrid columns="2">
 				<p:outputLabel for="link" value="Link" />
@@ -45,10 +53,6 @@
 			</h:panelGrid>
 		</h:form>
 		</p:panel>
-        
-        PARTE DA USARE QUANDO SARÀ PRONTA L'APP <br />
-        Username: <input type="text" id="username" />
-        Password: <input type="password" name="password" /> 
-		<h:commandButton value="Login" action="javascript:selectLogin();" id="button" />
+</p:panel>	
 </h:body>
 </html>
