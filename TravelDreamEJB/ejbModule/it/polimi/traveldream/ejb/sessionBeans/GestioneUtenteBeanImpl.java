@@ -28,8 +28,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	public void aggiungiNuovoUtente(UtenteDTO utente, AnagraficaDTO anagrafica) {
 		Anagrafica nuovaAnagrafica = new Anagrafica(anagrafica);
 		em.persist(nuovaAnagrafica);
-		//Utente nuovoUtente = new Utente(utente, nuovaAnagrafica);
-		//em.persist(nuovoUtente);
+		Utente nuovoUtente = new Utente(utente, nuovaAnagrafica);
+		em.persist(nuovoUtente);
 		
 	}
 

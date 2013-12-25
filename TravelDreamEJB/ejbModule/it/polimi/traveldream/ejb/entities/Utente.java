@@ -1,7 +1,13 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.UtenteDTO;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.List;
 
 
@@ -10,6 +16,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Utente")
 @NamedQuery(name="Utente.findAll", query="SELECT u FROM Utente u")
 public class Utente implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -81,6 +88,14 @@ public class Utente implements Serializable {
 	private List<Gruppo> gruppos2;
 
 	public Utente() {
+	}
+	
+	public Utente(UtenteDTO utente, Anagrafica anagrafica){
+		this.email = utente.getEmail();
+		this.username = utente.getUsername();
+		this.telefono = utente.getTelefono();
+		this.password = DigestUtils.sha256Hex(utente.getPassword());
+		this.anagrafica = anagrafica;
 	}
 
 	public String getUsername() {
