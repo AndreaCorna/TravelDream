@@ -14,6 +14,7 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="Anagrafica")
 @NamedQuery(name="Anagrafica.findAll", query="SELECT a FROM Anagrafica a")
 public class Anagrafica implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +44,12 @@ public class Anagrafica implements Serializable {
 	}
 	
 	public Anagrafica(AnagraficaDTO anagrafica){
-		
+		this.cf = anagrafica.getCodiceFiscale();
+		this.cognome = anagrafica.getCognome();
+		this.nome = anagrafica.getNome();
+		this.data_Nascita = anagrafica.getDataNascita();
+		this.luogo_Nascita = anagrafica.getLuogoNascita();
+		this.residenza = anagrafica.getResidenza();
 	}
 
 	public String getCf() {

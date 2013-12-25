@@ -12,7 +12,7 @@ public class UtenteDTO {
 	
 	
 	@NotEmpty
-	private int telefono;
+	private String telefono;
 	@NotEmpty
 	private String username;
 	@NotEmpty
@@ -21,13 +21,7 @@ public class UtenteDTO {
 	
 	
 
-	public int getTelefono() {
-		return telefono;
-	}
 
-	public void setTelefono(int telefono) {
-		this.telefono = telefono;
-	}
 
 	public String getUsername() {
 		return username;
@@ -51,6 +45,14 @@ public class UtenteDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 }

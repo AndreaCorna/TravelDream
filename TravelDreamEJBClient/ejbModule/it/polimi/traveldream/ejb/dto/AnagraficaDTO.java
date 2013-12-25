@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.sun.istack.NotNull;
+
 public class AnagraficaDTO {
 
 	@NotEmpty
@@ -14,7 +16,7 @@ public class AnagraficaDTO {
 	private String cognome;
 	@NotEmpty
 	private String luogoNascita;
-
+	@NotNull
 	private Date dataNascita;
 	@NotEmpty
 	private String residenza;

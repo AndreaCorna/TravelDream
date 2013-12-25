@@ -3,10 +3,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head>
 <h:body>
-            Sorry, you made an Error. Please try again: <h:link value="Login" outcome="home"/>
+	<p:panel header="Login Error">
+            Credenziali Errate: <h:link
+			outcome="home" value="Home" />
+	</p:panel>
 </h:body>
 </html>

@@ -26,7 +26,7 @@ public class Utente implements Serializable {
 	private String password;
 
 	@Column(name="Telefono")
-	private int telefono;
+	private String telefono;
 
 	//bi-directional many-to-one association to Condivisione
 	@OneToMany(mappedBy="utente")
@@ -107,11 +107,11 @@ public class Utente implements Serializable {
 		this.password = password;
 	}
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return this.telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
