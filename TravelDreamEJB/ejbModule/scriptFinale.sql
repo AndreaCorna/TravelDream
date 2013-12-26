@@ -41,6 +41,7 @@ CREATE TABLE `Aereo` (
 
 LOCK TABLES `Aereo` WRITE;
 /*!40000 ALTER TABLE `Aereo` DISABLE KEYS */;
+INSERT INTO `Aereo` VALUES (1,'Milano','Roma','2013-02-04 00:00:00',100,10),(2,'Roma','Milano','2013-03-04 00:00:00',100,10);
 /*!40000 ALTER TABLE `Aereo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,10 +87,10 @@ CREATE TABLE `Prenotazione_Viaggio` (
   KEY `fk_Prenotazione_Viaggio_Aereo_Andata` (`id_Aereo_Andata`),
   KEY `fk_Prenotazione_Viaggio_Aereo_Ritorno` (`id_Aereo_Ritorno`),
   KEY `fk_Prenotazione_Viaggio_Hotel` (`id_Hotel`),
-  CONSTRAINT `fk_Prenotazione_Viaggio_Utente` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Prenotazione_Viaggio_Aereo_Andata` FOREIGN KEY (`id_Aereo_Andata`) REFERENCES `Aereo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Prenotazione_Viaggio_Aereo_Ritorno` FOREIGN KEY (`id_Aereo_Ritorno`) REFERENCES `Aereo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Prenotazione_Viaggio_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Prenotazione_Viaggio_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Prenotazione_Viaggio_Utente` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -114,6 +115,7 @@ CREATE TABLE `Escursione` (
   `Luogo` varchar(45) NOT NULL,
   `Prezzo` int(11) NOT NULL,
   `Data` datetime NOT NULL,
+  `Descrizione` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -124,6 +126,7 @@ CREATE TABLE `Escursione` (
 
 LOCK TABLES `Escursione` WRITE;
 /*!40000 ALTER TABLE `Escursione` DISABLE KEYS */;
+INSERT INTO `Escursione` VALUES (1,'Roma',100,'2013-03-02 00:00:00','gita a roma');
 /*!40000 ALTER TABLE `Escursione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,8 +147,8 @@ CREATE TABLE `Utente` (
   PRIMARY KEY (`Username`),
   KEY `fk_Utente_Registrato_Anagrafica` (`id_Anagrafica`),
   KEY `fk_Utente_Amministratore_Creatore` (`id_Amministratore`),
-  CONSTRAINT `fk_Utente_Registrato_Anagrafica` FOREIGN KEY (`id_Anagrafica`) REFERENCES `Anagrafica` (`CF`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_Utente_Amministratore_Creatore` FOREIGN KEY (`id_Amministratore`) REFERENCES `Utente` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_Utente_Amministratore_Creatore` FOREIGN KEY (`id_Amministratore`) REFERENCES `Utente` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_Utente_Registrato_Anagrafica` FOREIGN KEY (`id_Anagrafica`) REFERENCES `Anagrafica` (`CF`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -172,8 +175,8 @@ CREATE TABLE `Gruppo_Utente` (
   PRIMARY KEY (`id_Utente`,`id_Gruppo`),
   KEY `fk_Utente_has_Gruppo_Gruppo1` (`id_Gruppo`),
   KEY `fk_Utente_has_Gruppo_Utente1` (`id_Utente`),
-  CONSTRAINT `fk_Utente_has_Gruppo_Utente1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Utente_has_Gruppo_Gruppo1` FOREIGN KEY (`id_Gruppo`) REFERENCES `Gruppo` (`nome`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_Utente_has_Gruppo_Gruppo1` FOREIGN KEY (`id_Gruppo`) REFERENCES `Gruppo` (`nome`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_Utente_has_Gruppo_Utente1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -228,8 +231,8 @@ CREATE TABLE `Escursioni_in_Prenotazione_Pacchetto` (
   PRIMARY KEY (`id_Prenotazione`,`id_Escursione`),
   KEY `fk_Prenotazione_Pacchetto_has_Escursione_Escursione1` (`id_Escursione`),
   KEY `fk_Prenotazione_Pacchetto_has_Escursione_Prenotazione_Pacchet1` (`id_Prenotazione`),
-  CONSTRAINT `fk_Prenotazione_Pacchetto_has_Escursione_Prenotazione_Pacchet1` FOREIGN KEY (`id_Prenotazione`) REFERENCES `Prenotazione_Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Prenotazione_Pacchetto_has_Escursione_Escursione1` FOREIGN KEY (`id_Escursione`) REFERENCES `Escursione` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Prenotazione_Pacchetto_has_Escursione_Escursione1` FOREIGN KEY (`id_Escursione`) REFERENCES `Escursione` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Prenotazione_Pacchetto_has_Escursione_Prenotazione_Pacchet1` FOREIGN KEY (`id_Prenotazione`) REFERENCES `Prenotazione_Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -278,12 +281,11 @@ DROP TABLE IF EXISTS `Condivisione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Condivisione` (
-  `id` int(11) NOT NULL,
   `Link` varchar(100) NOT NULL,
   `Data` datetime NOT NULL,
   `id_Utente` varchar(45) NOT NULL,
   `id_Prenotazione` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`Link`),
   KEY `fk_Condivisione_Pacchetto` (`id_Prenotazione`),
   KEY `fk_Condivisione_Utente_Registrato1` (`id_Utente`),
   CONSTRAINT `fk_Condivisione_Pacchetto` FOREIGN KEY (`id_Prenotazione`) REFERENCES `Prenotazione_Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -321,6 +323,7 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
+INSERT INTO `Hotel` VALUES (1,'Roma',1);
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,8 +390,8 @@ DROP TABLE IF EXISTS `Camera`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Camera` (
   `id` int(11) NOT NULL,
-  `Data_Checkin` datetime NOT NULL,
-  `Data_Checkout` datetime NOT NULL,
+  `Data_Checkin` datetime DEFAULT NULL,
+  `Data_Checkout` datetime DEFAULT NULL,
   `Costo` int(11) NOT NULL,
   `Posti` int(11) NOT NULL,
   `Occupata` tinyint(1) NOT NULL,
@@ -405,6 +408,7 @@ CREATE TABLE `Camera` (
 
 LOCK TABLES `Camera` WRITE;
 /*!40000 ALTER TABLE `Camera` DISABLE KEYS */;
+INSERT INTO `Camera` VALUES (1,NULL,NULL,0,2,0,1);
 /*!40000 ALTER TABLE `Camera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,11 +434,11 @@ CREATE TABLE `Prenotazione_Pacchetto` (
   KEY `fk_Prenotazione_Aereo_Ritorno` (`id_Aereo_Ritorno`),
   KEY `fk_Prenotazione_Hotel` (`id_Hotel`),
   KEY `fk_Prenotazione_Pacchetto_Pacchetto1` (`id_Pacchetto`),
-  CONSTRAINT `fk_Prenotazione_Utente_Registrato1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Prenotazione_Aereo_Andata` FOREIGN KEY (`id_Aereo_Andata`) REFERENCES `Aereo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Prenotazione_Aereo_Ritorno` FOREIGN KEY (`id_Aereo_Ritorno`) REFERENCES `Aereo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Prenotazione_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Prenotazione_Pacchetto_Pacchetto1` FOREIGN KEY (`id_Pacchetto`) REFERENCES `Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Prenotazione_Pacchetto_Pacchetto1` FOREIGN KEY (`id_Pacchetto`) REFERENCES `Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Prenotazione_Utente_Registrato1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -510,4 +514,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-26  0:16:12
+-- Dump completed on 2013-12-26  9:38:00
