@@ -5,8 +5,12 @@ import it.polimi.traveldream.ejb.sessionBeans.GestioneUtenteBean;
 import it.polimi.traveldream.ejb.dto.*;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 @ManagedBean(name="registra")
 @RequestScoped
@@ -44,6 +48,12 @@ public class RegistrazioneManagedBean {
 	public void setAnagrafica(AnagraficaDTO anagrafica) {
 		this.anagrafica = anagrafica;
 	}
+	
+	public void validaUsername(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+        if (gestioneUtente.esisteUsername((String)value)){
+                throw new ValidatorException(new FacesMessage("Username già utilizzato. Scegline un altro"));
+        }
+}
 	
 	
 	

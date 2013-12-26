@@ -46,7 +46,7 @@
 				<p:message for="telefono" />
 				
 				<h:outputLabel for="username">Username:</h:outputLabel>
-				<p:inputText id="username" value="#{registra.utente.username}" />
+				<p:inputText id="username" value="#{registra.utente.username}"  validator="#{registra.validaUsername}"/>
 				<p:message for="username" />
 
 				<h:outputLabel for="password">Password:</h:outputLabel>
@@ -61,7 +61,7 @@
 				
 				
 			</h:panelGrid>
-			<p:commandButton value="Registra" id="ajax"  
+			<p:commandButton value="Registra" id="ajax"  update="regGrid"
              action="#{registra.registra()}" styleClass="ui-priority-primary"/>  
 			
 

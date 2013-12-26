@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UtenteDTO {
 	
 	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-            message="invalid email")
+            message="Email non valida")
 	private String email;
 	
 	

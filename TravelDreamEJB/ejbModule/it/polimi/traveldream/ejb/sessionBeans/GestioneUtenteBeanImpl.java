@@ -3,7 +3,6 @@ package it.polimi.traveldream.ejb.sessionBeans;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
@@ -41,6 +40,15 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		nuovoUtente.setGruppi(gruppi);
 		em.persist(nuovoUtente);
 		
+	}
+
+
+	@Override
+	public boolean esisteUsername(String value) {
+		if (em.find(Utente.class,value)!=null){
+           return true;
+        }
+        return false;
 	}
 
     
