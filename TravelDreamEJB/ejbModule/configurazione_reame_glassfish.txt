@@ -1,0 +1,28 @@
+ 
+Nella sezione configurations → server-config → security → realms → new
+
+Name = authTravelDreamRealm
+
+Class name = com.sun.enterprise.security.ee.auth.realm.jdbc.JDBCRealm
+
+JAAS Context = jdbcRealm
+
+JNDI → il nome del pool di connessione che hai tu
+
+User Table→ Utente
+
+User Name Column → Username
+
+Password column → Password
+
+Group tabel → Gruppo_Utente
+
+Group Table User Name Column → id_Utente
+
+Group Name Column:  id_Gruppo
+
+Password Encryption Algorithm: MD5
+
+Assign Groups: UTENTE;DIPENDENTE;AMMINISTRATORE
+
+Digest Algorithm: SHA-256
