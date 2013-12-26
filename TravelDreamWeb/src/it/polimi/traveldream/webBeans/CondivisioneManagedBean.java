@@ -54,8 +54,17 @@ public class CondivisioneManagedBean {
 		this.condivisione = condivisione;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String visualizzaCondivisione(){
-		condivisione = gestoreCondivisione.mostraCondivisione(link);
+		/*condivisione = gestoreCondivisione.mostraCondivisione(link);
+		this.data = condivisione.getData();
+		this.utente = condivisione.getUtente();
+		this.link = condivisione.getLink();
+		*/
+		this.data = new Date(2013, 12, 5);
+		this.idUtente = "hummer";
+		this.idPrenotazione = 1;
+	
 		return "/condiv?link="+this.link+"&faces-redirect=true";
 		
 	}
