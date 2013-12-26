@@ -11,7 +11,7 @@ public class UtenteDTO {
 	private String email;
 	
 	
-	@NotEmpty
+	@Pattern(regexp="[0-9]+",message="Un numero non può contenere lettere")
 	private String telefono;
 	@NotEmpty
 	private String username;
