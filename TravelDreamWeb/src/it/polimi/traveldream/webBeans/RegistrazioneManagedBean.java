@@ -53,7 +53,18 @@ public class RegistrazioneManagedBean {
         if (gestioneUtente.esisteUsername((String)value)){
                 throw new ValidatorException(new FacesMessage("Username già utilizzato. Scegline un altro"));
         }
-}
+	}
+	
+	public void validaCodiceFiscale(FacesContext context,UIComponent component,Object value) throws ValidatorException{ 
+		if (!isCodiceFiscaleCorretto((String)value)){
+            throw new ValidatorException(new FacesMessage("Codice Fiscale non coerente con i dati inseriti"));
+		}
+	}
+	
+	private boolean isCodiceFiscaleCorretto(String codiceFiscale){
+		
+		return true;
+	}
 	
 	
 	

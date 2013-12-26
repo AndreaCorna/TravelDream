@@ -10,6 +10,7 @@ public interface GestioneUtenteBean {
 
 	void aggiungiNuovoUtente(UtenteDTO utente, AnagraficaDTO anagrafica);
 
-	boolean esisteUsername(String value);
+	boolean esisteUsername(String username);
+
 
 }

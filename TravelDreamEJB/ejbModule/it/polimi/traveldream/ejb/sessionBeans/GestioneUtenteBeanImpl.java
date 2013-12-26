@@ -44,14 +44,15 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 
 
 	@Override
-	public boolean esisteUsername(String value) {
-		if (em.find(Utente.class,value)!=null){
+	public boolean esisteUsername(String username) {
+		if (em.find(Utente.class,username)!=null){
            return true;
         }
         return false;
 	}
 
-    
+
+	   
 	
 
 }

@@ -30,7 +30,7 @@
 				<p></p>
 				
 				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
-				<p:inputText id="cf" value="#{registra.anagrafica.codiceFiscale}" />
+				<p:inputText id="cf" value="#{registra.anagrafica.codiceFiscale}" validator="#{registra.validaCodiceFiscale}"/>
 				<p:message for="cf" />
 				
 				<h:outputLabel for="residenza">Residenza:</h:outputLabel>
