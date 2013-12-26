@@ -1,9 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.Date;
 
 
@@ -33,7 +31,7 @@ public class Camera implements Serializable {
 	private Date data_Checkout;
 
 	@Column(name="Occupata")
-	private Boolean occupata;
+	private byte occupata;
 
 	@Column(name="Posti")
 	private int posti;
@@ -78,11 +76,11 @@ public class Camera implements Serializable {
 		this.data_Checkout = data_Checkout;
 	}
 
-	public Boolean getOccupata() {
+	public byte getOccupata() {
 		return this.occupata;
 	}
 
-	public void setOccupata(Boolean occupata) {
+	public void setOccupata(byte occupata) {
 		this.occupata = occupata;
 	}
 

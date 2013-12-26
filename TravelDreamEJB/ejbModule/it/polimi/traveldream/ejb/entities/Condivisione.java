@@ -1,9 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.Date;
 
 
@@ -19,14 +17,12 @@ public class Condivisione implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	@Column(name="Link")
+	private String link;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Data")
 	private Date data;
-
-	@Column(name="Link")
-	private String link;
 
 	//bi-directional many-to-one association to Prenotazione_Pacchetto
 	@ManyToOne
@@ -41,12 +37,12 @@ public class Condivisione implements Serializable {
 	public Condivisione() {
 	}
 
-	public int getId() {
-		return this.id;
+	public String getLink() {
+		return this.link;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public Date getData() {
@@ -55,14 +51,6 @@ public class Condivisione implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
-	}
-
-	public String getLink() {
-		return this.link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
 	}
 
 	public Prenotazione_Pacchetto getPrenotazionePacchetto() {
