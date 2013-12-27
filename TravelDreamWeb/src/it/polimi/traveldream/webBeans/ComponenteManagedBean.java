@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneComponenteBean;
 
 import javax.ejb.EJB;
@@ -25,6 +26,8 @@ public class ComponenteManagedBean {
 	
 	private AereoDTO aereo;
 	
+	private HotelDTO hotel;
+	
 	public ComponenteManagedBean(){
 		setAereo(new AereoDTO());
 	}
@@ -39,6 +42,11 @@ public class ComponenteManagedBean {
 	
 	public String aggiungiAereoDB(){
 		gestioneComp.aggiungiAereoDB(aereo);
+		return "index?faces-redirect=true";
+	}
+	
+	public String aggiungiHotelDB(){
+		gestioneComp.aggiungiHotelDB(hotel);
 		return "index?faces-redirect=true";
 	}
 	

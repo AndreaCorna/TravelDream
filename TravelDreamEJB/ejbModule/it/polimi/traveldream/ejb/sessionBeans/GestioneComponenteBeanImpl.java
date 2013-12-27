@@ -1,7 +1,10 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
+import it.polimi.traveldream.ejb.entities.Hotel;
+
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
@@ -34,6 +37,14 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		em.persist(nuovo);
 		
 	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void aggiungiHotelDB(HotelDTO hotel) {
+		Hotel nuovo = new Hotel(hotel);
+		em.persist(nuovo);
+		
+	}
 
 	@Override
 	public boolean esisteAereo(String id) {
@@ -43,5 +54,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	    }
 	   return false;
 	}
+
+	
 
 }
