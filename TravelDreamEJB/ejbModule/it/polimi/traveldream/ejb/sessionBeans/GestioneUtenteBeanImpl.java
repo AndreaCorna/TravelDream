@@ -111,6 +111,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		dto.setUsername(utente.getUsername());
 		dto.setTelefono(utente.getTelefono());
 		dto.setEmail(utente.getEmail());
+		dto.setIdAnagrafica(utente.getAnagrafica().getCf());
 		return dto;
 	}
 

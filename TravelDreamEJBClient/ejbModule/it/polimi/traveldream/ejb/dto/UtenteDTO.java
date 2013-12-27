@@ -18,6 +18,8 @@ public class UtenteDTO {
 	@NotEmpty
 	private String password;
 	
+	private String idAnagrafica;
+	
 	
 	
 
@@ -53,6 +55,14 @@ public class UtenteDTO {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public String getIdAnagrafica() {
+		return idAnagrafica;
+	}
+
+	public void setIdAnagrafica(String idAnagrafica) {
+		this.idAnagrafica = idAnagrafica;
 	}
 
 }
