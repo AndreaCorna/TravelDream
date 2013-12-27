@@ -10,6 +10,7 @@ import it.polimi.traveldream.ejb.entities.Gruppo;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -49,6 +50,15 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
            return true;
         }
         return false;
+	}
+
+
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public void modificaProfilo(UtenteDTO utente, AnagraficaDTO anagrafica) {
+		Anagrafica modifiche = new Anagrafica(anagrafica);
+		em.merge(modifiche);
+		em.merge(new Utente(utente, modifiche));
 	}
 
 

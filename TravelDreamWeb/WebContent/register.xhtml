@@ -14,55 +14,55 @@
 			<h:panelGrid columns="3" id="regGrid">
 			
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
-				<p:inputText id="nome" value="#{registra.anagrafica.nome}" />
+				<p:inputText id="nome" value="#{utente.anagrafica.nome}" />
 				<p:message for="nome" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="cognome">Cognome:</h:outputLabel>
-				<p:inputText id="cognome" value="#{registra.anagrafica.cognome}" />
+				<p:inputText id="cognome" value="#{utente.anagrafica.cognome}" />
 				<p:message for="cognome" />
 										
 				<h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
-				<p:inputText id="luogo_nascita" value="#{registra.anagrafica.luogoNascita}" />
+				<p:inputText id="luogo_nascita" value="#{utente.anagrafica.luogoNascita}" />
 				<p:message for="luogo_nascita" />
 				
 				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
-				<p:calendar id="data_nascita" value="#{registra.anagrafica.dataNascita}" navigator="true" display="inline"/>
+				<p:calendar id="data_nascita" value="#{utente.anagrafica.dataNascita}" navigator="true" display="inline"/>
 				<p></p>
 				
 				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
-				<p:inputText id="cf" value="#{registra.anagrafica.codiceFiscale}" validator="#{registra.validaCodiceFiscale}"/>
+				<p:inputText id="cf" value="#{utente.anagrafica.codiceFiscale}" validator="#{utente.validaCodiceFiscale}"/>
 				<p:message for="cf" />
 				
 				<h:outputLabel for="residenza">Residenza:</h:outputLabel>
-				<p:inputText id="residenza" value="#{registra.anagrafica.residenza}" />
+				<p:inputText id="residenza" value="#{utente.anagrafica.residenza}" />
 				<p:message for="residenza" />
 				
 				<h:outputLabel for="email">Email:</h:outputLabel>
-				<p:inputText id="email" value="#{registra.utente.email}" />
+				<p:inputText id="email" value="#{utente.utente.email}" />
 				<p:message for="email" />
 				
 				<h:outputLabel for="telefono">Telefono:</h:outputLabel>
-				<p:inputText id="telefono" value="#{registra.utente.telefono}" />
+				<p:inputText id="telefono" value="#{utente.utente.telefono}" />
 				<p:message for="telefono" />
 				
 				<h:outputLabel for="username">Username:</h:outputLabel>
-				<p:inputText id="username" value="#{registra.utente.username}"  validator="#{registra.validaUsername}"/>
+				<p:inputText id="username" value="#{utente.utente.username}"  validator="#{utente.validaUsername}"/>
 				<p:message for="username" />
 
 				<h:outputLabel for="password">Password:</h:outputLabel>
-				<p:password id="password" value="#{registra.utente.password}"
+				<p:password id="password" value="#{utente.utente.password}"
 					feedback="true" match="pwd2" label="Password"/>
 				<p:message for="password" />
 
 				<h:outputLabel for="pwd2">Conferma Password:</h:outputLabel>
-				<p:password id="pwd2" label="Confirm Password" value="#{registra.utente.password}"/>
+				<p:password id="pwd2" label="Confirm Password" value="#{utente.utente.password}"/>
 				<p></p>
 				
 				
 				
 			</h:panelGrid>
 			<p:commandButton value="Registra" id="ajax"  update="regGrid"
-             action="#{registra.registra()}" styleClass="ui-priority-primary"/>  
+             action="#{utente.registra()}" styleClass="ui-priority-primary"/>  
 			
 
 		</p:panel>

@@ -15,9 +15,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-@ManagedBean(name="registra")
+@ManagedBean(name="utente")
 @RequestScoped
-public class RegistrazioneManagedBean {
+public class UtenteManagedBean {
 
 	@EJB
 	private GestioneUtenteBean gestioneUtente;
@@ -26,7 +26,7 @@ public class RegistrazioneManagedBean {
 	
 	private AnagraficaDTO anagrafica;
 	
-	public RegistrazioneManagedBean(){
+	public UtenteManagedBean(){
 		setUtente(new UtenteDTO());
 		setAnagrafica(new AnagraficaDTO());
 	}
@@ -39,11 +39,6 @@ public class RegistrazioneManagedBean {
 		this.utente = utente;
 	}
 	
-	public String registra(){
-		gestioneUtente.aggiungiNuovoUtente(utente,anagrafica);
-		return "home?faces-redirect=true";
-	}
-
 	public AnagraficaDTO getAnagrafica() {
 		return anagrafica;
 	}
@@ -51,6 +46,20 @@ public class RegistrazioneManagedBean {
 	public void setAnagrafica(AnagraficaDTO anagrafica) {
 		this.anagrafica = anagrafica;
 	}
+	
+	/*Metodi che comunicano con l'ejb*/
+	
+	public String registra(){
+		gestioneUtente.aggiungiNuovoUtente(utente,anagrafica);
+		return "home?faces-redirect=true";
+	}
+	
+	public void modificaProfilo(){
+		
+	}
+	
+	
+	/*Validatori dei dati inseriti*/
 	
 	public void validaUsername(FacesContext context,UIComponent component,Object value) throws ValidatorException{
         if (gestioneUtente.esisteUsername((String)value)){
