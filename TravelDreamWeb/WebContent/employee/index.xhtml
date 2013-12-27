@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
-	<h1>Hello Dipendente</h1>
+	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
 	<h:form>
 		<p:commandButton action="#{logout.logout}" value="Logout" />
 	</h:form>

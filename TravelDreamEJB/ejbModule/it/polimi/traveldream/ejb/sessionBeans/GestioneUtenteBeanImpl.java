@@ -67,6 +67,14 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	public void eliminaProfilo() {
 		rimuovi(getUtenteAttivo());
 	}
+	
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public UtenteDTO getUtenteDTO() {
+		UtenteDTO userDTO = convertToDTO(getUtenteAttivo());
+		return userDTO;
+		
+	}
 
 	
 	   
@@ -97,6 +105,16 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     public String getUsernameAttivo() {
     	return context.getCallerPrincipal().getName();
     }
+
+    private UtenteDTO convertToDTO(Utente utente) {
+		UtenteDTO dto = new UtenteDTO();
+		dto.setUsername(utente.getUsername());
+		dto.setTelefono(utente.getTelefono());
+		dto.setEmail(utente.getEmail());
+		return dto;
+	}
+
+	
 
 	   
 	

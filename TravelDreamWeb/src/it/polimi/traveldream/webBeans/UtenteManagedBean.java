@@ -47,6 +47,10 @@ public class UtenteManagedBean {
 		this.anagrafica = anagrafica;
 	}
 	
+	public String getUsername(){
+		return gestioneUtente.getUtenteDTO().getUsername();
+	}
+	
 	/*Metodi che comunicano con l'ejb*/
 	
 	public String registra(){

@@ -16,5 +16,7 @@ public interface GestioneUtenteBean {
 	
 	void eliminaProfilo();
 
+	UtenteDTO getUtenteDTO();
+
 
 }
