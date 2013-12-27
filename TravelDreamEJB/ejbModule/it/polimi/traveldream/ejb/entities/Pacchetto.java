@@ -25,12 +25,12 @@ public class Pacchetto implements Serializable {
 	@Column(name="Destinazione")
 	private String destinazione;
 
-	@Column(name="Fine_Validit√†")
-	private int fine_Validit√†;
+	@Column(name="Fine_Validit‡")
+	private int fine_Validit‡;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="Inizio_Validit√†")
-	private Date inizio_Validit√†;
+	@Column(name="Inizio_Validit‡")
+	private Date inizio_Validit‡;
 
 	//uni-directional many-to-many association to Aereo
 	@ManyToMany
@@ -95,20 +95,20 @@ public class Pacchetto implements Serializable {
 		this.destinazione = destinazione;
 	}
 
-	public int getFine_Validit√†() {
-		return this.fine_Validit√†;
+	public int getFine_Validit‡() {
+		return this.fine_Validit‡;
 	}
 
-	public void setFine_Validit√†(int fine_Validit√†) {
-		this.fine_Validit√† = fine_Validit√†;
+	public void setFine_Validit‡(int fine_Validit‡) {
+		this.fine_Validit‡ = fine_Validit‡;
 	}
 
-	public Date getInizio_Validit√†() {
-		return this.inizio_Validit√†;
+	public Date getInizio_Validit‡() {
+		return this.inizio_Validit‡;
 	}
 
-	public void setInizio_Validit√†(Date inizio_Validit√†) {
-		this.inizio_Validit√† = inizio_Validit√†;
+	public void setInizio_Validit‡(Date inizio_Validit‡) {
+		this.inizio_Validit‡= inizio_Validit‡;
 	}
 
 	public List<Aereo> getAerei() {

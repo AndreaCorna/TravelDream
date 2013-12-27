@@ -24,8 +24,8 @@ public class Hotel implements Serializable {
 	@Column(name="Camere_Disponibili")
 	private int camere_Disponibili;
 
-	@Column(name="Citt√†")
-	private String citt√†;
+	@Column(name="Citt‡")
+	private String citt‡;
 
 	//bi-directional many-to-one association to Camera
 	@OneToMany(mappedBy="hotel")
@@ -50,12 +50,12 @@ public class Hotel implements Serializable {
 		this.camere_Disponibili = camere_Disponibili;
 	}
 
-	public String getCitt√†() {
-		return this.citt√†;
+	public String getCitt‡() {
+		return this.citt‡;
 	}
 
-	public void setCitt√†(String citt√†) {
-		this.citt√† = citt√†;
+	public void setCitt‡(String citt‡) {
+		this.citt‡= citt‡;
 	}
 
 	public List<Camera> getCamere() {
