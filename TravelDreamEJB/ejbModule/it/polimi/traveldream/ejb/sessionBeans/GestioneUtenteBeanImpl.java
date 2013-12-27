@@ -62,6 +62,42 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	}
 
 
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public void eliminaProfilo() {
+		rimuovi(getUtenteAttivo());
+	}
+
+	
+	   
+    public Utente cerca(String username) {
+    	return em.find(Utente.class, username);
+    }
+    
+    public List<Utente> getListaUtenti() {
+    	return em.createNamedQuery("Utente.findAll", Utente.class)
+                .getResultList();
+    }
+
+    public void rimuovi(String username) {
+		Utente utente = cerca(username);
+        em.remove(utente);
+	}
+    
+    public void rimuovi(Utente utente) {
+    	em.remove(utente);
+	}
+    
+    
+    public Utente getUtenteAttivo() {
+    	return cerca(getUsernameAttivo());
+    }
+	
+    
+    public String getUsernameAttivo() {
+    	return context.getCallerPrincipal().getName();
+    }
+
 	   
 	
 

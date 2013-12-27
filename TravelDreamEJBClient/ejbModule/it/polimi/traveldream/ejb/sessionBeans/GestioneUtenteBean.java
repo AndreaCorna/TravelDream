@@ -13,6 +13,8 @@ public interface GestioneUtenteBean {
 	boolean esisteUsername(String username);
 	
 	void modificaProfilo(UtenteDTO utente, AnagraficaDTO anagrafica);
+	
+	void eliminaProfilo();
 
 
 }
