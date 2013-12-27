@@ -48,7 +48,12 @@ public class UtenteManagedBean {
 	}
 	
 	public String getUsername(){
-		return gestioneUtente.getUtenteDTO().getUsername();
+		//return gestioneUtente.getUtenteDTO().getUsername();
+		return utente.getUsername();
+	}
+	
+	public void caricaProfiloUtente(){
+		utente = gestioneUtente.getUtenteDTO();
 	}
 	
 	/*Metodi che comunicano con l'ejb*/
