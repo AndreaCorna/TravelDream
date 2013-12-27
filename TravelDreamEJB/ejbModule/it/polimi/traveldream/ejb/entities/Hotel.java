@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.HotelDTO;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -32,6 +34,12 @@ public class Hotel implements Serializable {
 	private List<Camera> camere;
 
 	public Hotel() {
+	}
+
+	public Hotel(HotelDTO hotel) {
+		this.id = hotel.getId();
+		this.camere_Disponibili = hotel.getCamereDisponibili();
+		this.città = hotel.getCitta();
 	}
 
 	public int getId() {

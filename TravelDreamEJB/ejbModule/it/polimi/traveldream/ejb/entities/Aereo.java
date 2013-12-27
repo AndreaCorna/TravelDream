@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.AereoDTO;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -38,6 +40,15 @@ public class Aereo implements Serializable {
 	private int posti_Disponibili;
 
 	public Aereo() {
+	}
+	
+	public Aereo(AereoDTO aereo){
+		this.id = aereo.getId();
+		this.atterraggio = aereo.getCittaAtterraggio();
+		this.decollo = aereo.getCittaDecollo();
+		this.costo = aereo.getCosto();
+		this.data = aereo.getData();
+		this.posti_Disponibili = aereo.getPostiDisponibili();
 	}
 
 	public int getId() {
