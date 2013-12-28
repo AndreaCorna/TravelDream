@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Modifica Profilo</title>
+	#{utente.caricaProfiloUtente()}
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Modifica Profilo">
+			<h:panelGrid columns="3" id="regGrid">
+				
+				<h:outputLabel for="nome">Nome:</h:outputLabel>
+				<p:inputText id="nome" value="#{utente.anagrafica.nome}" />
+				<p:message for="nome" value="Inserisci il nome"/>
+				
+				<h:outputLabel for="cognome">Cognome:</h:outputLabel>
+				<p:inputText id="cognome" value="#{utente.anagrafica.cognome}" />
+				<p:message for="cognome" />	
+				
+				<h:outputLabel for="residenza">Residenza:</h:outputLabel>
+				<p:inputText id="residenza" value="#{utente.anagrafica.residenza}" />
+				<p:message for="residenza" />
+				
+				<h:outputLabel for="email">Email:</h:outputLabel>
+				<p:inputText id="email" value="#{utente.utente.email}" />
+				<p:message for="email" />
+				
+				<h:outputLabel for="telefono">Telefono:</h:outputLabel>
+				<p:inputText id="telefono" value="#{utente.utente.telefono}" />
+				<p:message for="telefono" />
+																	
+				<h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
+				<p:inputText id="luogo_nascita" value="#{utente.anagrafica.luogoNascita}" />
+				<p:message for="luogo_nascita" />
+				
+				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
+				<p:calendar id="data_nascita" value="#{utente.anagrafica.dataNascita}" navigator="true" display="inline"/>
+				<p></p>
+				
+				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
+				<p:inputText id="cf" value="#{utente.anagrafica.codiceFiscale}" validator="#{utente.validaUpdateCodFis}"/>
+				<p:message for="cf" />
+							
+				<h:outputLabel for="username">Username:</h:outputLabel>
+				<p:inputText id="username" value="#{utente.utente.username}"  validator="#{utente.validaUpdateUsername}"/>
+				<p:message for="username" />
+				
+				<h:outputLabel for="password">Password:</h:outputLabel>
+				<p:password id="password" value="#{utente.utente.password}"
+					feedback="true" match="pwd2" label="Password"/>
+				<p:message for="password" />
+
+				<h:outputLabel for="pwd2">Conferma Password:</h:outputLabel>
+				<p:password id="pwd2" label="Confirm Password" value="#{utente.utente.password}"/>
+				<p></p>
+				
+			</h:panelGrid>
+			<p:commandButton value="Aggiorna" id="ajax"  update="regGrid"
+             action="#{utente.modificaProfilo()}" styleClass="ui-priority-primary"/>  
+             <p:commandButton value="Elimina Profilo" id="ajax1"  update="regGrid"
+             action="#{utente.eliminaProfilo()}" styleClass="ui-priority-primary"/>  
+			
+
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
