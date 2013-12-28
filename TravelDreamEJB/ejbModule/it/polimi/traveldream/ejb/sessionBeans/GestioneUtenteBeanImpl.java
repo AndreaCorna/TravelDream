@@ -30,8 +30,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     
 	
     @Override
-	public void aggiungiNuovoUtente(UtenteDTO utente, AnagraficaDTO anagrafica) {
-		Anagrafica nuovaAnagrafica = new Anagrafica(anagrafica);
+	public void aggiungiNuovoUtente(UtenteDTO utente) {
+		Anagrafica nuovaAnagrafica = new Anagrafica(utente);
 		em.persist(nuovaAnagrafica);
 		Utente nuovoUtente = new Utente(utente, nuovaAnagrafica);
 		List<Gruppo> gruppi = new ArrayList<Gruppo>();
@@ -64,8 +64,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
-	public void modificaProfiloUtente(UtenteDTO utente, AnagraficaDTO anagrafica) {
-		Anagrafica modifiche = new Anagrafica(anagrafica);
+	public void modificaProfiloUtente(UtenteDTO utente) {
+		Anagrafica modifiche = new Anagrafica(utente);
 		Utente vecchio = em.find(Utente.class, utente.getUsername());
 		Utente nuovo = new Utente(utente, modifiche);
 		nuovo.setAmministratoreCreatore(vecchio.getAmministratoreCreatore());
@@ -92,10 +92,12 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO() {
 		UtenteDTO userDTO = convertToDTO(getUtenteAttivo());
-		return userDTO;
+		Anagrafica anag = em.find(Anagrafica.class, userDTO.getCodiceFiscale());
+		return convertToAnagraficaDTO(anag,userDTO);
 		
 	}
 	
+	/*
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public AnagraficaDTO getAnagraficaDTO(String idAnagrafica) {
@@ -103,7 +105,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		
 		return convertToAnagraficaDTO(anag);
 	}
-
+*/
 	
 	   
     public Utente cerca(String username) {
@@ -139,13 +141,12 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		dto.setUsername(utente.getUsername());
 		dto.setTelefono(utente.getTelefono());
 		dto.setEmail(utente.getEmail());
-		dto.setIdAnagrafica(utente.getAnagrafica().getCf());
+		dto.setCodiceFiscale(utente.getAnagrafica().getCf());
 		return dto;
 	}
     
-    private AnagraficaDTO convertToAnagraficaDTO(Anagrafica anagrafica) {
-		AnagraficaDTO nuovo = new AnagraficaDTO();
-		nuovo.setCodiceFiscale(anagrafica.getCf());
+    private UtenteDTO convertToAnagraficaDTO(Anagrafica anagrafica, UtenteDTO nuovo) {
+		
 		nuovo.setCognome(anagrafica.getCognome());
 		nuovo.setDataNascita(anagrafica.getData_Nascita());
 		nuovo.setLuogoNascita(anagrafica.getLuogo_Nascita());

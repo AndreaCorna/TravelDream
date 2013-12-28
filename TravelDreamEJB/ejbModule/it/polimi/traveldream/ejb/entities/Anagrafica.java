@@ -1,6 +1,6 @@
 package it.polimi.traveldream.ejb.entities;
 
-import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
+import it.polimi.traveldream.ejb.dto.UtenteDTO;
 
 import java.io.Serializable;
 
@@ -43,7 +43,7 @@ public class Anagrafica implements Serializable {
 	public Anagrafica() {
 	}
 	
-	public Anagrafica(AnagraficaDTO anagrafica){
+	public Anagrafica(UtenteDTO anagrafica){
 		this.cf = anagrafica.getCodiceFiscale();
 		this.cognome = anagrafica.getCognome();
 		this.nome = anagrafica.getNome();

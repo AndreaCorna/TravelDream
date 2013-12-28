@@ -8,17 +8,15 @@ import javax.ejb.Local;
 @Local
 public interface GestioneUtenteBean {
 
-	void aggiungiNuovoUtente(UtenteDTO utente, AnagraficaDTO anagrafica);
+	void aggiungiNuovoUtente(UtenteDTO utente);
 
 	boolean esisteUsername(String username);
 	
-	void modificaProfiloUtente(UtenteDTO utente, AnagraficaDTO anagrafica);
+	void modificaProfiloUtente(UtenteDTO utente);
 	
 	void eliminaProfilo(String string);
 
 	UtenteDTO getUtenteDTO();
-
-	AnagraficaDTO getAnagraficaDTO(String idAnagrafica);
 
 	boolean esisteCodiceFiscale(String codiceFiscale);
 

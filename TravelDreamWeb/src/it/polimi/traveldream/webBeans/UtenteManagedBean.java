@@ -24,8 +24,6 @@ public class UtenteManagedBean {
 	
 	private UtenteDTO utente;
 	
-	private AnagraficaDTO anagrafica;
-	
 	static private String username;
 	
 	static private String cf;
@@ -33,8 +31,7 @@ public class UtenteManagedBean {
 	public UtenteManagedBean(){
 		
 		setUtente(new UtenteDTO());
-		setAnagrafica(new AnagraficaDTO());
-		
+			
 	}
 
 	public UtenteDTO getUtente() {
@@ -45,14 +42,7 @@ public class UtenteManagedBean {
 		this.utente = utente;
 	}
 	
-	public AnagraficaDTO getAnagrafica() {
-		return anagrafica;
-	}
-
-	public void setAnagrafica(AnagraficaDTO anagrafica) {
-		this.anagrafica = anagrafica;
-	}
-	
+		
 	public String getUsername(){
 		//return gestioneUtente.getUtenteDTO().getUsername();
 		return utente.getUsername();
@@ -61,25 +51,24 @@ public class UtenteManagedBean {
 	public void caricaProfiloUtente(){
 		utente = gestioneUtente.getUtenteDTO();
 		username = utente.getUsername();
-		anagrafica = gestioneUtente.getAnagraficaDTO(utente.getIdAnagrafica());
-		cf = anagrafica.getCodiceFiscale();
+		cf = utente.getCodiceFiscale();
 	}
 	
 	/*Metodi che comunicano con l'ejb*/
 	
 	public String registra(){
-		gestioneUtente.aggiungiNuovoUtente(utente,anagrafica);
+		gestioneUtente.aggiungiNuovoUtente(utente);
 		return "home?faces-redirect=true";
 	}
 	
 	public String modificaProfilo(){
-		gestioneUtente.modificaProfiloUtente(utente, anagrafica);
+		gestioneUtente.modificaProfiloUtente(utente);
 		return "index?faces-redirect=true";
 		 
 	}
 	
 	public String eliminaProfilo(){
-		gestioneUtente.eliminaProfilo(anagrafica.getCodiceFiscale());
+		gestioneUtente.eliminaProfilo(utente.getCodiceFiscale());
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	    return "/home?faces-redirect=true";
 	}
