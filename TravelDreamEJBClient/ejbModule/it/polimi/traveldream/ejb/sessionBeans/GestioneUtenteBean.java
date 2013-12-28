@@ -1,6 +1,7 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
-import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
+import java.util.List;
+
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 
 import javax.ejb.Local;
@@ -19,6 +20,8 @@ public interface GestioneUtenteBean {
 	UtenteDTO getUtenteDTO();
 
 	boolean esisteCodiceFiscale(String codiceFiscale);
+
+	List<UtenteDTO> getListaUtenti();
 
 	
 }

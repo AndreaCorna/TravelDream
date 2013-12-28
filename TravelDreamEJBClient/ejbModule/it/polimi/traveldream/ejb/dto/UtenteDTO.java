@@ -85,11 +85,6 @@ public class UtenteDTO {
 	}
 	
 	
-	
-	
-
-
-
 	public String getUsername() {
 		return username;
 	}

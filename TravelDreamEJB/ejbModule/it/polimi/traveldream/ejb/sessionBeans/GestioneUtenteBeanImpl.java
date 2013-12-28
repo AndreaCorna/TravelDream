@@ -1,7 +1,10 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
@@ -92,8 +95,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO() {
 		UtenteDTO userDTO = convertToDTO(getUtenteAttivo());
-		Anagrafica anag = em.find(Anagrafica.class, userDTO.getCodiceFiscale());
-		return convertToAnagraficaDTO(anag,userDTO);
+		
+		return userDTO;
 		
 	}
 	
@@ -112,9 +115,18 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return em.find(Utente.class, username);
     }
     
-    public List<Utente> getListaUtenti() {
-    	return em.createNamedQuery("Utente.findAll", Utente.class)
+    @Override
+	@RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
+    public List<UtenteDTO> getListaUtenti() {
+    	List<Utente> utentiDB = em.createNamedQuery("Utente.findAll", Utente.class)
                 .getResultList();
+    	ArrayList<UtenteDTO> utenti = new ArrayList<UtenteDTO>();
+    	for(int i=0; i<utentiDB.size();i++){
+    		UtenteDTO user = convertToDTO(utentiDB.get(i));
+    		utenti.add(user);
+    	}
+    	List<UtenteDTO> listaUtenti = utenti;
+    	return listaUtenti;
     }
 
     public void rimuovi(String username) {
@@ -142,6 +154,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		dto.setTelefono(utente.getTelefono());
 		dto.setEmail(utente.getEmail());
 		dto.setCodiceFiscale(utente.getAnagrafica().getCf());
+		Anagrafica anag = em.find(Anagrafica.class, utente.getAnagrafica().getCf());
+		dto = convertToAnagraficaDTO(anag,dto);
 		return dto;
 	}
     
