@@ -1,11 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Aggiungi Escursione</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Aggiungi un escursione">
+			<h:panelGrid columns="3" id="regGrid">
+			
+				<h:outputLabel for="id">Id:</h:outputLabel>
+				<p:inputText id="id" value="#{componente.escursione.id}" validator="#{componente.validaIdEscursione}"/>
+				<p:message for="id"/>
+				
+				<h:outputLabel for="luogo">Luogo:</h:outputLabel>
+				<p:inputText id="luogo" value="#{componente.escursione.luogo}" />
+				<p:message for="luogo" />
+										
+				<h:outputLabel for="prezzo">Prezzo:</h:outputLabel>
+				<p:inputText id="prezzo" value="#{componente.escursione.prezzo}" validator="#{componente.validaNumero}"/>
+				<p:message for="prezzo" />
+				
+				<h:outputLabel for="data">Data:</h:outputLabel>
+				<p:calendar id="data" value="#{componente.escursione.data}" navigator="true" display="inline"/>
+				<p></p>
+				
+				<h:outputLabel for="descrizione">Descrizione</h:outputLabel>
+				<p:inputText id="descrizione" value="#{componente.escursione.descrizione}" />
+				<p:message for="descrizione" />
+				
+				
+			</h:panelGrid>
+			<p:commandButton value="Aggiungi" id="ajax"  update="regGrid"
+             action="#{componente.aggiungiEscursioneDB()}" styleClass="ui-priority-primary"/>  
+			
 
-<h:head></h:head> 
-<body> 
-
-</body> 
+		</p:panel>
+	</h:form>
+</h:body>
 </html>

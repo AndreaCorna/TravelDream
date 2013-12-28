@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneComponenteBean;
 
@@ -28,8 +29,12 @@ public class ComponenteManagedBean {
 	
 	private HotelDTO hotel;
 	
+	private EscursioneDTO escursione;
+	
 	public ComponenteManagedBean(){
 		setAereo(new AereoDTO());
+		setHotel(new HotelDTO());
+		setEscursione(new EscursioneDTO());
 	}
 
 	public AereoDTO getAereo() {
@@ -40,6 +45,22 @@ public class ComponenteManagedBean {
 		this.aereo = aereo;
 	}
 	
+	public HotelDTO getHotel(){
+		return hotel;
+	}
+	
+	public void setHotel(HotelDTO hotel){
+		this.hotel = hotel;
+	}
+	
+	public EscursioneDTO getEscursione() {
+		return escursione;
+	}
+
+	public void setEscursione(EscursioneDTO escursione) {
+		this.escursione = escursione;
+	}
+	
 	public String aggiungiAereoDB(){
 		gestioneComp.aggiungiAereoDB(aereo);
 		return "index?faces-redirect=true";
@@ -47,6 +68,11 @@ public class ComponenteManagedBean {
 	
 	public String aggiungiHotelDB(){
 		gestioneComp.aggiungiHotelDB(hotel);
+		return "index?faces-redirect=true";
+	}
+	
+	public String aggiungiEscursioneDB(){
+		gestioneComp.aggiungiEscursioneDB(escursione);
 		return "index?faces-redirect=true";
 	}
 	
@@ -65,6 +91,27 @@ public class ComponenteManagedBean {
 		
 	}
 	
+	public void validaIdHotel(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		if (!isNumeroCorretto(value.toString())){
+            throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
+		}
+		if (gestioneComp.esisteHotel(value.toString())){
+            throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
+		}
+		
+	}
+	
+	public void validaIdEscursione(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		if (!isNumeroCorretto(value.toString())){
+            throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
+		}
+		if (gestioneComp.esisteEscursione(value.toString())){
+            throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
+		}
+		
+	}
+	
+	
 	public void validaNumero(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		if (!isNumeroCorretto(value.toString())){
             throw new ValidatorException(new FacesMessage("Il campo può contenere solo numeri"));
@@ -82,6 +129,8 @@ public class ComponenteManagedBean {
 		Matcher m1 = p1.matcher(id);
 		return  m1.find();
 	}
+
+	
 }
 
 
