@@ -51,21 +51,41 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
         }
         return false;
 	}
-
-
+	
 	@Override
-	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
-	public void modificaProfilo(UtenteDTO utente, AnagraficaDTO anagrafica) {
-		Anagrafica modifiche = new Anagrafica(anagrafica);
-		em.merge(modifiche);
-		em.merge(new Utente(utente, modifiche));
+	public boolean esisteCodiceFiscale(String codiceFiscale) {
+		if (em.find(Anagrafica.class, codiceFiscale)!=null){
+			return true;
+		}
+		return false;
 	}
 
 
+	
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
-	public void eliminaProfilo() {
+	public void modificaProfiloUtente(UtenteDTO utente, AnagraficaDTO anagrafica) {
+		Anagrafica modifiche = new Anagrafica(anagrafica);
+		Utente vecchio = em.find(Utente.class, utente.getUsername());
+		Utente nuovo = new Utente(utente, modifiche);
+		nuovo.setAmministratoreCreatore(vecchio.getAmministratoreCreatore());
+		nuovo.setCondivisioni(vecchio.getCondivisioni());
+		nuovo.setDipendentiAggiunti(vecchio.getDipendentiAggiunti());
+		nuovo.setPrenotazioniPacchetti(vecchio.getPrenotazioniPacchetti());
+		nuovo.setPrenotazioniViaggi(vecchio.getPrenotazioniViaggi());
+		nuovo.setGruppi(vecchio.getGruppi());
+		em.merge(nuovo);
+		
+	}
+
+
+	
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public void eliminaProfilo(String cf) {
+		Anagrafica old = em.find(Anagrafica.class, cf);
 		rimuovi(getUtenteAttivo());
+		em.remove(old);
 	}
 	
 	@Override
@@ -74,6 +94,14 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		UtenteDTO userDTO = convertToDTO(getUtenteAttivo());
 		return userDTO;
 		
+	}
+	
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public AnagraficaDTO getAnagraficaDTO(String idAnagrafica) {
+		Anagrafica anag = em.find(Anagrafica.class, idAnagrafica);
+		
+		return convertToAnagraficaDTO(anag);
 	}
 
 	
@@ -114,6 +142,26 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		dto.setIdAnagrafica(utente.getAnagrafica().getCf());
 		return dto;
 	}
+    
+    private AnagraficaDTO convertToAnagraficaDTO(Anagrafica anagrafica) {
+		AnagraficaDTO nuovo = new AnagraficaDTO();
+		nuovo.setCodiceFiscale(anagrafica.getCf());
+		nuovo.setCognome(anagrafica.getCognome());
+		nuovo.setDataNascita(anagrafica.getData_Nascita());
+		nuovo.setLuogoNascita(anagrafica.getLuogo_Nascita());
+		nuovo.setNome(anagrafica.getNome());
+		nuovo.setResidenza(anagrafica.getResidenza());
+		return nuovo;
+	}
+
+
+
+
+
+	
+
+
+
 
 	
 

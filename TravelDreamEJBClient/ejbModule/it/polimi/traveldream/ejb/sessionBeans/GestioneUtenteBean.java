@@ -12,11 +12,15 @@ public interface GestioneUtenteBean {
 
 	boolean esisteUsername(String username);
 	
-	void modificaProfilo(UtenteDTO utente, AnagraficaDTO anagrafica);
+	void modificaProfiloUtente(UtenteDTO utente, AnagraficaDTO anagrafica);
 	
-	void eliminaProfilo();
+	void eliminaProfilo(String string);
 
 	UtenteDTO getUtenteDTO();
 
+	AnagraficaDTO getAnagraficaDTO(String idAnagrafica);
 
+	boolean esisteCodiceFiscale(String codiceFiscale);
+
+	
 }

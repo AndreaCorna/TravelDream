@@ -8,15 +8,47 @@
 #{utente.caricaProfiloUtente()}
 </h:head>
 <h:body>
-
+<h:form>
 	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
+    	<p:tabView effect="drop" effectDuration="normal">
+
+        <p:tab title="Profilo">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage value="/images/godfather/godfather1.jpg" />
+                <h:outputLabel for="nome" />Nome:
+                <h:outputText value="#{utente.anagrafica.nome}" />
+                <h:outputLabel for="cognome">Cognome:</h:outputLabel>
+                <h:outputText value="#{utente.anagrafica.cognome}" />
+                <h:outputLabel for="reisdenza">Residenza:</h:outputLabel>
+                <h:outputText value="#{utente.anagrafica.residenza}" />
+                <h:outputLabel for="data_nascita">Data di Nascita:</h:outputLabel>
+                <h:outputText value="#{utente.anagrafica.dataNascita}" />
+                <h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
+                <h:outputText value="#{utente.anagrafica.luogoNascita}" />
+                <h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
+                <h:outputText value="#{utente.anagrafica.codiceFiscale}" />
+                <h:outputLabel for="telefono">Telefono:</h:outputLabel>
+                <h:outputText value="#{utente.utente.telefono}" />
+                <h:outputLabel for="email">Email:</h:outputLabel>
+                <h:outputText value="#{utente.utente.email}" />
+                <p><a href="modificaProfilo.xhtml">Modifica il tuo profilo</a></p>
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Gestione Dipendenti">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage value="/images/godfather/godfather2.jpg" />
+                <h:outputText value="Gestisci i dipendenti"></h:outputText>
+                <p><a href="addDip.xhtml">Aggiungi un dipendente</a></p>
+                <p><a href="modificaDip.xhtml">Modifica un dipendente</a></p>
+               </h:panelGrid>
+        </p:tab>
+                
+    </p:tabView>
+
+</h:form>
+
 	<h:form>
 		<p:commandButton action="#{logout.logout}" value="Logout" />
 	</h:form>
-	
-	 
-  
-
-	
 </h:body>
 </html>
