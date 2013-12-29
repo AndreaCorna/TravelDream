@@ -1,7 +1,11 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -35,6 +39,11 @@ public class Condivisione implements Serializable {
 	private Utente utente;
 
 	public Condivisione() {
+	}
+
+	public Condivisione(CondivisioneDTO condivisione) {
+		this.data = condivisione.getData();
+		this.link = condivisione.getLink();
 	}
 
 	public String getLink() {
