@@ -64,6 +64,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public void modificaProfiloUtente(UtenteDTO utente) {
 		Anagrafica modifiche = new Anagrafica(utente);
+		em.merge(modifiche);
 		Utente vecchio = em.find(Utente.class, utente.getUsername());
 		Utente nuovo = new Utente(utente, modifiche);
 		nuovo.setAmministratoreCreatore(vecchio.getAmministratoreCreatore());
