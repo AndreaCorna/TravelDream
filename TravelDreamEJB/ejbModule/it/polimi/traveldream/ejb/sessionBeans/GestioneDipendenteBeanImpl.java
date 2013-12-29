@@ -45,6 +45,8 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		nuovoDip.setAmministratoreCreatore(amministratore);
 		em.merge(nuovoDip);
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"AMMINISTRATORE"})
 	public List<UtenteDTO> getListaDipendenti() {

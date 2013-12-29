@@ -125,7 +125,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return listaUtenti;
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     @RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
 	public List<UtenteDTO> getListaUtentiBase() {
     	List<Utente> utentiDB = em.createQuery("SELECT u FROM Utente u, IN (u.gruppi) g WHERE g.nome =:nome")

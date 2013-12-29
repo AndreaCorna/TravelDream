@@ -7,7 +7,6 @@ import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneDipendenteBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneUtenteBean;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
