@@ -37,7 +37,7 @@ public class DipendenteManagedBean {
 	}
 	
 	public void initUtenti(){
-		listaUtenti = gestioneUtente.getListaUtenti();
+		listaUtenti = gestioneUtente.getListaUtentiBase();
 	}
 	
 	public void initDipendenti(){

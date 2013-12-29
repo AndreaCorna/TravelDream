@@ -124,6 +124,20 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return listaUtenti;
     }
     
+    @Override
+    @RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
+	public List<UtenteDTO> getListaUtentiBase() {
+    	List<Utente> utentiDB = em.createQuery("SELECT u FROM Utente u, IN (u.gruppi) g WHERE g.nome =:nome")
+			    .setParameter("nome", "UTENTE").getResultList();
+    	ArrayList<UtenteDTO> utenti = new ArrayList<UtenteDTO>();
+    	for(int i=0; i<utentiDB.size();i++){
+    		UtenteDTO user = convertToDTO(utentiDB.get(i));
+    		utenti.add(user);
+    	}
+    	List<UtenteDTO> listaUtenti = utenti;
+    	return listaUtenti;
+	}
+    
 	
     public void rimuovi(String username) {
 		Utente utente = cerca(username);
@@ -164,6 +178,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		nuovo.setResidenza(anagrafica.getResidenza());
 		return nuovo;
 	}
+
+
+	
 
 
 

@@ -23,5 +23,7 @@ public interface GestioneUtenteBean {
 
 	List<UtenteDTO> getListaUtenti();
 
+	List<UtenteDTO> getListaUtentiBase();
+
 	
 }
