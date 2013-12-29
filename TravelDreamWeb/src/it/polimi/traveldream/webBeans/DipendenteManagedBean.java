@@ -10,7 +10,6 @@ import it.polimi.traveldream.ejb.sessionBeans.GestioneUtenteBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 
@@ -30,14 +29,19 @@ public class DipendenteManagedBean {
 	
 	private List<UtenteDTO> listaUtenti;
 	
+
 	public DipendenteManagedBean(){
 		setUtente(new UtenteDTO());
 		listaUtenti = new ArrayList<UtenteDTO>();  
 		
 	}
-	@PostConstruct
-	public void init(){
+	
+	public void initUtenti(){
 		listaUtenti = gestioneUtente.getListaUtenti();
+	}
+	
+	public void initDipendenti(){
+		listaUtenti = gestioneDip.getListaDipendenti();
 	}
 
 	
@@ -68,6 +72,11 @@ public class DipendenteManagedBean {
 	
 	public String creaDipendente(){
 		gestioneDip.creaDipendente(utentiTrovati.get(0));
+		return "index?faces-redirect=true";
+	}
+	
+	public String eliminaDipendente(){
+		gestioneDip.eliminaDipendente(utentiTrovati.get(0));
 		return "index?faces-redirect=true";
 	}
 	

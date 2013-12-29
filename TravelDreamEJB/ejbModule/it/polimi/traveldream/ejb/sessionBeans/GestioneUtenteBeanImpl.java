@@ -1,12 +1,8 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
 import it.polimi.traveldream.ejb.entities.Gruppo;
@@ -31,8 +27,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@Resource
 	private EJBContext context;
     
-	
-    @Override
+	@Override
 	public void aggiungiNuovoUtente(UtenteDTO utente) {
 		Anagrafica nuovaAnagrafica = new Anagrafica(utente);
 		em.persist(nuovaAnagrafica);
@@ -110,7 +105,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	}
 */
 	
-	   
+	
     public Utente cerca(String username) {
     	return em.find(Utente.class, username);
     }
@@ -128,7 +123,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	List<UtenteDTO> listaUtenti = utenti;
     	return listaUtenti;
     }
-
+    
+	
     public void rimuovi(String username) {
 		Utente utente = cerca(username);
         em.remove(utente);
@@ -168,6 +164,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		nuovo.setResidenza(anagrafica.getResidenza());
 		return nuovo;
 	}
+
+
+
 
 
 

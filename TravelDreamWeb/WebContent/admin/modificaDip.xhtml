@@ -5,10 +5,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
+#{dipendente.initDipendenti()}
 </h:head> 
 <body> 
 <h:form>  
-  
+  <p:panel header="Lista Dipendenti">
+			<h:panelGrid columns="4" id="regGrid">
     <p:dataTable id="tabella" var="utente" value="#{dipendente.listaUtenti}" widgetVar="tabellaUtenti"   
             emptyMessage="Nessun utente soddisfa i criteri di ricerca" filteredValue="#{dipendente.utentiTrovati}">  
   
@@ -45,8 +47,15 @@
   
       </p:dataTable>  
       <p></p>
-      <p:commandButton value="Aggiungi Dipendente" id="ajax" 
+      
+       </h:panelGrid>
+       <p:commandButton value="Aggiungi Dipendente" id="ajax" 
              action="#{dipendente.creaDipendente()}"/>
+      <p:commandButton value="Elimina Dipendente" id="ajax1" 
+             action="#{dipendente.eliminaDipendente()}"/>
+         <p></p>    
+       <p><a href="index.xhtml">Torna alla homepage</a></p>
+       </p:panel>
       
 </h:form>  
 </body> 
