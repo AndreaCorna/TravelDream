@@ -6,32 +6,21 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title>Registrazione</title>
+	<title>Modifica Profilo</title>
+	#{utente.caricaProfiloUtente()}
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Form di Registrazione">
+		<p:panel header="Modifica Profilo">
 			<h:panelGrid columns="3" id="regGrid">
-			
+				
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
 				<p:inputText id="nome" value="#{utente.utente.nome}" />
 				<p:message for="nome" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="cognome">Cognome:</h:outputLabel>
 				<p:inputText id="cognome" value="#{utente.utente.cognome}" />
-				<p:message for="cognome" />
-										
-				<h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
-				<p:inputText id="luogo_nascita" value="#{utente.utente.luogoNascita}" />
-				<p:message for="luogo_nascita" />
-				
-				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
-				<p:calendar id="data_nascita" value="#{utente.utente.dataNascita}" pattern="MM/dd/yyyy HH:mm:ss" navigator="true" display="inline"/>
-				<p></p>
-				
-				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
-				<p:inputText id="cf" value="#{utente.utente.codiceFiscale}" validator="#{utente.validaCodiceFiscale}"/>
-				<p:message for="cf" />
+				<p:message for="cognome" />	
 				
 				<h:outputLabel for="residenza">Residenza:</h:outputLabel>
 				<p:inputText id="residenza" value="#{utente.utente.residenza}" />
@@ -44,11 +33,23 @@
 				<h:outputLabel for="telefono">Telefono:</h:outputLabel>
 				<p:inputText id="telefono" value="#{utente.utente.telefono}" />
 				<p:message for="telefono" />
+																	
+				<h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
+				<p:inputText id="luogo_nascita" value="#{utente.utente.luogoNascita}" />
+				<p:message for="luogo_nascita" />
 				
+				<h:outputLabel for="data_nascita">Data di nascita:</h:outputLabel>
+				<p:calendar id="data_nascita" value="#{utente.utente.dataNascita}" pattern="MM/dd/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p></p>
+				
+				<h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
+				<p:inputText id="cf" value="#{utente.utente.codiceFiscale}" validator="#{utente.validaUpdateCodFis}"/>
+				<p:message for="cf" />
+							
 				<h:outputLabel for="username">Username:</h:outputLabel>
-				<p:inputText id="username" value="#{utente.utente.username}"  validator="#{utente.validaUsername}"/>
+				<p:inputText id="username" value="#{utente.utente.username}"  validator="#{utente.validaUpdateUsername}"/>
 				<p:message for="username" />
-
+				
 				<h:outputLabel for="password">Password:</h:outputLabel>
 				<p:password id="password" value="#{utente.utente.password}"
 					feedback="true" match="pwd2" label="Password"/>
@@ -58,11 +59,13 @@
 				<p:password id="pwd2" label="Confirm Password" value="#{utente.utente.password}"/>
 				<p></p>
 				
-				
-				
 			</h:panelGrid>
-			<p:commandButton value="Registra" id="ajax"  update="regGrid"
-             action="#{utente.registra()}" styleClass="ui-priority-primary"/>  
+			<p:commandButton value="Aggiorna" id="ajax"  update="regGrid"
+             action="#{utente.modificaProfilo()}" styleClass="ui-priority-primary"/>  
+             <p:commandButton value="Elimina Profilo" id="ajax1"  update="regGrid"
+             action="#{utente.eliminaProfilo()}" styleClass="ui-priority-primary"/>  
+             <p></p>    
+      		 <p><a href="index.xhtml">Torna alla homepage</a></p>
 			
 
 		</p:panel>

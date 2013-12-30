@@ -21,6 +21,7 @@ public class AnagraficaDTO {
 	@NotEmpty
 	private String residenza;
 	
+	
 	public String getNome() {
 		return nome;
 	}

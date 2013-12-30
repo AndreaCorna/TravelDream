@@ -9,4 +9,6 @@ public interface CondivisioneBean {
 
 	CondivisioneDTO mostraCondivisione(String link);
 
+	void creaCondivisione(CondivisioneDTO condivisione);
+
 }

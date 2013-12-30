@@ -1,8 +1,10 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
+import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 
 import javax.annotation.Resource;
@@ -45,6 +47,17 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		em.persist(nuovo);
 		
 	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void aggiungiEscursioneDB(EscursioneDTO escursione) {
+		Escursione nuovo = new Escursione(escursione);
+		em.persist(nuovo);
+		
+	}
+
+	
+	
 
 	@Override
 	public boolean esisteAereo(String id) {
@@ -55,6 +68,25 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	   return false;
 	}
 
+	@Override
+	public boolean esisteHotel(String id) {
+		Integer num = new Integer(id);
+		if (em.find(Hotel.class,num.intValue())!=null){
+	           return true;
+	    }
+	   return false;
+	}
+
+	@Override
+	public boolean esisteEscursione(String id) {
+		Integer num = new Integer(id);
+		if (em.find(Escursione.class,num.intValue())!=null){
+	           return true;
+	    }
+	   return false;
+	}
+
+	
 	
 
 }

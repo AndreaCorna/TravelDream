@@ -3,7 +3,6 @@ package it.polimi.traveldream.ejb.sessionBeans;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.traveldream.ejb.dto.AnagraficaDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
 import it.polimi.traveldream.ejb.entities.Gruppo;
@@ -28,10 +27,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@Resource
 	private EJBContext context;
     
-	
-    @Override
-	public void aggiungiNuovoUtente(UtenteDTO utente, AnagraficaDTO anagrafica) {
-		Anagrafica nuovaAnagrafica = new Anagrafica(anagrafica);
+	@Override
+	public void aggiungiNuovoUtente(UtenteDTO utente) {
+		Anagrafica nuovaAnagrafica = new Anagrafica(utente);
 		em.persist(nuovaAnagrafica);
 		Utente nuovoUtente = new Utente(utente, nuovaAnagrafica);
 		List<Gruppo> gruppi = new ArrayList<Gruppo>();
@@ -51,42 +49,98 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
         }
         return false;
 	}
-
-
+	
 	@Override
-	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
-	public void modificaProfilo(UtenteDTO utente, AnagraficaDTO anagrafica) {
-		Anagrafica modifiche = new Anagrafica(anagrafica);
-		em.merge(modifiche);
-		em.merge(new Utente(utente, modifiche));
+	public boolean esisteCodiceFiscale(String codiceFiscale) {
+		if (em.find(Anagrafica.class, codiceFiscale)!=null){
+			return true;
+		}
+		return false;
 	}
 
 
+	
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
-	public void eliminaProfilo() {
+	public void modificaProfiloUtente(UtenteDTO utente) {
+		Anagrafica modifiche = new Anagrafica(utente);
+		em.merge(modifiche);
+		Utente vecchio = em.find(Utente.class, utente.getUsername());
+		Utente nuovo = new Utente(utente, modifiche);
+		nuovo.setAmministratoreCreatore(vecchio.getAmministratoreCreatore());
+		nuovo.setCondivisioni(vecchio.getCondivisioni());
+		nuovo.setDipendentiAggiunti(vecchio.getDipendentiAggiunti());
+		nuovo.setPrenotazioniPacchetti(vecchio.getPrenotazioniPacchetti());
+		nuovo.setPrenotazioniViaggi(vecchio.getPrenotazioniViaggi());
+		nuovo.setGruppi(vecchio.getGruppi());
+		em.merge(nuovo);
+		
+	}
+
+
+	
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public void eliminaProfilo(String cf) {
+		Anagrafica old = em.find(Anagrafica.class, cf);
 		rimuovi(getUtenteAttivo());
+		em.remove(old);
 	}
 	
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO() {
 		UtenteDTO userDTO = convertToDTO(getUtenteAttivo());
+		
 		return userDTO;
 		
 	}
-
 	
-	   
+	/*
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public AnagraficaDTO getAnagraficaDTO(String idAnagrafica) {
+		Anagrafica anag = em.find(Anagrafica.class, idAnagrafica);
+		
+		return convertToAnagraficaDTO(anag);
+	}
+*/
+	
+	
     public Utente cerca(String username) {
     	return em.find(Utente.class, username);
     }
     
-    public List<Utente> getListaUtenti() {
-    	return em.createNamedQuery("Utente.findAll", Utente.class)
+    @Override
+	@RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
+    public List<UtenteDTO> getListaUtenti() {
+    	List<Utente> utentiDB = em.createNamedQuery("Utente.findAll", Utente.class)
                 .getResultList();
+    	ArrayList<UtenteDTO> utenti = new ArrayList<UtenteDTO>();
+    	for(int i=0; i<utentiDB.size();i++){
+    		UtenteDTO user = convertToDTO(utentiDB.get(i));
+    		utenti.add(user);
+    	}
+    	List<UtenteDTO> listaUtenti = utenti;
+    	return listaUtenti;
     }
-
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    @RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
+	public List<UtenteDTO> getListaUtentiBase() {
+    	List<Utente> utentiDB = em.createQuery("SELECT u FROM Utente u, IN (u.gruppi) g WHERE g.nome =:nome")
+			    .setParameter("nome", "UTENTE").getResultList();
+    	ArrayList<UtenteDTO> utenti = new ArrayList<UtenteDTO>();
+    	for(int i=0; i<utentiDB.size();i++){
+    		UtenteDTO user = convertToDTO(utentiDB.get(i));
+    		utenti.add(user);
+    	}
+    	List<UtenteDTO> listaUtenti = utenti;
+    	return listaUtenti;
+	}
+    
+	
     public void rimuovi(String username) {
 		Utente utente = cerca(username);
         em.remove(utente);
@@ -111,9 +165,36 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		dto.setUsername(utente.getUsername());
 		dto.setTelefono(utente.getTelefono());
 		dto.setEmail(utente.getEmail());
-		dto.setIdAnagrafica(utente.getAnagrafica().getCf());
+		dto.setCodiceFiscale(utente.getAnagrafica().getCf());
+		Anagrafica anag = em.find(Anagrafica.class, utente.getAnagrafica().getCf());
+		dto = convertToAnagraficaDTO(anag,dto);
 		return dto;
 	}
+    
+    private UtenteDTO convertToAnagraficaDTO(Anagrafica anagrafica, UtenteDTO nuovo) {
+		
+		nuovo.setCognome(anagrafica.getCognome());
+		nuovo.setDataNascita(anagrafica.getData_Nascita());
+		nuovo.setLuogoNascita(anagrafica.getLuogo_Nascita());
+		nuovo.setNome(anagrafica.getNome());
+		nuovo.setResidenza(anagrafica.getResidenza());
+		return nuovo;
+	}
+
+
+	
+
+
+
+
+
+
+
+
+	
+
+
+
 
 	
 

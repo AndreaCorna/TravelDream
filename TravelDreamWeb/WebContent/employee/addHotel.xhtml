@@ -2,10 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head> 
-<body> 
+<h:head>
+	<title>Aggiungi Hotel</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Aggiungi un hotel">
+			<h:panelGrid columns="1" id="aereiAndata">
+			
+				<h:outputLabel for="id">Id:</h:outputLabel>
+				<p:inputText id="id" value="#{componente.hotel.id}" validator="#{componente.validaIdHotel}"/>
+				<p:message for="id"/>
+				
+				<h:outputLabel for="decollo">Città:</h:outputLabel>
+				<p:inputText id="citta" value="#{componente.hotel.citta}" />
+				<p:message for="citta" />
+										
+				<h:outputLabel for="camere">Camere Disponibili:</h:outputLabel>
+				<p:inputText id="camere" value="#{componente.hotel.camereDisponibili}" validator="#{componente.validaNumero}"/>
+				<p:message for="camere" />
+												
+			</h:panelGrid>
+			<p:commandButton value="Aggiungi" id="ajax"  update="regGrid"
+             action="#{componente.aggiungiHotelDB()}" styleClass="ui-priority-primary"/>  
+			
 
-</body> 
+		</p:panel>
+	</h:form>
+</h:body>
 </html>

@@ -1,7 +1,11 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.EscursioneDTO;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -28,8 +32,19 @@ public class Escursione implements Serializable {
 
 	@Column(name="Prezzo")
 	private int prezzo;
+	
+	@Column(name="Descrizione")
+	private String descrizione;
 
 	public Escursione() {
+	}
+
+	public Escursione(EscursioneDTO escursione) {
+		this.id = escursione.getId();
+		this.luogo = escursione.getLuogo();
+		this.data = escursione.getData();
+		this.prezzo = escursione.getPrezzo();
+		this.setDescrizione(escursione.getDescrizione());
 	}
 
 	public int getId() {
@@ -62,6 +77,14 @@ public class Escursione implements Serializable {
 
 	public void setPrezzo(int prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 }
