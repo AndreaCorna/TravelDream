@@ -21,7 +21,7 @@ public class AereoDTO {
 	@NotNull
 	private int postiDisponibili;
 	@NotNull
-	private int costo;
+	private float costo;
 
 		
 	public int getId(){
@@ -64,11 +64,11 @@ public class AereoDTO {
 		this.postiDisponibili = postiDisponibili;
 	}
 
-	public int getCosto() {
+	public float getCosto() {
 		return costo;
 	}
 
-	public void setCosto(int costo) {
+	public void setCosto(float costo) {
 		this.costo = costo;
 	}
 	

@@ -13,7 +13,7 @@ public class EscursioneDTO {
 	@NotEmpty
 	private String luogo;
 	@NotNull
-	private int prezzo;
+	private float prezzo;
 	@NotNull
 	private Date data;
 	@NotEmpty
@@ -35,11 +35,11 @@ public class EscursioneDTO {
 		this.luogo = luogo;
 	}
 
-	public int getPrezzo() {
+	public float getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(int prezzo) {
+	public void setPrezzo(float prezzo) {
 		this.prezzo = prezzo;
 	}
 

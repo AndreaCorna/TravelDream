@@ -27,7 +27,7 @@ public class Aereo implements Serializable {
 	private String atterraggio;
 
 	@Column(name="Costo")
-	private int costo;
+	private float costo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Data")
@@ -67,11 +67,11 @@ public class Aereo implements Serializable {
 		this.atterraggio = atterraggio;
 	}
 
-	public int getCosto() {
+	public float getCosto() {
 		return this.costo;
 	}
 
-	public void setCosto(int costo) {
+	public void setCosto(float costo) {
 		this.costo = costo;
 	}
 

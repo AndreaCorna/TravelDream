@@ -20,7 +20,7 @@ public class Camera implements Serializable {
 	private int id;
 
 	@Column(name="Costo")
-	private int costo;
+	private float costo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Data_Checkin")
@@ -52,11 +52,11 @@ public class Camera implements Serializable {
 		this.id = id;
 	}
 
-	public int getCosto() {
+	public float getCosto() {
 		return this.costo;
 	}
 
-	public void setCosto(int costo) {
+	public void setCosto(float costo) {
 		this.costo = costo;
 	}
 
