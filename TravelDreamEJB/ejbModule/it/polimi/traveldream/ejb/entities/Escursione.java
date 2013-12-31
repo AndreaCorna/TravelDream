@@ -31,7 +31,7 @@ public class Escursione implements Serializable {
 	private String luogo;
 
 	@Column(name="Prezzo")
-	private int prezzo;
+	private float prezzo;
 	
 	@Column(name="Descrizione")
 	private String descrizione;
@@ -71,11 +71,11 @@ public class Escursione implements Serializable {
 		this.luogo = luogo;
 	}
 
-	public int getPrezzo() {
+	public float getPrezzo() {
 		return this.prezzo;
 	}
 
-	public void setPrezzo(int prezzo) {
+	public void setPrezzo(float prezzo) {
 		this.prezzo = prezzo;
 	}
 
