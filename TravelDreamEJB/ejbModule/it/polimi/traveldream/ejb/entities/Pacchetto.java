@@ -31,6 +31,9 @@ public class Pacchetto implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="Inizio_Validità")
 	private Date inizio_Validità;
+	
+	@Column(name="Descrizione")
+	private String descrizione;
 
 	//uni-directional many-to-many association to Aereo
 	@ManyToMany
@@ -141,6 +144,14 @@ public class Pacchetto implements Serializable {
 
 	public void setDipendente(Utente dipendente) {
 		this.dipendente = dipendente;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 }

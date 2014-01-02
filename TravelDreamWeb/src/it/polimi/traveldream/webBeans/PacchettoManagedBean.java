@@ -135,7 +135,7 @@ public class PacchettoManagedBean {
 			pacchetto.setHotels(listaHotel);
 			return "insertEscursione?faces-redirect=true";
 		}
-		return "index?faces-redirect=true";
+		return "insertHotel?faces-redirect=true";
 	}
 
 	private boolean verificaAtterraggioAerei(){

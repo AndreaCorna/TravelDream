@@ -28,6 +28,8 @@ public class PacchettoDTO {
 	private List<HotelDTO> hotels;
 	@NotEmpty
 	private UtenteDTO dipendente;
+	@NotEmpty
+	private String descrizione;
 
 	public int getId() {
 		return id;
@@ -99,5 +101,13 @@ public class PacchettoDTO {
 
 	public void setAereiRitorno(List<AereoDTO> aereiRitorno) {
 		this.aereiRitorno = aereiRitorno;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 }
