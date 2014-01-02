@@ -256,8 +256,9 @@ CREATE TABLE `Pacchetto` (
   `id` int(11) NOT NULL,
   `Destinazione` varchar(45) NOT NULL,
   `Inizio_Validità` date NOT NULL,
-  `Fine_Validità` int(11) NOT NULL,
+  `Fine_Validità` date NOT NULL,
   `id_Dipendente` varchar(45) NOT NULL,
+  `Descrizione` varchar(500) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Pacchetto_Dipendente1` (`id_Dipendente`),
   CONSTRAINT `fk_Pacchetto_Dipendente1` FOREIGN KEY (`id_Dipendente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -270,7 +271,7 @@ CREATE TABLE `Pacchetto` (
 
 LOCK TABLES `Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Pacchetto` DISABLE KEYS */;
-INSERT INTO `Pacchetto` VALUES (1,'Roma','2013-05-08',1997,'ciao');
+INSERT INTO `Pacchetto` VALUES (1,'Roma','2013-05-08','0000-00-00','ciao','ciao');
 /*!40000 ALTER TABLE `Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +326,7 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'Roma',1),(565,'Milano',200);
+INSERT INTO `Hotel` VALUES (1,'Roma',1),(33,'Milano',100),(34,'Milano',100),(232,'Milano',45),(565,'Milano',200);
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -520,4 +521,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-31 14:48:04
+-- Dump completed on 2014-01-02 22:18:12

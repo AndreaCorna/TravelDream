@@ -25,12 +25,16 @@ public class Pacchetto implements Serializable {
 	@Column(name="Destinazione")
 	private String destinazione;
 
-	@Column(name="Fine_Validità")
-	private int fine_Validità;
+	@Temporal(TemporalType.DATE)
+	@Column(name="Fine_ValiditÃ ")
+	private Date fine_ValiditÃ ;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="Inizio_Validità")
-	private Date inizio_Validità;
+	@Column(name="Inizio_ValiditÃ ")
+	private Date inizio_ValiditÃ ;
+	
+	@Column(name="Descrizione")
+	private String descrizione;
 
 	//uni-directional many-to-many association to Aereo
 	@ManyToMany
@@ -95,20 +99,21 @@ public class Pacchetto implements Serializable {
 		this.destinazione = destinazione;
 	}
 
-	public int getFine_Validità() {
-		return this.fine_Validità;
+
+	public Date getFine_ValiditÃ () {
+		return this.fine_ValiditÃ ;
 	}
 
-	public void setFine_Validità(int fine_Validità) {
-		this.fine_Validità = fine_Validità;
+	public void setFine_ValiditÃ (Date fine_ValiditÃ ) {
+		this.fine_ValiditÃ  = fine_ValiditÃ ;
 	}
 
-	public Date getInizio_Validità() {
-		return this.inizio_Validità;
+	public Date getInizio_Validitï¿½() {
+		return this.inizio_Validitï¿½;
 	}
 
-	public void setInizio_Validità(Date inizio_Validità) {
-		this.inizio_Validità= inizio_Validità;
+	public void setInizio_Validitï¿½(Date inizio_Validitï¿½) {
+		this.inizio_Validitï¿½= inizio_Validitï¿½;
 	}
 
 	public List<Aereo> getAerei() {
@@ -141,6 +146,14 @@ public class Pacchetto implements Serializable {
 
 	public void setDipendente(Utente dipendente) {
 		this.dipendente = dipendente;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 }

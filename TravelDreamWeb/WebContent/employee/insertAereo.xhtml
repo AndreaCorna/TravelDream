@@ -7,21 +7,20 @@
 
 <h:head></h:head> 
 <body> 
+<h:form>
 <p:panel header="Seleziona la Destinazione">
 			<h:panelGrid columns="3" id="dest">
-			<h:outputLabel for="destinazione">Destinazione:</h:outputLabel>
-				<p:inputText id="destinazione" value="#{pacchetto.destinazione}" />
-				<p:message for="destinazione" />
-				<p></p>
-			</h:panelGrid>
+					<h:outputLabel for="destinazione">Destinazione:</h:outputLabel>
+					<p:inputText id="destinazione" value="#{pacchetto.destinazione}" />
+					<p:message for="destinazione" />
+					<p></p>
+				</h:panelGrid>
 			</p:panel>
-<p:panel header="Seleziona gli Aerei">
-			<h:panelGrid columns="3" id="aereiAndata">
-			
-		<p:dataTable id="listaAereiAndata" var="aereo" value="#{pacchetto.datiAerei}" paginator="true" rows="30"  
+			<p:panel header="Seleziona gli Aerei">
+				<h:panelGrid columns="3" id="aereiAndata">
+				<p:dataTable id="listaAereiAndata" var="aereo" value="#{pacchetto.datiAerei}" paginator="true" rows="30"  
 		                 selection="#{pacchetto.listaAereiAndata}">  
-		  
-		        <f:facet name="header">  
+		  		<f:facet name="header">  
 		            Lista Aerei Andata
 		        </f:facet>  
 		  
@@ -53,9 +52,9 @@
 		  
 		       
 		    </p:dataTable>  
-</h:panelGrid>
-<h:panelGrid columns="3" id="aereiRitorno">
-		<p:dataTable id="listaAereiRitorno" var="aereoRitorno" value="#{pacchetto.datiAerei}" paginator="true" rows="30"  
+			</h:panelGrid>
+			<h:panelGrid columns="3" id="aereiRitorno">
+			<p:dataTable id="listaAereiRitorno" var="aereoRitorno" value="#{pacchetto.datiAerei}" paginator="true" rows="30"  
 		                 selection="#{pacchetto.listaAereiRitorno}">  
 		  
 		        <f:facet name="header">  
@@ -87,13 +86,10 @@
 		        <p:column headerText="Costo" style="width:24%">  
 		            #{aereoRitorno.costo}  
 		        </p:column> 
-		  
-		        <f:facet name="footer">  
-		            <p:commandButton value="Aggiungi" id="ajax"  
-             action="#{pacchetto.aggiungiAerei()}" styleClass="ui-priority-primary"/>  
-		        </f:facet>  
-		    </p:dataTable>  
-</h:panelGrid>
-</p:panel>
+		  </p:dataTable>  
+		</h:panelGrid>
+		<p:commandButton id="ajax" value="Aggiungi"  ajax="false" update="aereiRitorno,aereiAndata" action="#{pacchetto.aggiungiAerei()}" styleClass="ui-priority-primary"/>  
+	</p:panel>
+</h:form>
 </body> 
 </html>

@@ -2,10 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head> 
 <body> 
-
+<h:form>
+	<p:panel header="Seleziona gli hotel">
+		<h:panelGrid columns="3" id="hotel">
+			<p:dataTable id="listaHotel" var="hotel" value="#{pacchetto.datiHotel}" paginator="true" rows="30"  
+		                 selection="#{pacchetto.listaHotel}">  
+		  		<f:facet name="header">  
+		            Lista Hotel 
+		        </f:facet>  
+		  
+		        <p:column selectionMode="multiple" style="width:2%" />  
+		  
+		        <p:column headerText="Id" style="width:25%">  
+		            #{hotel.id}  
+		        </p:column>  
+		  
+		        <p:column headerText="Città" style="width:25%">  
+		            #{hotel.citta}  
+		        </p:column>  
+		  
+		        <p:column headerText="Camere Disponibili" style="width:24%">  
+		            #{hotel.camereDisponibili}  
+		        </p:column>  
+				       
+		    </p:dataTable>  
+			</h:panelGrid>
+			<p:commandButton id="ajax" value="Aggiungi"  ajax="false" update="hotel" action="#{pacchetto.aggiungiHotel()}" styleClass="ui-priority-primary"/>  
+	</p:panel>
+</h:form>
 </body> 
 </html>
