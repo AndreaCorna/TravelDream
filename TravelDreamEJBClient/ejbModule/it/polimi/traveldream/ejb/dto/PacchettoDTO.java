@@ -19,7 +19,9 @@ public class PacchettoDTO {
 	@NotNull
 	private Date inizio_Validita;
 	@NotEmpty
-	private List<AereoDTO> aerei;
+	private List<AereoDTO> aereiAndata;
+	@NotEmpty
+	private List<AereoDTO> aereiRitorno;
 	@NotEmpty
 	private List<EscursioneDTO> escursioni;
 	@NotEmpty
@@ -59,14 +61,6 @@ public class PacchettoDTO {
 		this.inizio_Validita = inizio_Validita;
 	}
 
-	public List<AereoDTO> getAerei() {
-		return aerei;
-	}
-
-	public void setAerei(List<AereoDTO> aerei) {
-		this.aerei = aerei;
-	}
-
 	public List<EscursioneDTO> getEscursioni() {
 		return escursioni;
 	}
@@ -89,5 +83,21 @@ public class PacchettoDTO {
 
 	public void setDipendente(UtenteDTO dipendente) {
 		this.dipendente = dipendente;
+	}
+
+	public List<AereoDTO> getAereiAndata() {
+		return aereiAndata;
+	}
+
+	public void setAereiAndata(List<AereoDTO> aereiAndata) {
+		this.aereiAndata = aereiAndata;
+	}
+
+	public List<AereoDTO> getAereiRitorno() {
+		return aereiRitorno;
+	}
+
+	public void setAereiRitorno(List<AereoDTO> aereiRitorno) {
+		this.aereiRitorno = aereiRitorno;
 	}
 }

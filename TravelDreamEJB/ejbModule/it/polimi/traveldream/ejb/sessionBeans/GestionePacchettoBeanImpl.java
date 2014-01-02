@@ -1,7 +1,12 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.CameraDTO;
+import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
+import it.polimi.traveldream.ejb.entities.Camera;
+import it.polimi.traveldream.ejb.entities.Hotel;
+import it.polimi.traveldream.ejb.entities.Utente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +37,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     }
 
 	@Override
-	@RolesAllowed({"DIPENDENTE"})
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAerei() {
 		List<Aereo> aereiDB = em.createNamedQuery("Aereo.findAll", Aereo.class).getResultList();
 		ArrayList<AereoDTO> aerei = new ArrayList<AereoDTO>();
@@ -44,6 +49,20 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     	return listaAerei;
 	}
 	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<HotelDTO> getListaHotel(String citta) {
+		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.città =:nome")
+			    .setParameter("nome", citta).getResultList();
+		ArrayList<HotelDTO> listaHotel = new ArrayList<HotelDTO>();
+		for(int i=0; i<hotels.size();i++){
+			HotelDTO hotel = convertToDTO(hotels.get(i));
+			listaHotel.add(hotel);
+		}
+		List<HotelDTO> listaHotels = listaHotel;
+		return listaHotels;
+	}
+	
 	private AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
 		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
@@ -52,6 +71,30 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setData(aereo.getData());
 		nuovo.setId(aereo.getId());
 		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
+		return nuovo;
+	}
+	
+	private HotelDTO convertToDTO(Hotel hotel){
+		HotelDTO nuovo = new HotelDTO();
+		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
+		nuovo.setId(hotel.getId());
+		nuovo.setCitta(hotel.getCittà());
+		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
+		for(Camera camera:hotel.getCamere()){
+			camere.add(convertToDTO(camera));
+		}
+		nuovo.setCamere(camere);
+		return nuovo;
+	}
+	
+	private CameraDTO convertToDTO(Camera camera){
+		CameraDTO nuovo = new CameraDTO();
+		nuovo.setCosto(camera.getCosto());
+		nuovo.setData_Checkin(camera.getData_Checkin());
+		nuovo.setData_Checkout(camera.getData_Checkout());
+		nuovo.setId(camera.getId());
+		nuovo.setOccupata(camera.getOccupata());
+		nuovo.setPosti(camera.getPosti());
 		return nuovo;
 	}
 

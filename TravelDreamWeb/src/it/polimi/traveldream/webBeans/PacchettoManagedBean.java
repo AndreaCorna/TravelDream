@@ -3,18 +3,20 @@ package it.polimi.traveldream.webBeans;
 import java.util.List;
 
 import it.polimi.traveldream.dataModels.AereoDataModel;
+import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 
 @ManagedBean(name="pacchetto")
-@RequestScoped
+@SessionScoped
 public class PacchettoManagedBean {
 
 	@EJB
@@ -31,6 +33,12 @@ public class PacchettoManagedBean {
 	private PacchettoDTO pacchetto;
 	
 	private String destinazione;
+	
+	private List<HotelDTO> listaHotelDB;
+	
+	private List<HotelDTO> listaHotel;
+	
+	private HotelDataModel datiHotel;
 	
 	@PostConstruct
 	public void init(){
@@ -70,15 +78,6 @@ public class PacchettoManagedBean {
 		this.datiAerei = datiAerei;
 	}
 	
-	public String aggiungiAerei(){
-		pacchetto = new PacchettoDTO();
-		if( verificaAtterraggioAerei() && verificaDecolloAerei() ){
-			
-			return "/insertHotel?faces-redirect=true";
-		}
-		return "/index?faces-redirect=true";
-	}
-
 	public PacchettoDTO getPacchetto() {
 		return pacchetto;
 	}
@@ -95,8 +94,53 @@ public class PacchettoManagedBean {
 		this.destinazione = destinazione;
 	}
 	
+	public List<HotelDTO> getListaHotel() {
+		return listaHotel;
+	}
+
+	public void setListaHotel(List<HotelDTO> listaHotel) {
+		this.listaHotel = listaHotel;
+	}
+	
+	public List<HotelDTO> getListaHotelDB() {
+		return listaHotelDB;
+	}
+
+	public void setListaHotelDB(List<HotelDTO> listaHotelDB) {
+		this.listaHotelDB = listaHotelDB;
+	}
+	
+	public HotelDataModel getDatiHotel() {
+		return datiHotel;
+	}
+
+	public void setDatiHotel(HotelDataModel datiHotel) {
+		this.datiHotel = datiHotel;
+	}
+
+	public String aggiungiAerei(){
+		pacchetto = new PacchettoDTO();
+		if( verificaAtterraggioAerei() && verificaDecolloAerei() ){
+			pacchetto.setAereiAndata(listaAereiAndata);
+			pacchetto.setAereiRitorno(listaAereiRitorno);
+			listaHotelDB = gestionePacchetto.getListaHotel(destinazione);
+			setDatiHotel(new HotelDataModel(listaHotelDB));
+			return "insertHotel?faces-redirect=true";
+		}
+		return "index?faces-redirect=true";
+	}
+	
+	public String aggiungiHotel(){
+		if ( verificaHotel() ){
+			pacchetto.setHotels(listaHotel);
+			return "insertEscursione?faces-redirect=true";
+		}
+		return "index?faces-redirect=true";
+	}
+
 	private boolean verificaAtterraggioAerei(){
 		for(AereoDTO aereo:listaAereiAndata){
+			System.out.println(listaAereiAndata.size());
 			if(!aereo.getCittaAtterraggio().toLowerCase().equals(destinazione.toLowerCase())){
 				return false;
 			}
@@ -112,6 +156,17 @@ public class PacchettoManagedBean {
 		}
 		return true;
 	}
+	
+	private boolean verificaHotel(){
+		for(HotelDTO hotel:listaHotel){
+			if (!hotel.getCitta().equals(destinazione)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	
 	
 	
 }

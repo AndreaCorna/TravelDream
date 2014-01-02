@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 public class HotelDTO {
@@ -10,6 +12,8 @@ public class HotelDTO {
 	private String citta;
 	@NotNull
 	private int camereDisponibili;
+	@NotNull
+	private List<CameraDTO> camere;
 	
 	
 	
@@ -30,6 +34,12 @@ public class HotelDTO {
 	}
 	public void setCamereDisponibili(int camereDisponibili) {
 		this.camereDisponibili = camereDisponibili;
+	}
+	public List<CameraDTO> getCamere() {
+		return camere;
+	}
+	public void setCamere(List<CameraDTO> camere) {
+		this.camere = camere;
 	}
 	
 	
