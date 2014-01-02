@@ -256,7 +256,7 @@ CREATE TABLE `Pacchetto` (
   `id` int(11) NOT NULL,
   `Destinazione` varchar(45) NOT NULL,
   `Inizio_Validità` date NOT NULL,
-  `Fine_Validità` int(11) NOT NULL,
+  `Fine_Validità` date NOT NULL,
   `id_Dipendente` varchar(45) NOT NULL,
   `Descrizione` varchar(500) NOT NULL,
   PRIMARY KEY (`id`),
@@ -271,7 +271,7 @@ CREATE TABLE `Pacchetto` (
 
 LOCK TABLES `Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Pacchetto` DISABLE KEYS */;
-INSERT INTO `Pacchetto` VALUES (1,'Roma','2013-05-08',1997,'ciao','ciao');
+INSERT INTO `Pacchetto` VALUES (1,'Roma','2013-05-08','0000-00-00','ciao','ciao');
 /*!40000 ALTER TABLE `Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,4 +521,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-02 22:09:36
+-- Dump completed on 2014-01-02 22:18:12

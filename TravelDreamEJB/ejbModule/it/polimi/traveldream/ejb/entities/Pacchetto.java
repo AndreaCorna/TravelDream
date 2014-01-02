@@ -25,8 +25,9 @@ public class Pacchetto implements Serializable {
 	@Column(name="Destinazione")
 	private String destinazione;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name="Fine_Validità")
-	private int fine_Validità;
+	private Date fine_Validità;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="Inizio_Validità")
@@ -98,11 +99,11 @@ public class Pacchetto implements Serializable {
 		this.destinazione = destinazione;
 	}
 
-	public int getFine_Validità() {
+	public Date getFine_Validità() {
 		return this.fine_Validità;
 	}
 
-	public void setFine_Validità(int fine_Validità) {
+	public void setFine_Validità(Date fine_Validità) {
 		this.fine_Validità = fine_Validità;
 	}
 
