@@ -18,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
@@ -33,9 +34,13 @@ public class PacchettoManagedBean {
 	
 	private List<AereoDTO> listaAereiRitorno;
 	
-	private List<AereoDTO> listaAereiDB;
+	private List<AereoDTO> listaAereiAndataDB;
 	
-	private AereoDataModel datiAerei;
+	private List<AereoDTO> listaAereiRitornoDB;
+	
+	private AereoDataModel datiAereiAndata;
+	
+	private AereoDataModel datiAereiRitorno;
 	
 	private PacchettoDTO pacchetto;
 	
@@ -75,20 +80,12 @@ public class PacchettoManagedBean {
 		this.listaAereiRitorno = listaAereiRitorno;
 	}
 
-	public List<AereoDTO> getListaAereiDB() {
-		return listaAereiDB;
+	public AereoDataModel getDatiAereiAndata() {
+		return datiAereiAndata;
 	}
 
-	public void setListaAereiDB(List<AereoDTO> listaAereiDB) {
-		this.listaAereiDB = listaAereiDB;
-	}
-
-	public AereoDataModel getDatiAerei() {
-		return datiAerei;
-	}
-
-	public void setDatiAerei(AereoDataModel datiAerei) {
-		this.datiAerei = datiAerei;
+	public void setDatiAereiAndata(AereoDataModel datiAerei) {
+		this.datiAereiAndata = datiAerei;
 	}
 	
 	public PacchettoDTO getPacchetto() {
@@ -178,22 +175,20 @@ public class PacchettoManagedBean {
 	}
 
 	public String aggiungiDestinazioneDate(){
-			listaAereiDB = gestionePacchetto.getListaAerei();
-			setDatiAerei(new AereoDataModel(listaAereiDB));
-			return "insertAereo?faces-redirect=true";
+		listaAereiAndataDB = gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione());
+		listaAereiRitornoDB = gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione());
+		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
+		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
+		return "insertAereo?faces-redirect=true";
 	}
 
 	
 	public String aggiungiAerei(){
-		
-		if( verificaAtterraggioAerei() && verificaDecolloAerei() ){
-			pacchetto.setAereiAndata(listaAereiAndata);
-			pacchetto.setAereiRitorno(listaAereiRitorno);
-			listaHotelDB = gestionePacchetto.getListaHotel(destinazione);
-			setDatiHotel(new HotelDataModel(listaHotelDB));
-			return "insertHotel?faces-redirect=true";
-		}
-		return "index?faces-redirect=true";
+		pacchetto.setAereiAndata(listaAereiAndata);
+		pacchetto.setAereiRitorno(listaAereiRitorno);
+		listaHotelDB = gestionePacchetto.getListaHotelPerCitta(destinazione);
+		setDatiHotel(new HotelDataModel(listaHotelDB));
+		return "insertHotel?faces-redirect=true";
 	}
 	
 	public String aggiungiHotel(){
@@ -205,33 +200,14 @@ public class PacchettoManagedBean {
 	}
 	
 	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		Object inizioData = component.getAttributes().get("data_inizio");
-		Date dataInizio = (Date)inizioData;
+		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
+		Date dataInizio = (Date)datainizio.getValue();
 		Date dataFine = (Date)value;
 		if (dataFine.before(dataInizio)){
                 throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
         }
 	}
 
-	private boolean verificaAtterraggioAerei(){
-		for(AereoDTO aereo:listaAereiAndata){
-			System.out.println(listaAereiAndata.size());
-			if(!aereo.getCittaAtterraggio().toLowerCase().equals(destinazione.toLowerCase())){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean verificaDecolloAerei(){
-		for(AereoDTO aereo:listaAereiRitorno){
-			if(!aereo.getCittaDecollo().toLowerCase().equals(destinazione.toLowerCase())){
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	private boolean verificaHotel(){
 		for(HotelDTO hotel:listaHotel){
 			if (!hotel.getCitta().equals(destinazione)){
@@ -239,6 +215,30 @@ public class PacchettoManagedBean {
 			}
 		}
 		return true;
+	}
+
+	public List<AereoDTO> getListaAereiAndataDB() {
+		return listaAereiAndataDB;
+	}
+
+	public void setListaAereiAndataDB(List<AereoDTO> listaAereiAndataDB) {
+		this.listaAereiAndataDB = listaAereiAndataDB;
+	}
+
+	public List<AereoDTO> getListaAereiRitornoDB() {
+		return listaAereiRitornoDB;
+	}
+
+	public void setListaAereiRitornoDB(List<AereoDTO> listaAereiRitornoDB) {
+		this.listaAereiRitornoDB = listaAereiRitornoDB;
+	}
+
+	public AereoDataModel getDatiAereiRitorno() {
+		return datiAereiRitorno;
+	}
+
+	public void setDatiAereiRitorno(AereoDataModel datiAereiRitorno) {
+		this.datiAereiRitorno = datiAereiRitorno;
 	}
 
 

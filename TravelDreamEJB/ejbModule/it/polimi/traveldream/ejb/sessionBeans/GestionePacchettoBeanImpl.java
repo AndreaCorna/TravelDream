@@ -51,7 +51,20 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<HotelDTO> getListaHotel(String citta) {
+	public List<HotelDTO> getListaHotel(){
+		List<Hotel> hotels = em.createNamedQuery("Hotel.findAll", Hotel.class).getResultList();
+		ArrayList<HotelDTO> listaHotel = new ArrayList<HotelDTO>();
+		for(int i=0; i<hotels.size();i++){
+			HotelDTO hotel = convertToDTO(hotels.get(i));
+			listaHotel.add(hotel);
+		}
+		List<HotelDTO> listaHotels = listaHotel;
+		return listaHotels;
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<HotelDTO> getListaHotelPerCitta(String citta) {
 		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.città =:nome")
 			    .setParameter("nome", citta).getResultList();
 		ArrayList<HotelDTO> listaHotel = new ArrayList<HotelDTO>();
@@ -62,6 +75,36 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<HotelDTO> listaHotels = listaHotel;
 		return listaHotels;
 	}
+	
+
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome")
+			    .setParameter("nome", cittaAtterraggio).getResultList();
+		ArrayList<AereoDTO> aereiAndata = new ArrayList<AereoDTO>();
+		for(int i=0; i<aerei.size(); i++){
+			AereoDTO aereo = convertToDTO(aerei.get(i));
+			aereiAndata.add(aereo);
+		}
+		List<AereoDTO> listaAerei = aereiAndata;
+		return listaAerei;
+	}
+
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome")
+			    .setParameter("nome", cittaDecollo).getResultList();
+		ArrayList<AereoDTO> aereiRitorno = new ArrayList<AereoDTO>();
+		for(int i=0; i<aerei.size(); i++){
+			AereoDTO aereo = convertToDTO(aerei.get(i));
+			aereiRitorno.add(aereo);
+		}
+		List<AereoDTO> listaAerei = aereiRitorno;
+		return listaAerei;
+	}
+
 	
 	private AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
