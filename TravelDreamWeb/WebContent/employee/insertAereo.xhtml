@@ -8,17 +8,9 @@
 <h:head></h:head> 
 <body> 
 <h:form>
-<p:panel header="Seleziona la Destinazione">
-			<h:panelGrid columns="3" id="dest">
-					<h:outputLabel for="destinazione">Destinazione:</h:outputLabel>
-					<p:inputText id="destinazione" value="#{pacchetto.destinazione}" />
-					<p:message for="destinazione" />
-					<p></p>
-				</h:panelGrid>
-			</p:panel>
 			<p:panel header="Seleziona gli Aerei">
 				<h:panelGrid columns="3" id="aereiAndata">
-				<p:dataTable id="listaAereiAndata" var="aereo" value="#{pacchetto.datiAerei}" paginator="true" rows="30"  
+				<p:dataTable id="listaAereiAndata" var="aereo" value="#{pacchetto.datiAereiAndata}" paginator="true" rows="30"  
 		                 selection="#{pacchetto.listaAereiAndata}">  
 		  		<f:facet name="header">  
 		            Lista Aerei Andata
@@ -54,7 +46,7 @@
 		    </p:dataTable>  
 			</h:panelGrid>
 			<h:panelGrid columns="3" id="aereiRitorno">
-			<p:dataTable id="listaAereiRitorno" var="aereoRitorno" value="#{pacchetto.datiAerei}" paginator="true" rows="30"  
+			<p:dataTable id="listaAereiRitorno" var="aereoRitorno" value="#{pacchetto.datiAereiRitorno}" paginator="true" rows="30"  
 		                 selection="#{pacchetto.listaAereiRitorno}">  
 		  
 		        <f:facet name="header">  
