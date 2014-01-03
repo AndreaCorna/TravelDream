@@ -42,14 +42,6 @@ public class PacchettoManagedBean {
 	
 	private AereoDataModel datiAereiRitorno;
 	
-	private PacchettoDTO pacchetto;
-	
-	private String destinazione;
-	
-	private Date dataInizio;
-	
-	private Date dataFine;
-	
 	private List<HotelDTO> listaHotelDB;
 	
 	private List<HotelDTO> listaHotel;
@@ -62,8 +54,70 @@ public class PacchettoManagedBean {
 	
 	private EscursioneDataModel datiEscursioni;
 	
-	//METTERE I METODI PER L'ESCURSIONE E METTERE PAGINA PRIMA DEGLI AEREI
+	private PacchettoDTO pacchetto;
+	
+	
+	@PostConstruct
+	public void init(){
+		pacchetto = new PacchettoDTO();
 		
+	}
+
+	public String aggiungiDestinazioneDate(){
+		listaAereiAndataDB = gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione());
+		listaAereiRitornoDB = gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione());
+		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
+		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
+		return "insertAereo?faces-redirect=true";
+	}
+
+	
+	public String aggiungiAerei(){
+		pacchetto.setAereiAndata(listaAereiAndata);
+		pacchetto.setAereiRitorno(listaAereiRitorno);
+		listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
+		setDatiHotel(new HotelDataModel(listaHotelDB));
+		return "insertHotel?faces-redirect=true";
+	}
+	
+	public String aggiungiHotel(){
+		pacchetto.setHotels(listaHotel);
+		return "insertEscursione?faces-redirect=true";
+	}
+	
+	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
+		Date dataInizio = (Date)datainizio.getValue();
+		Date dataFine = (Date)value;
+		if (dataFine.before(dataInizio)){
+                throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
+        }
+	}
+
+	public List<AereoDTO> getListaAereiAndataDB() {
+		return listaAereiAndataDB;
+	}
+
+	public void setListaAereiAndataDB(List<AereoDTO> listaAereiAndataDB) {
+		this.listaAereiAndataDB = listaAereiAndataDB;
+	}
+
+	public List<AereoDTO> getListaAereiRitornoDB() {
+		return listaAereiRitornoDB;
+	}
+
+	public void setListaAereiRitornoDB(List<AereoDTO> listaAereiRitornoDB) {
+		this.listaAereiRitornoDB = listaAereiRitornoDB;
+	}
+
+	public AereoDataModel getDatiAereiRitorno() {
+		return datiAereiRitorno;
+	}
+
+	public void setDatiAereiRitorno(AereoDataModel datiAereiRitorno) {
+		this.datiAereiRitorno = datiAereiRitorno;
+	}
+	
 	public List<AereoDTO> getListaAereiAndata() {
 		return listaAereiAndata;
 	}
@@ -96,14 +150,6 @@ public class PacchettoManagedBean {
 		this.pacchetto = pacchetto;
 	}
 
-	public String getDestinazione() {
-		return destinazione;
-	}
-
-	public void setDestinazione(String destinazione) {
-		this.destinazione = destinazione;
-	}
-	
 	public List<HotelDTO> getListaHotel() {
 		return listaHotel;
 	}
@@ -152,94 +198,6 @@ public class PacchettoManagedBean {
 		this.datiEscursioni = datiEscursioni;
 	}
 
-	public Date getDataInizio() {
-		return dataInizio;
-	}
-
-	public void setDataInizio(Date dataInizio) {
-		this.dataInizio = dataInizio;
-	}
-
-	public Date getDataFine() {
-		return dataFine;
-	}
-
-	public void setDataFine(Date dataFine) {
-		this.dataFine = dataFine;
-	}
-	
-	@PostConstruct
-	public void init(){
-		pacchetto = new PacchettoDTO();
-		
-	}
-
-	public String aggiungiDestinazioneDate(){
-		listaAereiAndataDB = gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione());
-		listaAereiRitornoDB = gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione());
-		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
-		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
-		return "insertAereo?faces-redirect=true";
-	}
-
-	
-	public String aggiungiAerei(){
-		pacchetto.setAereiAndata(listaAereiAndata);
-		pacchetto.setAereiRitorno(listaAereiRitorno);
-		listaHotelDB = gestionePacchetto.getListaHotelPerCitta(destinazione);
-		setDatiHotel(new HotelDataModel(listaHotelDB));
-		return "insertHotel?faces-redirect=true";
-	}
-	
-	public String aggiungiHotel(){
-		if ( verificaHotel() ){
-			pacchetto.setHotels(listaHotel);
-			return "insertEscursione?faces-redirect=true";
-		}
-		return "insertHotel?faces-redirect=true";
-	}
-	
-	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
-		Date dataInizio = (Date)datainizio.getValue();
-		Date dataFine = (Date)value;
-		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
-        }
-	}
-
-	private boolean verificaHotel(){
-		for(HotelDTO hotel:listaHotel){
-			if (!hotel.getCitta().equals(destinazione)){
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public List<AereoDTO> getListaAereiAndataDB() {
-		return listaAereiAndataDB;
-	}
-
-	public void setListaAereiAndataDB(List<AereoDTO> listaAereiAndataDB) {
-		this.listaAereiAndataDB = listaAereiAndataDB;
-	}
-
-	public List<AereoDTO> getListaAereiRitornoDB() {
-		return listaAereiRitornoDB;
-	}
-
-	public void setListaAereiRitornoDB(List<AereoDTO> listaAereiRitornoDB) {
-		this.listaAereiRitornoDB = listaAereiRitornoDB;
-	}
-
-	public AereoDataModel getDatiAereiRitorno() {
-		return datiAereiRitorno;
-	}
-
-	public void setDatiAereiRitorno(AereoDataModel datiAereiRitorno) {
-		this.datiAereiRitorno = datiAereiRitorno;
-	}
 
 
 

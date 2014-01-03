@@ -14,7 +14,7 @@ public interface GestionePacchettoBean {
 	
 	List<HotelDTO> getListaHotel();
 
-	List<HotelDTO> getListaHotelPerCitta(String citta);
+	List<HotelDTO> getListaHotel(String citta);
 
 	List<AereoDTO> getListaAereiAndata(String cittaAtterraggio);
 

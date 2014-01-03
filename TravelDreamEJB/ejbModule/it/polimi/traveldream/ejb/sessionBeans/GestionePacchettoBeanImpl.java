@@ -64,7 +64,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<HotelDTO> getListaHotelPerCitta(String citta) {
+	public List<HotelDTO> getListaHotel(String citta) {
 		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.città =:nome")
 			    .setParameter("nome", citta).getResultList();
 		ArrayList<HotelDTO> listaHotel = new ArrayList<HotelDTO>();
