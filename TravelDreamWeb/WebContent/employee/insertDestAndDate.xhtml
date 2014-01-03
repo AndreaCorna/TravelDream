@@ -28,6 +28,10 @@
 				</p:calendar>
 				<p></p>
 				
+				<h:outputLabel for="id">Id:</h:outputLabel>
+				<p:inputText id="id" value="#{pacchetto.pacchetto.id}"  validator="#{pacchetto.validaId}"/>
+				<p:message for="id" />
+				
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="ajax"  update="regGrid"
              action="#{pacchetto.aggiungiDestinazioneDate()}" styleClass="ui-priority-primary"/>  

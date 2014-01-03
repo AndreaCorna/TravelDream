@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> 
+<body> 
+<h:form>
+	<p:panel header="Seleziona le Escursioni">
+		<h:panelGrid columns="3" id="escursioni">
+			<p:dataTable id="listaEscursioni" var="escursione" value="#{pacchetto.datiEscursioni}" paginator="true" rows="30"  
+		                 selection="#{pacchetto.listaEscursioni}">  
+		  		<f:facet name="header">  
+		            Lista Escursioni 
+		        </f:facet>  
+		  
+		        <p:column selectionMode="multiple" style="width:2%" />  
+		  
+		        <p:column headerText="Id" style="width:25%">  
+		            #{escursione.id}  
+		        </p:column>  
+		  
+		        <p:column headerText="Città" style="width:25%">  
+		            #{escursione.luogo}  
+		        </p:column>  
+		  
+		        <p:column headerText="Prezzo" style="width:24%">  
+		            #{escursione.prezzo}  
+		        </p:column>  
+		        
+		        <p:column headerText="Data" style="width:24%">  
+		            #{escursione.data}  
+		        </p:column>  
+		        
+		        <p:column headerText="Descrizione" style="width:24%">  
+		            #{escursione.descrizione}  
+		        </p:column>  
+				       
+		    </p:dataTable>  
+			</h:panelGrid>
+			<p:commandButton id="ajax" value="Aggiungi"  ajax="false" update="escursioni" action="#{pacchetto.aggiungiEscursioni()}" styleClass="ui-priority-primary"/>  
+	</p:panel>
+</h:form>
+</body> 
+</html>

@@ -62,6 +62,7 @@ public class PacchettoManagedBean {
 		pacchetto = new PacchettoDTO();
 		
 	}
+	
 
 	public String aggiungiDestinazioneDate(){
 		String destinazione = pacchetto.getDestinazione();
@@ -85,7 +86,20 @@ public class PacchettoManagedBean {
 	
 	public String aggiungiHotel(){
 		pacchetto.setHotels(listaHotel);
+		listaEscursioniDB = gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(),
+						pacchetto.getFine_Validita());
+		setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
 		return "insertEscursione?faces-redirect=true";
+	}
+	
+	public String aggiungiEscursioni(){
+		pacchetto.setEscursioni(listaEscursioni);
+		return "riepilogo?faces-redirect=true";
+	}
+	
+	public String creaPacchetto(){
+		gestionePacchetto.creaPacchetto(pacchetto);
+		return "index?faces-redirect=true";
 	}
 	
 	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
@@ -94,6 +108,12 @@ public class PacchettoManagedBean {
 		Date dataFine = (Date)value;
 		if (dataFine.before(dataInizio)){
                 throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
+        }
+	}
+	
+	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+        if (gestionePacchetto.esisteIdPacchetto(value.toString())){
+                throw new ValidatorException(new FacesMessage("Username già utilizzato. Scegline un altro"));
         }
 	}
 
