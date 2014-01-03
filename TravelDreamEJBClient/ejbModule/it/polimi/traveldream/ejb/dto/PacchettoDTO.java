@@ -15,7 +15,7 @@ public class PacchettoDTO {
 	@NotEmpty
 	private String destinazione;
 	@NotNull
-	private int fine_Validita;
+	private Date fine_Validita;
 	@NotNull
 	private Date inizio_Validita;
 	@NotEmpty
@@ -47,11 +47,11 @@ public class PacchettoDTO {
 		this.destinazione = destinazione;
 	}
 
-	public int getFine_Validita() {
+	public Date getFine_Validita() {
 		return fine_Validita;
 	}
 
-	public void setFine_Validita(int fine_Validita) {
+	public void setFine_Validita(Date fine_Validita) {
 		this.fine_Validita = fine_Validita;
 	}
 

@@ -1,18 +1,25 @@
 package it.polimi.traveldream.webBeans;
 
+import java.util.Date;
 import java.util.List;
 
 import it.polimi.traveldream.dataModels.AereoDataModel;
+import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 
 @ManagedBean(name="pacchetto")
@@ -34,18 +41,24 @@ public class PacchettoManagedBean {
 	
 	private String destinazione;
 	
+	private Date dataInizio;
+	
+	private Date dataFine;
+	
 	private List<HotelDTO> listaHotelDB;
 	
 	private List<HotelDTO> listaHotel;
 	
 	private HotelDataModel datiHotel;
 	
-	@PostConstruct
-	public void init(){
-		listaAereiDB = gestionePacchetto.getListaAerei();
-		setDatiAerei(new AereoDataModel(listaAereiDB));
-	}
+	private List<EscursioneDTO> listaEscursioni;
 	
+	private List<EscursioneDTO> listaEscursioniDB;
+	
+	private EscursioneDataModel datiEscursioni;
+	
+	//METTERE I METODI PER L'ESCURSIONE E METTERE PAGINA PRIMA DEGLI AEREI
+		
 	public List<AereoDTO> getListaAereiAndata() {
 		return listaAereiAndata;
 	}
@@ -117,9 +130,62 @@ public class PacchettoManagedBean {
 	public void setDatiHotel(HotelDataModel datiHotel) {
 		this.datiHotel = datiHotel;
 	}
+	
+	public List<EscursioneDTO> getListaEscursioni() {
+		return listaEscursioni;
+	}
 
-	public String aggiungiAerei(){
+	public void setListaEscursioni(List<EscursioneDTO> listaEscursioni) {
+		this.listaEscursioni = listaEscursioni;
+	}
+
+	public List<EscursioneDTO> getListaEscursioniDB() {
+		return listaEscursioniDB;
+	}
+
+	public void setListaEscursioniDB(List<EscursioneDTO> listaEscursioniDB) {
+		this.listaEscursioniDB = listaEscursioniDB;
+	}
+
+	public EscursioneDataModel getDatiEscursioni() {
+		return datiEscursioni;
+	}
+
+	public void setDatiEscursioni(EscursioneDataModel datiEscursioni) {
+		this.datiEscursioni = datiEscursioni;
+	}
+
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+
+	public Date getDataFine() {
+		return dataFine;
+	}
+
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
+	}
+	
+	@PostConstruct
+	public void init(){
 		pacchetto = new PacchettoDTO();
+		
+	}
+
+	public String aggiungiDestinazioneDate(){
+			listaAereiDB = gestionePacchetto.getListaAerei();
+			setDatiAerei(new AereoDataModel(listaAereiDB));
+			return "insertAereo?faces-redirect=true";
+	}
+
+	
+	public String aggiungiAerei(){
+		
 		if( verificaAtterraggioAerei() && verificaDecolloAerei() ){
 			pacchetto.setAereiAndata(listaAereiAndata);
 			pacchetto.setAereiRitorno(listaAereiRitorno);
@@ -136,6 +202,15 @@ public class PacchettoManagedBean {
 			return "insertEscursione?faces-redirect=true";
 		}
 		return "insertHotel?faces-redirect=true";
+	}
+	
+	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		Object inizioData = component.getAttributes().get("data_inizio");
+		Date dataInizio = (Date)inizioData;
+		Date dataFine = (Date)value;
+		if (dataFine.before(dataInizio)){
+                throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
+        }
 	}
 
 	private boolean verificaAtterraggioAerei(){
@@ -165,6 +240,8 @@ public class PacchettoManagedBean {
 		}
 		return true;
 	}
+
+
 
 	
 	
