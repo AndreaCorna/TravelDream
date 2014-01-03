@@ -12,6 +12,18 @@
 			<h:panelGrid columns="3" id="riepilogo">
                 <h:outputLabel for="nome" />Destinazione:
                 <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
+                <h:outputLabel for="inizio" />Inizio Validita:
+                <h:outputText value="#{pacchetto.pacchetto.inizio_Validita}" />
+                <h:outputLabel for="fine" />Fine Validita:
+                <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
+                <h:outputLabel for="andataAerei" />Aerei di Andata:
+				<p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}  
+				</p:dataList>
+				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
+				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
+				</p:dataList>  
                 
             </h:panelGrid>
            <h:panelGrid columns="3" id="descrizione">
