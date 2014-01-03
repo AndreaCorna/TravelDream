@@ -6,9 +6,8 @@ import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Hotel;
-import it.polimi.traveldream.ejb.entities.Utente;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +16,7 @@ import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 
 /**
  * Session Bean implementation class GestionePacchettoBeanImpl
@@ -62,6 +62,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaHotels;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String citta) {
@@ -77,11 +78,15 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome")
-			    .setParameter("nome", cittaAtterraggio).getResultList();
+	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio, Date inizioValidita, Date fineValidita) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data BETWEEN :startDate AND :endDate")
+			    .setParameter("nome", cittaAtterraggio)
+			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
+			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
+			    .getResultList();
 		ArrayList<AereoDTO> aereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0; i<aerei.size(); i++){
 			AereoDTO aereo = convertToDTO(aerei.get(i));
@@ -91,11 +96,15 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaAerei;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome")
-			    .setParameter("nome", cittaDecollo).getResultList();
+	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date inizioValidita, Date fineValidita) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.data BETWEEN :startDate AND :endDate")
+			    .setParameter("nome", cittaDecollo)
+			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
+			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
+			    .getResultList();
 		ArrayList<AereoDTO> aereiRitorno = new ArrayList<AereoDTO>();
 		for(int i=0; i<aerei.size(); i++){
 			AereoDTO aereo = convertToDTO(aerei.get(i));
