@@ -24,6 +24,14 @@
 				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
 				</p:dataList>  
+				<h:outputLabel for="hotel" />Hotel:
+				<p:dataList value="#{pacchetto.pacchetto.hotels}" var="hotel" itemType="circle">  
+   				 	#{hotel.id}, #{hotel.citta}, #{hotel.camereDisponibili}  
+				</p:dataList>  
+				<h:outputLabel for="escursioni" />Escursioni:
+				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+				</p:dataList>
                 
             </h:panelGrid>
            <h:panelGrid columns="3" id="descrizione">
