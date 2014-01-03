@@ -64,8 +64,11 @@ public class PacchettoManagedBean {
 	}
 
 	public String aggiungiDestinazioneDate(){
-		listaAereiAndataDB = gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione());
-		listaAereiRitornoDB = gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione());
+		String destinazione = pacchetto.getDestinazione();
+		Date inizioValidita = pacchetto.getInizio_Validita();
+		Date fineValidita = pacchetto.getFine_Validita();
+		listaAereiAndataDB = gestionePacchetto.getListaAereiAndata(destinazione, inizioValidita, fineValidita);
+		listaAereiRitornoDB = gestionePacchetto.getListaAereiRitorno(destinazione, inizioValidita, fineValidita);
 		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
 		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
 		return "insertAereo?faces-redirect=true";
