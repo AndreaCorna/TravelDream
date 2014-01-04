@@ -39,7 +39,7 @@ public class Hotel implements Serializable {
 	public Hotel(HotelDTO hotel) {
 		this.id = hotel.getId();
 		this.camere_Disponibili = hotel.getCamereDisponibili();
-		this.citt√† = hotel.getCitta();
+		this.citt‡ = hotel.getCitta();
 	}
 
 	public int getId() {
