@@ -30,8 +30,8 @@ public class Camera implements Serializable {
 	@Column(name="Data_Checkout")
 	private Date data_Checkout;
 
-	@Column(name="Occupata")
-	private byte occupata;
+	@Column(name="Occupata",columnDefinition = "TINYINT(1)")
+	private boolean occupata;
 
 	@Column(name="Posti")
 	private int posti;
@@ -76,11 +76,11 @@ public class Camera implements Serializable {
 		this.data_Checkout = data_Checkout;
 	}
 
-	public byte getOccupata() {
+	public boolean getOccupata() {
 		return this.occupata;
 	}
 
-	public void setOccupata(byte occupata) {
+	public void setOccupata(boolean occupata) {
 		this.occupata = occupata;
 	}
 
