@@ -25,5 +25,7 @@ public interface GestioneUtenteBean {
 
 	List<UtenteDTO> getListaUtentiBase();
 
+	UtenteDTO getUtenteDTO(String dipendente);
+
 	
 }

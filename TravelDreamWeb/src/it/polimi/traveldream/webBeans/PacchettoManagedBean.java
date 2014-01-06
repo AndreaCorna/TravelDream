@@ -56,11 +56,19 @@ public class PacchettoManagedBean {
 	
 	private PacchettoDTO pacchetto;
 	
+	private List<PacchettoDTO> listaPacchetti;
+	
+	private List<PacchettoDTO> listaPacchettiSelezionati;
+	
 	
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
 		
+	}
+	
+	public void mostraOfferte(){
+		listaPacchetti = gestionePacchetto.getListaPacchetti();
 	}
 	
 
@@ -232,6 +240,25 @@ public class PacchettoManagedBean {
 
 	public void setDatiEscursioni(EscursioneDataModel datiEscursioni) {
 		this.datiEscursioni = datiEscursioni;
+	}
+
+
+	public List<PacchettoDTO> getListaPacchetti() {
+		return listaPacchetti;
+	}
+
+
+	public void setListaPacchetti(List<PacchettoDTO> listaPacchetti) {
+		this.listaPacchetti = listaPacchetti;
+	}
+
+	public List<PacchettoDTO> getListaPacchettiSelezionati() {
+		return listaPacchettiSelezionati;
+	}
+
+	public void setListaPacchettiSelezionati(
+			List<PacchettoDTO> listaPacchettiSelezionati) {
+		this.listaPacchettiSelezionati = listaPacchettiSelezionati;
 	}
 
 
