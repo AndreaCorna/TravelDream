@@ -243,7 +243,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<AereoDTO> convertListaAereiAndataToDTO(List<Aereo> lista, String destinazionePacchetto){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
-			if(lista.get(i).getAtterraggio().equals(destinazionePacchetto)){
+			if(lista.get(i).getAtterraggio().toLowerCase().equals(destinazionePacchetto.toLowerCase())){
 				AereoDTO nuovo = convertToDTO(lista.get(i));
 				listaAereiAndata.add(nuovo);
 			}
@@ -255,7 +255,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista, String destinazionePacchetto){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
-			if(lista.get(i).getDecollo().equals(destinazionePacchetto)){
+			if(lista.get(i).getDecollo().toLowerCase().equals(destinazionePacchetto.toLowerCase())){
 				AereoDTO nuovo = convertToDTO(lista.get(i));
 				listaAereiAndata.add(nuovo);
 			}

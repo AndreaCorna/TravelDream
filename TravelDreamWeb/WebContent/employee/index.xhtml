@@ -6,7 +6,6 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 #{utente.caricaProfiloUtente()}
-#{pacchetto.mostraOfferte()}
 </h:head>
 <h:body>
 <h:form>
@@ -60,36 +59,7 @@
                
             </h:panelGrid>
         </p:tab>
-        <p:tab title="Mostra Offerte">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather2.jpg" />
-                <h:outputText value="Ecco le nostre offerte"></h:outputText>
-                <h:form>  
-  
-   				 <p:dataTable id="listaOfferte" var="pacchetto" value="#{pacchetto.listaPacchetti}" widgetVar="ListaOfferte"   
-            		emptyMessage="Nessun offerta trovata" filteredValue="#{pacchetto.listaPacchettiSelezionati}">  
-  
-		         <f:facet name="header">  
-		            <p:outputPanel>  
-		                <h:outputText value="Cerca in tutti i campi:" />  
-		                <p:inputText id="globalFilter" onkeyup="ListaOfferte.filter()" style="width:150px" />  
-		            </p:outputPanel>  
-		        </f:facet>  
-  
-			        <p:column id="dest" filterBy="destinazione"   
-			                headerText="Destinazione" footerText="contains"  
-			                filterMatchMode="contains">  
-			            <h:outputText value="#{pacchetto.destinazione}" />  
-			        </p:column>  
-			  
-			    </p:dataTable>  
-			      
-			</h:form>  
-             
-               
-            </h:panelGrid>
-        </p:tab>
-        
+          
     </p:tabView>
 
 </h:form>
