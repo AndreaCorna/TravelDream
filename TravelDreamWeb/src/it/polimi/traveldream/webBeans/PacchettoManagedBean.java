@@ -77,24 +77,37 @@ public class PacchettoManagedBean {
 
 	
 	public String aggiungiAerei(){
-		pacchetto.setAereiAndata(listaAereiAndata);
-		pacchetto.setAereiRitorno(listaAereiRitorno);
-		listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
-		setDatiHotel(new HotelDataModel(listaHotelDB));
-		return "insertHotel?faces-redirect=true";
+		if (listaAereiAndata.size()>0 && listaAereiRitorno.size()>0){
+			pacchetto.setAereiAndata(listaAereiAndata);
+			pacchetto.setAereiRitorno(listaAereiRitorno);
+			listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
+			setDatiHotel(new HotelDataModel(listaHotelDB));
+			return "insertHotel?faces-redirect=true";
+		}
+		else
+			return "insertAereo?faces-redirect=true";
 	}
 	
 	public String aggiungiHotel(){
-		pacchetto.setHotels(listaHotel);
-		listaEscursioniDB = gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(),
-						pacchetto.getFine_Validita());
-		setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
-		return "insertEscursione?faces-redirect=true";
+		if ( listaHotel.size()>0 ){
+			pacchetto.setHotels(listaHotel);
+			listaEscursioniDB = gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(),
+							pacchetto.getFine_Validita());
+			setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
+			return "insertEscursione?faces-redirect=true";
+		}
+		else
+			return  "insertHotel?faces-redirect=true";
+		
 	}
 	
 	public String aggiungiEscursioni(){
-		pacchetto.setEscursioni(listaEscursioni);
-		return "riepilogo?faces-redirect=true";
+		if ( listaEscursioni.size()>0 ){
+			pacchetto.setEscursioni(listaEscursioni);
+			return "riepilogo?faces-redirect=true";
+		}
+		else
+			return "insertEscursione?faces-redirect=true";
 	}
 	
 	public String creaPacchetto(){
