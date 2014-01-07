@@ -160,7 +160,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	        return false;
 	}
 
-	
+/*
+ * Metodi privati per la conversione di un oggetto prelevato dal database in un oggetto che verrà inviato alla view.
+ */
 	private AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
 		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
@@ -206,6 +208,25 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return nuovo;
 	}
 	
+	private PacchettoDTO convertToDTO(Pacchetto pacchetto){
+		PacchettoDTO nuovo = new PacchettoDTO();
+		nuovo.setDescrizione(pacchetto.getDescrizione());
+		nuovo.setDestinazione(pacchetto.getDestinazione());
+		nuovo.setFine_Validita(pacchetto.getFine_Validità());
+		nuovo.setId(pacchetto.getId());
+		nuovo.setInizio_Validita(pacchetto.getInizio_Validità());
+		nuovo.setHotels(convertListaHotelToDTO(pacchetto.getHotels()));
+		nuovo.setEscursioni(convertListaEscursioniToDTO(pacchetto.getEscursioni()));
+		nuovo.setAereiAndata(convertListaAereiAndataToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
+		nuovo.setAereiRitorno(convertListaAereiRitornoToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
+		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
+		nuovo.setDipendente(dipendente);
+		return nuovo;
+	}
+
+/*
+ * Metodi per la conversione di liste di oggetti del database
+ */
 	private List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
@@ -293,22 +314,6 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		}
 		List<HotelDTO> hotel = listaHotel;
 		return hotel;
-	}
-	
-	private PacchettoDTO convertToDTO(Pacchetto pacchetto){
-		PacchettoDTO nuovo = new PacchettoDTO();
-		nuovo.setDescrizione(pacchetto.getDescrizione());
-		nuovo.setDestinazione(pacchetto.getDestinazione());
-		nuovo.setFine_Validita(pacchetto.getFine_Validità());
-		nuovo.setId(pacchetto.getId());
-		nuovo.setInizio_Validita(pacchetto.getInizio_Validità());
-		nuovo.setHotels(convertListaHotelToDTO(pacchetto.getHotels()));
-		nuovo.setEscursioni(convertListaEscursioniToDTO(pacchetto.getEscursioni()));
-		nuovo.setAereiAndata(convertListaAereiAndataToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
-		nuovo.setAereiRitorno(convertListaAereiRitornoToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
-		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
-		nuovo.setDipendente(dipendente);
-		return nuovo;
 	}
 	
 	private List<PacchettoDTO> convertListaPacchettiToDTO(List<Pacchetto> lista){

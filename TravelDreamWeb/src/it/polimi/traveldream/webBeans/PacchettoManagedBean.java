@@ -134,7 +134,7 @@ public class PacchettoManagedBean {
 	
 	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
         if (gestionePacchetto.esisteIdPacchetto(value.toString())){
-                throw new ValidatorException(new FacesMessage("Username già utilizzato. Scegline un altro"));
+                throw new ValidatorException(new FacesMessage("Id già utilizzato. Scegline un altro"));
         }
 	}
 
