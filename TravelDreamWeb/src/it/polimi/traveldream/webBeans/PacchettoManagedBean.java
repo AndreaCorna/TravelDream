@@ -1,5 +1,6 @@
 package it.polimi.traveldream.webBeans;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
 
@@ -63,6 +65,8 @@ public class PacchettoManagedBean {
 	
 	private PacchettoDataModel datiPacchetti;
 	
+	private SelectItem[] destinazioni;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -72,6 +76,7 @@ public class PacchettoManagedBean {
 	
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
+		caricaDestinazioni();
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
@@ -271,6 +276,29 @@ public class PacchettoManagedBean {
 
 	public void setDatiPacchetti(PacchettoDataModel datiPacchetti) {
 		this.datiPacchetti = datiPacchetti;
+	}
+
+	private void caricaDestinazioni(){
+		ArrayList<String> listaDestinazioni = new ArrayList<String>();
+		for(PacchettoDTO pacchetto:listaPacchetti){
+			if (!listaDestinazioni.contains(pacchetto.getDestinazione().toUpperCase())){
+				listaDestinazioni.add(pacchetto.getDestinazione().toUpperCase());
+			}
+		}
+		destinazioni = new SelectItem[listaDestinazioni.size()+1];
+		destinazioni[0]=new SelectItem("", "Seleziona");
+		for(int i=0;i<listaDestinazioni.size();i++){
+			String dest = listaDestinazioni.get(i);
+			destinazioni[i+1] = new SelectItem(dest, dest);
+		}
+	}
+
+	public SelectItem[] getDestinazioni() {
+		return destinazioni;
+	}
+
+	public void setDestinazioni(SelectItem[] destinazioni) {
+		this.destinazioni = destinazioni;
 	}
 
 

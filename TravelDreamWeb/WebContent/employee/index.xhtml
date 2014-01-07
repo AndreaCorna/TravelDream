@@ -74,8 +74,9 @@
        			 </f:facet>  
   
 		        <p:column id="dest" filterBy="destinazione"   
-		                headerText="Destinazione" footerText="Destinazione"  
-		                filterMatchMode="contains">  
+		                headerText="Destinazione" footerText="Destinazione"
+		                filterOptions="#{pacchetto.destinazioni}"
+		                filterMatchMode="exact">  
 		            <h:outputText value="#{pac.destinazione}" />  
 		        </p:column> 
 		        
