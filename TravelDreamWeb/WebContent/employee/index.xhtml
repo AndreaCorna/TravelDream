@@ -62,8 +62,9 @@
         </p:tab>
         <p:tab title="Mostra Offerte">
         	<h:panelGrid columns="4" id="regGrid">
-    			<p:dataTable id="tabella" var="pac" value="#{pacchetto.listaPacchetti}" widgetVar="tabellaOfferte"   
-          			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}" >  
+    			<p:dataTable id="tabella" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
+          			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
+          			  		selectionMode="single" >  
   
          		<f:facet name="header">  
           			  <p:outputPanel>  

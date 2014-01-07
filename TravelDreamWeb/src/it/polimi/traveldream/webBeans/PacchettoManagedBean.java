@@ -6,6 +6,7 @@ import java.util.List;
 import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
+import it.polimi.traveldream.dataModels.PacchettoDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
@@ -60,6 +61,8 @@ public class PacchettoManagedBean {
 	
 	private List<PacchettoDTO> listaPacchettiSelezionati;
 	
+	private PacchettoDataModel datiPacchetti;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -69,6 +72,7 @@ public class PacchettoManagedBean {
 	
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
+		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
 
@@ -259,6 +263,14 @@ public class PacchettoManagedBean {
 	public void setListaPacchettiSelezionati(
 			List<PacchettoDTO> listaPacchettiSelezionati) {
 		this.listaPacchettiSelezionati = listaPacchettiSelezionati;
+	}
+
+	public PacchettoDataModel getDatiPacchetti() {
+		return datiPacchetti;
+	}
+
+	public void setDatiPacchetti(PacchettoDataModel datiPacchetti) {
+		this.datiPacchetti = datiPacchetti;
 	}
 
 

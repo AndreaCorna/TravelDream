@@ -11,8 +11,9 @@
 <h:form>  
   <p:panel header="Lista Dipendenti">
 			<h:panelGrid columns="4" id="regGrid">
-    <p:dataTable id="tabella" var="utente" value="#{dipendente.listaUtenti}" widgetVar="tabellaUtenti"   
-            emptyMessage="Nessun utente soddisfa i criteri di ricerca" filteredValue="#{dipendente.utentiTrovati}">  
+    <p:dataTable id="tabella" var="utente" value="#{dipendente.datiUtenti}" widgetVar="tabellaUtenti"   
+            emptyMessage="Nessun utente soddisfa i criteri di ricerca" selection="#{dipendente.utenteTrovato}"
+            	selectionMode="single">  
   
          <f:facet name="header">  
             <p:outputPanel>  
