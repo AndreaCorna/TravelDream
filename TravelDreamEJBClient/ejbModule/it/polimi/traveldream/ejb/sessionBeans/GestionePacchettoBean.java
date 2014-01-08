@@ -31,4 +31,6 @@ public interface GestionePacchettoBean {
 
 	boolean esisteIdPacchetto(String id);
 
+	List<PacchettoDTO> getListaPacchetti();
+
 }

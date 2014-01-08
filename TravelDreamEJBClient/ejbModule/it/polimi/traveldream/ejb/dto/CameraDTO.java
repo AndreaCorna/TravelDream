@@ -13,7 +13,7 @@ public class CameraDTO {
 
 	private Date data_Checkout;
 
-	private byte occupata;
+	private boolean occupata;
 
 	private int posti;
 
@@ -49,11 +49,11 @@ public class CameraDTO {
 		this.data_Checkout = data_Checkout;
 	}
 
-	public byte getOccupata() {
+	public boolean getOccupata() {
 		return occupata;
 	}
 
-	public void setOccupata(byte occupata) {
+	public void setOccupata(boolean occupata) {
 		this.occupata = occupata;
 	}
 

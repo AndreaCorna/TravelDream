@@ -6,12 +6,12 @@ import javax.ejb.Stateless;
  * Session Bean implementation class GestionePrenotazioneImpl
  */
 @Stateless
-public class GestionePrenotazioneImpl implements it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazione {
+public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean {
 
     /**
      * Default constructor. 
      */
-    public GestionePrenotazioneImpl() {
+    public GestionePrenotazioneBeanImpl() {
         // TODO Auto-generated constructor stub
     }
 

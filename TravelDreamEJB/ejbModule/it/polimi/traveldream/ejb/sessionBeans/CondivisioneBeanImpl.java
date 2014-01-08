@@ -7,6 +7,7 @@ import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,6 +25,7 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 	
 	@Resource
 	private EJBContext context;
+	
     /**
      * Default constructor. 
      */
@@ -35,10 +37,9 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 	public CondivisioneDTO mostraCondivisione(String link) {
 		CondivisioneDTO condivisione = new CondivisioneDTO();
 		Condivisione dato = em.find(Condivisione.class, link);
-		Utente utente = em.find(Utente.class, dato.getUtente().getUsername());
 		condivisione.setData(dato.getData());
 		condivisione.setLink(dato.getLink());
-		condivisione.setUtente(convertiUtenteInDTO(utente));
+		condivisione.setUtente(convertToDTO(dato.getUtente()));
 		return condivisione;
 		
 	}
@@ -51,16 +52,12 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		nuova.setUtente(em.find(Utente.class, condivisione.getUtente().getUsername()));
 		em.persist(nuova);
 	}
+
 	
-	/**
-	 * Metodo per convertire un'entità utente presente nel database in un oggetto DTO
-	 * @param utente - l'utente ottenuto dal database
-	 * @return utenteDTO - data transfer object
-	 */
-	private UtenteDTO convertiUtenteInDTO(Utente utente){
+	private UtenteDTO convertToDTO(Utente utente){
 		UtenteDTO nuovo = new UtenteDTO();
-		nuovo.setEmail(utente.getEmail());
 		nuovo.setUsername(utente.getUsername());
+		nuovo.setEmail(utente.getEmail());
 		nuovo.setTelefono(utente.getTelefono());
 		return nuovo;
 	}

@@ -95,6 +95,12 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		return userDTO;
 		
 	}
+	@Override
+	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
+	public UtenteDTO getUtenteDTO(String dipendente) {
+		Utente dip = em.find(Utente.class, dipendente);
+		return convertToDTO(dip);
+	}
 	
 	/*
 	@Override
@@ -160,7 +166,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return context.getCallerPrincipal().getName();
     }
 
-    private UtenteDTO convertToDTO(Utente utente) {
+    protected UtenteDTO convertToDTO(Utente utente) {
 		UtenteDTO dto = new UtenteDTO();
 		dto.setUsername(utente.getUsername());
 		dto.setTelefono(utente.getTelefono());
@@ -180,6 +186,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		nuovo.setResidenza(anagrafica.getResidenza());
 		return nuovo;
 	}
+
+
+
 
 
 	

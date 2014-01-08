@@ -3,6 +3,7 @@ package it.polimi.traveldream.webBeans;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.traveldream.dataModels.UtenteDataModel;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneDipendenteBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneUtenteBean;
@@ -24,9 +25,11 @@ public class DipendenteManagedBean {
 	private UtenteDTO utente;
 	
 	
-	private List<UtenteDTO> utentiTrovati;
+	private UtenteDTO utenteTrovato;
 	
 	private List<UtenteDTO> listaUtenti;
+	
+	private UtenteDataModel datiUtenti;
 	
 
 	public DipendenteManagedBean(){
@@ -37,10 +40,12 @@ public class DipendenteManagedBean {
 	
 	public void initUtenti(){
 		listaUtenti = gestioneUtente.getListaUtentiBase();
+		datiUtenti = new UtenteDataModel(listaUtenti);
 	}
 	
 	public void initDipendenti(){
 		listaUtenti = gestioneDip.getListaDipendenti();
+		datiUtenti = new UtenteDataModel(listaUtenti);
 	}
 
 	
@@ -53,12 +58,12 @@ public class DipendenteManagedBean {
 	}
 
 	
-	public List<UtenteDTO> getUtentiTrovati() {
-		return utentiTrovati;
+	public UtenteDTO getUtenteTrovato() {
+		return utenteTrovato;
 	}
 
-	public void setUtentiTrovati(List<UtenteDTO> utentiTrovati) {
-		this.utentiTrovati = utentiTrovati;
+	public void setUtenteTrovato(UtenteDTO utenteTrovato) {
+		this.utenteTrovato = utenteTrovato;
 	}
 
 	public List<UtenteDTO> getListaUtenti() {
@@ -70,13 +75,21 @@ public class DipendenteManagedBean {
 	}
 	
 	public String creaDipendente(){
-		gestioneDip.creaDipendente(utentiTrovati.get(0));
+		gestioneDip.creaDipendente(utenteTrovato);
 		return "index?faces-redirect=true";
 	}
 	
 	public String eliminaDipendente(){
-		gestioneDip.eliminaDipendente(utentiTrovati.get(0));
+		gestioneDip.eliminaDipendente(utenteTrovato);
 		return "index?faces-redirect=true";
+	}
+
+	public UtenteDataModel getDatiUtenti() {
+		return datiUtenti;
+	}
+
+	public void setDatiUtenti(UtenteDataModel datiUtenti) {
+		this.datiUtenti = datiUtenti;
 	}
 	
 	

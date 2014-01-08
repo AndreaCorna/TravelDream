@@ -26,8 +26,14 @@ public class Hotel implements Serializable {
 	@Column(name="Camere_Disponibili")
 	private int camere_Disponibili;
 
-	@Column(name="Città")
-	private String città;
+	@Column(name="Cittï¿½")
+	private String cittï¿½;
+	
+	@Column(name="Nome")
+	private String nome;
+	
+	@Column(name="Stelle")
+	private int stelle;
 
 	//bi-directional many-to-one association to Camera
 	@OneToMany(mappedBy="hotel")
@@ -39,7 +45,9 @@ public class Hotel implements Serializable {
 	public Hotel(HotelDTO hotel) {
 		this.id = hotel.getId();
 		this.camere_Disponibili = hotel.getCamereDisponibili();
-		this.città = hotel.getCitta();
+		this.cittï¿½ = hotel.getCitta();
+		this.nome = hotel.getNome();
+		this.stelle = hotel.getRating().intValue();
 	}
 
 	public int getId() {
@@ -58,12 +66,12 @@ public class Hotel implements Serializable {
 		this.camere_Disponibili = camere_Disponibili;
 	}
 
-	public String getCittà() {
-		return this.città;
+	public String getCittï¿½() {
+		return this.cittï¿½;
 	}
 
-	public void setCittà(String città) {
-		this.città= città;
+	public void setCittï¿½(String cittï¿½) {
+		this.cittï¿½= cittï¿½;
 	}
 
 	public List<Camera> getCamere() {
@@ -86,6 +94,22 @@ public class Hotel implements Serializable {
 		camere.setHotel(null);
 
 		return camere;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public int getStelle() {
+		return stelle;
+	}
+
+	public void setStelle(int stelle) {
+		this.stelle = stelle;
 	}
 
 }

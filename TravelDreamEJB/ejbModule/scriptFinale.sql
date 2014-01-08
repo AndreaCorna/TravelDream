@@ -41,7 +41,7 @@ CREATE TABLE `Aereo` (
 
 LOCK TABLES `Aereo` WRITE;
 /*!40000 ALTER TABLE `Aereo` DISABLE KEYS */;
-INSERT INTO `Aereo` VALUES (1,'Milano','Roma','2013-02-04 00:00:00',100,10),(2,'Roma','Milano','2013-03-04 00:00:00',100,10),(3,'cia','ciai','2013-12-08 00:00:00',20,20),(5,'Milano','Roma','2013-12-03 05:11:00',200,30),(59,'Roma','Bergamo','2013-12-10 00:00:00',200,59.9),(67,'milano','roma','2013-12-03 05:00:00',500,10),(21234,'Milano','Barcellona','2014-01-15 09:37:21',100,84);
+INSERT INTO `Aereo` VALUES (1,'Milano','Roma','2013-02-04 00:00:00',400,10),(2,'Roma','Milano','2013-03-04 00:00:00',100,10),(3,'cia','ciai','2013-12-08 00:00:00',20,20),(5,'Milano','Roma','2013-12-03 05:11:00',200,30),(8,'Milano','Roma','2014-01-18 00:00:00',15,12.2),(49,'Roma','Milano','2014-01-07 00:00:00',400,45),(59,'Roma','Bergamo','2013-12-10 00:00:00',200,59.9),(67,'milano','roma','2013-12-03 05:00:00',500,10),(21234,'Milano','Barcellona','2014-01-15 09:37:21',100,84);
 /*!40000 ALTER TABLE `Aereo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `Utente` (
 
 LOCK TABLES `Utente` WRITE;
 /*!40000 ALTER TABLE `Utente` DISABLE KEYS */;
-INSERT INTO `Utente` VALUES ('admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@amdmi.com','45425','aaaaaaaaaaaaaaa','admin'),('andrea','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna.ac.91@gmail.com','3407901064','crnndr91n44r787w','admin'),('ciao','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna@gmail.com','222','bbbbbbbbbbbbbbb',NULL),('hummer','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andra@gmail.com','15484','crnndr91b22i628w',NULL),('simone','19a0098e641d4bee278bb5d470d06679ffc5fdc818c3a1c52bfb7f8cde3752d3','simone@gmail.com','03684565','crnndr91b22i999t','admin'),('utente','44c2dbe2c24719aae64ed42989c9e3f1e504474d0f4871bc26bab6695f95d912','andrea@gmail.com','21525621','crnndr91c33o628e','admin');
+INSERT INTO `Utente` VALUES ('admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@amdmi.com','45425','aaaaaaaaaaaaaaa','admin'),('andrea','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna.ac.91@gmail.com','3407901064','crnndr91n44r787w','admin'),('ciao','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna@gmail.com','222','bbbbbbbbbbbbbbb',NULL),('hummer','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andra@gmail.com','15484','crnndr91b22i628w','admin'),('simone','19a0098e641d4bee278bb5d470d06679ffc5fdc818c3a1c52bfb7f8cde3752d3','simone@gmail.com','03684565','crnndr91b22i999t','admin'),('utente','44c2dbe2c24719aae64ed42989c9e3f1e504474d0f4871bc26bab6695f95d912','andrea@gmail.com','21525621','crnndr91c33o628e','admin');
 /*!40000 ALTER TABLE `Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +186,7 @@ CREATE TABLE `Gruppo_Utente` (
 
 LOCK TABLES `Gruppo_Utente` WRITE;
 /*!40000 ALTER TABLE `Gruppo_Utente` DISABLE KEYS */;
-INSERT INTO `Gruppo_Utente` VALUES ('admin','AMMINISTRATORE'),('andrea','DIPENDENTE'),('ciao','DIPENDENTE'),('simone','DIPENDENTE'),('hummer','UTENTE'),('utente','UTENTE');
+INSERT INTO `Gruppo_Utente` VALUES ('admin','AMMINISTRATORE'),('andrea','DIPENDENTE'),('ciao','DIPENDENTE'),('hummer','DIPENDENTE'),('simone','UTENTE'),('utente','UTENTE');
 /*!40000 ALTER TABLE `Gruppo_Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +271,7 @@ CREATE TABLE `Pacchetto` (
 
 LOCK TABLES `Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Pacchetto` DISABLE KEYS */;
-INSERT INTO `Pacchetto` VALUES (1,'Roma','2013-05-08','0000-00-00','ciao','ciao');
+INSERT INTO `Pacchetto` VALUES (1,'Roma','2013-05-08','2013-09-09','ciao','ciao'),(2,'Milano','2013-01-01','2014-01-31','ciao','prova'),(4,'Milano','2013-01-01','2014-01-31','ciao','Prova'),(6,'Roma','2013-01-01','2014-02-01','ciao','Un allegro viaggio per la città di roma, tra le mille strade e vicoli alla ricerca di qualcosa che ora non so.'),(9,'Milano','2013-01-01','2014-01-30','ciao','hotel mio'),(43,'milano','2013-01-01','2014-01-31','ciao','ciao');
 /*!40000 ALTER TABLE `Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,6 +316,8 @@ CREATE TABLE `Hotel` (
   `id` int(11) NOT NULL,
   `Città` varchar(45) NOT NULL,
   `Camere_Disponibili` int(11) NOT NULL,
+  `Nome` varchar(50) NOT NULL,
+  `Stelle` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -326,7 +328,7 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'Roma',1),(33,'Milano',100),(34,'Milano',100),(232,'Milano',45),(565,'Milano',200);
+INSERT INTO `Hotel` VALUES (1,'Roma',1,'Ciao',1),(5,'Milano',49,'OOOOo',2),(8,'Milano',89,'HotelMio',3),(33,'Milano',100,'Ciao',4),(34,'Milano',100,'Ciao',5),(232,'Milano',45,'Ciao',4),(565,'Milano',200,'Ciao',3);
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,7 +356,7 @@ CREATE TABLE `Hotel_in_Pacchetto` (
 
 LOCK TABLES `Hotel_in_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Hotel_in_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Hotel_in_Pacchetto` VALUES (1,1);
+INSERT INTO `Hotel_in_Pacchetto` VALUES (1,1),(33,2),(34,2),(232,2),(565,2),(33,4),(34,4),(232,4),(565,4),(1,6),(5,9),(8,9),(33,9),(34,9),(232,9),(565,9),(33,43),(34,43),(232,43),(565,43);
 /*!40000 ALTER TABLE `Hotel_in_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,7 +414,7 @@ CREATE TABLE `Camera` (
 
 LOCK TABLES `Camera` WRITE;
 /*!40000 ALTER TABLE `Camera` DISABLE KEYS */;
-INSERT INTO `Camera` VALUES (1,NULL,NULL,0,2,0,1);
+INSERT INTO `Camera` VALUES (1,'2013-05-05 00:00:00','2013-05-05 00:00:00',0,2,0,1),(2,'2013-05-05 00:00:00','2013-05-05 00:00:00',0,2,1,34),(3,'2013-05-05 00:00:00','2013-05-05 00:00:00',0,0,1,33),(4,'2013-05-05 00:00:00','2013-05-05 00:00:00',0,92,1,232),(5,'2013-05-05 00:00:00','2013-05-05 00:00:00',9,9,1,565);
 /*!40000 ALTER TABLE `Camera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,7 +482,7 @@ CREATE TABLE `Aereo_in_Pacchetto` (
 
 LOCK TABLES `Aereo_in_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Aereo_in_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Aereo_in_Pacchetto` VALUES (1,1),(2,1);
+INSERT INTO `Aereo_in_Pacchetto` VALUES (1,1),(2,1),(1,2),(2,2),(5,2),(8,2),(49,2),(67,2),(21234,2),(1,4),(2,4),(5,4),(8,4),(49,4),(67,4),(21234,4),(1,6),(2,6),(5,6),(8,6),(49,6),(59,6),(67,6),(1,9),(2,9),(5,9),(8,9),(49,9),(67,9),(21234,9),(1,43),(2,43),(5,43),(8,43),(49,43),(67,43),(21234,43);
 /*!40000 ALTER TABLE `Aereo_in_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -508,7 +510,7 @@ CREATE TABLE `Escursione_in_Pacchetto` (
 
 LOCK TABLES `Escursione_in_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Escursione_in_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Escursione_in_Pacchetto` VALUES (1,1);
+INSERT INTO `Escursione_in_Pacchetto` VALUES (1,1),(3,2),(498,2),(3,4),(498,4),(1,6),(3,9),(498,9),(3,43),(498,43);
 /*!40000 ALTER TABLE `Escursione_in_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -521,4 +523,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-02 22:18:12
+-- Dump completed on 2014-01-08 21:24:31

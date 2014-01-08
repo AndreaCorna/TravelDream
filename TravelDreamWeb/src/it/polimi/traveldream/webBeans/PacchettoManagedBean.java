@@ -1,11 +1,13 @@
 package it.polimi.traveldream.webBeans;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
+import it.polimi.traveldream.dataModels.PacchettoDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
@@ -20,6 +22,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
 
@@ -56,11 +59,25 @@ public class PacchettoManagedBean {
 	
 	private PacchettoDTO pacchetto;
 	
+	private List<PacchettoDTO> listaPacchetti;
+	
+	private List<PacchettoDTO> listaPacchettiSelezionati;
+	
+	private PacchettoDataModel datiPacchetti;
+	
+	private SelectItem[] destinazioni;
+	
 	
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
 		
+	}
+	
+	public void mostraOfferte(){
+		listaPacchetti = gestionePacchetto.getListaPacchetti();
+		caricaDestinazioni();
+		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
 
@@ -77,24 +94,37 @@ public class PacchettoManagedBean {
 
 	
 	public String aggiungiAerei(){
-		pacchetto.setAereiAndata(listaAereiAndata);
-		pacchetto.setAereiRitorno(listaAereiRitorno);
-		listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
-		setDatiHotel(new HotelDataModel(listaHotelDB));
-		return "insertHotel?faces-redirect=true";
+		if (listaAereiAndata.size()>0 && listaAereiRitorno.size()>0){
+			pacchetto.setAereiAndata(listaAereiAndata);
+			pacchetto.setAereiRitorno(listaAereiRitorno);
+			listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
+			setDatiHotel(new HotelDataModel(listaHotelDB));
+			return "insertHotel?faces-redirect=true";
+		}
+		else
+			return "insertAereo?faces-redirect=true";
 	}
 	
 	public String aggiungiHotel(){
-		pacchetto.setHotels(listaHotel);
-		listaEscursioniDB = gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(),
-						pacchetto.getFine_Validita());
-		setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
-		return "insertEscursione?faces-redirect=true";
+		if ( listaHotel.size()>0 ){
+			pacchetto.setHotels(listaHotel);
+			listaEscursioniDB = gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(),
+							pacchetto.getFine_Validita());
+			setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
+			return "insertEscursione?faces-redirect=true";
+		}
+		else
+			return  "insertHotel?faces-redirect=true";
+		
 	}
 	
 	public String aggiungiEscursioni(){
-		pacchetto.setEscursioni(listaEscursioni);
-		return "riepilogo?faces-redirect=true";
+		if ( listaEscursioni.size()>0 ){
+			pacchetto.setEscursioni(listaEscursioni);
+			return "riepilogo?faces-redirect=true";
+		}
+		else
+			return "insertEscursione?faces-redirect=true";
 	}
 	
 	public String creaPacchetto(){
@@ -113,7 +143,7 @@ public class PacchettoManagedBean {
 	
 	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
         if (gestionePacchetto.esisteIdPacchetto(value.toString())){
-                throw new ValidatorException(new FacesMessage("Username già utilizzato. Scegline un altro"));
+                throw new ValidatorException(new FacesMessage("Id già utilizzato. Scegline un altro"));
         }
 	}
 
@@ -219,6 +249,56 @@ public class PacchettoManagedBean {
 
 	public void setDatiEscursioni(EscursioneDataModel datiEscursioni) {
 		this.datiEscursioni = datiEscursioni;
+	}
+
+
+	public List<PacchettoDTO> getListaPacchetti() {
+		return listaPacchetti;
+	}
+
+
+	public void setListaPacchetti(List<PacchettoDTO> listaPacchetti) {
+		this.listaPacchetti = listaPacchetti;
+	}
+
+	public List<PacchettoDTO> getListaPacchettiSelezionati() {
+		return listaPacchettiSelezionati;
+	}
+
+	public void setListaPacchettiSelezionati(
+			List<PacchettoDTO> listaPacchettiSelezionati) {
+		this.listaPacchettiSelezionati = listaPacchettiSelezionati;
+	}
+
+	public PacchettoDataModel getDatiPacchetti() {
+		return datiPacchetti;
+	}
+
+	public void setDatiPacchetti(PacchettoDataModel datiPacchetti) {
+		this.datiPacchetti = datiPacchetti;
+	}
+
+	private void caricaDestinazioni(){
+		ArrayList<String> listaDestinazioni = new ArrayList<String>();
+		for(PacchettoDTO pacchetto:listaPacchetti){
+			if (!listaDestinazioni.contains(pacchetto.getDestinazione().toUpperCase())){
+				listaDestinazioni.add(pacchetto.getDestinazione().toUpperCase());
+			}
+		}
+		destinazioni = new SelectItem[listaDestinazioni.size()+1];
+		destinazioni[0]=new SelectItem("", "Seleziona");
+		for(int i=0;i<listaDestinazioni.size();i++){
+			String dest = listaDestinazioni.get(i);
+			destinazioni[i+1] = new SelectItem(dest, dest);
+		}
+	}
+
+	public SelectItem[] getDestinazioni() {
+		return destinazioni;
+	}
+
+	public void setDestinazioni(SelectItem[] destinazioni) {
+		this.destinazioni = destinazioni;
 	}
 
 

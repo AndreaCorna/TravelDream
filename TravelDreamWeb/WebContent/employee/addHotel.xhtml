@@ -17,6 +17,10 @@
 				<p:inputText id="id" value="#{componente.hotel.id}" validator="#{componente.validaIdHotel}"/>
 				<p:message for="id"/>
 				
+				<h:outputLabel for="nome">Nome:</h:outputLabel>
+				<p:inputText id="nome" value="#{componente.hotel.nome}" />
+				<p:message for="nome"/>
+				
 				<h:outputLabel for="decollo">Città:</h:outputLabel>
 				<p:inputText id="citta" value="#{componente.hotel.citta}" />
 				<p:message for="citta" />
@@ -24,6 +28,9 @@
 				<h:outputLabel for="camere">Camere Disponibili:</h:outputLabel>
 				<p:inputText id="camere" value="#{componente.hotel.camereDisponibili}" validator="#{componente.validaNumero}"/>
 				<p:message for="camere" />
+				
+				 <h:outputLabel for="rating">Stelle:</h:outputLabel>
+        			<p:rating value="#{componente.hotel.rating}" />  
 												
 			</h:panelGrid>
 			<p:commandButton value="Aggiungi" id="ajax"  update="aereiAndata"
