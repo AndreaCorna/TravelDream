@@ -104,6 +104,14 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return convertToDTO(hotel);
 	}
 	
+	@Override
+	public EscursioneDTO getEscursioneById(String id) {
+		Integer value = new Integer(id);
+		Escursione escursione = em.find(Escursione.class, value.intValue());
+		return convertToDTO(escursione);
+	}
+
+	
 
 	
 
@@ -128,6 +136,18 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
 		em.merge(modificato);
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void modificaEscursione(EscursioneDTO escursione) {
+		Escursione modificato = em.find(Escursione.class, escursione.getId());
+		modificato.setData(escursione.getData());
+		modificato.setDescrizione(escursione.getDescrizione());
+		modificato.setLuogo(escursione.getLuogo());
+		modificato.setPrezzo(escursione.getPrezzo());
+		em.merge(modificato);
+		
 	}
 	
 	private AereoDTO convertToDTO(Aereo aereo){
@@ -168,11 +188,16 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return nuovo;
 	}
 
-	
+	private EscursioneDTO convertToDTO(Escursione escursione){
+		EscursioneDTO nuovo = new EscursioneDTO();
+		nuovo.setData(escursione.getData());
+		nuovo.setDescrizione(escursione.getDescrizione());
+		nuovo.setId(escursione.getId());
+		nuovo.setLuogo(escursione.getLuogo());
+		nuovo.setPrezzo(escursione.getPrezzo());
+		return nuovo;
+	}
 
-	
 
-	
-	
 
 }

@@ -5,17 +5,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Aggiungi Escursione</title>
+	<title>Modifica Escursione</title>
+	#{componente.initModificaEscursione(param['id'])}
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Aggiungi un'escursione">
+		<p:panel header="Modifica un'escursione">
 			<h:panelGrid columns="3" id="regGrid">
 			
-				<h:outputLabel for="id">Id:</h:outputLabel>
-				<p:inputText id="id" value="#{componente.escursione.id}" validator="#{componente.validaIdEscursione}"/>
-				<p:message for="id"/>
-				
+				<h:outputLabel for="id">Id: #{componente.escursione.id}</h:outputLabel>
+								
 				<h:outputLabel for="luogo">Luogo:</h:outputLabel>
 				<p:inputText id="luogo" value="#{componente.escursione.luogo}" />
 				<p:message for="luogo" />
@@ -34,8 +33,8 @@
 				
 				
 			</h:panelGrid>
-			<p:commandButton value="Aggiungi" id="ajax"  update="regGrid"
-             action="#{componente.aggiungiEscursioneDB()}" styleClass="ui-priority-primary"/>  
+			<p:commandButton value="Modifica" id="ajax"  update="regGrid"
+             action="#{componente.modificaEscursione()}" styleClass="ui-priority-primary"/>  
 			 <p><a href="index.xhtml">Torna alla homepage</a></p>
 		</p:panel>
 	</h:form>

@@ -29,4 +29,8 @@ public interface GestioneComponenteBean {
 
 	void modificaHotel(HotelDTO hotel);
 
+	EscursioneDTO getEscursioneById(String id);
+
+	void modificaEscursione(EscursioneDTO escursione);
+
 }

@@ -45,6 +45,10 @@ public class ComponenteManagedBean {
 	
 	private List<HotelDTO> hotelSelezionati;
 	
+	private List<EscursioneDTO> listaEscursioniDB;
+	
+	private List<EscursioneDTO> escursioniSelezionate;
+	
 	public ComponenteManagedBean(){
 		
 	}
@@ -108,6 +112,14 @@ public class ComponenteManagedBean {
 		listaHotelDB = gestionePacchetto.getListaHotel();
 	}
 	
+	public void caricaListaEscursioni(){
+		listaEscursioniDB = gestionePacchetto.getListaEscursioni();
+	}
+	
+	public void initModificaEscursione(String id){
+		escursione = gestioneComp.getEscursioneById(id);
+	}
+	
 	public void initModificaHotel(String id){
 		hotel = gestioneComp.getHotelById(id);
 	}
@@ -119,6 +131,11 @@ public class ComponenteManagedBean {
 	
 	public String modificaAereo(){
 		gestioneComp.modificaAereo(aereo);
+		return "index?faces-redirect=true";
+	}
+	
+	public String modificaEscursione(){
+		gestioneComp.modificaEscursione(escursione);
 		return "index?faces-redirect=true";
 	}
 	
@@ -211,6 +228,22 @@ public class ComponenteManagedBean {
 
 	public void setHotelSelezionati(List<HotelDTO> hotelSelezionati) {
 		this.hotelSelezionati = hotelSelezionati;
+	}
+
+	public List<EscursioneDTO> getListaEscursioniDB() {
+		return listaEscursioniDB;
+	}
+
+	public void setListaEscursioniDB(List<EscursioneDTO> listaEscursioniDB) {
+		this.listaEscursioniDB = listaEscursioniDB;
+	}
+
+	public List<EscursioneDTO> getEscursioniSelezionate() {
+		return escursioniSelezionate;
+	}
+
+	public void setEscursioniSelezionate(List<EscursioneDTO> escursioniSelezionate) {
+		this.escursioniSelezionate = escursioniSelezionate;
 	}
 
 	
