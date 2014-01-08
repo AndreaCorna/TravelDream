@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
@@ -16,6 +15,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -23,7 +23,7 @@ import javax.faces.validator.ValidatorException;
 
 
 @ManagedBean(name="componente")
-@RequestScoped
+@ViewScoped
 public class ComponenteManagedBean {
 	
 	@EJB
@@ -37,9 +37,7 @@ public class ComponenteManagedBean {
 	
 	private EscursioneDTO escursione;
 	
-	private AereoDataModel datiAerei;
-	
-	private List<AereoDTO> listaAerei;
+	private List<AereoDTO> listaAereiDB;
 	
 	private List<AereoDTO> aereiSelezionati;
 	
@@ -99,13 +97,16 @@ public class ComponenteManagedBean {
 	}
 	
 	public void caricaListaAerei(){
-		listaAerei = gestionePacchetto.getListaAerei();
-		datiAerei = new AereoDataModel(listaAerei);
+		listaAereiDB = gestionePacchetto.getListaAerei();
 	}
 	
 	public String modificaAereo(){
-		
+		gestioneComp.modificaAereo(aereo);
 		return "index?faces-redirect=true";
+	}
+	
+	public void initModificaAereo(String id){
+		aereo = gestioneComp.getAereoById(id);
 	}
 	
 	
@@ -162,20 +163,13 @@ public class ComponenteManagedBean {
 		return  m1.find();
 	}
 
-	public AereoDataModel getDatiAerei() {
-		return datiAerei;
+	
+	public List<AereoDTO> getListaAereiDB() {
+		return listaAereiDB;
 	}
 
-	public void setDatiAerei(AereoDataModel datiAerei) {
-		this.datiAerei = datiAerei;
-	}
-
-	public List<AereoDTO> getListaAerei() {
-		return listaAerei;
-	}
-
-	public void setListaAerei(List<AereoDTO> listaAerei) {
-		this.listaAerei = listaAerei;
+	public void setListaAereiDB(List<AereoDTO> listaAerei) {
+		this.listaAereiDB = listaAerei;
 	}
 
 	public List<AereoDTO> getAereiSelezionati() {

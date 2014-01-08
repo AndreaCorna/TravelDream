@@ -21,4 +21,8 @@ public interface GestioneComponenteBean {
 
 	void aggiungiEscursioneDB(EscursioneDTO escursione);
 
+	AereoDTO getAereoById(String id);
+
+	void modificaAereo(AereoDTO aereo);
+
 }

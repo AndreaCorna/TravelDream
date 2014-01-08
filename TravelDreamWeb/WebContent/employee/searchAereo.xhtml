@@ -10,50 +10,45 @@
 	#{componente.caricaListaAerei()}
 </h:head>
 <h:body>
-	<h:form>
-		<p:panel header="Seleziona Aereo">
-			<h:panelGrid columns="3" id="aerei">
-				<p:dataTable id="listaAerei" var="aereo" value="#{componente.datiAerei}" paginator="true" rows="30"  
-		                 selection="#{componente.aereiSelezionati}">  
-		  		<f:facet name="header">  
-		            Lista Aerei
-		        </f:facet>  
-		  
-		 	   <p:column selectionMode="single" style="width:2%" />  
-		 	   
-		       <p:column headerText="Id" style="width:25%">  
-		            #{aereo.id}  
-		        </p:column>  
-		  
-		        <p:column headerText="Decollo" style="width:25%">  
-		            #{aereo.cittaDecollo}  
-		        </p:column>  
-		  
-		        <p:column headerText="Atterraggio" style="width:24%">  
-		            #{aereo.cittaAtterraggio}  
-		        </p:column>  
-		  
-		        <p:column headerText="Data" style="width:24%">  
-		            #{aereo.data}  
-		        </p:column>  
-		        
-		        <p:column headerText="Posti" style="width:24%">  
-		            #{aereo.postiDisponibili}  
-		        </p:column> 
-		        
-		        <p:column headerText="Costo" style="width:24%">  
-		            #{aereo.costo}  
-		        </p:column> 
-		  
-		       
-		    </p:dataTable>  
-			</h:panelGrid>
-			<p:commandButton value="Seleziona" id="ajax"  
-             action="#{componente.selezionaAereo()}" styleClass="ui-priority-primary"/>  
-            <p><a href="index.xhtml">Torna alla homepage</a></p>
-			
-
-		</p:panel>
-	</h:form>
+	<h:form>  
+  
+    <p:dataTable id="aereiTable" var="aereo" value="#{componente.listaAereiDB}" widgetVar="tabellaAerei"   
+            emptyMessage="Nessun aereo trovato" filteredValue="#{componente.aereiSelezionati}">  
+  
+         <f:facet name="header">  
+            <p:outputPanel>  
+                <h:outputText value="Search all fields:" />  
+                <p:inputText id="globalFilter" onkeyup="tabellaAerei.filter()" style="width:150px" />  
+            </p:outputPanel>  
+        </f:facet>  
+  
+        <p:column id="idAereo" filterBy="id"   
+                headerText="Id"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{aereo.id}" />  
+        </p:column>  
+  
+        <p:column id="decollo" filterBy="decollo"  
+                headerText="Decollo" filterMatchMode="contains"> 
+            <h:outputText value="#{aereo.cittaDecollo}" />  
+        </p:column>  
+  
+        <p:column id="atterraggio" filterBy="atterraggio"   
+                headerText="Atterraggio" filterMatchMode="contains"> 
+           <h:outputText value="#{aereo.cittaAtterraggio}" />  
+        </p:column>  
+  
+        <p:column id="data" filterBy="data"  
+                headerText="Data" filterMatchMode="contains">  
+            <h:outputText value="#{aereo.data}" />  
+        </p:column> 
+        
+         <p:column headerText="Modifica" style="width:24%" >  
+                <h:link outcome = "modificaAereo?id=#{aereo.id}"  value="Modifica"/>
+         </p:column> 
+        
+       </p:dataTable>  
+      
+</h:form>  
 </h:body>
 </html>
