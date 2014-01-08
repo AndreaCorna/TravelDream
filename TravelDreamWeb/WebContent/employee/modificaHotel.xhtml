@@ -6,16 +6,15 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Aggiungi Hotel</title>
+	<title>Modifica Hotel</title>
+	#{componente.initModificaHotel(param['id'])}
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Aggiungi un hotel">
-			<h:panelGrid columns="1" id="aereiAndata">
+		<p:panel header="Modifica un hotel">
+			<h:panelGrid columns="1" id="Hotel">
 			
-				<h:outputLabel for="id">Id:</h:outputLabel>
-				<p:inputText id="id" value="#{componente.hotel.id}" validator="#{componente.validaIdHotel}"/>
-				<p:message for="id"/>
+				<h:outputLabel for="id">Id: #{componente.hotel.id}</h:outputLabel>
 				
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
 				<p:inputText id="nome" value="#{componente.hotel.nome}" />
@@ -33,9 +32,10 @@
         			<p:rating value="#{componente.hotel.rating}" />  
 												
 			</h:panelGrid>
-			<p:commandButton value="Aggiungi" id="ajax"  update="aereiAndata"
-             action="#{componente.aggiungiHotelDB()}" styleClass="ui-priority-primary"/>  
-			 <p><a href="index.xhtml">Torna alla homepage</a></p>
+			<p:commandButton value="Modifica" id="ajax"  update="Hotel"
+             action="#{componente.modificaHotel()}" styleClass="ui-priority-primary"/>  
+			 <p><a href="searchHotel.xhtml">Lista Hotel</a></p>
+
 		</p:panel>
 	</h:form>
 </h:body>

@@ -11,7 +11,7 @@
 </h:head>
 <h:body>
 	<h:form>  
-  
+  <p:panel header="Cerca un aereo">
     <p:dataTable id="aereiTable" var="aereo" value="#{componente.listaAereiDB}" widgetVar="tabellaAerei"   
             emptyMessage="Nessun aereo trovato" filteredValue="#{componente.aereiSelezionati}">  
   
@@ -47,8 +47,9 @@
                 <h:link outcome = "modificaAereo?id=#{aereo.id}"  value="Modifica"/>
          </p:column> 
         
-       </p:dataTable>  
-      
+       </p:dataTable> 
+         <p><a href="index.xhtml">Torna alla homepage</a></p>
+      </p:panel>
 </h:form>  
 </h:body>
 </html>

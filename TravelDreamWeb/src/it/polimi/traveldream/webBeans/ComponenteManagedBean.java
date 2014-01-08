@@ -41,6 +41,10 @@ public class ComponenteManagedBean {
 	
 	private List<AereoDTO> aereiSelezionati;
 	
+	private List<HotelDTO> listaHotelDB;
+	
+	private List<HotelDTO> hotelSelezionati;
+	
 	public ComponenteManagedBean(){
 		
 	}
@@ -98,6 +102,19 @@ public class ComponenteManagedBean {
 	
 	public void caricaListaAerei(){
 		listaAereiDB = gestionePacchetto.getListaAerei();
+	}
+	
+	public void caricaListaHotel(){
+		listaHotelDB = gestionePacchetto.getListaHotel();
+	}
+	
+	public void initModificaHotel(String id){
+		hotel = gestioneComp.getHotelById(id);
+	}
+	
+	public String modificaHotel(){
+		gestioneComp.modificaHotel(hotel);
+		return "index?faces-redirect=true";
 	}
 	
 	public String modificaAereo(){
@@ -178,6 +195,22 @@ public class ComponenteManagedBean {
 
 	public void setAereiSelezionati(List<AereoDTO> aereiSelezionati) {
 		this.aereiSelezionati = aereiSelezionati;
+	}
+
+	public List<HotelDTO> getListaHotelDB() {
+		return listaHotelDB;
+	}
+
+	public void setListaHotelDB(List<HotelDTO> listaHotelDB) {
+		this.listaHotelDB = listaHotelDB;
+	}
+
+	public List<HotelDTO> getHotelSelezionati() {
+		return hotelSelezionati;
+	}
+
+	public void setHotelSelezionati(List<HotelDTO> hotelSelezionati) {
+		this.hotelSelezionati = hotelSelezionati;
 	}
 
 	

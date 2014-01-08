@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Lista Hotel</title>
+	#{componente.caricaListaHotel()}
+</h:head>
+<h:body>
+	<h:form>  
+  <p:panel header="Cerca un hotel">
+    <p:dataTable id="hotelTable" var="hotel" value="#{componente.listaHotelDB}" widgetVar="tabellaHotel"   
+            emptyMessage="Nessun hotel trovato" filteredValue="#{componente.hotelSelezionati}">  
+  
+         <f:facet name="header">  
+            <p:outputPanel>  
+                <h:outputText value="Search all fields:" />  
+                <p:inputText id="globalFilter" onkeyup="tabellaHotel.filter()" style="width:150px" />  
+            </p:outputPanel>  
+        </f:facet>  
+  
+        <p:column id="idAereo" filterBy="id"   
+                headerText="Id"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{hotel.id}" />  
+        </p:column>  
+        
+        <p:column id="nome" filterBy="nome"   
+                headerText="Nome" filterMatchMode="contains"> 
+           <h:outputText value="#{hotel.nome}" />  
+        </p:column> 
+  
+        <p:column id="citta" filterBy="citta"  
+                headerText="Citta" filterMatchMode="contains"> 
+            <h:outputText value="#{hotel.citta}" />  
+        </p:column>  
+  
+        <p:column id="rating" filterBy="rating"  
+                headerText="Rating" filterMatchMode="contains">  
+            <h:outputText value="#{hotel.rating}" />  
+        </p:column> 
+        
+         <p:column headerText="Modifica" style="width:24%" >  
+                <h:link outcome = "modificaHotel?id=#{hotel.id}"  value="Modifica"/>
+         </p:column> 
+        
+       </p:dataTable> 
+         <p><a href="index.xhtml">Torna alla homepage</a></p> 
+      </p:panel>
+</h:form>  
+</h:body>
+</html>

@@ -25,4 +25,8 @@ public interface GestioneComponenteBean {
 
 	void modificaAereo(AereoDTO aereo);
 
+	HotelDTO getHotelById(String id);
+
+	void modificaHotel(HotelDTO hotel);
+
 }
