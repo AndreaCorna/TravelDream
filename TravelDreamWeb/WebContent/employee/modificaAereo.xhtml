@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Modifica Aereo</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Modifica l'aereo">
+			<h:panelGrid columns="3" id="regGrid">
+			
+				<h:outputLabel for="id">Id:</h:outputLabel>#{componente.id}
+								
+				<h:outputLabel for="decollo">Decollo:</h:outputLabel>
+				<p:inputText id="decollo" value="#{componente.aereo.cittaDecollo}" />
+				<p:message for="decollo" />
+										
+				<h:outputLabel for="atterraggio">Atterraggio:</h:outputLabel>
+				<p:inputText id="atterraggio" value="#{componente.aereo.cittaAtterraggio}" />
+				<p:message for="atterraggio" />
+				
+				<h:outputLabel for="data">Data Volo:</h:outputLabel>
+				<p:calendar id="data" value="#{componente.aereo.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p></p>
+				
+				<h:outputLabel for="posti">Posti Disponibili:</h:outputLabel>
+				<p:inputText id="posti" value="#{componente.aereo.postiDisponibili}" validator="#{componente.validaNumero}"/>
+				<p:message for="posti" />
+				
+				<h:outputLabel for="costo">Costo:</h:outputLabel>
+				<p:inputText id="costo" value="#{componente.aereo.costo}" validator="#{componente.validaNumero}"/>
+				<p:message for="costo" />
+				
+								
+			</h:panelGrid>
+			<p:commandButton value="Aggiungi" id="ajax"  update="regGrid"
+             action="#{componente.modificaAereo()}" styleClass="ui-priority-primary"/>  
+			
+
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

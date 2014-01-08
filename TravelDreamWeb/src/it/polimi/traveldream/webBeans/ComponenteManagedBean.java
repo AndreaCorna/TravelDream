@@ -1,13 +1,17 @@
 package it.polimi.traveldream.webBeans;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneComponenteBean;
+import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +28,8 @@ public class ComponenteManagedBean {
 	
 	@EJB
 	private GestioneComponenteBean gestioneComp;
+	@EJB
+	private GestionePacchettoBean gestionePacchetto;
 	
 	private AereoDTO aereo;
 	
@@ -31,7 +37,18 @@ public class ComponenteManagedBean {
 	
 	private EscursioneDTO escursione;
 	
+	private AereoDataModel datiAerei;
+	
+	private List<AereoDTO> listaAerei;
+	
+	private List<AereoDTO> aereiSelezionati;
+	
 	public ComponenteManagedBean(){
+		
+	}
+	
+	@PostConstruct
+	public void init(){
 		setAereo(new AereoDTO());
 		setHotel(new HotelDTO());
 		setEscursione(new EscursioneDTO());
@@ -73,6 +90,21 @@ public class ComponenteManagedBean {
 	
 	public String aggiungiEscursioneDB(){
 		gestioneComp.aggiungiEscursioneDB(escursione);
+		return "index?faces-redirect=true";
+	}
+	
+	public String selezionaAereo(){
+		aereo = aereiSelezionati.get(0);
+		return "modificaAereo?faces-redirect=true";
+	}
+	
+	public void caricaListaAerei(){
+		listaAerei = gestionePacchetto.getListaAerei();
+		datiAerei = new AereoDataModel(listaAerei);
+	}
+	
+	public String modificaAereo(){
+		
 		return "index?faces-redirect=true";
 	}
 	
@@ -128,6 +160,30 @@ public class ComponenteManagedBean {
 		Pattern p1 = Pattern.compile("[0-9]+");
 		Matcher m1 = p1.matcher(id);
 		return  m1.find();
+	}
+
+	public AereoDataModel getDatiAerei() {
+		return datiAerei;
+	}
+
+	public void setDatiAerei(AereoDataModel datiAerei) {
+		this.datiAerei = datiAerei;
+	}
+
+	public List<AereoDTO> getListaAerei() {
+		return listaAerei;
+	}
+
+	public void setListaAerei(List<AereoDTO> listaAerei) {
+		this.listaAerei = listaAerei;
+	}
+
+	public List<AereoDTO> getAereiSelezionati() {
+		return aereiSelezionati;
+	}
+
+	public void setAereiSelezionati(List<AereoDTO> aereiSelezionati) {
+		this.aereiSelezionati = aereiSelezionati;
 	}
 
 	

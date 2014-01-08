@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Lista Aerei</title>
+	#{componente.caricaListaAerei()}
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Seleziona Aereo">
+			<h:panelGrid columns="3" id="aerei">
+				<p:dataTable id="listaAerei" var="aereo" value="#{componente.datiAerei}" paginator="true" rows="30"  
+		                 selection="#{componente.aereiSelezionati}">  
+		  		<f:facet name="header">  
+		            Lista Aerei
+		        </f:facet>  
+		  
+		 	   <p:column selectionMode="single" style="width:2%" />  
+		 	   
+		       <p:column headerText="Id" style="width:25%">  
+		            #{aereo.id}  
+		        </p:column>  
+		  
+		        <p:column headerText="Decollo" style="width:25%">  
+		            #{aereo.cittaDecollo}  
+		        </p:column>  
+		  
+		        <p:column headerText="Atterraggio" style="width:24%">  
+		            #{aereo.cittaAtterraggio}  
+		        </p:column>  
+		  
+		        <p:column headerText="Data" style="width:24%">  
+		            #{aereo.data}  
+		        </p:column>  
+		        
+		        <p:column headerText="Posti" style="width:24%">  
+		            #{aereo.postiDisponibili}  
+		        </p:column> 
+		        
+		        <p:column headerText="Costo" style="width:24%">  
+		            #{aereo.costo}  
+		        </p:column> 
+		  
+		       
+		    </p:dataTable>  
+			</h:panelGrid>
+			<p:commandButton value="Seleziona" id="ajax"  
+             action="#{componente.selezionaAereo()}" styleClass="ui-priority-primary"/>  
+            <p><a href="index.xhtml">Torna alla homepage</a></p>
+			
+
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
