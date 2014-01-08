@@ -142,8 +142,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setDestinazione(pacchetto.getDestinazione());
 		nuovoPacchetto.setEscursioni(escursioni);
 		nuovoPacchetto.setHotels(hotel);
-		nuovoPacchetto.setFine_Validit�(pacchetto.getFine_Validita());
-		nuovoPacchetto.setInizio_Validit�(pacchetto.getInizio_Validita());
+		nuovoPacchetto.setFine_Validità(pacchetto.getFine_Validita());
+		nuovoPacchetto.setInizio_Validità(pacchetto.getInizio_Validita());
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
 		nuovoPacchetto.setId(pacchetto.getId());
@@ -178,7 +178,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		HotelDTO nuovo = new HotelDTO();
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCitt�());
+		nuovo.setCitta(hotel.getCittà());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
