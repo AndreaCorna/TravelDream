@@ -1,6 +1,7 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
+import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Condivisione;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
 import it.polimi.traveldream.ejb.entities.Utente;
@@ -25,8 +26,6 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 	@Resource
 	private EJBContext context;
 	
-	@EJB
-	private GestioneUtenteBean gestioneUtente;
     /**
      * Default constructor. 
      */
@@ -40,7 +39,7 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		Condivisione dato = em.find(Condivisione.class, link);
 		condivisione.setData(dato.getData());
 		condivisione.setLink(dato.getLink());
-		condivisione.setUtente(gestioneUtente.getUtenteDTO(dato.getUtente().getUsername()));
+		condivisione.setUtente(convertToDTO(dato.getUtente()));
 		return condivisione;
 		
 	}
@@ -54,5 +53,13 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		em.persist(nuova);
 	}
 
+	
+	private UtenteDTO convertToDTO(Utente utente){
+		UtenteDTO nuovo = new UtenteDTO();
+		nuovo.setUsername(utente.getUsername());
+		nuovo.setEmail(utente.getEmail());
+		nuovo.setTelefono(utente.getTelefono());
+		return nuovo;
+	}
 
 }
