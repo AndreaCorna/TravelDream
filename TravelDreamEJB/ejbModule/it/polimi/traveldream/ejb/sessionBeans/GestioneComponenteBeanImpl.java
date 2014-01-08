@@ -93,16 +93,6 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return convertToDTO(aereo);
 	}
 	
-	private AereoDTO convertToDTO(Aereo aereo){
-		AereoDTO nuovo = new AereoDTO();
-		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
-		nuovo.setCittaDecollo(aereo.getDecollo());
-		nuovo.setCosto(aereo.getCosto());
-		nuovo.setData(aereo.getData());
-		nuovo.setId(aereo.getId());
-		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
-		return nuovo;
-	}
 
 	@Override
 	public void modificaAereo(AereoDTO aereo) {
@@ -114,6 +104,18 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setPosti_Disponibili(aereo.getPostiDisponibili());
 		em.merge(modificato);
 	}
+	
+	private AereoDTO convertToDTO(Aereo aereo){
+		AereoDTO nuovo = new AereoDTO();
+		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
+		nuovo.setCittaDecollo(aereo.getDecollo());
+		nuovo.setCosto(aereo.getCosto());
+		nuovo.setData(aereo.getData());
+		nuovo.setId(aereo.getId());
+		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
+		return nuovo;
+	}
+
 
 	
 	

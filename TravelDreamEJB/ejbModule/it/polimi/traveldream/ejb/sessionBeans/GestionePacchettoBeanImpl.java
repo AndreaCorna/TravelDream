@@ -179,6 +179,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
 		nuovo.setCitta(hotel.getCittà());
+		nuovo.setNome(hotel.getNome());
+		Integer value = new Integer(hotel.getStelle());
+		nuovo.setRating(value);
 		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
 		for(Camera camera:hotel.getCamere()){
 			camere.add(convertToDTO(camera));
