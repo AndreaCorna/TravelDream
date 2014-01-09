@@ -95,11 +95,13 @@
 		            <h:outputText value="#{pac.fine_Validita}" />  
 		        </p:column> 
 		        
-		        <p:column id="descri" filterBy="descrizione"   
-		                headerText="Descrizione" footerText="Descrizione"  
-		                filterMatchMode="contains">  
+		        <p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
 		            <h:outputText value="#{pac.descrizione}" />  
-		        </p:column>   
+		        </p:column>  
+		        
+		        <p:column headerText="Personalizza" style="width:24%" >  
+                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Personalizza"/>
+         </p:column>  
   
 		        	 </p:dataTable>  
       	<p></p>

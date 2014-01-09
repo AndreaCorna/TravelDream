@@ -95,4 +95,8 @@ public class Prenotazione_PacchettoDTO {
 	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
 	}
+	
+	public void setData(Date data){
+		this.data = data;
+	}
 }

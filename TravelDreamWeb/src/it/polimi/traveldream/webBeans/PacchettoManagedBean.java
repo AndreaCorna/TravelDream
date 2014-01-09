@@ -74,6 +74,17 @@ public class PacchettoManagedBean {
 		
 	}
 	
+	public void initPersonalizza(String id){
+		Integer value = new Integer(id);
+		boolean found = false;
+		for(int i=0; i<listaPacchetti.size() && !found; i++){
+			if(listaPacchetti.get(i).getId() == value.intValue()){
+				pacchetto = listaPacchetti.get(i);
+				found = true;
+			}
+		}
+	}
+	
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
 		caricaDestinazioni();
