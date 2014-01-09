@@ -61,10 +61,11 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<Prenotazione_PacchettoDTO> getListaPrenotazioni() {
 		String idUtenteOnline = context.getCallerPrincipal().getName();
-		List<Prenotazione_Pacchetto> prenotazioniUtente = em.createQuery("SELECT a FROM Prenotazione_Pacchetto a WHERE id_Utente =:nome")
-			    .setParameter("nome", idUtenteOnline)
+		Utente utenteOnline = em.find(Utente.class, idUtenteOnline);
+		List<Prenotazione_Pacchetto> prenotazioniUtente = em.createQuery("SELECT a FROM Prenotazione_Pacchetto a WHERE a.utente =:nome")
+			    .setParameter("nome", utenteOnline)
 			    .getResultList();
-		List<Prenotazione_PacchettoDTO> listaUtenti = convertListaUtentiOnlineToDTO(prenotazioniUtente, idUtenteOnline);
+		List<Prenotazione_PacchettoDTO> listaUtenti = convertListaUtentiOnlineToDTO(prenotazioniUtente, utenteOnline.getUsername());
 		return listaUtenti;
 	}
 	

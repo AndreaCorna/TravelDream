@@ -6,6 +6,8 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
 #{utente.caricaProfiloUtente()}
+#{prenotazione.mostraPrenotazioni()}
+
 </h:head>
 <h:body>
 
@@ -34,7 +36,7 @@
                 killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."></h:outputText>
             </h:panelGrid>
         </p:tab>
-       <p:tab title="Profilo">
+         <p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage value="/images/godfather/godfather1.jpg" />
                 <h:outputLabel for="nome" />Nome:
@@ -56,6 +58,7 @@
                 <p><a href="modificaProfilo.xhtml">Modifica il tuo profilo</a></p>
             </h:panelGrid>
         </p:tab>
+  
         <p:tab title="Godfather Part II">
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage value="/images/godfather/godfather2.jpg" />
@@ -78,13 +81,74 @@
 			<p></p>
 		</h:panelGrid>
 		</p:tab>
-		<p:tab title="Mostra Prenotazione">
+		<p:tab title="Mostra Prenotazioni">
+        	<h:panelGrid columns="4" id="regGrid">
+    			<p:dataTable id="tabella" var="pac" value="#{prenotazione.datiPrenotazione}" widgetVar="tabellaPrenotazioni"   
+          			  emptyMessage="Non hai effettuato alcuna prenotazione" filteredValue="#{prenotazione.prenotazioniSelezionate}"
+          			  		selectionMode="single" >  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value="Cerca  su tutti i campi:" />  
+               		 		<p:inputText id="globalFilter" onkeyup="tabellaPrenotazioni.filter()" style="width:150px" />  
+            			</p:outputPanel>  
+       			 </f:facet>  
+  
+		        <p:column id="id" filterBy="id"   
+		                headerText="id" footerText="id"
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.id}" />  
+		        </p:column> 
+		        
+		        <p:column id="pacchetto" filterBy="pacchetto"   
+		                headerText="pacchetto" footerText="pacchetto"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.pacchetto}" />  
+		        </p:column>
+		        
+		        <p:column id="data" filterBy="data"   
+		                headerText="data" footerText="data"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.data}" />  
+		        </p:column> 
+		        
+		        <p:column id="condivisioni" filterBy="condivisioni"   
+		                headerText="condivisioni" footerText="condivisioni"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.condivisioni}" />  
+		        </p:column>  
+		        <p:column id="escursioni" filterBy="escursioni"   
+		                headerText="escursioni" footerText="escursioni"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.escursioni}" />  
+		        </p:column> 
+		        <p:column id="aereo1" filterBy="aereo1"   
+		                headerText="aereo Andata" footerText="aereo1"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.aereo1}" />  
+		        </p:column>   
+		         <p:column id="aereo2" filterBy="aereo2"   
+		                headerText="aereo Ritorno" footerText="aereo2"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.aereo2}" />  
+		        </p:column> 
+		        <p:column id="hotel" filterBy="hotel"   
+		                headerText="hotel" footerText="hotel"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.hotel}" />  
+		        </p:column> 
+  
+		        	 </p:dataTable>  
+      	<p></p>
+      	</h:panelGrid>
+			</p:tab>
+	<!--	<p:tab title="Mostra Prenotazione">
          <h:panelGrid columns="2" cellpadding="10">
          	<p></p>
        		<p><a href=".../mostraPrenotazione.xhtml">Le tue Prenotazioni</a></p>
 			<p></p>
 		</h:panelGrid>
-		</p:tab>
+		</p:tab> -->
 
     </p:tabView>
 

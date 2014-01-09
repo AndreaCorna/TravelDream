@@ -4,6 +4,7 @@ package it.polimi.traveldream.webBeans;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.traveldream.dataModels.PrenotazioneDataModel;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean;
@@ -21,23 +22,42 @@ public class PrenotazioneManagedBean {
 	@EJB
 	private GestionePrenotazioneBean gestionePrenotazione;
 	
-	private List<Prenotazione_PacchettoDTO> listaPacchetti;
+	private List<Prenotazione_PacchettoDTO> listaPrenotazioni;
+	
+	private List<Prenotazione_PacchettoDTO> prenotazioniSelezionate;
 	
 	private Prenotazione_PacchettoDTO prenotazionePacchetto;
 	
+	private PrenotazioneDataModel datiPrenotazione;
+	
 	@PostConstruct
 	public void init(){
-		prenotazionePacchetto = new Prenotazione_PacchettoDTO();
+		setPrenotazionePacchetto(new Prenotazione_PacchettoDTO());
 	}
 	public void mostraPrenotazioni(){
-		listaPacchetti = gestionePrenotazione.getListaPrenotazioni();
-		caricaPrenotazioni();
+		listaPrenotazioni = gestionePrenotazione.getListaPrenotazioni();
+		datiPrenotazione = new PrenotazioneDataModel(listaPrenotazioni);
+		}
+	
+	public Prenotazione_PacchettoDTO getPrenotazionePacchetto() {
+		return prenotazionePacchetto;
 	}
 	
-	private void caricaPrenotazioni(){
-		ArrayList<String> listaPrenotazioni = new ArrayList<String>();
-		for(Prenotazione_PacchettoDTO prenotazione:listaPacchetti){
-				listaPrenotazioni.add(prenotazione.getAereoAndata().getCittaAtterraggio().toUpperCase());
-		}
-		}
+	public void setPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazionePacchetto) {
+		this.prenotazionePacchetto = prenotazionePacchetto;
+	}
+	
+	public PrenotazioneDataModel getDatiPrenotazione() {
+		return datiPrenotazione;
+	}
+	
+	public void setDatiPrenotazione(PrenotazioneDataModel datiPrenotazione) {
+		this.datiPrenotazione = datiPrenotazione;
+	}
+	public List<Prenotazione_PacchettoDTO> getPrenotazioniSelezionate() {
+		return prenotazioniSelezionate;
+	}
+	public void setPrenotazioniSelezionate(List<Prenotazione_PacchettoDTO> prenotazioniSelezionate) {
+		this.prenotazioniSelezionate = prenotazioniSelezionate;
+	}
 }
