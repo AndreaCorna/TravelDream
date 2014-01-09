@@ -73,6 +73,10 @@ public class PacchettoManagedBean {
 	
 	private DualListModel<String> listaSelezioneAereoRitorno;
 	
+	private DualListModel<String> listaSelezioneHotel;
+	
+	private DualListModel<String> listaSelezioneEscursioni;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -357,12 +361,24 @@ public class PacchettoManagedBean {
 	}
 	
 	private void loadListaHotel(){
-		
+		ArrayList<String> hotels = new ArrayList<String>();
+		for(HotelDTO hotel:pacchetto.getHotels()){
+			Integer id = new Integer(hotel.getId());
+			hotels.add(id.toString());
+		}
+		ArrayList<String> hotelsTarget = new ArrayList<String>();
+		setListaSelezioneHotel(new DualListModel<>(hotels, hotelsTarget));
 	
 	}
 	
 	private void loadListaEscursioni(){
-		
+		ArrayList<String> escursioni = new ArrayList<String>();
+		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
+			Integer id = new Integer(escursione.getId());
+			escursioni.add(id.toString());
+		}
+		ArrayList<String> escursioniTarget = new ArrayList<String>();
+		setListaSelezioneEscursioni(new DualListModel<>(escursioni, escursioniTarget));
 	}
 
 	public DualListModel<String> getListaSelezioneAereoRitorno() {
@@ -372,6 +388,22 @@ public class PacchettoManagedBean {
 	public void setListaSelezioneAereoRitorno(
 			DualListModel<String> listaSelezioneAereoRitorno) {
 		this.listaSelezioneAereoRitorno = listaSelezioneAereoRitorno;
+	}
+
+	public DualListModel<String> getListaSelezioneHotel() {
+		return listaSelezioneHotel;
+	}
+
+	public void setListaSelezioneHotel(DualListModel<String> listaSelezioneHotel) {
+		this.listaSelezioneHotel = listaSelezioneHotel;
+	}
+
+	public DualListModel<String> getListaSelezioneEscursioni() {
+		return listaSelezioneEscursioni;
+	}
+
+	public void setListaSelezioneEscursioni(DualListModel<String> listaSelezioneEscursioni) {
+		this.listaSelezioneEscursioni = listaSelezioneEscursioni;
 	}
 
 
