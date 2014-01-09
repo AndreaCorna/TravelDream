@@ -147,6 +147,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
 		nuovoPacchetto.setId(pacchetto.getId());
+		nuovoPacchetto.setNumeroPersone(pacchetto.getNumeroPersone());
 		em.persist(nuovoPacchetto);
 		
 	}
@@ -224,6 +225,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setAereiRitorno(convertListaAereiRitornoToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
 		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
 		nuovo.setDipendente(dipendente);
+		nuovo.setNumeroPersone(pacchetto.getNumeroPersone());
 		return nuovo;
 	}
 

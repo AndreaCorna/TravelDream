@@ -3,6 +3,8 @@ package it.polimi.traveldream.ejb.dto;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -30,6 +32,8 @@ public class PacchettoDTO {
 	private UtenteDTO dipendente;
 	@NotEmpty
 	private String descrizione;
+	@Min(1) @Max(4) 
+	private int numeroPersone;
 
 	public int getId() {
 		return id;
@@ -109,5 +113,13 @@ public class PacchettoDTO {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public int getNumeroPersone() {
+		return numeroPersone;
+	}
+
+	public void setNumeroPersone(int numeroPersone) {
+		this.numeroPersone = numeroPersone;
 	}
 }
