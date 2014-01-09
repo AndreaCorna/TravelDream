@@ -25,6 +25,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.model.DualListModel;
+
 
 @ManagedBean(name="pacchetto")
 @SessionScoped
@@ -67,6 +69,10 @@ public class PacchettoManagedBean {
 	
 	private SelectItem[] destinazioni;
 	
+	private DualListModel<String> listaSelezioneAereoAndata;
+	
+	private DualListModel<String> listaSelezioneAereoRitorno;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -81,8 +87,10 @@ public class PacchettoManagedBean {
 			if(listaPacchetti.get(i).getId() == value.intValue()){
 				pacchetto = listaPacchetti.get(i);
 				found = true;
+				loadListeSelezione(pacchetto);
 			}
 		}
+		
 	}
 	
 	public void mostraOfferte(){
@@ -310,6 +318,60 @@ public class PacchettoManagedBean {
 
 	public void setDestinazioni(SelectItem[] destinazioni) {
 		this.destinazioni = destinazioni;
+	}
+
+	public DualListModel<String> getListaSelezioneAereoAndata() {
+		return listaSelezioneAereoAndata;
+	}
+
+	public void setListaSelezioneAereoAndata(
+			DualListModel<String> listaSelezioneAereoAndata) {
+		this.listaSelezioneAereoAndata = listaSelezioneAereoAndata;
+	}
+	
+	private void loadListeSelezione(PacchettoDTO pacchetto){
+		loadListaAereiAndata();
+		loadListaAereiRitorno();
+		loadListaHotel();
+		loadListaEscursioni();
+	}
+	
+	private void loadListaAereiAndata(){
+		ArrayList<String> aereiAndata = new ArrayList<String>();
+		for(AereoDTO aereo:pacchetto.getAereiAndata()){
+			Integer id = new Integer(aereo.getId());
+			aereiAndata.add(id.toString());
+		}
+		ArrayList<String> aereiAndataTarget = new ArrayList<String>();
+		listaSelezioneAereoAndata = new DualListModel<>(aereiAndata, aereiAndataTarget);
+	}
+	
+	private void loadListaAereiRitorno(){
+		ArrayList<String> aereiRitorno = new ArrayList<String>();
+		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
+			Integer id = new Integer(aereo.getId());
+			aereiRitorno.add(id.toString());
+		}
+		ArrayList<String> aereiRitornoTarget = new ArrayList<String>();
+		setListaSelezioneAereoRitorno(new DualListModel<>(aereiRitorno, aereiRitornoTarget));
+	}
+	
+	private void loadListaHotel(){
+		
+	
+	}
+	
+	private void loadListaEscursioni(){
+		
+	}
+
+	public DualListModel<String> getListaSelezioneAereoRitorno() {
+		return listaSelezioneAereoRitorno;
+	}
+
+	public void setListaSelezioneAereoRitorno(
+			DualListModel<String> listaSelezioneAereoRitorno) {
+		this.listaSelezioneAereoRitorno = listaSelezioneAereoRitorno;
 	}
 
 

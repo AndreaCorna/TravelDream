@@ -11,7 +11,7 @@
 <body> 
 <h:form>
 		<p:panel header="Personalizza il pacchetto">
-			<h:panelGrid columns="3" id="regGrid">
+			<h:panelGrid columns="1" id="regGrid">
 				<h:outputLabel for="nome" />Destinazione:
                 <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
                 <h:outputLabel for="inizio" />Inizio Validita:
@@ -22,10 +22,18 @@
 				<p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
 				</p:dataList>
+				<p:pickList id="aereiAndata" value="#{pacchetto.listaSelezioneAereoAndata}" var="aereo" effect="bounce"  
+                    itemValue="#{aereo}" itemLabel="#{aereo}" > 
+                </p:pickList>
+                <p></p>
 				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
 				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
 				</p:dataList>  
+				<p:pickList id="aereiRitorno" value="#{pacchetto.listaSelezioneAereoRitorno}" var="aereo" effect="bounce"  
+                    itemValue="#{aereo}" itemLabel="#{aereo}" > 
+                </p:pickList>
+                  <p></p>
 				<h:outputLabel for="hotel" />Hotel:
 				<p:dataList value="#{pacchetto.pacchetto.hotels}" var="hotel" itemType="circle">  
    				 	#{hotel.nome}, #{hotel.citta}  
@@ -34,6 +42,10 @@
 				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
    				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
 				</p:dataList>
+				<h:outputLabel for="escursioni" />Descrizione:
+				<p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
+		            <h:outputText value="#{pacchetto.pacchetto.descrizione}" />  
+		        </p:column>  
 			</h:panelGrid>
 			 <p><a href="index.xhtml">Torna alla homepage</a></p>
 		</p:panel>
