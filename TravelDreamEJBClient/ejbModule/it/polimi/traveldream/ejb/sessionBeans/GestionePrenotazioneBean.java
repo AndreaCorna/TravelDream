@@ -19,4 +19,6 @@ public interface GestionePrenotazioneBean {
 
 	List<AereoDTO> getListaAereiAndata(String cittaAtterraggio,
 			Date inizioValidita, Date fineValidita);
+
+	List<AereoDTO> getListaPrenotazioni();
 }
