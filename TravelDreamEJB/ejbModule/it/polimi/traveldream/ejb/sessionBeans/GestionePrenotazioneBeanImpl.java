@@ -55,20 +55,6 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
     }
 
 
-/*
-	@SuppressWarnings("unchecked")
-	@Override
-	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio, Date inizioValidita, Date fineValidita) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data BETWEEN :startDate AND :endDate")
-			    .setParameter("nome", cittaAtterraggio)
-			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
-			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
-			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, cittaAtterraggio);
-		return listaAerei;
-	}
-	*/
 
 	@SuppressWarnings("unchecked")
 	@Override

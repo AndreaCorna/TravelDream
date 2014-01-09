@@ -71,7 +71,6 @@ public class PacchettoManagedBean {
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
-		
 	}
 	
 	public void mostraOfferte(){
