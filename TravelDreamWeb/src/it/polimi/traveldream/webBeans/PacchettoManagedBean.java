@@ -77,6 +77,8 @@ public class PacchettoManagedBean {
 	
 	private DualListModel<String> listaSelezioneEscursioni;
 	
+	private int id;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -86,9 +88,10 @@ public class PacchettoManagedBean {
 	
 	public void initPersonalizza(String id){
 		Integer value = new Integer(id);
+		this.id = value.intValue();
 		boolean found = false;
 		for(int i=0; i<listaPacchetti.size() && !found; i++){
-			if(listaPacchetti.get(i).getId() == value.intValue()){
+			if(listaPacchetti.get(i).getId() == this.id){
 				pacchetto = listaPacchetti.get(i);
 				found = true;
 				loadListeSelezione(pacchetto);
@@ -163,6 +166,17 @@ public class PacchettoManagedBean {
 	
 	public String creaPacchetto(){
 		gestionePacchetto.creaPacchetto(pacchetto);
+		return "index?faces-redirect=true";
+	}
+	
+	public String modificaPacchetto(){
+		pacchetto.setId(id);
+		return "index?faces-redirect=true";
+	}
+	
+	public String eliminaPacchetto(){
+		pacchetto.setId(id);
+		gestionePacchetto.eliminaPacchetto(pacchetto);
 		return "index?faces-redirect=true";
 	}
 	
@@ -436,6 +450,14 @@ public class PacchettoManagedBean {
 			}
 		}
 		return corretto;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 

@@ -153,6 +153,13 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void eliminaPacchetto(PacchettoDTO pacchetto) {
+		Pacchetto eliminato = em.find(Pacchetto.class, pacchetto.getId());
+		em.remove(eliminato);
+	}
+	
+	@Override
 	public boolean esisteIdPacchetto(String id) {
 		Integer value = new Integer(id);
 		if (em.find(Pacchetto.class,value.intValue())!=null){
@@ -332,6 +339,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
+
+	
 
 
 

@@ -10,9 +10,11 @@
 </h:head> 
 <body> 
 <p:panel header="Modifica il pacchetto">
+<h:form>
 	<p:tabView effect="drop" effectDuration="normal">
 		<p:tab title="Info di base">
 			<h:panelGrid columns="3" id="regGrid">
+				
 				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
 				<p:inputText id="dest" value="#{pacchetto.pacchetto.destinazione}" />
 				<p:message for="dest" value="Inserisci il nome"/>
@@ -28,13 +30,10 @@
 				</p:calendar>
 				<p></p>
 				
-				<h:outputLabel for="id">Id:</h:outputLabel>
-				<p:inputText id="id" value="#{pacchetto.pacchetto.id}"  validator="#{pacchetto.validaId}"/>
-				<p:message for="id" />
-				
 				<h:outputLabel for="numero">Numero di Persone:</h:outputLabel>
 				<p:inputText id="numero" value="#{pacchetto.pacchetto.numeroPersone}"  />
 				<p:message for="numero" />
+				<h:outputLabel for="dest">Id:</h:outputLabel>#{pacchetto.id}
 			</h:panelGrid>
 		</p:tab>
 		<p:tab title="Aerei">
@@ -187,9 +186,13 @@
 		</p:tab>
 		
 		
-		
+	
 	</p:tabView>
+	<p:commandButton value="Modifica" id="ajax"  ajax="false" action="riepilogo.xthml" />  
+	<p:commandButton value="Elimina" id="ajax1"  ajax="false" action="#{pacchetto.eliminaPacchetto()}" />  
+	
 	<p><a href="index.xhtml">Torna alla homepage</a></p>
+</h:form>
 </p:panel>
 
 </body> 
