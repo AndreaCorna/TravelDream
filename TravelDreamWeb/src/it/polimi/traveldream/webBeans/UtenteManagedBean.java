@@ -62,6 +62,7 @@ public class UtenteManagedBean {
 	}
 	
 	public String modificaProfilo(){
+		utente.setUsername(username);
 		gestioneUtente.modificaProfiloUtente(utente);
 		return "index?faces-redirect=true";
 		 

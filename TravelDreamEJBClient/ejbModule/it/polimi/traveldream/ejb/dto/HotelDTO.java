@@ -1,5 +1,6 @@
 package it.polimi.traveldream.ejb.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,12 @@ public class HotelDTO {
 	private List<CameraDTO> camere;
 	@NotNull
 	private Integer rating;
+	@NotNull
+	private float costoGiornaliero;
+	@NotNull
+	private Date dataInizio;
+	@NotNull
+	private Date dataFine;
 	
 	
 	
@@ -56,6 +63,24 @@ public class HotelDTO {
 	}
 	public void setRating(Integer rating) {
 		this.rating = rating;
+	}
+	public float getCostoGiornaliero() {
+		return costoGiornaliero;
+	}
+	public void setCostoGiornaliero(float costoGiornaliero) {
+		this.costoGiornaliero = costoGiornaliero;
+	}
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+	public Date getDataFine() {
+		return dataFine;
+	}
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
 	}
 	
 	

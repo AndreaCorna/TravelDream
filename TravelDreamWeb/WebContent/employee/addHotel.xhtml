@@ -29,6 +29,19 @@
 				<p:inputText id="camere" value="#{componente.hotel.camereDisponibili}" validator="#{componente.validaNumero}"/>
 				<p:message for="camere" />
 				
+				<h:outputLabel for="costo">Costo:</h:outputLabel>
+				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}" />
+				<p:message for="costo" />
+				
+				<h:outputLabel for="data_inizio">Data Inizio:</h:outputLabel>
+				<p:calendar binding="#{data_inizio}" required="true" value="#{componente.hotel.dataInizio}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline" />
+									
+				<h:outputLabel for="dataFine">Data Fine:</h:outputLabel>
+				<p:calendar id="dataFine" value="#{componente.hotel.dataFine}" pattern="dd/MM/yyyy HH:mm:ss" 
+				navigator="true" display="inline" validator="#{componente.validaDateHotel}">
+				<f:attribute name="data_inizio" value="#{data_inizio}" />
+				</p:calendar>
+								
 				 <h:outputLabel for="rating">Stelle:</h:outputLabel>
         			<p:rating value="#{componente.hotel.rating}" />  
 												

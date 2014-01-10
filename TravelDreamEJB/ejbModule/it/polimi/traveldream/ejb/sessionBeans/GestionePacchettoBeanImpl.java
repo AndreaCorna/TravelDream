@@ -183,6 +183,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
+		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
+		nuovo.setDataFine(hotel.getDataFine());
+		nuovo.setDataInizio(hotel.getDataInizio());
 		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
 		for(Camera camera:hotel.getCamere()){
 			camere.add(convertToDTO(camera));
