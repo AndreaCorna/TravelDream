@@ -29,6 +29,11 @@
 				<p:inputText id="camere" value="#{componente.hotel.camereDisponibili}" validator="#{componente.validaNumero}"/>
 				<p:message for="camere" />
 				
+				<h:outputLabel for="costo">Costo:</h:outputLabel>
+				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}" />
+				<p:message for="costo" />
+				
+								
 				 <h:outputLabel for="rating">Stelle:</h:outputLabel>
         			<p:rating value="#{componente.hotel.rating}" />  
 												

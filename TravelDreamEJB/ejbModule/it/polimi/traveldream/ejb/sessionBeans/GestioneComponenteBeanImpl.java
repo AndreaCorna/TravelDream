@@ -1,6 +1,7 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.CameraDTO;
@@ -10,6 +11,7 @@ import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
+import it.polimi.traveldream.ejb.entities.Pacchetto;
 
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
@@ -125,6 +127,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setDecollo(aereo.getCittaDecollo());
 		modificato.setPosti_Disponibili(aereo.getPostiDisponibili());
 		em.merge(modificato);
+		aggiornaPacchetti(modificato);
 	}
 	
 	@Override
@@ -135,7 +138,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setCitt�(hotel.getCitta());
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
+		modificato.setCostoGiornaliero(hotel.getCostoGiornaliero());
+		modificato.setDataCheckOut(hotel.getDataFine());
+		modificato.setDataCheckIn(hotel.getDataInizio());
 		em.merge(modificato);
+		//aggiornaPacchetti(modificato);
 	}
 	
 	@Override
@@ -147,6 +154,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setLuogo(escursione.getLuogo());
 		modificato.setPrezzo(escursione.getPrezzo());
 		em.merge(modificato);
+		aggiornaPacchetti(modificato);
 		
 	}
 	
@@ -169,6 +177,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
+		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
+		nuovo.setDataFine(hotel.getDataCheckOut());
+		nuovo.setDataInizio(hotel.getDataCheckIn());
 		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
 		for(Camera camera:hotel.getCamere()){
 			camere.add(convertToDTO(camera));
@@ -197,6 +208,55 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		nuovo.setPrezzo(escursione.getPrezzo());
 		return nuovo;
 	}
+	
+	@SuppressWarnings("unchecked")
+	private void aggiornaPacchetti(Aereo aereo){
+		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.aerei) a WHERE a=:nome")
+			    .setParameter("nome",aereo).getResultList();
+		for(Pacchetto pacchetto:pacchetti){
+			if(aereo.getData().before(pacchetto.getInizio_Validità()) ||
+					aereo.getData().after(pacchetto.getFine_Validità())){
+				pacchetto.getAerei().remove(aereo);
+				if(!conRitornoAndata(pacchetto)){
+					em.remove(pacchetto);
+				}
+			}
+		}
+   
+	}
+	
+	@SuppressWarnings({"unchecked" })
+	private void aggiornaPacchetti(Escursione escursione){
+		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.escursioni) e WHERE e=:nome")
+			    .setParameter("nome",escursione).getResultList();
+		for(Pacchetto pacchetto:pacchetti){
+			if(escursione.getData().before(pacchetto.getInizio_Validità()) ||
+					escursione.getData().after(pacchetto.getFine_Validità())){
+				pacchetto.getAerei().remove(escursione);
+				if(pacchetto.getEscursioni().size() == 0){
+					em.remove(pacchetto);
+				}
+			}
+		}
+	}
+	
+		
+	private boolean conRitornoAndata(Pacchetto pacchetto){
+		boolean andata = false;
+		boolean ritorno = false;
+		List<Aereo> lista = pacchetto.getAerei();
+		for(int i=0;i<lista.size() && (!andata || !ritorno);i++){
+			if( lista.get(i).getAtterraggio().equals(pacchetto.getDestinazione())){
+				andata = true;
+			}
+			else if( lista.get(i).getDecollo().equals(pacchetto.getDestinazione())){
+				ritorno = true;
+			}
+		}
+		return andata & ritorno;
+	}
+	
+	
 
 
 

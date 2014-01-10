@@ -56,6 +56,12 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
         // TODO Auto-generated constructor stub
     }
 
+	@Override
+	public List<Prenotazione_PacchettoDTO> getPrenotazioni() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	@SuppressWarnings("unchecked")
@@ -145,9 +151,9 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			PacchettoDTO nuovo = new PacchettoDTO();
 			nuovo.setDescrizione(pacchetto.getDescrizione());
 			nuovo.setDestinazione(pacchetto.getDestinazione());
-			nuovo.setFine_Validita(pacchetto.getFine_Validità());
+			nuovo.setFine_Validita(pacchetto.getFine_Validitï¿½());
 			nuovo.setId(pacchetto.getId());
-			nuovo.setInizio_Validita(pacchetto.getInizio_Validità());
+			nuovo.setInizio_Validita(pacchetto.getInizio_Validitï¿½());
 			nuovo.setHotels(convertListaHotelToDTO(pacchetto.getHotels()));
 			nuovo.setEscursioni(convertListaEscursioniToDTO(pacchetto.getEscursioni()));
 			nuovo.setAereiAndata(convertListaAereiAndataToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
@@ -217,7 +223,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			HotelDTO nuovo = new HotelDTO();
 			nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 			nuovo.setId(hotel.getId());
-			nuovo.setCitta(hotel.getCittà());
+			nuovo.setCitta(hotel.getCittï¿½());
 			nuovo.setNome(hotel.getNome());
 			Integer value = new Integer(hotel.getStelle());
 			nuovo.setRating(value);

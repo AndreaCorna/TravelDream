@@ -32,6 +32,10 @@
 				<p:inputText id="id" value="#{pacchetto.pacchetto.id}"  validator="#{pacchetto.validaId}"/>
 				<p:message for="id" />
 				
+				<h:outputLabel for="numero">Numero di Persone:</h:outputLabel>
+				<p:inputText id="numero" value="#{pacchetto.pacchetto.numeroPersone}"  />
+				<p:message for="numero" />
+				
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="ajax"  update="regGrid"
              action="#{pacchetto.aggiungiDestinazioneDate()}" styleClass="ui-priority-primary"/>  

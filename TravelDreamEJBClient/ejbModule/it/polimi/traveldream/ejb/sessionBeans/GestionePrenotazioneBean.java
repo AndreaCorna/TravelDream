@@ -12,6 +12,8 @@ import javax.ejb.Local;
 
 @Local
 public interface GestionePrenotazioneBean {
+
+	List<Prenotazione_PacchettoDTO> getPrenotazioni();
 	
 	
 	List<Prenotazione_PacchettoDTO> getListaPrenotazioni();

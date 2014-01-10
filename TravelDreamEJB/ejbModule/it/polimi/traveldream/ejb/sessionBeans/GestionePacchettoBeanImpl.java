@@ -147,7 +147,34 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
 		nuovoPacchetto.setId(pacchetto.getId());
+		nuovoPacchetto.setNumeroPersone(pacchetto.getNumeroPersone());
 		em.persist(nuovoPacchetto);
+		
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void eliminaPacchetto(PacchettoDTO pacchetto) {
+		Pacchetto eliminato = em.find(Pacchetto.class, pacchetto.getId());
+		em.remove(eliminato);
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void modificaPacchetto(PacchettoDTO pacchetto) {
+		Pacchetto modificato = em.find(Pacchetto.class, pacchetto.getId());
+		List<Escursione> escursioni = covertListaEscursioni(pacchetto.getEscursioni());
+		List<Hotel> hotel = convertListaHotel(pacchetto.getHotels());
+		List<Aereo> aerei = convertListaAerei(pacchetto.getAereiAndata(),pacchetto.getAereiRitorno());
+		modificato.setDescrizione(pacchetto.getDescrizione());
+		modificato.setDestinazione(pacchetto.getDestinazione());
+		modificato.setEscursioni(escursioni);
+		modificato.setHotels(hotel);
+		modificato.setFine_Validità(pacchetto.getFine_Validita());
+		modificato.setInizio_Validità(pacchetto.getInizio_Validita());
+		modificato.setAerei(aerei);
+		modificato.setNumeroPersone(pacchetto.getNumeroPersone());
+		em.merge(modificato);
 		
 	}
 	
@@ -182,6 +209,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
+		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
+		nuovo.setDataFine(hotel.getDataCheckOut());
+		nuovo.setDataInizio(hotel.getDataCheckIn());
 		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
 		for(Camera camera:hotel.getCamere()){
 			camere.add(convertToDTO(camera));
@@ -224,6 +254,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setAereiRitorno(convertListaAereiRitornoToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
 		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
 		nuovo.setDipendente(dipendente);
+		nuovo.setNumeroPersone(pacchetto.getNumeroPersone());
 		return nuovo;
 	}
 
@@ -327,6 +358,10 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
+
+	
+
+	
 
 
 

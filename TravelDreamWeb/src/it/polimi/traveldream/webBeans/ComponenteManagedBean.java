@@ -1,5 +1,6 @@
 package it.polimi.traveldream.webBeans;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
@@ -183,6 +185,15 @@ public class ComponenteManagedBean {
 		if (!isNumeroCorretto(value.toString())){
             throw new ValidatorException(new FacesMessage("Il campo può contenere solo numeri"));
 		}
+	}
+	
+	public void validaDateHotel(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
+		Date dataInizio = (Date)datainizio.getValue();
+		Date dataFine = (Date)value;
+		if (dataFine.before(dataInizio)){
+                throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
+        }
 	}
 	
 	/*public void aereoVola(FacesContext context,UIComponent component,Object value) throws ValidatorException{

@@ -33,4 +33,8 @@ public interface GestionePacchettoBean {
 
 	List<PacchettoDTO> getListaPacchetti();
 
+	void eliminaPacchetto(PacchettoDTO pacchetto);
+
+	void modificaPacchetto(PacchettoDTO pacchetto);
+
 }

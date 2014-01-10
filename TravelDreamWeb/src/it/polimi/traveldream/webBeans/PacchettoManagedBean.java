@@ -25,6 +25,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.model.DualListModel;
+
 
 @ManagedBean(name="pacchetto")
 @SessionScoped
@@ -67,10 +69,45 @@ public class PacchettoManagedBean {
 	
 	private SelectItem[] destinazioni;
 	
+	private DualListModel<String> listaSelezioneAereoAndata;
+	
+	private DualListModel<String> listaSelezioneAereoRitorno;
+	
+	private DualListModel<String> listaSelezioneHotel;
+	
+	private DualListModel<String> listaSelezioneEscursioni;
+	
+	private int id;
+	
 	
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
+	}
+	
+	public void initPersonalizza(String id){
+		if(	!id.equals("")){
+			Integer value = new Integer(id);
+			this.id = value.intValue();
+		}
+		boolean found = false;
+		for(int i=0; i<listaPacchetti.size() && !found; i++){
+			if(listaPacchetti.get(i).getId() == this.id){
+				pacchetto = listaPacchetti.get(i);
+				found = true;
+				loadListeSelezione(pacchetto);
+			}
+		}
+		
+	}
+	
+	public void initModifica(String id){
+		initPersonalizza(id);
+		datiAereiAndata = new AereoDataModel(pacchetto.getAereiAndata());
+		datiAereiRitorno = new AereoDataModel(pacchetto.getAereiRitorno());
+		datiHotel = new HotelDataModel(pacchetto.getHotels());
+		datiEscursioni = new EscursioneDataModel(pacchetto.getEscursioni());
+		resetSelezioni();
 	}
 	
 	public void mostraOfferte(){
@@ -93,7 +130,8 @@ public class PacchettoManagedBean {
 
 	
 	public String aggiungiAerei(){
-		if (listaAereiAndata.size()>0 && listaAereiRitorno.size()>0){
+		
+		if (validaAerei()){
 			pacchetto.setAereiAndata(listaAereiAndata);
 			pacchetto.setAereiRitorno(listaAereiRitorno);
 			listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
@@ -101,8 +139,10 @@ public class PacchettoManagedBean {
 			return "insertHotel?faces-redirect=true";
 		}
 		else
-			return "insertAereo?faces-redirect=true";
+			return null;
 	}
+	
+	
 	
 	public String aggiungiHotel(){
 		if ( listaHotel.size()>0 ){
@@ -113,7 +153,7 @@ public class PacchettoManagedBean {
 			return "insertEscursione?faces-redirect=true";
 		}
 		else
-			return  "insertHotel?faces-redirect=true";
+			return  null;
 		
 	}
 	
@@ -123,11 +163,30 @@ public class PacchettoManagedBean {
 			return "riepilogo?faces-redirect=true";
 		}
 		else
-			return "insertEscursione?faces-redirect=true";
+			return  null;
 	}
 	
 	public String creaPacchetto(){
 		gestionePacchetto.creaPacchetto(pacchetto);
+		return "index?faces-redirect=true";
+	}
+	
+	public String modificaPacchetto(){
+		if(validaModifiche()){
+			pacchetto.setAereiAndata(listaAereiAndata);
+			pacchetto.setAereiRitorno(listaAereiRitorno);
+			pacchetto.setHotels(listaHotel);
+			pacchetto.setEscursioni(listaEscursioni);
+			pacchetto.setId(id);
+			gestionePacchetto.modificaPacchetto(pacchetto);
+			return "index?faces-redirect=true";
+		}
+		return "modificaPacchetto.xhtml?id="+id;
+	}
+	
+	public String eliminaPacchetto(){
+		pacchetto.setId(id);
+		gestionePacchetto.eliminaPacchetto(pacchetto);
 		return "index?faces-redirect=true";
 	}
 	
@@ -300,6 +359,131 @@ public class PacchettoManagedBean {
 		this.destinazioni = destinazioni;
 	}
 
+	public DualListModel<String> getListaSelezioneAereoAndata() {
+		return listaSelezioneAereoAndata;
+	}
+
+	public void setListaSelezioneAereoAndata(
+			DualListModel<String> listaSelezioneAereoAndata) {
+		this.listaSelezioneAereoAndata = listaSelezioneAereoAndata;
+	}
+	
+	private void loadListeSelezione(PacchettoDTO pacchetto){
+		loadListaAereiAndata();
+		loadListaAereiRitorno();
+		loadListaHotel();
+		loadListaEscursioni();
+	}
+	
+	private void loadListaAereiAndata(){
+		ArrayList<String> aereiAndata = new ArrayList<String>();
+		for(AereoDTO aereo:pacchetto.getAereiAndata()){
+			Integer id = new Integer(aereo.getId());
+			aereiAndata.add(id.toString());
+		}
+		ArrayList<String> aereiAndataTarget = new ArrayList<String>();
+		listaSelezioneAereoAndata = new DualListModel<>(aereiAndata, aereiAndataTarget);
+	}
+	
+	private void loadListaAereiRitorno(){
+		ArrayList<String> aereiRitorno = new ArrayList<String>();
+		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
+			Integer id = new Integer(aereo.getId());
+			aereiRitorno.add(id.toString());
+		}
+		ArrayList<String> aereiRitornoTarget = new ArrayList<String>();
+		setListaSelezioneAereoRitorno(new DualListModel<>(aereiRitorno, aereiRitornoTarget));
+	}
+	
+	private void loadListaHotel(){
+		ArrayList<String> hotels = new ArrayList<String>();
+		for(HotelDTO hotel:pacchetto.getHotels()){
+			Integer id = new Integer(hotel.getId());
+			hotels.add(id.toString());
+		}
+		ArrayList<String> hotelsTarget = new ArrayList<String>();
+		setListaSelezioneHotel(new DualListModel<>(hotels, hotelsTarget));
+	
+	}
+	
+	private void loadListaEscursioni(){
+		ArrayList<String> escursioni = new ArrayList<String>();
+		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
+			Integer id = new Integer(escursione.getId());
+			escursioni.add(id.toString());
+		}
+		ArrayList<String> escursioniTarget = new ArrayList<String>();
+		setListaSelezioneEscursioni(new DualListModel<>(escursioni, escursioniTarget));
+	}
+
+	public DualListModel<String> getListaSelezioneAereoRitorno() {
+		return listaSelezioneAereoRitorno;
+	}
+
+	public void setListaSelezioneAereoRitorno(
+			DualListModel<String> listaSelezioneAereoRitorno) {
+		this.listaSelezioneAereoRitorno = listaSelezioneAereoRitorno;
+	}
+
+	public DualListModel<String> getListaSelezioneHotel() {
+		return listaSelezioneHotel;
+	}
+
+	public void setListaSelezioneHotel(DualListModel<String> listaSelezioneHotel) {
+		this.listaSelezioneHotel = listaSelezioneHotel;
+	}
+
+	public DualListModel<String> getListaSelezioneEscursioni() {
+		return listaSelezioneEscursioni;
+	}
+
+	public void setListaSelezioneEscursioni(DualListModel<String> listaSelezioneEscursioni) {
+		this.listaSelezioneEscursioni = listaSelezioneEscursioni;
+	}
+	
+	private boolean validaAerei(){
+		boolean corretto = false;
+		if(listaAereiAndata.size()==0 || listaAereiRitorno.size()==0)
+			return false;
+		else{
+			for(int i=0;i<listaAereiAndata.size();i++){
+				corretto = false;
+				AereoDTO andata = listaAereiAndata.get(i);
+				for(int j=0;j<listaAereiRitorno.size() && !corretto;j++){
+					AereoDTO ritorno = listaAereiRitorno.get(j);
+					if(andata.getData().before(ritorno.getData()) && 
+							andata.getCittaDecollo().equals(ritorno.getCittaAtterraggio()))
+						corretto=true;
+				}
+				if(!corretto)
+					return corretto;
+			}
+		}
+		return corretto;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	private boolean validaModifiche(){
+		return validaAerei() && listaHotel.size()>0 && listaEscursioni.size()>=0;
+	}
+	
+	private void resetSelezioni(){
+		if(listaAereiAndata != null)
+			listaAereiAndata.clear();
+		if(listaAereiRitorno != null)
+			listaAereiRitorno.clear();
+		if(listaEscursioni != null)
+			listaEscursioni.clear();
+		if(listaHotel != null)
+			listaHotel.clear();
+	}
 
 
 

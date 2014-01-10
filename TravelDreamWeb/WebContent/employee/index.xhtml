@@ -57,11 +57,50 @@
         </p:tab>
         <p:tab title="Gestione Pacchetto">
             <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather2.jpg" />
-                <h:outputText value="Aggiungi i componenti al database"></h:outputText>
-                <p><a href="insertDestAndDate.xhtml">Crea un Pacchetto</a></p>
-               
-            </h:panelGrid>
+                <h:outputText value="Gestisci i Pacchetti dell'agenzia"></h:outputText>
+                <p></p>
+                <p:dataTable id="tabellaPac" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaPacchetti"   
+          			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
+          			  		selectionMode="single" >  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value="Cerca  su tutti i campi:" />  
+               		 		<p:inputText id="globalFilter" onkeyup="tabellaPacchetti.filter()" style="width:150px" />  
+            			</p:outputPanel>  
+       			 </f:facet>  
+  
+		        <p:column id="dest" filterBy="destinazione"   
+		                headerText="Destinazione" footerText="Destinazione"
+		                filterOptions="#{pacchetto.destinazioni}"
+		                filterMatchMode="exact">  
+		            <h:outputText value="#{pac.destinazione}" />  
+		        </p:column> 
+		        
+		        <p:column id="inizio_Validita" filterBy="inizio_Validita"   
+		                headerText="Inizio Offerta" footerText="Inizio Offerta"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.inizio_Validita}" />  
+		        </p:column>
+		        
+		        <p:column id="fine_Validita" filterBy="fine_Validita"   
+		                headerText="Fine Offerta" footerText="Fine Offerta"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.fine_Validita}" />  
+		        </p:column> 
+		        
+		        <p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
+		            <h:outputText value="#{pac.descrizione}" />  
+		        </p:column>  
+		        
+		        <p:column headerText="Modifica" style="width:24%" >  
+                <h:link outcome = "modificaPacchetto?id=#{pac.id}"  value="Modifica"/>
+         		</p:column>  
+  			</p:dataTable>
+  		
+        </h:panelGrid>
+        <p></p>
+ 		 <p><a href="insertDestAndDate.xhtml">Crea un Pacchetto</a></p>  
         </p:tab>
         <p:tab title="Mostra Offerte">
         	<h:panelGrid columns="4" id="regGrid">
@@ -95,11 +134,13 @@
 		            <h:outputText value="#{pac.fine_Validita}" />  
 		        </p:column> 
 		        
-		        <p:column id="descri" filterBy="descrizione"   
-		                headerText="Descrizione" footerText="Descrizione"  
-		                filterMatchMode="contains">  
+		        <p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
 		            <h:outputText value="#{pac.descrizione}" />  
-		        </p:column>   
+		        </p:column>  
+		        
+		        <p:column headerText="Personalizza" style="width:24%" >  
+                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Personalizza"/>
+         </p:column>  
   
 		        	 </p:dataTable>  
       	<p></p>

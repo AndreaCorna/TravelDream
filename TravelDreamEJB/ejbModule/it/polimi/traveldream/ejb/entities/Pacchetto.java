@@ -35,6 +35,9 @@ public class Pacchetto implements Serializable {
 	
 	@Column(name="Descrizione")
 	private String descrizione;
+	
+	@Column(name="Numero_Persone")
+	private int numeroPersone;
 
 	//uni-directional many-to-many association to Aereo
 	@ManyToMany
@@ -154,6 +157,14 @@ public class Pacchetto implements Serializable {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public int getNumeroPersone() {
+		return numeroPersone;
+	}
+
+	public void setNumeroPersone(int numeroPersone) {
+		this.numeroPersone = numeroPersone;
 	}
 
 }

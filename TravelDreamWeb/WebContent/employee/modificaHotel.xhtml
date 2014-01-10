@@ -29,7 +29,11 @@
 				<p:message for="camere" />
 				
 				 <h:outputLabel for="rating">Stelle:</h:outputLabel>
-        			<p:rating value="#{componente.hotel.rating}" />  
+        			<p:rating value="#{componente.hotel.rating}" />
+        			
+        		<h:outputLabel for="costo">Costo:</h:outputLabel>
+				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}" />
+				<p:message for="costo" />  
 												
 			</h:panelGrid>
 			<p:commandButton value="Modifica" id="ajax"  update="Hotel"

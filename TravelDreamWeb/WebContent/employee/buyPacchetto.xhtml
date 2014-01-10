@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+<title>Personalizza Pacchettoo</title>
+	#{pacchetto.initPersonalizza(param['id'])}</h:head> 
+<body> 
+<h:form>
+		<p:panel header="Personalizza il pacchetto">
+			<h:panelGrid columns="1" id="regGrid">
+				<h:outputLabel for="nome" />Destinazione:
+                <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
+                <h:outputLabel for="inizio" />Inizio Validita:
+                <h:outputText value="#{pacchetto.pacchetto.inizio_Validita}" />
+                <h:outputLabel for="fine" />Fine Validita:
+                <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
+                <h:outputLabel for="andataAerei" />Aerei di Andata:
+				<p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
+				</p:dataList>
+				<p:pickList id="aereiAndata" value="#{pacchetto.listaSelezioneAereoAndata}" var="aereo" effect="bounce"  
+                    itemValue="#{aereo}" itemLabel="#{aereo}" > 
+                </p:pickList>
+                <p></p>
+				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
+				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
+				</p:dataList>  
+				<p:pickList id="aereiRitorno" value="#{pacchetto.listaSelezioneAereoRitorno}" var="aereo" effect="bounce"  
+                    itemValue="#{aereo}" itemLabel="#{aereo}" > 
+                </p:pickList>
+                  <p></p>
+				<h:outputLabel for="hotel" />Hotel:
+				<p:dataList value="#{pacchetto.pacchetto.hotels}" var="hotel" itemType="circle">  
+   				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}  
+				</p:dataList>  
+				<p:pickList id="hotel" value="#{pacchetto.listaSelezioneHotel}" var="hotel" effect="bounce"  
+                    itemValue="#{hotel}" itemLabel="#{hotel}" > 
+                </p:pickList>
+                 <p></p>
+				<h:outputLabel for="escursioni" />Escursioni:
+				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+				</p:dataList>
+				<p:pickList id="escur" value="#{pacchetto.listaSelezioneEscursioni}" var="esc" effect="bounce"  
+                    itemValue="#{esc}" itemLabel="#{esc}" > 
+                </p:pickList>
+                 <p></p>
+				<h:outputLabel for="escursioni" />Descrizione:
+				<p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
+		            <h:outputText value="#{pacchetto.pacchetto.descrizione}" />  
+		        </p:column>  
+			</h:panelGrid>
+			 <p><a href="index.xhtml">Torna alla homepage</a></p>
+		</p:panel>
+</h:form>
+</body> 
+</html>
