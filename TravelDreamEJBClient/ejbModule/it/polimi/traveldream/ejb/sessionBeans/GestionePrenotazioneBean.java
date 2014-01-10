@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 
 import java.util.Date;
@@ -14,4 +15,6 @@ public interface GestionePrenotazioneBean {
 	
 	
 	List<Prenotazione_PacchettoDTO> getListaPrenotazioni();
+
+	List<Prenotazione_ViaggioDTO> getListaPrenotazioniViaggio();
 }

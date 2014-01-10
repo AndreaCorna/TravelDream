@@ -7,6 +7,7 @@ import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Camera;
@@ -15,6 +16,7 @@ import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import java.util.ArrayList;
@@ -69,12 +71,35 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		return listaUtenti;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<Prenotazione_ViaggioDTO> getListaPrenotazioniViaggio() {
+		String idUtenteOnline = context.getCallerPrincipal().getName();
+		Utente utenteOnline = em.find(Utente.class, idUtenteOnline);
+		List<Prenotazione_Viaggio> prenotazioniUtente = em.createQuery("SELECT a FROM Prenotazione_Viaggio a WHERE a.utente =:nome")
+			    .setParameter("nome", utenteOnline)
+			    .getResultList();
+		List<Prenotazione_ViaggioDTO> listaUtenti = convertListaUtentiOnlineViaggiToDTO(prenotazioniUtente, utenteOnline.getUsername());
+		return listaUtenti;
+	}
 
 	
 	/*
 	 * Metodi privati per la conversione di un oggetto prelevato dal database in un oggetto che verrà inviato alla view.
 	 */
+	
+	private List<Prenotazione_ViaggioDTO> convertListaUtentiOnlineViaggiToDTO(List<Prenotazione_Viaggio> lista, String idUtenteOnline){
+		ArrayList<Prenotazione_ViaggioDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_ViaggioDTO>();
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).getUtente().getUsername().toLowerCase().equals(idUtenteOnline.toLowerCase()))
+			{	Prenotazione_ViaggioDTO nuovo = convertToDTO(lista.get(i));
+				listaPacchettiPrenotati.add(nuovo);
+			}
+		}
+		List<Prenotazione_ViaggioDTO> prenotazioni = listaPacchettiPrenotati;
+		return prenotazioni;
+	}
 	
 	private List<Prenotazione_PacchettoDTO> convertListaUtentiOnlineToDTO(List<Prenotazione_Pacchetto> lista, String idUtenteOnline){
 		ArrayList<Prenotazione_PacchettoDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_PacchettoDTO>();
@@ -87,6 +112,19 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		List<Prenotazione_PacchettoDTO> prenotazioni = listaPacchettiPrenotati;
 		return prenotazioni;
 	}
+		
+		private Prenotazione_ViaggioDTO convertToDTO(Prenotazione_Viaggio prenotazione){
+			Prenotazione_ViaggioDTO nuovo = new Prenotazione_ViaggioDTO();
+			nuovo.setId(prenotazione.getId());
+			nuovo.setData(prenotazione.getData());
+			nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
+			nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));                //CONTINUARE DA QUI
+			nuovo.setAereoRitorno(convertAereoRitornoToDTO(prenotazione.getAereo2()));
+			nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
+			nuovo.setUtente(convertToDTO(prenotazione.getUtente()));
+			
+			return nuovo;
+		}
 		
 		private Prenotazione_PacchettoDTO convertToDTO(Prenotazione_Pacchetto prenotazione){
 			Prenotazione_PacchettoDTO nuovo = new Prenotazione_PacchettoDTO();
