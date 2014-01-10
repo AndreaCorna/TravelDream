@@ -23,8 +23,10 @@ public interface GestioneViaggioBean {
 	public void mostraRiepilogo();
 
 	List<AereoDTO> getListaAereiAndata(String cittaAtterraggio,
-			Date inizioValidita, Date fineValidita);
+			Date partenza);
 
 	List<AereoDTO> getListaAereiRitorno(String cittaDecollo,
-			Date inizioValidita, Date fineValidita);
+			Date partenza);
+
+	public void aggiungiAereoViaggio(AereoDTO aereoAndata);
 }

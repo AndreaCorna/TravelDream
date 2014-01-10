@@ -68,6 +68,11 @@ public class ViaggioManagedBean {
 	
 	private SelectItem[] destinazioni;
 	
+	private AereoDTO aereoAndata;
+	
+	private AereoDTO aereoRitorno;
+	
+	
 	
 	@PostConstruct
 	public void init(){
@@ -82,13 +87,7 @@ public class ViaggioManagedBean {
 	*/
 
 	public String aggiungiDestinazioneDate(){
-		String destinazione = viaggio.getDestinazione();
-		Date inizioValidita = viaggio.getInizio_Validita();
-		Date fineValidita = viaggio.getFine_Validita();
-		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, inizioValidita, fineValidita);
-		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazione, inizioValidita, fineValidita);
-		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
-		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
+		gestioneViaggio.aggiungiAereoViaggio(aereoAndata);
 		return "insertAereo?faces-redirect=true";
 	}
 

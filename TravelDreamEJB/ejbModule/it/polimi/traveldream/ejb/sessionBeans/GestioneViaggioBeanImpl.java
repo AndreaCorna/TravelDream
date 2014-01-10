@@ -77,11 +77,10 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio, Date inizioValidita, Date fineValidita) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data BETWEEN :startDate AND :endDate")
+	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio, Date andata) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data = startDate")
 			    .setParameter("nome", cittaAtterraggio)
-			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
-			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
+			    .setParameter("startDate", andata, TemporalType.TIMESTAMP)
 			    .getResultList();
 		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, cittaAtterraggio);
 		return listaAerei;
@@ -90,11 +89,10 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date inizioValidita, Date fineValidita) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.data BETWEEN :startDate AND :endDate")
+	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date partenza) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.data = startDAte")
 			    .setParameter("nome", cittaDecollo)
-			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
-			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
+			    .setParameter("startDate", partenza, TemporalType.TIMESTAMP)
 			    .getResultList();
 		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei, cittaDecollo);
 		return listaAerei;
@@ -208,5 +206,11 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovo.setLuogo(escursione.getLuogo());
 		nuovo.setPrezzo(escursione.getPrezzo());
 		return nuovo;
+	}
+
+	@Override
+	public void aggiungiAereoViaggio(AereoDTO aereoAndata) {
+		// TODO Auto-generated method stub
+		
 	}
 }
