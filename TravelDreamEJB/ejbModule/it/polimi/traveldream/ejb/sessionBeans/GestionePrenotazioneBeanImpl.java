@@ -5,7 +5,7 @@ import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
-import it.polimi.traveldream.ejb.dto.ViaggioDTO;
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
@@ -141,8 +141,8 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			return nuovo;
 		}
 		
-		private ViaggioDTO convertToDTO(Pacchetto pacchetto){
-			ViaggioDTO nuovo = new ViaggioDTO();
+		private PacchettoDTO convertToDTO(Pacchetto pacchetto){
+			PacchettoDTO nuovo = new PacchettoDTO();
 			nuovo.setDescrizione(pacchetto.getDescrizione());
 			nuovo.setDestinazione(pacchetto.getDestinazione());
 			nuovo.setFine_Validita(pacchetto.getFine_Validità());

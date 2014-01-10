@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
-public class ViaggioDTO {
+public class PacchettoDTO {
 
 	@NotNull
 	private int id;

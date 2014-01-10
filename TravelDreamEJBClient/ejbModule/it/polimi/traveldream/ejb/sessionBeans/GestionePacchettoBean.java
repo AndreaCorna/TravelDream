@@ -3,7 +3,7 @@ package it.polimi.traveldream.ejb.sessionBeans;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
-import it.polimi.traveldream.ejb.dto.ViaggioDTO;
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -27,10 +27,10 @@ public interface GestionePacchettoBean {
 
 	List<EscursioneDTO> getListaEscursioni(String destinazione,Date inizioValidita, Date fineValidita);
 
-	void creaPacchetto(ViaggioDTO pacchetto);
+	void creaPacchetto(PacchettoDTO pacchetto);
 
 	boolean esisteIdPacchetto(String id);
 
-	List<ViaggioDTO> getListaPacchetti();
+	List<PacchettoDTO> getListaPacchetti();
 
 }

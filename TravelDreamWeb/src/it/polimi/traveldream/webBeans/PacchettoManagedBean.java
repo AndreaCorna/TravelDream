@@ -11,7 +11,7 @@ import it.polimi.traveldream.dataModels.PacchettoDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
-import it.polimi.traveldream.ejb.dto.ViaggioDTO;
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 
 import javax.annotation.PostConstruct;
@@ -57,11 +57,11 @@ public class PacchettoManagedBean {
 	
 	private EscursioneDataModel datiEscursioni;
 	
-	private ViaggioDTO pacchetto;
+	private PacchettoDTO pacchetto;
 	
-	private List<ViaggioDTO> listaPacchetti;
+	private List<PacchettoDTO> listaPacchetti;
 	
-	private List<ViaggioDTO> listaPacchettiSelezionati;
+	private List<PacchettoDTO> listaPacchettiSelezionati;
 	
 	private PacchettoDataModel datiPacchetti;
 	
@@ -70,7 +70,7 @@ public class PacchettoManagedBean {
 	
 	@PostConstruct
 	public void init(){
-		pacchetto = new ViaggioDTO();
+		pacchetto = new PacchettoDTO();
 	}
 	
 	public void mostraOfferte(){
@@ -194,11 +194,11 @@ public class PacchettoManagedBean {
 		this.datiAereiAndata = datiAerei;
 	}
 	
-	public ViaggioDTO getPacchetto() {
+	public PacchettoDTO getPacchetto() {
 		return pacchetto;
 	}
 
-	public void setPacchetto(ViaggioDTO pacchetto) {
+	public void setPacchetto(PacchettoDTO pacchetto) {
 		this.pacchetto = pacchetto;
 	}
 
@@ -251,21 +251,21 @@ public class PacchettoManagedBean {
 	}
 
 
-	public List<ViaggioDTO> getListaPacchetti() {
+	public List<PacchettoDTO> getListaPacchetti() {
 		return listaPacchetti;
 	}
 
 
-	public void setListaPacchetti(List<ViaggioDTO> listaPacchetti) {
+	public void setListaPacchetti(List<PacchettoDTO> listaPacchetti) {
 		this.listaPacchetti = listaPacchetti;
 	}
 
-	public List<ViaggioDTO> getListaPacchettiSelezionati() {
+	public List<PacchettoDTO> getListaPacchettiSelezionati() {
 		return listaPacchettiSelezionati;
 	}
 
 	public void setListaPacchettiSelezionati(
-			List<ViaggioDTO> listaPacchettiSelezionati) {
+			List<PacchettoDTO> listaPacchettiSelezionati) {
 		this.listaPacchettiSelezionati = listaPacchettiSelezionati;
 	}
 
@@ -279,7 +279,7 @@ public class PacchettoManagedBean {
 
 	private void caricaDestinazioni(){
 		ArrayList<String> listaDestinazioni = new ArrayList<String>();
-		for(ViaggioDTO pacchetto:listaPacchetti){
+		for(PacchettoDTO pacchetto:listaPacchetti){
 			if (!listaDestinazioni.contains(pacchetto.getDestinazione().toUpperCase())){
 				listaDestinazioni.add(pacchetto.getDestinazione().toUpperCase());
 			}

@@ -2,25 +2,25 @@ package it.polimi.traveldream.dataModels;
 
 import java.util.List;
 
-import it.polimi.traveldream.ejb.dto.ViaggioDTO;
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 
 import javax.faces.model.ListDataModel;
 
 import org.primefaces.model.SelectableDataModel;
 
-public class PacchettoDataModel extends ListDataModel<ViaggioDTO> implements SelectableDataModel<ViaggioDTO>{
+public class PacchettoDataModel extends ListDataModel<PacchettoDTO> implements SelectableDataModel<PacchettoDTO>{
 
 	public PacchettoDataModel(){
 		
 	}
 	
-	public PacchettoDataModel(List<ViaggioDTO> listaPacchetti){
+	public PacchettoDataModel(List<PacchettoDTO> listaPacchetti){
 		super(listaPacchetti);
 	}
 	@Override
-	public ViaggioDTO getRowData(String id) {
-		List<ViaggioDTO> pacchetti = (List<ViaggioDTO>) getWrappedData(); 
-		for(ViaggioDTO pacchetto:pacchetti){
+	public PacchettoDTO getRowData(String id) {
+		List<PacchettoDTO> pacchetti = (List<PacchettoDTO>) getWrappedData(); 
+		for(PacchettoDTO pacchetto:pacchetti){
 			Integer value = new Integer(pacchetto.getId());
 			if ( value.toString().equals(id)){
 				return pacchetto;
@@ -30,7 +30,7 @@ public class PacchettoDataModel extends ListDataModel<ViaggioDTO> implements Sel
 	}
 
 	@Override
-	public Object getRowKey(ViaggioDTO pacchetto) {
+	public Object getRowKey(PacchettoDTO pacchetto) {
 		return pacchetto.getId();
 	}
 

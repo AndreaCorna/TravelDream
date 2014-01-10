@@ -2,7 +2,7 @@ package it.polimi.traveldream.dataModels;
 
 import java.util.List;
 
-import it.polimi.traveldream.ejb.dto.ViaggioDTO;
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 
