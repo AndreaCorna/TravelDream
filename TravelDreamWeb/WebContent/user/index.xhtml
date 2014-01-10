@@ -169,17 +169,17 @@
 		        <p:column id="aereoAndata" filterBy="aereoAndata"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.aereoAndata}" />  
+		            <h:outputText value="#{pacV.aereoAndata.getData()}" />  
 		        </p:column>   
 		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
 		                headerText="aereo Ritorno" footerText="aereoRitorno"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.aereoRitorno}" />  
+		            <h:outputText value="#{pacV.aereoRitorno.getData()}" />  
 		        </p:column> 
 		        <p:column id="hotel" filterBy="hotel"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{paVc.hotel}" />  
+		            <h:outputText value="#{paVc.hotel.getNome}" />  
 		        </p:column> 
   
 		        	 </p:dataTable>  

@@ -96,8 +96,8 @@ public class Prenotazione_PacchettoDTO {
 		this.utente = utente;
 	}
 
-	public void setData(Date data2) {
+	public void setData(Date data) {
 		// TODO Auto-generated method stub
-		
+		this.data=data;
 	}
 }

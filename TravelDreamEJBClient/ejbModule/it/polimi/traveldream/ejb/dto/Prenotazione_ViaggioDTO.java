@@ -76,8 +76,8 @@ public class Prenotazione_ViaggioDTO {
 	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
 	}
-	public void setData(Date data2) {
+	public void setData(Date data) {
 		// TODO Auto-generated method stub
-		
+		this.data = data;
 	}
 }
