@@ -21,9 +21,9 @@ public class HotelDTO {
 	private Integer rating;
 	@NotNull
 	private float costoGiornaliero;
-	@NotNull
+	
 	private Date dataInizio;
-	@NotNull
+	
 	private Date dataFine;
 	
 	

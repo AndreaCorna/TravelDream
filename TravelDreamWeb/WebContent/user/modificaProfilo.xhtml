@@ -13,7 +13,8 @@
 	<h:form>
 		<p:panel header="Modifica Profilo">
 			<h:panelGrid columns="3" id="regGrid">
-				
+								
+					
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
 				<p:inputText id="nome" value="#{utente.utente.nome}" />
 				<p:message for="nome" value="Inserisci il nome"/>
@@ -46,10 +47,6 @@
 				<p:inputText id="cf" value="#{utente.utente.codiceFiscale}" validator="#{utente.validaUpdateCodFis}"/>
 				<p:message for="cf" />
 							
-				<h:outputLabel for="username">Username:</h:outputLabel>
-				<p:inputText id="username" value="#{utente.utente.username}"  validator="#{utente.validaUpdateUsername}"/>
-				<p:message for="username" />
-				
 				<h:outputLabel for="password">Password:</h:outputLabel>
 				<p:password id="password" value="#{utente.utente.password}"
 					feedback="true" match="pwd2" label="Password"/>
@@ -63,9 +60,9 @@
 			<p:commandButton value="Aggiorna" id="ajax"  update="regGrid"
              action="#{utente.modificaProfilo()}" styleClass="ui-priority-primary"/>  
              <p:commandButton value="Elimina Profilo" id="ajax1"  update="regGrid"
-             action="#{utente.eliminaProfilo()}" styleClass="ui-priority-primary"/> 
+             action="#{utente.eliminaProfilo()}" styleClass="ui-priority-primary"/>  
              <p></p>    
-      		 <p><a href="index.xhtml">Torna alla homepage</a></p> 
+      		 <p><a href="index.xhtml">Torna alla homepage</a></p>
 			
 
 		</p:panel>

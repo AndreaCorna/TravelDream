@@ -117,7 +117,8 @@ public class PacchettoManagedBean {
 
 	
 	public String aggiungiAerei(){
-		if (listaAereiAndata.size()>0 && listaAereiRitorno.size()>0){
+		
+		if (validaAereiAndata()){
 			pacchetto.setAereiAndata(listaAereiAndata);
 			pacchetto.setAereiRitorno(listaAereiRitorno);
 			listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
@@ -125,7 +126,28 @@ public class PacchettoManagedBean {
 			return "insertHotel?faces-redirect=true";
 		}
 		else
-			return "insertAereo?faces-redirect=true";
+			return null;
+	}
+	
+	private boolean validaAereiAndata(){
+		boolean corretto = false;
+		if(listaAereiAndata.size()==0 || listaAereiRitorno.size()==0)
+			return false;
+		else{
+			for(int i=0;i<listaAereiAndata.size();i++){
+				corretto = false;
+				AereoDTO andata = listaAereiAndata.get(i);
+				for(int j=0;j<listaAereiRitorno.size() && !corretto;j++){
+					AereoDTO ritorno = listaAereiRitorno.get(j);
+					if(andata.getData().before(ritorno.getData()) && 
+							andata.getCittaDecollo().equals(ritorno.getCittaAtterraggio()))
+						corretto=true;
+				}
+				if(!corretto)
+					return corretto;
+			}
+		}
+		return corretto;
 	}
 	
 	public String aggiungiHotel(){
@@ -137,7 +159,7 @@ public class PacchettoManagedBean {
 			return "insertEscursione?faces-redirect=true";
 		}
 		else
-			return  "insertHotel?faces-redirect=true";
+			return  null;
 		
 	}
 	
@@ -147,7 +169,7 @@ public class PacchettoManagedBean {
 			return "riepilogo?faces-redirect=true";
 		}
 		else
-			return "insertEscursione?faces-redirect=true";
+			return  null;
 	}
 	
 	public String creaPacchetto(){
