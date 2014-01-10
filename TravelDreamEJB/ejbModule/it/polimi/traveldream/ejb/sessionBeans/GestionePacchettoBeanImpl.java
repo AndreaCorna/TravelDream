@@ -4,7 +4,7 @@ import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
-import it.polimi.traveldream.ejb.dto.PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Camera;
@@ -49,9 +49,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<PacchettoDTO> getListaPacchetti() {
+	public List<ViaggioDTO> getListaPacchetti() {
 		List<Pacchetto> pacchettiDB = em.createNamedQuery("Pacchetto.findAll", Pacchetto.class).getResultList();
-		List<PacchettoDTO> pacchetti = convertListaPacchettiToDTO(pacchettiDB);
+		List<ViaggioDTO> pacchetti = convertListaPacchettiToDTO(pacchettiDB);
 		return pacchetti;
 		
 	}
@@ -132,7 +132,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
-	public void creaPacchetto(PacchettoDTO pacchetto) {
+	public void creaPacchetto(ViaggioDTO pacchetto) {
 		Pacchetto nuovoPacchetto = new Pacchetto();
 		List<Escursione> escursioni = covertListaEscursioni(pacchetto.getEscursioni());
 		List<Hotel> hotel = convertListaHotel(pacchetto.getHotels());
@@ -211,8 +211,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return nuovo;
 	}
 	
-	private PacchettoDTO convertToDTO(Pacchetto pacchetto){
-		PacchettoDTO nuovo = new PacchettoDTO();
+	private ViaggioDTO convertToDTO(Pacchetto pacchetto){
+		ViaggioDTO nuovo = new ViaggioDTO();
 		nuovo.setDescrizione(pacchetto.getDescrizione());
 		nuovo.setDestinazione(pacchetto.getDestinazione());
 		nuovo.setFine_Validita(pacchetto.getFine_Validità());
@@ -319,12 +319,12 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return hotel;
 	}
 	
-	private List<PacchettoDTO> convertListaPacchettiToDTO(List<Pacchetto> lista){
-		ArrayList<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();
+	private List<ViaggioDTO> convertListaPacchettiToDTO(List<Pacchetto> lista){
+		ArrayList<ViaggioDTO> pacchetti = new ArrayList<ViaggioDTO>();
 		for (int i=0;i<lista.size();i++){
 			pacchetti.add(convertToDTO(lista.get(i)));
 		}
-		List<PacchettoDTO> listaPacchetti = pacchetti;
+		List<ViaggioDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
 

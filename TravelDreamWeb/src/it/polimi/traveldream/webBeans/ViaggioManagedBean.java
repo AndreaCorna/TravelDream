@@ -13,6 +13,7 @@ import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.ViaggioDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
+import it.polimi.traveldream.ejb.sessionBeans.GestioneViaggioBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,12 +27,12 @@ import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
 
-@ManagedBean(name="pacchetto")
+@ManagedBean(name="viaggio")
 @SessionScoped
-public class PacchettoManagedBean {
+public class ViaggioManagedBean {
 
 	@EJB
-	private GestionePacchettoBean gestionePacchetto;
+	private GestioneViaggioBean gestioneViaggio;
 	
 	private List<AereoDTO> listaAereiAndata;
 	
@@ -57,7 +58,7 @@ public class PacchettoManagedBean {
 	
 	private EscursioneDataModel datiEscursioni;
 	
-	private ViaggioDTO pacchetto;
+	private ViaggioDTO viaggio;
 	
 	private List<ViaggioDTO> listaPacchetti;
 	
@@ -70,66 +71,39 @@ public class PacchettoManagedBean {
 	
 	@PostConstruct
 	public void init(){
-		pacchetto = new ViaggioDTO();
+		viaggio = new ViaggioDTO();
 	}
-	
+	/*
 	public void mostraOfferte(){
-		listaPacchetti = gestionePacchetto.getListaPacchetti();
+		listaPacchetti = gestioneViaggio.getListaPacchetti();
 		caricaDestinazioni();
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
-	
+	*/
 
 	public String aggiungiDestinazioneDate(){
-		String destinazione = pacchetto.getDestinazione();
-		Date inizioValidita = pacchetto.getInizio_Validita();
-		Date fineValidita = pacchetto.getFine_Validita();
-		listaAereiAndataDB = gestionePacchetto.getListaAereiAndata(destinazione, inizioValidita, fineValidita);
-		listaAereiRitornoDB = gestionePacchetto.getListaAereiRitorno(destinazione, inizioValidita, fineValidita);
+		String destinazione = viaggio.getDestinazione();
+		Date inizioValidita = viaggio.getInizio_Validita();
+		Date fineValidita = viaggio.getFine_Validita();
+		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, inizioValidita, fineValidita);
+		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazione, inizioValidita, fineValidita);
 		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
 		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
 		return "insertAereo?faces-redirect=true";
 	}
 
 	
-	public String aggiungiAerei(){
-		if (listaAereiAndata.size()>0 && listaAereiRitorno.size()>0){
-			pacchetto.setAereiAndata(listaAereiAndata);
-			pacchetto.setAereiRitorno(listaAereiRitorno);
-			listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
-			setDatiHotel(new HotelDataModel(listaHotelDB));
-			return "insertHotel?faces-redirect=true";
-		}
-		else
-			return "insertAereo?faces-redirect=true";
-	}
-	
-	public String aggiungiHotel(){
-		if ( listaHotel.size()>0 ){
-			pacchetto.setHotels(listaHotel);
-			listaEscursioniDB = gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(),
-							pacchetto.getFine_Validita());
-			setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
-			return "insertEscursione?faces-redirect=true";
-		}
-		else
-			return  "insertHotel?faces-redirect=true";
-		
-	}
+
 	
 	public String aggiungiEscursioni(){
 		if ( listaEscursioni.size()>0 ){
-			pacchetto.setEscursioni(listaEscursioni);
+			viaggio.setEscursioni(listaEscursioni);
 			return "riepilogo?faces-redirect=true";
 		}
 		else
 			return "insertEscursione?faces-redirect=true";
 	}
-	
-	public String creaPacchetto(){
-		gestionePacchetto.creaPacchetto(pacchetto);
-		return "index?faces-redirect=true";
-	}
+
 	
 	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
@@ -137,12 +111,6 @@ public class PacchettoManagedBean {
 		Date dataFine = (Date)value;
 		if (dataFine.before(dataInizio)){
                 throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
-        }
-	}
-	
-	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-        if (gestionePacchetto.esisteIdPacchetto(value.toString())){
-                throw new ValidatorException(new FacesMessage("Id già utilizzato. Scegline un altro"));
         }
 	}
 
@@ -195,11 +163,11 @@ public class PacchettoManagedBean {
 	}
 	
 	public ViaggioDTO getPacchetto() {
-		return pacchetto;
+		return viaggio;
 	}
 
 	public void setPacchetto(ViaggioDTO pacchetto) {
-		this.pacchetto = pacchetto;
+		this.viaggio = pacchetto;
 	}
 
 	public List<HotelDTO> getListaHotel() {

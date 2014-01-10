@@ -25,7 +25,7 @@ public class Prenotazione_PacchettoDTO {
 	@NotNull
 	private HotelDTO hotel;
 	@NotNull
-	private PacchettoDTO pacchetto;
+	private ViaggioDTO pacchetto;
 	@NotNull
 	private UtenteDTO utente;
 	
@@ -80,11 +80,11 @@ public class Prenotazione_PacchettoDTO {
 		this.aereoRitorno = aereoRitorno;
 	}
 	
-	public PacchettoDTO getPacchetto() {
+	public ViaggioDTO getPacchetto() {
 		return pacchetto;
 	}
 
-	public void setPacchetto(PacchettoDTO pacchetto) {
+	public void setPacchetto(ViaggioDTO pacchetto) {
 		this.pacchetto = pacchetto;
 	}
 

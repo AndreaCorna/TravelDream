@@ -8,51 +8,36 @@
       xmlns:p="http://primefaces.org/ui"
    >
    
+<h:head>
+	<title>Acquista Viaggio</title>
+</h:head>
 <h:body>
-<p:panel header="Inserisci la Destinazione e la Data">
-
-		<h:panelGrid columns="3" id="regGrid">
-		
-			<h:outputLabel for="dest">Destinazione Volo:</h:outputLabel>
-			<p:inputText id="dest" value="#{Aereo.Aereo.atterraggio}" />
-			<p:message for="dest" value="Inserisci il nome"/>
-					
-			<h:outputLabel for="data_partenza">Data di Partenza:</h:outputLabel>
-			<p:calendar binding="#{data_inizio}" required="true" value="#{Aereo.Aereo.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
-			<p></p>
+	<h:form>
+		<p:panel header="Inserisci la Destinazione e la Data">
+			<h:panelGrid columns="3" id="regGrid">
 			
-		</h:panelGrid>
-		
-		<p:commandButton value="Prosegui" id="ajax"  update="regGrid"
+				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
+				<p:inputText id="dest" value="#{pacchetto.pacchetto.destinazione}" />
+				<p:message for="dest" value="Inserisci il nome"/>
+				
+				<h:outputLabel for="data_inizio">Data di Inizio Validità:</h:outputLabel>
+				<p:calendar binding="#{data_inizio}" required="true" value="#{pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p></p>
+				
+				<h:outputLabel for="data_fine">Data di Fine Validità</h:outputLabel>
+				<p:calendar id="data_fine" value="#{pacchetto.pacchetto.fine_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
+								validator="#{pacchetto.validaDate}" >
+								<f:attribute name="data_inizio" value="#{data_inizio}" />
+				</p:calendar>
+				<p></p>
+
+				
+			</h:panelGrid>
+			<p:commandButton value="Prosegui" id="ajax"  update="regGrid"
              action="#{pacchetto.aggiungiDestinazioneDate()}" styleClass="ui-priority-primary"/>  
-             
-</p:panel>	
+			
+
+		</p:panel>
+	</h:form>
 </h:body>
 </html>
-				
-	<!--			
-       <p:panel header="Seleziona luogo partenza volo">
-		<h:form id="luogoVoloAndata">
-			<p:commandButton value="Cerca Volo" id="ajax"  update="regGrid"
-             action="#{Prenotazione_Viaggio.voloAndata()}" styleClass="ui-priority-primary"/>  
-		</h:form>
-		
-	</p:panel>
-	 <p:panel header="Seleziona il tuo volo di ritorno">
-		<h:form id="voloRitorno">
-			<p class="search">
-    <input name="search" type="text" class="txt" />
-    <input name="search-btn" type="submit" class="btn" value="SEARCH" />
-</p>
-		</h:form>
-	</p:panel>
-	 <p:panel header="Cerca Il tuo Albergo">
-		<h:form id="albergo">
-			<p class="search">
-    <input name="search" type="text" class="txt" />
-    <input name="search-btn" type="submit" class="btn" value="SEARCH" />
-</p>
-		</h:form>
-	</p:panel>
-	
-	-->

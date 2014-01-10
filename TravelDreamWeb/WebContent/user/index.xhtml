@@ -103,7 +103,7 @@
 		        <p:column id="pacchetto" filterBy="pacchetto"   
 		                headerText="pacchetto" footerText="pacchetto"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.pacchetto}" />  
+		            <h:outputText value="#{pac.pacchetto.getId()}" />  
 		        </p:column>
 		        
 		        <p:column id="data" filterBy="data"   
@@ -112,30 +112,25 @@
 		            <h:outputText value="#{pac.data}" />  
 		        </p:column> 
 		        
-		        <p:column id="condivisioni" filterBy="condivisioni"   
-		                headerText="condivisioni" footerText="condivisioni"  
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.condivisioni}" />  
-		        </p:column>  
 		        <p:column id="escursioni" filterBy="escursioni"   
 		                headerText="escursioni" footerText="escursioni"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.escursioni}" />  
 		        </p:column> 
-		        <p:column id="aereo1" filterBy="aereo1"   
-		                headerText="aereo Andata" footerText="aereo1"  
+		        <p:column id="aereoAndata" filterBy="aereoAndata"   
+		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.aereo1}" />  
+		            <h:outputText value="#{pac.aereoAndata.getData()}" />  
 		        </p:column>   
-		         <p:column id="aereo2" filterBy="aereo2"   
-		                headerText="aereo Ritorno" footerText="aereo2"  
+		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
+		                headerText="aereo Ritorno" footerText="aereoRItorno"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.aereo2}" />  
+		            <h:outputText value="#{pac.aereoRitorno.getData()}" />  
 		        </p:column> 
 		        <p:column id="hotel" filterBy="hotel"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.hotel}" />  
+		            <h:outputText value="#{pac.hotel.getNome()}" />  
 		        </p:column> 
   
 		        	 </p:dataTable>

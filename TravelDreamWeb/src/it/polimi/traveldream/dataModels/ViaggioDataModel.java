@@ -8,13 +8,13 @@ import javax.faces.model.ListDataModel;
 
 import org.primefaces.model.SelectableDataModel;
 
-public class PacchettoDataModel extends ListDataModel<ViaggioDTO> implements SelectableDataModel<ViaggioDTO>{
+public class ViaggioDataModel extends ListDataModel<ViaggioDTO> implements SelectableDataModel<ViaggioDTO>{
 
-	public PacchettoDataModel(){
+	public ViaggioDataModel(){
 		
 	}
 	
-	public PacchettoDataModel(List<ViaggioDTO> listaPacchetti){
+	public ViaggioDataModel(List<ViaggioDTO> listaPacchetti){
 		super(listaPacchetti);
 	}
 	@Override
