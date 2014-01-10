@@ -35,4 +35,6 @@ public interface GestionePacchettoBean {
 
 	void eliminaPacchetto(PacchettoDTO pacchetto);
 
+	void modificaPacchetto(PacchettoDTO pacchetto);
+
 }

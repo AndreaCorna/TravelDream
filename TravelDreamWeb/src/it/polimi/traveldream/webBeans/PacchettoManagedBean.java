@@ -87,8 +87,10 @@ public class PacchettoManagedBean {
 	}
 	
 	public void initPersonalizza(String id){
-		Integer value = new Integer(id);
-		this.id = value.intValue();
+		if(	!id.equals("")){
+			Integer value = new Integer(id);
+			this.id = value.intValue();
+		}
 		boolean found = false;
 		for(int i=0; i<listaPacchetti.size() && !found; i++){
 			if(listaPacchetti.get(i).getId() == this.id){
@@ -106,6 +108,7 @@ public class PacchettoManagedBean {
 		datiAereiRitorno = new AereoDataModel(pacchetto.getAereiRitorno());
 		datiHotel = new HotelDataModel(pacchetto.getHotels());
 		datiEscursioni = new EscursioneDataModel(pacchetto.getEscursioni());
+		resetSelezioni();
 	}
 	
 	public void mostraOfferte(){
@@ -170,8 +173,16 @@ public class PacchettoManagedBean {
 	}
 	
 	public String modificaPacchetto(){
-		pacchetto.setId(id);
-		return "index?faces-redirect=true";
+		if(validaModifiche()){
+			pacchetto.setAereiAndata(listaAereiAndata);
+			pacchetto.setAereiRitorno(listaAereiRitorno);
+			pacchetto.setHotels(listaHotel);
+			pacchetto.setEscursioni(listaEscursioni);
+			pacchetto.setId(id);
+			gestionePacchetto.modificaPacchetto(pacchetto);
+			return "index?faces-redirect=true";
+		}
+		return "modificaPacchetto.xhtml?id="+id;
 	}
 	
 	public String eliminaPacchetto(){
@@ -460,6 +471,20 @@ public class PacchettoManagedBean {
 		this.id = id;
 	}
 
+	private boolean validaModifiche(){
+		return validaAerei() && listaHotel.size()>0 && listaEscursioni.size()>=0;
+	}
+	
+	private void resetSelezioni(){
+		if(listaAereiAndata != null)
+			listaAereiAndata.clear();
+		if(listaAereiRitorno != null)
+			listaAereiRitorno.clear();
+		if(listaEscursioni != null)
+			listaEscursioni.clear();
+		if(listaHotel != null)
+			listaHotel.clear();
+	}
 
 
 

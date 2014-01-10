@@ -160,6 +160,25 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void modificaPacchetto(PacchettoDTO pacchetto) {
+		Pacchetto modificato = em.find(Pacchetto.class, pacchetto.getId());
+		List<Escursione> escursioni = covertListaEscursioni(pacchetto.getEscursioni());
+		List<Hotel> hotel = convertListaHotel(pacchetto.getHotels());
+		List<Aereo> aerei = convertListaAerei(pacchetto.getAereiAndata(),pacchetto.getAereiRitorno());
+		modificato.setDescrizione(pacchetto.getDescrizione());
+		modificato.setDestinazione(pacchetto.getDestinazione());
+		modificato.setEscursioni(escursioni);
+		modificato.setHotels(hotel);
+		modificato.setFine_Validità(pacchetto.getFine_Validita());
+		modificato.setInizio_Validità(pacchetto.getInizio_Validita());
+		modificato.setAerei(aerei);
+		modificato.setNumeroPersone(pacchetto.getNumeroPersone());
+		em.merge(modificato);
+		
+	}
+	
+	@Override
 	public boolean esisteIdPacchetto(String id) {
 		Integer value = new Integer(id);
 		if (em.find(Pacchetto.class,value.intValue())!=null){
@@ -339,6 +358,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
+
+	
 
 	
 
