@@ -40,12 +40,12 @@ public class Hotel implements Serializable {
 	private float costoGiornaliero;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="Data_Inizio")
-	private Date dataInizio;
+	@Column(name="Data_Checkin")
+	private Date dataCheckIn;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="Data_Fine")
-	private Date dataFine;
+	@Column(name="Data_Checkout")
+	private Date dataCheckOut;
 
 	//bi-directional many-to-one association to Camera
 	@OneToMany(mappedBy="hotel")
@@ -61,8 +61,8 @@ public class Hotel implements Serializable {
 		this.nome = hotel.getNome();
 		this.stelle = hotel.getRating().intValue();
 		this.costoGiornaliero = hotel.getCostoGiornaliero();
-		this.dataFine = hotel.getDataFine();
-		this.dataInizio = hotel.getDataInizio();
+		this.dataCheckOut = hotel.getDataFine();
+		this.dataCheckIn = hotel.getDataInizio();
 	}
 
 	public int getId() {
@@ -135,20 +135,20 @@ public class Hotel implements Serializable {
 		this.costoGiornaliero = costoGiornaliero;
 	}
 
-	public Date getDataInizio() {
-		return dataInizio;
+	public Date getDataCheckIn() {
+		return dataCheckIn;
 	}
 
-	public void setDataInizio(Date dataInizio) {
-		this.dataInizio = dataInizio;
+	public void setDataCheckIn(Date dataInizio) {
+		this.dataCheckIn = dataInizio;
 	}
 
-	public Date getDataFine() {
-		return dataFine;
+	public Date getDataCheckOut() {
+		return dataCheckOut;
 	}
 
-	public void setDataFine(Date dataFine) {
-		this.dataFine = dataFine;
+	public void setDataCheckOut(Date dataFine) {
+		this.dataCheckOut = dataFine;
 	}
 
 }

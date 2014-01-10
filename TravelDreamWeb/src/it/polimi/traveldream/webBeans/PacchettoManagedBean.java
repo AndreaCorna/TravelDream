@@ -97,6 +97,14 @@ public class PacchettoManagedBean {
 		
 	}
 	
+	public void initModifica(String id){
+		initPersonalizza(id);
+		datiAereiAndata = new AereoDataModel(pacchetto.getAereiAndata());
+		datiAereiRitorno = new AereoDataModel(pacchetto.getAereiRitorno());
+		datiHotel = new HotelDataModel(pacchetto.getHotels());
+		datiEscursioni = new EscursioneDataModel(pacchetto.getEscursioni());
+	}
+	
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
 		caricaDestinazioni();
@@ -118,7 +126,7 @@ public class PacchettoManagedBean {
 	
 	public String aggiungiAerei(){
 		
-		if (validaAereiAndata()){
+		if (validaAerei()){
 			pacchetto.setAereiAndata(listaAereiAndata);
 			pacchetto.setAereiRitorno(listaAereiRitorno);
 			listaHotelDB = gestionePacchetto.getListaHotel(pacchetto.getDestinazione());
@@ -129,26 +137,7 @@ public class PacchettoManagedBean {
 			return null;
 	}
 	
-	private boolean validaAereiAndata(){
-		boolean corretto = false;
-		if(listaAereiAndata.size()==0 || listaAereiRitorno.size()==0)
-			return false;
-		else{
-			for(int i=0;i<listaAereiAndata.size();i++){
-				corretto = false;
-				AereoDTO andata = listaAereiAndata.get(i);
-				for(int j=0;j<listaAereiRitorno.size() && !corretto;j++){
-					AereoDTO ritorno = listaAereiRitorno.get(j);
-					if(andata.getData().before(ritorno.getData()) && 
-							andata.getCittaDecollo().equals(ritorno.getCittaAtterraggio()))
-						corretto=true;
-				}
-				if(!corretto)
-					return corretto;
-			}
-		}
-		return corretto;
-	}
+	
 	
 	public String aggiungiHotel(){
 		if ( listaHotel.size()>0 ){
@@ -426,6 +415,27 @@ public class PacchettoManagedBean {
 
 	public void setListaSelezioneEscursioni(DualListModel<String> listaSelezioneEscursioni) {
 		this.listaSelezioneEscursioni = listaSelezioneEscursioni;
+	}
+	
+	private boolean validaAerei(){
+		boolean corretto = false;
+		if(listaAereiAndata.size()==0 || listaAereiRitorno.size()==0)
+			return false;
+		else{
+			for(int i=0;i<listaAereiAndata.size();i++){
+				corretto = false;
+				AereoDTO andata = listaAereiAndata.get(i);
+				for(int j=0;j<listaAereiRitorno.size() && !corretto;j++){
+					AereoDTO ritorno = listaAereiRitorno.get(j);
+					if(andata.getData().before(ritorno.getData()) && 
+							andata.getCittaDecollo().equals(ritorno.getCittaAtterraggio()))
+						corretto=true;
+				}
+				if(!corretto)
+					return corretto;
+			}
+		}
+		return corretto;
 	}
 
 

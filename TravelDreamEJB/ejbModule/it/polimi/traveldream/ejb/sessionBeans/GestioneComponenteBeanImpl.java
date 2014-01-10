@@ -139,8 +139,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
 		modificato.setCostoGiornaliero(hotel.getCostoGiornaliero());
-		modificato.setDataFine(hotel.getDataFine());
-		modificato.setDataInizio(hotel.getDataInizio());
+		modificato.setDataCheckOut(hotel.getDataFine());
+		modificato.setDataCheckIn(hotel.getDataInizio());
 		em.merge(modificato);
 		//aggiornaPacchetti(modificato);
 	}
@@ -178,8 +178,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
 		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
-		nuovo.setDataFine(hotel.getDataFine());
-		nuovo.setDataInizio(hotel.getDataInizio());
+		nuovo.setDataFine(hotel.getDataCheckOut());
+		nuovo.setDataInizio(hotel.getDataCheckIn());
 		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
 		for(Camera camera:hotel.getCamere()){
 			camere.add(convertToDTO(camera));
@@ -240,6 +240,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		}
 	}
 	
+		
 	private boolean conRitornoAndata(Pacchetto pacchetto){
 		boolean andata = false;
 		boolean ritorno = false;
