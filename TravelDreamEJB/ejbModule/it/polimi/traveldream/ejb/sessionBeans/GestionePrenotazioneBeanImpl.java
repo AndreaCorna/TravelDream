@@ -160,6 +160,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setAereiRitorno(convertListaAereiRitornoToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
 			UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
 			nuovo.setDipendente(dipendente);
+			nuovo.setNumeroPersone(pacchetto.getNumeroPersone());
 			return nuovo;
 		}
 		
@@ -225,6 +226,9 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setId(hotel.getId());
 			nuovo.setCitta(hotel.getCitt�());
 			nuovo.setNome(hotel.getNome());
+			nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
+			nuovo.setDataFine(hotel.getDataCheckOut());
+			nuovo.setDataInizio(hotel.getDataCheckIn());
 			Integer value = new Integer(hotel.getStelle());
 			nuovo.setRating(value);
 			ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
