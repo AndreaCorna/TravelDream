@@ -12,6 +12,7 @@ import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneViaggioBean;
 
@@ -72,7 +73,27 @@ public class ViaggioManagedBean {
 	
 	private AereoDTO aereoRitorno;
 	
-	
+	public ViaggioManagedBean(){
+		
+		setViaggio(new PacchettoDTO());
+		setAereoAndata(new AereoDTO());
+			
+	}
+
+	private void setAereoAndata(AereoDTO aereoAndata) {
+		this.aereoAndata = aereoAndata;
+	}
+	public AereoDTO getAereoAndata() {
+		return aereoAndata;
+	}
+
+	public PacchettoDTO getViaggio() {
+		return viaggio;
+	}
+
+	public void setViaggio(PacchettoDTO viaggio) {
+		this.viaggio = viaggio;
+	}
 	
 	@PostConstruct
 	public void init(){

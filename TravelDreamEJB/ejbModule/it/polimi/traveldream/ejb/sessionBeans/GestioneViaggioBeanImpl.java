@@ -208,9 +208,15 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return nuovo;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void aggiungiAereoViaggio(AereoDTO aereoAndata) {
-		// TODO Auto-generated method stub
-		
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> aggiungiAereoViaggio(AereoDTO aereoAndata) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data = startDate")
+			    .setParameter("nome", aereoAndata.getCittaAtterraggio())
+			    .setParameter("startDate", aereoAndata.getData())
+			    .getResultList();
+		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, aereoAndata.getCittaAtterraggio());
+		return listaAerei;
 	}
 }

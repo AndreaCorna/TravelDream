@@ -28,5 +28,5 @@ public interface GestioneViaggioBean {
 	List<AereoDTO> getListaAereiRitorno(String cittaDecollo,
 			Date partenza);
 
-	public void aggiungiAereoViaggio(AereoDTO aereoAndata);
+	public List<AereoDTO> aggiungiAereoViaggio(AereoDTO aereoAndata);
 }

@@ -13,30 +13,22 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Inserisci la Destinazione e la Data">
+		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
 			<h:panelGrid columns="3" id="regGrid">
 			
 				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
-				<p:inputText id="dest" value="#{viaggio.destinazione}" />
+				<p:inputText id="dest" value="#{viaggio.viaggio.destinazione}" />
 				<p:message for="dest" value="Inserisci il nome"/>
 				
-				<h:outputLabel for="data_inizio">Data di Inizio Validità:</h:outputLabel>
-				<p:calendar binding="#{data_inizio}" required="true" value="#{viaggio.viaggio.aereoAndata}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<h:outputLabel for="data_inizio">Data di partenza:</h:outputLabel>
+				<p:calendar binding="#{data_inizio}" required="true" value="#{viaggio.viaggio.aereiAndata}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
 				
-				<h:outputLabel for="data_fine">Data di Fine Validità</h:outputLabel>
-				<p:calendar id="data_fine" value="#{viaggio.fine_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
-								validator="#{viaggio.validaDate}" >
-								<f:attribute name="data_inizio" value="#{data_inizio}" />
-				</p:calendar>
-				<p></p>
 
 				
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="ajax"  update="regGrid"
              action="#{viaggio.aggiungiDestinazioneDate()}" styleClass="ui-priority-primary"/>  
-			
-
 		</p:panel>
 	</h:form>
 </h:body>
