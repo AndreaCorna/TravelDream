@@ -146,7 +146,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void modificaHotel(HotelDTO hotel) {
 		Hotel modificato = em.find(Hotel.class, hotel.getId());
 		modificato.setCamere_Disponibili(hotel.getCamereDisponibili());
-		modificato.setCitt‡(hotel.getCitta());
+		modificato.setCitt√†(hotel.getCitta());
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
 		modificato.setCostoGiornaliero(hotel.getCostoGiornaliero());
@@ -190,7 +190,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		HotelDTO nuovo = new HotelDTO();
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCitt‡());
+		nuovo.setCitta(hotel.getCitt√†());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);

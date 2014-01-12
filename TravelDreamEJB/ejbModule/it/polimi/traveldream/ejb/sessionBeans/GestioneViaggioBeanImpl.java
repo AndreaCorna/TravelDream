@@ -175,7 +175,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		HotelDTO nuovo = new HotelDTO();
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCitt‡());
+		nuovo.setCitta(hotel.getCitt√†());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
