@@ -14,6 +14,8 @@ import javax.ejb.Local;
 public interface GestionePrenotazioneBean {
 
 	List<Prenotazione_PacchettoDTO> getPrenotazioni();
+
+	void inserisciPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione);
 	
 	
 	List<Prenotazione_PacchettoDTO> getListaPrenotazioni();

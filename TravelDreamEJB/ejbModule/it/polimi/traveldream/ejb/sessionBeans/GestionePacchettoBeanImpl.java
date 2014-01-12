@@ -11,6 +11,8 @@ import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import java.util.ArrayList;
@@ -131,6 +133,84 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto) {
+		ArrayList<Aereo> aerei = new ArrayList<Aereo>();
+		for(AereoDTO aereo:pacchetto.getAereiAndata()){
+			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
+			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
+					&& haPostiDisponibili(aereoDB)){
+				aerei.add(em.find(Aereo.class,aereo.getId()));
+			}
+		}
+		List<AereoDTO> listaAerei = convertListaAereiToDTO(aerei);
+		return listaAerei;
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto) {
+		ArrayList<Aereo> aerei = new ArrayList<Aereo>();
+		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
+			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
+			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
+					&& haPostiDisponibili(aereoDB)){
+				aerei.add(em.find(Aereo.class,aereo.getId()));
+			}
+		}
+		List<AereoDTO> listaAerei = convertListaAereiToDTO(aerei);
+		return listaAerei;
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<HotelDTO> getListaHotelDip(Date partenza, Date ritorno, PacchettoDTO pacchetto) {
+		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+		for(HotelDTO hotel:pacchetto.getHotels()){
+			Hotel hotelDB = em.find(Hotel.class,hotel.getId());
+			if(haCamereDisponibili(hotelDB,partenza,ritorno)){
+				hotels.add(hotelDB);
+			}
+		}
+		List<HotelDTO> listaHotel = convertListaHotelToDTO(hotels);
+		return listaHotel;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
+		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
+				+ "WHERE p.aereo1.data BETWEEN :andata AND :ritorno and p.aereo2.data BETWEEN :andata AND :ritorno")
+				.setParameter("ritorno", ritorno)
+				.setParameter("andata",partenza).getResultList();
+		int camereOccupate = prenotazioniPac.size();
+		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
+	}
+	
+	
+	private boolean isAfterPartenza(Aereo aereo, Date partenza){
+		return (aereo.getData().after(partenza) || aereo.getData().equals(partenza));
+	}
+	
+	private boolean isBeforeRitorno(Aereo aereo, Date ritorno){
+		return (aereo.getData().before(ritorno) || aereo.getData().equals(ritorno));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean haPostiDisponibili(Aereo aereo){
+		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome")
+				.setParameter("nome", aereo).getResultList();
+		int postiOccupati = 0;
+		for(Prenotazione_Pacchetto prenotazione:listaPrenotazioniPac){
+			postiOccupati = postiOccupati + prenotazione.getPacchetto().getNumeroPersone();
+		}
+		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE p.aereo1 =:nome OR p.aereo2 =:nome")
+				.setParameter("nome", aereo).getResultList();
+		postiOccupati = postiOccupati + listaViaggi.size();
+		
+	return (aereo.getPosti_Disponibili()-postiOccupati)>0;
+	}
+	
+	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void creaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetto nuovoPacchetto = new Pacchetto();
@@ -146,9 +226,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setInizio_Validità(pacchetto.getInizio_Validita());
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
-		nuovoPacchetto.setId(pacchetto.getId());
 		nuovoPacchetto.setNumeroPersone(pacchetto.getNumeroPersone());
 		em.persist(nuovoPacchetto);
+		em.flush();
+		nuovoPacchetto = em.find(Pacchetto.class, nuovoPacchetto.getId());
+		pacchetto.setId(nuovoPacchetto.getId());
 		
 	}
 	
@@ -264,7 +346,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
-			Escursione nuova = new Escursione(lista.get(i));
+			Escursione nuova = em.find(Escursione.class, lista.get(i).getId());
 			listaEscursioni.add(nuova);
 		}
 		List<Escursione> escursioni = listaEscursioni;
@@ -284,11 +366,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<Aereo> convertListaAerei(List<AereoDTO> listaAndata, List<AereoDTO> listaRitorno){
 		ArrayList<Aereo> listaAerei = new ArrayList<Aereo>();
 		for(int i=0;i<listaAndata.size();i++){
-			Aereo nuovo = new Aereo(listaAndata.get(i));
+			Aereo nuovo = em.find(Aereo.class, listaAndata.get(i).getId());
 			listaAerei.add(nuovo);
 		}
 		for(int i=0;i<listaRitorno.size();i++){
-			Aereo nuovo = new Aereo(listaRitorno.get(i));
+			Aereo nuovo = em.find(Aereo.class, listaRitorno.get(i).getId());
 			listaAerei.add(nuovo);
 		}
 		List<Aereo> aerei = listaAerei;
@@ -333,7 +415,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<Hotel> convertListaHotel(List<HotelDTO> lista){
 		ArrayList<Hotel> listaHotel = new ArrayList<Hotel>();
 		for(int i=0;i<lista.size();i++){
-			Hotel nuovo = new Hotel(lista.get(i));
+			Hotel nuovo = em.find(Hotel.class, lista.get(i).getId());
 			listaHotel.add(nuovo);
 		}
 		List<Hotel> hotel = listaHotel;
@@ -358,6 +440,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
+
+	
+
+	
+	
 
 	
 

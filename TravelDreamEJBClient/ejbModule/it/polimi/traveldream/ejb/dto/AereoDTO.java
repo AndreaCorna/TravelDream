@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AereoDTO {
 
-	@NotNull
+	
 	private int id;
 	@NotEmpty
 	private String cittaDecollo;

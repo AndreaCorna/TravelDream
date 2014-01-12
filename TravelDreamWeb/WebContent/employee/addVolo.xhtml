@@ -11,11 +11,7 @@
 	<h:form>
 		<p:panel header="Aggiungi un aereo">
 			<h:panelGrid columns="3" id="regGrid">
-			
-				<h:outputLabel for="id">Id:</h:outputLabel>
-				<p:inputText id="id" value="#{componente.aereo.id}" validator="#{componente.validaIdAereo}"/>
-				<p:message for="id"/>
-				
+				<p:growl id="msg" showDetail="true" escape="false" /> 
 				<h:outputLabel for="decollo">Decollo:</h:outputLabel>
 				<p:inputText id="decollo" value="#{componente.aereo.cittaDecollo}" />
 				<p:message for="decollo" />
@@ -38,7 +34,7 @@
 				
 								
 			</h:panelGrid>
-			<p:commandButton value="Aggiungi" id="ajax"  update="regGrid"
+			<p:commandButton value="Aggiungi" id="ajax"  update="regGrid,msg"
              action="#{componente.aggiungiAereoDB()}" styleClass="ui-priority-primary"/>  
              
               <p><a href="index.xhtml">Torna alla homepage</a></p>	

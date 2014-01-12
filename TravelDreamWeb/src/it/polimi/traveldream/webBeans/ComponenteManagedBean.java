@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -88,16 +87,22 @@ public class ComponenteManagedBean {
 	
 	public String aggiungiAereoDB(){
 		gestioneComp.aggiungiAereoDB(aereo);
+		String message = "Aereo Aggiunto";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		return "index?faces-redirect=true";
 	}
 	
 	public String aggiungiHotelDB(){
 		gestioneComp.aggiungiHotelDB(hotel);
+		String message = "Hotel Aggiunto";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		return "index?faces-redirect=true";
 	}
 	
 	public String aggiungiEscursioneDB(){
 		gestioneComp.aggiungiEscursioneDB(escursione);
+		String message = "Escursione Aggiunta";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		return "index?faces-redirect=true";
 	}
 	
@@ -141,6 +146,21 @@ public class ComponenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	public String eliminaAereo(){
+		gestioneComp.eliminaAereo(aereo);
+		return "index?faces-redirect=true";
+	}
+	
+	public String eliminaHotel(){
+		
+		return "index?faces-redirect=true";
+	}
+	
+	public String eliminaEscursione(){
+		
+		return "index?faces-redirect=true";
+	}
+	
 	public void initModificaAereo(String id){
 		aereo = gestioneComp.getAereoById(id);
 	}
@@ -149,7 +169,7 @@ public class ComponenteManagedBean {
 	/*
 	 * Validatori dei dati inseriti
 	 */
-	
+	/*
 	public void validaIdAereo(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		if (!isNumeroCorretto(value.toString())){
             throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
@@ -178,7 +198,7 @@ public class ComponenteManagedBean {
             throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
 		}
 		
-	}
+	}*/
 	
 	
 	public void validaNumero(FacesContext context,UIComponent component,Object value) throws ValidatorException{

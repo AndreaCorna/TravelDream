@@ -33,4 +33,6 @@ public interface GestioneComponenteBean {
 
 	void modificaEscursione(EscursioneDTO escursione);
 
+	void eliminaAereo(AereoDTO aereo);
+
 }

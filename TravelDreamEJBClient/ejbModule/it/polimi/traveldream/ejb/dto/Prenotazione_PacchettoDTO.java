@@ -10,11 +10,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Prenotazione_PacchettoDTO {
 
-	@NotNull
+	
 	private int id;
 	@NotNull
 	private Date data;
-	@NotEmpty
+	
 	private List<CondivisioneDTO> condivisioni;
 	@NotEmpty
 	private List<EscursioneDTO> escursioni;

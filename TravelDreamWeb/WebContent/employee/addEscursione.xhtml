@@ -11,11 +11,7 @@
 	<h:form>
 		<p:panel header="Aggiungi un'escursione">
 			<h:panelGrid columns="3" id="regGrid">
-			
-				<h:outputLabel for="id">Id:</h:outputLabel>
-				<p:inputText id="id" value="#{componente.escursione.id}" validator="#{componente.validaIdEscursione}"/>
-				<p:message for="id"/>
-				
+				<p:growl id="msg" showDetail="true" escape="false" />  
 				<h:outputLabel for="luogo">Luogo:</h:outputLabel>
 				<p:inputText id="luogo" value="#{componente.escursione.luogo}" />
 				<p:message for="luogo" />

@@ -20,7 +20,7 @@ public class Aereo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name="Atterraggio")
@@ -43,7 +43,6 @@ public class Aereo implements Serializable {
 	}
 	
 	public Aereo(AereoDTO aereo){
-		this.id = aereo.getId();
 		this.atterraggio = aereo.getCittaAtterraggio();
 		this.decollo = aereo.getCittaDecollo();
 		this.costo = aereo.getCosto();

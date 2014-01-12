@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class EscursioneDTO {
 	
-	@NotNull
+	
 	private int id;
 	@NotEmpty
 	private String luogo;

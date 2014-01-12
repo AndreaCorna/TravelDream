@@ -18,6 +18,8 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -43,6 +45,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void aggiungiAereoDB(AereoDTO aereo) {
 		Aereo nuovo = new Aereo(aereo);
 		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Aereo.class, nuovo.getId());
+		aereo.setId(nuovo.getId());
 		
 	}
 	
@@ -51,6 +56,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void aggiungiHotelDB(HotelDTO hotel) {
 		Hotel nuovo = new Hotel(hotel);
 		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Hotel.class, nuovo.getId());
+		hotel.setId(nuovo.getId());
 		
 	}
 	
@@ -59,6 +67,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void aggiungiEscursioneDB(EscursioneDTO escursione) {
 		Escursione nuovo = new Escursione(escursione);
 		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Escursione.class,nuovo.getId());
+		escursione.setId(nuovo.getId());
 		
 	}
 
@@ -155,6 +166,12 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setPrezzo(escursione.getPrezzo());
 		em.merge(modificato);
 		aggiornaPacchetti(modificato);
+		
+	}
+	
+	@Override
+	public void eliminaAereo(AereoDTO aereo) {
+		// TODO Auto-generated method stub
 		
 	}
 	
@@ -255,6 +272,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		}
 		return andata & ritorno;
 	}
+
+	
 	
 	
 
