@@ -81,12 +81,6 @@ public class PacchettoManagedBean {
 	
 	private SelectItem[] destinazioni;
 	
-	/*private DualListModel<String> listaSelezioneAereoAndata;
-	
-	private DualListModel<String> listaSelezioneAereoRitorno;
-	
-	private DualListModel<String> listaSelezioneHotel;*/
-	
 	private DualListModel<String> listaSelezioneEscursioni;
 	
 	private int id;
@@ -104,6 +98,10 @@ public class PacchettoManagedBean {
 	private boolean checkCondivisione;
 	
 	private String linkCondivisione;
+	
+	private Date partenza;
+	
+	private Date ritorno;
 	
 	
 	@PostConstruct
@@ -126,9 +124,10 @@ public class PacchettoManagedBean {
 				//loadListeSelezione(pacchetto);
 			}
 		}
-		listaAereiAndata = pacchetto.getAereiAndata();
-		listaAereiRitorno = pacchetto.getAereiRitorno();
-		listaHotel = pacchetto.getHotels();
+		listaAereiAndataDB = pacchetto.getAereiAndata();
+		listaAereiRitornoDB = pacchetto.getAereiRitorno();
+		listaHotelDB = pacchetto.getHotels();
+		listaEscursioniDB = pacchetto.getEscursioni();
 		loadListaEscursioni();
 		//listaEscursioni = pacchetto.getEscursioni();
 	}
@@ -492,87 +491,6 @@ public class PacchettoManagedBean {
 		this.destinazioni = destinazioni;
 	}
 
-	/*public DualListModel<String> getListaSelezioneAereoAndata() {
-		return listaSelezioneAereoAndata;
-	}
-
-	public void setListaSelezioneAereoAndata(
-			DualListModel<String> listaSelezioneAereoAndata) {
-		this.listaSelezioneAereoAndata = listaSelezioneAereoAndata;
-	}
-	
-	/*private void loadListeSelezione(PacchettoDTO pacchetto){
-		loadListaAereiAndata();
-		loadListaAereiRitorno();
-		loadListaHotel();
-		loadListaEscursioni();
-	}*/
-	/*
-	private void loadListaAereiAndata(){
-		ArrayList<String> aereiAndata = new ArrayList<String>();
-		for(AereoDTO aereo:pacchetto.getAereiAndata()){
-			Integer id = new Integer(aereo.getId());
-			aereiAndata.add(id.toString());
-		}
-		ArrayList<String> aereiAndataTarget = new ArrayList<String>();
-		listaSelezioneAereoAndata = new DualListModel<>(aereiAndata, aereiAndataTarget);
-	}
-	
-	private void loadListaAereiRitorno(){
-		ArrayList<String> aereiRitorno = new ArrayList<String>();
-		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
-			Integer id = new Integer(aereo.getId());
-			aereiRitorno.add(id.toString());
-		}
-		ArrayList<String> aereiRitornoTarget = new ArrayList<String>();
-		setListaSelezioneAereoRitorno(new DualListModel<>(aereiRitorno, aereiRitornoTarget));
-	}
-	
-	private void loadListaHotel(){
-		ArrayList<String> hotels = new ArrayList<String>();
-		for(HotelDTO hotel:pacchetto.getHotels()){
-			Integer id = new Integer(hotel.getId());
-			hotels.add(id.toString());
-		}
-		ArrayList<String> hotelsTarget = new ArrayList<String>();
-		setListaSelezioneHotel(new DualListModel<>(hotels, hotelsTarget));
-	
-	}
-	
-	private void loadListaEscursioni(){
-		ArrayList<String> escursioni = new ArrayList<String>();
-		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
-			Integer id = new Integer(escursione.getId());
-			escursioni.add(id.toString());
-		}
-		ArrayList<String> escursioniTarget = new ArrayList<String>();
-		setListaSelezioneEscursioni(new DualListModel<>(escursioni, escursioniTarget));
-	}
-
-	public DualListModel<String> getListaSelezioneAereoRitorno() {
-		return listaSelezioneAereoRitorno;
-	}
-
-	public void setListaSelezioneAereoRitorno(
-			DualListModel<String> listaSelezioneAereoRitorno) {
-		this.listaSelezioneAereoRitorno = listaSelezioneAereoRitorno;
-	}
-
-	public DualListModel<String> getListaSelezioneHotel() {
-		return listaSelezioneHotel;
-	}
-
-	public void setListaSelezioneHotel(DualListModel<String> listaSelezioneHotel) {
-		this.listaSelezioneHotel = listaSelezioneHotel;
-	}
-
-	public DualListModel<String> getListaSelezioneEscursioni() {
-		return listaSelezioneEscursioni;
-	}
-
-	public void setListaSelezioneEscursioni(DualListModel<String> listaSelezioneEscursioni) {
-		this.listaSelezioneEscursioni = listaSelezioneEscursioni;
-	}*/
 	private boolean validaAerei(){
 		boolean corretto = false;
 		if(listaAereiAndata.size()==0 || listaAereiRitorno.size()==0)
@@ -652,7 +570,7 @@ public class PacchettoManagedBean {
 	
 	private void loadListaEscursioni(){
 		ArrayList<String> escursioni = new ArrayList<String>();
-		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
+		for(EscursioneDTO escursione:listaEscursioniDB){
 			Integer id = new Integer(escursione.getId());
 			escursioni.add(id.toString());
 		}
@@ -779,5 +697,50 @@ public class PacchettoManagedBean {
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
+	}
+
+	public Date getPartenza() {
+		return partenza;
+	}
+
+	public void setPartenza(Date partenza) {
+		this.partenza = partenza;
+	}
+	
+	public void listenerData(){
+		ArrayList<AereoDTO> listaAndata = new ArrayList<AereoDTO>();
+		for(AereoDTO aereo:pacchetto.getAereiAndata()){
+			if((aereo.getData().after(partenza) || aereo.getData().equals(partenza)) && 
+					aereo.getData().before(ritorno)){
+				listaAndata.add(aereo);
+			}
+		}
+		listaAereiAndataDB = listaAndata;
+		ArrayList<AereoDTO> listaRitorno = new ArrayList<AereoDTO>();
+		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
+			if(aereo.getData().after(partenza) && 
+					(aereo.getData().before(partenza) || aereo.getData().equals(partenza))){
+				listaRitorno.add(aereo);
+			}
+		}
+		listaAereiRitornoDB = listaRitorno;
+		ArrayList<EscursioneDTO> lista = new ArrayList<EscursioneDTO>();
+		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
+			if((escursione.getData().after(partenza)) && escursione.getData().before(partenza)){
+				lista.add(escursione);
+			}
+		}
+		listaEscursioniDB = lista;
+		loadListaEscursioni();
+		String message = "Selezionata la data";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+	}
+	
+	public Date getRitorno() {
+		return ritorno;
+	}
+
+	public void setRitorno(Date ritorno) {
+		this.ritorno = ritorno;
 	}
 }

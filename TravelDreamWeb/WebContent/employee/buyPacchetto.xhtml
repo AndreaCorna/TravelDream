@@ -14,7 +14,14 @@
 		<p:panel header="Personalizza il pacchetto">
 			 
 			<h:panelGrid columns="1" id="regGrid">
-				
+				<h:outputLabel for="partenza" />Seleziona la data di partenza:
+				<p:calendar value="#{pacchetto.partenza}" mode="inline" id="partenza" pattern="dd/MM/yyyy" navigator="true">  
+      				  <p:ajax event="dateSelect" listener="#{pacchetto.listenerData}" update="msg,regGrid" />  
+    			</p:calendar>  
+    			<h:outputLabel for="arrivo" />Seleziona la data di ritorno:
+    			<p:calendar value="#{pacchetto.ritorno}" mode="inline" id="ritorno" pattern="dd/MM/yyyy" navigator="true">  
+      				  <p:ajax event="dateSelect" listener="#{pacchetto.listenerData}" update="msg,regGrid" />  
+    			</p:calendar>
 				<h:outputLabel for="nome" />Destinazione:
                 <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
                 <h:outputLabel for="inizio" />Inizio Validita:
@@ -24,36 +31,36 @@
                 <h:outputLabel for="fine" />Numero di Persone:
                 <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
                 <h:outputLabel for="andataAerei" />Aerei di Andata:
-                <p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
+                <p:dataList value="#{pacchetto.listaAereiAndataDB}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
 				</p:dataList>
 				<p:selectOneListbox value="#{pacchetto.idAereoAndata}" >
-    				<f:selectItems value="#{pacchetto.listaAereiAndata}" var="aereo"
+    				<f:selectItems value="#{pacchetto.listaAereiAndataDB}" var="aereo"
       				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
 				</p:selectOneListbox>  
 				
                 <p></p>
 				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
-				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
+				<p:dataList value="#{pacchetto.listaAereiRitornoDB}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
 				</p:dataList>  
 				<p:selectOneListbox value="#{pacchetto.idAereoRitorno}" >
-    				<f:selectItems value="#{pacchetto.listaAereiRitorno}" var="aereo"
+    				<f:selectItems value="#{pacchetto.listaAereiRitornoDB}" var="aereo"
       				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
 				</p:selectOneListbox>  
 				
                   <p></p>
 				<h:outputLabel for="hotel" />Hotel:
-				<p:dataList value="#{pacchetto.pacchetto.hotels}" var="hotel" itemType="circle">  
+				<p:dataList value="#{pacchetto.listaHotelDB}" var="hotel" itemType="circle">  
    				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}, #{hotel.rating}
 				</p:dataList>  
 				<p:selectOneListbox value="#{pacchetto.idHotel}" >
-    				<f:selectItems value="#{pacchetto.listaHotel}" var="hotel"
+    				<f:selectItems value="#{pacchetto.listaHotelDB}" var="hotel"
       				  itemValue="#{hotel}" itemLabel="#{hotel.id}" />
 				</p:selectOneListbox>  
                  <p></p>
 				<h:outputLabel for="escursioni" />Escursioni:
-				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
+				<p:dataList value="#{pacchetto.listaEscursioniDB}" var="escur" itemType="circle">  
    				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
 				</p:dataList>
 				<p:pickList id="pickList" value="#{pacchetto.listaSelezioneEscursioni}" var="esc"   
