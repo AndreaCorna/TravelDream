@@ -223,14 +223,75 @@ public class PacchettoManagedBean {
 	}
 	
 	public String prenotaPacchetto(){
+		
 		setSelezioneAerei();
 		setSelezioneHotel();
 		setSelezioneEscursioni();
-		Date date = new Date();
-		prenotazione.setPacchetto(pacchetto);
-		prenotazione.setUtente(gestioneUtente.getUtenteDTO());
-		prenotazione.setData(date);
-		return "riep&cond?faces-redirect=true";
+		if(selezionePossibile()){
+			Date date = new Date();
+			prenotazione.setPacchetto(pacchetto);
+			prenotazione.setUtente(gestioneUtente.getUtenteDTO());
+			prenotazione.setData(date);
+			return "riep&cond?faces-redirect=true";
+		}
+		return null;
+	}
+	
+	private boolean selezionePossibile(){
+		return checkNumeroPosti() && checkDate() && checkAerei();
+	}
+	
+	private boolean checkAerei(){
+		AereoDTO andata = prenotazione.getAereoAndata();
+		AereoDTO ritorno = prenotazione.getAereoRitorno();
+		if(!andata.getCittaDecollo().equals(ritorno.getCittaAtterraggio())){
+			String message = "Con gli aerei scelti non ritorni da dove sei partito";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return false;
+		}
+		if(andata.getData().after(ritorno.getData())){
+			String message = "Pensi di tornare prima di partire?!";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkNumeroPosti(){
+		AereoDTO andata = prenotazione.getAereoAndata();
+		AereoDTO ritorno = prenotazione.getAereoRitorno();
+		HotelDTO hotel = prenotazione.getHotel();
+		if(andata.getPostiDisponibili()<pacchetto.getNumeroPersone()){
+			String message = "I posti sull'aereo di andata non sono sufficienti";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return false;
+		}
+		if(ritorno.getPostiDisponibili()<pacchetto.getNumeroPersone()){
+			String message = "I posti sull'aereo di ritorno non sono sufficienti";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return false;
+		}
+		if(hotel.getCamereDisponibili()<=0){
+			String message = "L'albergo non ha camere disponibili";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return false;
+		}		
+		return true;
+	}
+	
+	private boolean checkDate(){
+		AereoDTO andata = prenotazione.getAereoAndata();
+		AereoDTO ritorno = prenotazione.getAereoRitorno();
+		List<EscursioneDTO> lista = prenotazione.getEscursioni();
+		for(EscursioneDTO escursione:lista){
+			if(escursione.getData().before(andata.getData()) ||
+					escursione.getData().after(ritorno.getData())){
+				String message = "La data dell'escursione "+escursione.getId()+"  non è compresa tra le date degli aerei scelti";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+				return false;
+			}
+		}
+		return true;
 	}
 		
 	public String confermaPrenotazione(){
@@ -663,12 +724,17 @@ public class PacchettoManagedBean {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void setSelezioneHotel(){
 		boolean hotelTrovato = false;
 		List<HotelDTO> lista = pacchetto.getHotels();
 		for(int i=0;i<lista.size() & !hotelTrovato; i++){
 			HotelDTO hotel = lista.get(i);
 			if (hotel.toString().equals(idHotel)){
+				Date dataCheckIn = prenotazione.getAereoAndata().getData();
+				Date dataCheckOut = prenotazione.getAereoRitorno().getData();
+				hotel.setDataInizio(new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate()));
+				hotel.setDataFine(new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate()));
 				prenotazione.setHotel(hotel);
 				hotelTrovato = true;
 			}

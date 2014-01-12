@@ -169,6 +169,12 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		
 	}
 	
+	@Override
+	public void eliminaAereo(AereoDTO aereo) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
 		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
@@ -266,6 +272,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		}
 		return andata & ritorno;
 	}
+
+	
 	
 	
 
