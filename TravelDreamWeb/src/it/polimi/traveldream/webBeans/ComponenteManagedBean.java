@@ -87,16 +87,22 @@ public class ComponenteManagedBean {
 	
 	public String aggiungiAereoDB(){
 		gestioneComp.aggiungiAereoDB(aereo);
+		String message = "Aereo Aggiunto";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		return "index?faces-redirect=true";
 	}
 	
 	public String aggiungiHotelDB(){
 		gestioneComp.aggiungiHotelDB(hotel);
+		String message = "Hotel Aggiunto";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		return "index?faces-redirect=true";
 	}
 	
 	public String aggiungiEscursioneDB(){
 		gestioneComp.aggiungiEscursioneDB(escursione);
+		String message = "Escursione Aggiunta";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		return "index?faces-redirect=true";
 	}
 	

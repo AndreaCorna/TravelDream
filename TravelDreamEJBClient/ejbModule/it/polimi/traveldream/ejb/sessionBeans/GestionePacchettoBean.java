@@ -37,4 +37,10 @@ public interface GestionePacchettoBean {
 
 	void modificaPacchetto(PacchettoDTO pacchetto);
 
+	List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto);
+
+	List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto);
+
+	List<HotelDTO> getListaHotelDip(Date partenza, Date ritorno, PacchettoDTO pacchetto);
+
 }

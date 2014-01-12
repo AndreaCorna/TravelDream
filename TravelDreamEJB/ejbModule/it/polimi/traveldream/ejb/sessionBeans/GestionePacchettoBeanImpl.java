@@ -11,6 +11,8 @@ import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import java.util.ArrayList;
@@ -128,6 +130,84 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 			    .getResultList();
 		List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
     	return listaEscursioni;
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto) {
+		ArrayList<Aereo> aerei = new ArrayList<Aereo>();
+		for(AereoDTO aereo:pacchetto.getAereiAndata()){
+			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
+			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
+					&& haPostiDisponibili(aereoDB)){
+				aerei.add(em.find(Aereo.class,aereo.getId()));
+			}
+		}
+		List<AereoDTO> listaAerei = convertListaAereiToDTO(aerei);
+		return listaAerei;
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto) {
+		ArrayList<Aereo> aerei = new ArrayList<Aereo>();
+		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
+			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
+			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
+					&& haPostiDisponibili(aereoDB)){
+				aerei.add(em.find(Aereo.class,aereo.getId()));
+			}
+		}
+		List<AereoDTO> listaAerei = convertListaAereiToDTO(aerei);
+		return listaAerei;
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public List<HotelDTO> getListaHotelDip(Date partenza, Date ritorno, PacchettoDTO pacchetto) {
+		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+		for(HotelDTO hotel:pacchetto.getHotels()){
+			Hotel hotelDB = em.find(Hotel.class,hotel.getId());
+			if(haCamereDisponibili(hotelDB,partenza,ritorno)){
+				hotels.add(hotelDB);
+			}
+		}
+		List<HotelDTO> listaHotel = convertListaHotelToDTO(hotels);
+		return listaHotel;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
+		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
+				+ "WHERE p.aereo1.data BETWEEN :andata AND :ritorno and p.aereo2.data BETWEEN :andata AND :ritorno")
+				.setParameter("ritorno", ritorno)
+				.setParameter("andata",partenza).getResultList();
+		int camereOccupate = prenotazioniPac.size();
+		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
+	}
+	
+	
+	private boolean isAfterPartenza(Aereo aereo, Date partenza){
+		return (aereo.getData().after(partenza) || aereo.getData().equals(partenza));
+	}
+	
+	private boolean isBeforeRitorno(Aereo aereo, Date ritorno){
+		return (aereo.getData().before(ritorno) || aereo.getData().equals(ritorno));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean haPostiDisponibili(Aereo aereo){
+		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome")
+				.setParameter("nome", aereo).getResultList();
+		int postiOccupati = 0;
+		for(Prenotazione_Pacchetto prenotazione:listaPrenotazioniPac){
+			postiOccupati = postiOccupati + prenotazione.getPacchetto().getNumeroPersone();
+		}
+		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE p.aereo1 =:nome OR p.aereo2 =:nome")
+				.setParameter("nome", aereo).getResultList();
+		postiOccupati = postiOccupati + listaViaggi.size();
+		
+	return (aereo.getPosti_Disponibili()-postiOccupati)>0;
 	}
 	
 	@Override
@@ -360,6 +440,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
+
+	
+
+	
+	
 
 	
 
