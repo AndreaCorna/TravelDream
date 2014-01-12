@@ -11,7 +11,7 @@
 	<p:panel header="Riepilogo Prenotazione">
 			 
 			<h:panelGrid columns="1" id="regGrid">
-				
+				 <p:growl id="msg" />  
 				<h:outputLabel for="nome" />Destinazione:
                 <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
                 <h:outputLabel for="inizio" />Inizio Validita:
@@ -38,8 +38,15 @@
 				</p:dataList>
 				<h:outputLabel for="escursioni" />Descrizione:
 				<h:outputText value="#{pacchetto.pacchetto.descrizione}" />
-			              
+				<h:outputLabel for="escursioni" />Vuoi Condividere la tua prenotazione?:
+				<p:selectBooleanCheckbox value="#{pacchetto.checkCondivisione}">  
+           			 <p:ajax update="msg,link" listener="#{pacchetto.messaggioCheckBox}"/>  
+        		</p:selectBooleanCheckbox> 
+        		
+			    <p:inputTextarea id="link" value="#{pacchetto.linkCondivisione}" rows="1" cols="60" />
 			 </h:panelGrid>
+			 <p:commandButton value="Conferma" id="ajax"  ajax="false" action="#{pacchetto.confermaPrenotazione}" styleClass="ui-priority-primary"/>  
+			 <p><a href="buyPacchetto.xhtml">Torna Indietro</a></p>
 	</p:panel>
 
 </h:form>

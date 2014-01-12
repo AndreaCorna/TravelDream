@@ -101,6 +101,10 @@ public class PacchettoManagedBean {
 	
 	private CondivisioneDTO condivisione;
 	
+	private boolean checkCondivisione;
+	
+	private String linkCondivisione;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -228,6 +232,11 @@ public class PacchettoManagedBean {
 		prenotazione.setData(date);
 		
 		return "riep&cond?faces-redirect=true";
+	}
+	
+	public String confermaPrenotazione(){
+		
+		return "index?faces-redirect=true";
 	}
 	
 	public void onTransfer(TransferEvent event){
@@ -662,5 +671,37 @@ public class PacchettoManagedBean {
 
 	public void setCondivisione(CondivisioneDTO condivisione) {
 		this.condivisione = condivisione;
+	}
+
+	public boolean isCheckCondivisione() {
+		return checkCondivisione;
+	}
+
+	public void setCheckCondivisione(boolean checkCondivisione) {
+		this.checkCondivisione = checkCondivisione;
+	}
+
+	public String getLinkCondivisione() {
+		return linkCondivisione;
+	}
+
+	public void setLinkCondivisione(String linkCondivisione) {
+		this.linkCondivisione = linkCondivisione;
+	}
+	
+	public void messaggioCheckBox(){
+		String summary;
+		if(checkCondivisione){
+			Date date = new Date();
+			summary = "Condivisione Prenotazione Attivata";
+			linkCondivisione = "cond"+pacchetto.getId()+"user"+gestioneUtente.getUtenteDTO().getUsername()+
+					"date"+date.getYear()+date.getMonth()+date.getDay();
+		}
+		else{
+			summary = "Condivisione Prenotazione Disattivata";
+			linkCondivisione =null;
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
 	}
 }
