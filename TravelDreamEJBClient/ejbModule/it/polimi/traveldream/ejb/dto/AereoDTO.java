@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -19,8 +20,10 @@ public class AereoDTO {
 	@NotNull
 	private Date data;
 	@NotNull
+	@Min(1)
 	private int postiDisponibili;
 	@NotNull
+	@Min(0)
 	private float costo;
 
 		

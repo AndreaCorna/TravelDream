@@ -3,6 +3,7 @@ package it.polimi.traveldream.ejb.dto;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class HotelDTO {
@@ -12,6 +13,7 @@ public class HotelDTO {
 	@NotNull
 	private String citta;
 	@NotNull
+	@Min(1)
 	private int camereDisponibili;
 	@NotNull
 	private String nome;

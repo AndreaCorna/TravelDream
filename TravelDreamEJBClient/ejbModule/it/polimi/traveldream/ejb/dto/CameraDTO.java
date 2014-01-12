@@ -6,7 +6,7 @@ import java.util.Date;
 public class CameraDTO {
 
 	private int id;
-
+	
 	private float costo;
 
 	private Date data_Checkin;
