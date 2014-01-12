@@ -264,7 +264,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
-			Escursione nuova = new Escursione(lista.get(i));
+			Escursione nuova = em.find(Escursione.class, lista.get(i).getId());
 			listaEscursioni.add(nuova);
 		}
 		List<Escursione> escursioni = listaEscursioni;

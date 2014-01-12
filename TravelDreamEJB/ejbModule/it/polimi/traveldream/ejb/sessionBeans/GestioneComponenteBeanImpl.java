@@ -18,6 +18,8 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -65,6 +67,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void aggiungiEscursioneDB(EscursioneDTO escursione) {
 		Escursione nuovo = new Escursione(escursione);
 		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Escursione.class,nuovo.getId());
+		escursione.setId(nuovo.getId());
 		
 	}
 
