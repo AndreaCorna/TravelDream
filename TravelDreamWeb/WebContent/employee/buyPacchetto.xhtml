@@ -27,7 +27,7 @@
                 <p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
 				</p:dataList>
-				<p:selectOneListbox value="#{pacchetto.prenotazione.aereoAndata}" >
+				<p:selectOneListbox value="#{pacchetto.idAereoAndata}" >
     				<f:selectItems value="#{pacchetto.listaAereiAndata}" var="aereo"
       				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
 				</p:selectOneListbox>  
@@ -37,7 +37,7 @@
 				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
 				</p:dataList>  
-				<p:selectOneListbox value="#{pacchetto.prenotazione.aereoRitorno}" >
+				<p:selectOneListbox value="#{pacchetto.idAereoRitorno}" >
     				<f:selectItems value="#{pacchetto.listaAereiRitorno}" var="aereo"
       				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
 				</p:selectOneListbox>  
@@ -47,7 +47,7 @@
 				<p:dataList value="#{pacchetto.pacchetto.hotels}" var="hotel" itemType="circle">  
    				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}, #{hotel.rating}
 				</p:dataList>  
-				<p:selectOneListbox value="#{pacchetto.prenotazione.hotel}" >
+				<p:selectOneListbox value="#{pacchetto.idHotel}" >
     				<f:selectItems value="#{pacchetto.listaHotel}" var="hotel"
       				  itemValue="#{hotel}" itemLabel="#{hotel.id}" />
 				</p:selectOneListbox>  
@@ -58,7 +58,7 @@
 				</p:dataList>
 				<p:pickList id="pickList" value="#{pacchetto.listaSelezioneEscursioni}" var="esc"   
                 itemLabel="#{esc}" itemValue="#{esc}" effect="bounce">  
-                <p:ajax event="transfer" listener="#{pacchetto.onTransfer}" update="msg" />
+                <p:ajax event="transfer" listener="#{pacchetto.onTransfer}" update="msg"/>
                 </p:pickList>
 				<p:growl id="msg" showDetail="true" escape="false" />  
                  <p></p>

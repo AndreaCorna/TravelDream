@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Prenotazione_PacchettoDTO {
 
-	@NotNull
+	
 	private int id;
 	@NotNull
 	private Date data;

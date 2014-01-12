@@ -2,10 +2,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
 
 <h:head></h:head> 
 <body> 
+<h:form>
+	<p:panel header="Riepilogo Prenotazione">
+			 
+			<h:panelGrid columns="1" id="regGrid">
+				
+				<h:outputLabel for="nome" />Destinazione:
+                <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
+                <h:outputLabel for="inizio" />Inizio Validita:
+                <h:outputText value="#{pacchetto.pacchetto.inizio_Validita}" />
+                <h:outputLabel for="fine" />Fine Validita:
+                <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
+                <h:outputLabel for="fine" />Numero di Persone:
+                <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
+                <h:outputLabel for="andataAereo" />Aereo di Andata:
+                 <p:dataList value="#{pacchetto.prenotazione.aereoAndata}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
+				</p:dataList>
+                <h:outputLabel for="ritornoAereo" />Aereo di Ritorno:
+				<p:dataList value="#{pacchetto.prenotazione.aereoRitorno}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
+				</p:dataList>
+				<h:outputLabel for="hotel" />Hotel:
+				<p:dataList value="#{pacchetto.prenotazione.hotel}" var="hotel" itemType="circle">  
+   				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}, #{hotel.rating}
+				</p:dataList>  
+				<h:outputLabel for="escursioni" />Escursioni:
+				<p:dataList value="#{pacchetto.prenotazione.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+				</p:dataList>
+				<h:outputLabel for="escursioni" />Descrizione:
+				<h:outputText value="#{pacchetto.pacchetto.descrizione}" />
+			              
+			 </h:panelGrid>
+	</p:panel>
+
+</h:form>
 
 </body> 
 </html>

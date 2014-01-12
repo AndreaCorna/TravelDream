@@ -9,11 +9,15 @@ import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.dataModels.PacchettoDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
+import it.polimi.traveldream.ejb.sessionBeans.CondivisioneBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
+import it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean;
+import it.polimi.traveldream.ejb.sessionBeans.GestioneUtenteBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,6 +40,12 @@ public class PacchettoManagedBean {
 
 	@EJB
 	private GestionePacchettoBean gestionePacchetto;
+	@EJB
+	private GestioneUtenteBean gestioneUtente;
+	@EJB
+	private GestionePrenotazioneBean gestionePrenotazione;
+	@EJB
+	private CondivisioneBean gestioneCondivisione;
 	
 	private List<AereoDTO> listaAereiAndata;
 	
@@ -82,6 +92,14 @@ public class PacchettoManagedBean {
 	private int id;
 	
 	private Prenotazione_PacchettoDTO prenotazione;
+	
+	private String idAereoAndata;
+	
+	private String idAereoRitorno;
+	
+	private String idHotel;
+	
+	private CondivisioneDTO condivisione;
 	
 	
 	@PostConstruct
@@ -201,7 +219,14 @@ public class PacchettoManagedBean {
 	}
 	
 	public String prenotaPacchetto(){
-		//settaSelezioni();
+		setSelezioneAerei();
+		setSelezioneHotel();
+		setSelezioneEscursioni();
+		Date date = new Date();
+		prenotazione.setPacchetto(pacchetto);
+		prenotazione.setUtente(gestioneUtente.getUtenteDTO());
+		prenotazione.setData(date);
+		
 		return "riep&cond?faces-redirect=true";
 	}
 	
@@ -554,9 +579,88 @@ public class PacchettoManagedBean {
 		ArrayList<String> escursioniTarget = new ArrayList<String>();
 		setListaSelezioneEscursioni(new DualListModel<>(escursioni, escursioniTarget));
 	}
+	
+	private void setSelezioneEscursioni(){
+		boolean trovato = false;
+		List<String> selezioneEscursioni = listaSelezioneEscursioni.getTarget();
+		ArrayList<EscursioneDTO> escursioni = new ArrayList<EscursioneDTO>();
+		for(String selezione:selezioneEscursioni){
+			trovato = false;
+			List<EscursioneDTO> lista = pacchetto.getEscursioni();
+			for(int i=0; i<lista.size() & !trovato;i++){
+				Integer idValue = new Integer(lista.get(i).getId());
+				if(idValue.toString().equals(selezione)){
+					escursioni.add(lista.get(i));
+					trovato = true;
+				}
+			}
+		}
+		prenotazione.setEscursioni(escursioni);		
+	}
 
+	public String getIdAereoAndata() {
+		return idAereoAndata;
+	}
 
+	public void setIdAereoAndata(String idAereoAndata) {
+		this.idAereoAndata = idAereoAndata;
+	}
+
+	public String getIdAereoRitorno() {
+		return idAereoRitorno;
+	}
+
+	public void setIdAereoRitorno(String idAereoRitorno) {
+		this.idAereoRitorno = idAereoRitorno;
+	}
+
+	public String getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(String idHotel) {
+		this.idHotel = idHotel;
+	}
 	
+	private void setSelezioneAerei(){
+		boolean aereoTrovato= false;
+		List<AereoDTO> lista = pacchetto.getAereiAndata();
+		for(int i=0;i<lista.size() & !aereoTrovato; i++){
+			AereoDTO aereo = lista.get(i);
+			if (aereo.toString().equals(idAereoAndata)){
+				prenotazione.setAereo(aereo);
+				aereoTrovato = true;
+			}
+		}
+		aereoTrovato = false;
+		lista = pacchetto.getAereiRitorno();
+		for(int i=0;i<lista.size() & !aereoTrovato; i++){
+			AereoDTO aereo = lista.get(i);
+			if (aereo.toString().equals(idAereoRitorno)){
+				prenotazione.setAereoRitorno(aereo);
+				aereoTrovato = true;
+			}
+		}
+		
+	}
 	
-	
+	private void setSelezioneHotel(){
+		boolean hotelTrovato = false;
+		List<HotelDTO> lista = pacchetto.getHotels();
+		for(int i=0;i<lista.size() & !hotelTrovato; i++){
+			HotelDTO hotel = lista.get(i);
+			if (hotel.toString().equals(idHotel)){
+				prenotazione.setHotel(hotel);
+				hotelTrovato = true;
+			}
+		}
+	}
+
+	public CondivisioneDTO getCondivisione() {
+		return condivisione;
+	}
+
+	public void setCondivisione(CondivisioneDTO condivisione) {
+		this.condivisione = condivisione;
+	}
 }
