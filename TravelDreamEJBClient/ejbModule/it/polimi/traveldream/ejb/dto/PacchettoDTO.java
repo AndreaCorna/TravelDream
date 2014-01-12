@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class PacchettoDTO {
 
-	@NotNull
+	
 	private int id;
 	@NotEmpty
 	private String destinazione;

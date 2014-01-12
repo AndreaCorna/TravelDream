@@ -146,9 +146,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setInizio_Validità(pacchetto.getInizio_Validita());
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
-		nuovoPacchetto.setId(pacchetto.getId());
 		nuovoPacchetto.setNumeroPersone(pacchetto.getNumeroPersone());
 		em.persist(nuovoPacchetto);
+		em.flush();
+		nuovoPacchetto = em.find(Pacchetto.class, nuovoPacchetto.getId());
+		pacchetto.setId(nuovoPacchetto.getId());
 		
 	}
 	
