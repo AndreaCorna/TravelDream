@@ -149,7 +149,7 @@ public class ComponenteManagedBean {
 	/*
 	 * Validatori dei dati inseriti
 	 */
-	
+	/*
 	public void validaIdAereo(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		if (!isNumeroCorretto(value.toString())){
             throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
@@ -158,7 +158,7 @@ public class ComponenteManagedBean {
             throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
 		}
 		
-	}
+	}*/
 	
 	public void validaIdHotel(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		if (!isNumeroCorretto(value.toString())){

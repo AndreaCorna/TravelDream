@@ -12,10 +12,6 @@
 		<p:panel header="Aggiungi un aereo">
 			<h:panelGrid columns="3" id="regGrid">
 			
-				<h:outputLabel for="id">Id:</h:outputLabel>
-				<p:inputText id="id" value="#{componente.aereo.id}" validator="#{componente.validaIdAereo}"/>
-				<p:message for="id"/>
-				
 				<h:outputLabel for="decollo">Decollo:</h:outputLabel>
 				<p:inputText id="decollo" value="#{componente.aereo.cittaDecollo}" />
 				<p:message for="decollo" />

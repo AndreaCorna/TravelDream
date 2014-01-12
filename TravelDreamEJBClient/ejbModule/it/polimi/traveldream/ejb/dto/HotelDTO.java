@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 public class HotelDTO {
 
-	@NotNull
+	
 	private int id;
 	@NotNull
 	private String citta;

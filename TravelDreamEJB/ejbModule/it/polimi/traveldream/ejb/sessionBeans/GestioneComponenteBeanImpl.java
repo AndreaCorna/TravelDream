@@ -43,6 +43,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void aggiungiAereoDB(AereoDTO aereo) {
 		Aereo nuovo = new Aereo(aereo);
 		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Aereo.class, nuovo.getId());
+		aereo.setId(nuovo.getId());
 		
 	}
 	
@@ -51,6 +54,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void aggiungiHotelDB(HotelDTO hotel) {
 		Hotel nuovo = new Hotel(hotel);
 		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Hotel.class, nuovo.getId());
+		hotel.setId(nuovo.getId());
 		
 	}
 	

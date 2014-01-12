@@ -284,11 +284,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<Aereo> convertListaAerei(List<AereoDTO> listaAndata, List<AereoDTO> listaRitorno){
 		ArrayList<Aereo> listaAerei = new ArrayList<Aereo>();
 		for(int i=0;i<listaAndata.size();i++){
-			Aereo nuovo = new Aereo(listaAndata.get(i));
+			Aereo nuovo = em.find(Aereo.class, listaAndata.get(i).getId());
 			listaAerei.add(nuovo);
 		}
 		for(int i=0;i<listaRitorno.size();i++){
-			Aereo nuovo = new Aereo(listaRitorno.get(i));
+			Aereo nuovo = em.find(Aereo.class, listaRitorno.get(i).getId());
 			listaAerei.add(nuovo);
 		}
 		List<Aereo> aerei = listaAerei;
@@ -333,7 +333,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private List<Hotel> convertListaHotel(List<HotelDTO> lista){
 		ArrayList<Hotel> listaHotel = new ArrayList<Hotel>();
 		for(int i=0;i<lista.size();i++){
-			Hotel nuovo = new Hotel(lista.get(i));
+			Hotel nuovo = em.find(Hotel.class, lista.get(i).getId());
 			listaHotel.add(nuovo);
 		}
 		List<Hotel> hotel = listaHotel;
