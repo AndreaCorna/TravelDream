@@ -6,55 +6,68 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
-<title>Personalizza Pacchettoo</title>
+<title>Personalizza Pacchetto</title>
 	#{pacchetto.initPersonalizza(param['id'])}</h:head> 
 <body> 
 <h:form>
+
 		<p:panel header="Personalizza il pacchetto">
+			 
 			<h:panelGrid columns="1" id="regGrid">
+				
 				<h:outputLabel for="nome" />Destinazione:
                 <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
                 <h:outputLabel for="inizio" />Inizio Validita:
                 <h:outputText value="#{pacchetto.pacchetto.inizio_Validita}" />
                 <h:outputLabel for="fine" />Fine Validita:
                 <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
+                <h:outputLabel for="fine" />Numero di Persone:
+                <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
                 <h:outputLabel for="andataAerei" />Aerei di Andata:
-				<p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
+                <p:dataList value="#{pacchetto.pacchetto.aereiAndata}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
 				</p:dataList>
-				<p:pickList id="aereiAndata" value="#{pacchetto.listaSelezioneAereoAndata}" var="aereo" effect="bounce"  
-                    itemValue="#{aereo}" itemLabel="#{aereo}" > 
-                </p:pickList>
+				<p:selectOneListbox value="#{pacchetto.prenotazione.aereoAndata}" >
+    				<f:selectItems value="#{pacchetto.listaAereiAndata}" var="aereo"
+      				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
+				</p:selectOneListbox>  
+				
                 <p></p>
 				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
 				<p:dataList value="#{pacchetto.pacchetto.aereiRitorno}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
 				</p:dataList>  
-				<p:pickList id="aereiRitorno" value="#{pacchetto.listaSelezioneAereoRitorno}" var="aereo" effect="bounce"  
-                    itemValue="#{aereo}" itemLabel="#{aereo}" > 
-                </p:pickList>
+				<p:selectOneListbox value="#{pacchetto.prenotazione.aereoRitorno}" >
+    				<f:selectItems value="#{pacchetto.listaAereiRitorno}" var="aereo"
+      				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
+				</p:selectOneListbox>  
+				
                   <p></p>
 				<h:outputLabel for="hotel" />Hotel:
 				<p:dataList value="#{pacchetto.pacchetto.hotels}" var="hotel" itemType="circle">  
-   				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}  
+   				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}, #{hotel.rating}
 				</p:dataList>  
-				<p:pickList id="hotel" value="#{pacchetto.listaSelezioneHotel}" var="hotel" effect="bounce"  
-                    itemValue="#{hotel}" itemLabel="#{hotel}" > 
-                </p:pickList>
+				<p:selectOneListbox value="#{pacchetto.prenotazione.hotel}" >
+    				<f:selectItems value="#{pacchetto.listaHotel}" var="hotel"
+      				  itemValue="#{hotel}" itemLabel="#{hotel.id}" />
+				</p:selectOneListbox>  
                  <p></p>
 				<h:outputLabel for="escursioni" />Escursioni:
 				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
    				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
 				</p:dataList>
-				<p:pickList id="escur" value="#{pacchetto.listaSelezioneEscursioni}" var="esc" effect="bounce"  
-                    itemValue="#{esc}" itemLabel="#{esc}" > 
+				<p:pickList id="pickList" value="#{pacchetto.listaSelezioneEscursioni}" var="esc"   
+                itemLabel="#{esc}" itemValue="#{esc}" effect="bounce">  
+                <p:ajax event="transfer" listener="#{pacchetto.onTransfer}" update="msg" />
                 </p:pickList>
+				<p:growl id="msg" showDetail="true" escape="false" />  
                  <p></p>
 				<h:outputLabel for="escursioni" />Descrizione:
 				<p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
 		            <h:outputText value="#{pacchetto.pacchetto.descrizione}" />  
 		        </p:column>  
 			</h:panelGrid>
+			<p:commandButton value="Prenota" id="ajax"  ajax="false" action="#{pacchetto.prenotaPacchetto}" styleClass="ui-priority-primary"/>  
 			 <p><a href="index.xhtml">Torna alla homepage</a></p>
 		</p:panel>
 </h:form>

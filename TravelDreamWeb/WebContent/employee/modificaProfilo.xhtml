@@ -14,7 +14,7 @@
 		<p:panel header="Modifica Profilo">
 			<h:panelGrid columns="3" id="regGrid">
 								
-					
+				<p:growl id="msg" showDetail="true" escape="false" />  
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
 				<p:inputText id="nome" value="#{utente.utente.nome}" />
 				<p:message for="nome" value="Inserisci il nome"/>

@@ -14,7 +14,7 @@ public class Prenotazione_PacchettoDTO {
 	private int id;
 	@NotNull
 	private Date data;
-	@NotEmpty
+	
 	private List<CondivisioneDTO> condivisioni;
 	@NotEmpty
 	private List<EscursioneDTO> escursioni;
