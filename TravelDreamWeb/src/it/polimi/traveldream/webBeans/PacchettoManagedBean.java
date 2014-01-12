@@ -230,13 +230,23 @@ public class PacchettoManagedBean {
 		prenotazione.setPacchetto(pacchetto);
 		prenotazione.setUtente(gestioneUtente.getUtenteDTO());
 		prenotazione.setData(date);
-		
 		return "riep&cond?faces-redirect=true";
 	}
-	
-	public String confermaPrenotazione(){
 		
+	public String confermaPrenotazione(){
+		gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
+		if(checkCondivisione){
+			setCondivisione();
+			gestioneCondivisione.creaCondivisione(condivisione, prenotazione);
+		}
 		return "index?faces-redirect=true";
+	}
+	
+	private void setCondivisione(){
+		condivisione = new CondivisioneDTO();
+		condivisione.setData(new Date());
+		condivisione.setLink(linkCondivisione);
+		condivisione.setUtente(gestioneUtente.getUtenteDTO());
 	}
 	
 	public void onTransfer(TransferEvent event){
