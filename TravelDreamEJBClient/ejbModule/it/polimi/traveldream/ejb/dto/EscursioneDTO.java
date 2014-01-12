@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,6 +14,7 @@ public class EscursioneDTO {
 	@NotEmpty
 	private String luogo;
 	@NotNull
+	@Min(0)
 	private float prezzo;
 	@NotNull
 	private Date data;
