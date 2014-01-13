@@ -179,7 +179,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@SuppressWarnings("unchecked")
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
-				+ "WHERE p.aereo1.data BETWEEN :andata AND :ritorno and p.aereo2.data BETWEEN :andata AND :ritorno")
+				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno and p.dataCheckOutHotel BETWEEN :andata AND :ritorno")
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
 		int camereOccupate = prenotazioniPac.size();
