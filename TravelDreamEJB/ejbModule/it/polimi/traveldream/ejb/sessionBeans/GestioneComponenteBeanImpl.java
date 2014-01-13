@@ -155,7 +155,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaHotel(HotelDTO hotel) {
 		Hotel modificato = em.find(Hotel.class, hotel.getId());
-		modificato.setCamere_Disponibili(hotel.getCamereDisponibili());
+		//setCamere_Disponibili(hotel.getCamereDisponibili());
 		modificato.setCittà(hotel.getCitta());
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
@@ -198,7 +198,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	
 	private HotelDTO convertToDTO(Hotel hotel){
 		HotelDTO nuovo = new HotelDTO();
-		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
+		//nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
 		nuovo.setCitta(hotel.getCittà());
 		nuovo.setNome(hotel.getNome());

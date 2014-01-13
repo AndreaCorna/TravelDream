@@ -244,7 +244,7 @@ CREATE TABLE `Escursioni_in_Prenotazione_Pacchetto` (
 
 LOCK TABLES `Escursioni_in_Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Escursioni_in_Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Escursioni_in_Prenotazione_Pacchetto` VALUES (3,56),(4,56),(5,56);
+INSERT INTO `Escursioni_in_Prenotazione_Pacchetto` VALUES (3,56),(4,56),(5,56),(6,56);
 /*!40000 ALTER TABLE `Escursioni_in_Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +305,7 @@ CREATE TABLE `Condivisione` (
 
 LOCK TABLES `Condivisione` WRITE;
 /*!40000 ALTER TABLE `Condivisione` DISABLE KEYS */;
-INSERT INTO `Condivisione` VALUES ('cond56userciaodate11400','2014-01-12 16:23:19','ciao',5),('prova','2013-05-08 00:00:00','ciao',1);
+INSERT INTO `Condivisione` VALUES ('cond56userciaodate11400','2014-01-12 16:23:19','ciao',5),('cond56userciaodate11401','2014-01-13 14:09:30','ciao',6),('prova','2013-05-08 00:00:00','ciao',1);
 /*!40000 ALTER TABLE `Condivisione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,9 +324,9 @@ CREATE TABLE `Hotel` (
   `Stelle` int(11) NOT NULL,
   `Costo_Giornaliero` float NOT NULL,
   `Data_Checkin` datetime DEFAULT NULL,
-  `Data_Checkout` datetime DEFAULT NULL,
+  `Data_Checkout` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -335,7 +335,7 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'Roma',1,'Ciao',5,0,'2010-05-05 00:00:00','2010-06-06 00:00:00'),(56,'Milano',14,'Hotel Milano',5,15,NULL,NULL),(100,'Milano',29,'HotelMilano',4,14,'2014-01-02 00:00:00','2014-01-03 00:00:00'),(101,'Milano',15,'HotelPdor',5,15,NULL,NULL);
+INSERT INTO `Hotel` VALUES (1,'Roma',1,'Ciao',5,0,NULL,NULL),(56,'Milano',14,'Hotel Milano',5,15,NULL,NULL),(100,'Milano',29,'HotelMilano',4,14,NULL,NULL),(101,'Milano',15,'HotelPdor',5,15,NULL,NULL),(102,'Ilio',50,'Hotel Ele',5,14,NULL,NULL);
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +453,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
   CONSTRAINT `fk_Prenotazione_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_Prenotazione_Pacchetto_Pacchetto1` FOREIGN KEY (`id_Pacchetto`) REFERENCES `Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_Prenotazione_Utente_Registrato1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -462,7 +462,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
 
 LOCK TABLES `Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL);
+INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL),(6,'2014-01-13 14:09:27',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00');
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -531,4 +531,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-13 11:10:56
+-- Dump completed on 2014-01-13 14:17:06

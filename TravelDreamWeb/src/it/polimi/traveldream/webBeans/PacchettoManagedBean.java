@@ -409,11 +409,10 @@ public class PacchettoManagedBean {
 		ArrayList<EscursioneDTO> escursioni = new ArrayList<EscursioneDTO>();
 		for(String selezione:selezioneEscursioni){
 			trovato = false;
-			List<EscursioneDTO> lista = pacchetto.getEscursioni();
-			for(int i=0; i<lista.size() & !trovato;i++){
-				Integer idValue = new Integer(lista.get(i).getId());
+			for(int i=0; i<listaEscursioniDB.size() & !trovato;i++){
+				Integer idValue = new Integer(listaEscursioniDB.get(i).getId());
 				if(idValue.toString().equals(selezione)){
-					escursioni.add(lista.get(i));
+					escursioni.add(listaEscursioniDB.get(i));
 					trovato = true;
 				}
 			}
@@ -423,18 +422,19 @@ public class PacchettoManagedBean {
 
 	private void setSelezioneAerei(){
 		boolean aereoTrovato= false;
-		List<AereoDTO> lista = pacchetto.getAereiAndata();
-		for(int i=0;i<lista.size() & !aereoTrovato; i++){
-			AereoDTO aereo = lista.get(i);
+		for(int i=0;i<listaAereiAndataDB.size() & !aereoTrovato; i++){
+			AereoDTO aereo = listaAereiAndataDB.get(i);
+			System.out.println("i " +i);
+			System.out.println("aereo andata "+aereo+" id aereo ="+idAereoAndata);
 			if (aereo.toString().equals(idAereoAndata)){
 				prenotazione.setAereo(aereo);
 				aereoTrovato = true;
 			}
 		}
+		System.out.println("Aereo andata "+prenotazione.getAereoAndata());
 		aereoTrovato = false;
-		lista = pacchetto.getAereiRitorno();
-		for(int i=0;i<lista.size() & !aereoTrovato; i++){
-			AereoDTO aereo = lista.get(i);
+		for(int i=0;i<listaAereiRitornoDB.size() & !aereoTrovato; i++){
+			AereoDTO aereo = listaAereiRitornoDB.get(i);
 			if (aereo.toString().equals(idAereoRitorno)){
 				prenotazione.setAereoRitorno(aereo);
 				aereoTrovato = true;
@@ -446,9 +446,8 @@ public class PacchettoManagedBean {
 	
 	private void setSelezioneHotel(){
 		boolean hotelTrovato = false;
-		List<HotelDTO> lista = pacchetto.getHotels();
-		for(int i=0;i<lista.size() & !hotelTrovato; i++){
-			HotelDTO hotel = lista.get(i);
+		for(int i=0;i<listaHotelDB.size() & !hotelTrovato; i++){
+			HotelDTO hotel = listaHotelDB.get(i);
 			if (hotel.toString().equals(idHotel)){
 				prenotazione.setHotel(hotel);
 				hotelTrovato = true;
