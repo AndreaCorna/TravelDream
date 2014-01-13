@@ -80,7 +80,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	public List<AereoDTO> getListaAereiAndata(String destinazione, Date andata) {
 		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:destinazione and a.data = startDate")
 			    .setParameter("destinazione", destinazione)
-			    .setParameter("startDate", andata, TemporalType.TIMESTAMP)
+			    .setParameter("startDate", andata)
 			    .getResultList();
 		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, destinazione);
 		return listaAerei;
