@@ -61,7 +61,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza, Date dataFine ){
-		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.città =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
+		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.cittï¿½ =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", dataFine)
@@ -177,7 +177,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		HotelDTO nuovo = new HotelDTO();
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCittà());
+		nuovo.setCitta(hotel.getCitta());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
