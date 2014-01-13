@@ -88,7 +88,8 @@ public class ViaggioManagedBean {
 	
 	@PostConstruct
 	public void init(){
-		viaggio = new Prenotazione_ViaggioDTO();
+	//	viaggio = new Prenotazione_ViaggioDTO();
+		aereoAndata = new AereoDTO();
 	}
 	/*
 	public void mostraOfferte(){
