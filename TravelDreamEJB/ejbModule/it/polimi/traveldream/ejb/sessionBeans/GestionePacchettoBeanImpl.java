@@ -139,7 +139,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		for(AereoDTO aereo:pacchetto.getAereiAndata()){
 			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
 			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
-					&& haPostiDisponibili(aereoDB)){
+					&& haPostiDisponibili(aereoDB,partenza,ritorno)){
 				aerei.add(em.find(Aereo.class,aereo.getId()));
 			}
 		}
@@ -154,7 +154,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
 			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
 			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
-					&& haPostiDisponibili(aereoDB)){
+					&& haPostiDisponibili(aereoDB,partenza,ritorno)){
 				aerei.add(em.find(Aereo.class,aereo.getId()));
 			}
 		}
@@ -184,7 +184,13 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
-		int camereOccupate = prenotazioniPac.size();
+		List<Prenotazione_Pacchetto> prenotazioniViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p "
+				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno and p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
+				+ "AND p.hotel =:hotel")
+				.setParameter("hotel", hotel)
+				.setParameter("ritorno", ritorno)
+				.setParameter("andata",partenza).getResultList();
+		int camereOccupate = prenotazioniPac.size() + prenotazioniViaggi.size();
 		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
 	}
 	
@@ -198,15 +204,21 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private boolean haPostiDisponibili(Aereo aereo){
-		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome")
-				.setParameter("nome", aereo).getResultList();
+	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno){
+		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome"
+				+ "AND (p.aereo1.data BETWEEN :andata AND :ritorno OR p.aereo2.data BETWEEN :andata AND :ritorno)")
+				.setParameter("nome", aereo)
+				.setParameter("andata",partenza)
+				.setParameter("ritorno",ritorno).getResultList();
 		int postiOccupati = 0;
 		for(Prenotazione_Pacchetto prenotazione:listaPrenotazioniPac){
 			postiOccupati = postiOccupati + prenotazione.getPacchetto().getNumeroPersone();
 		}
-		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE p.aereo1 =:nome OR p.aereo2 =:nome")
-				.setParameter("nome", aereo).getResultList();
+		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE p.aereo1 =:nome OR p.aereo2 =:nome "
+				+ "AND (p.aereo1.data BETWEEN :andata AND :ritorno OR p.aereo2.data BETWEEN :andata AND :ritorno)")
+				.setParameter("nome", aereo)
+				.setParameter("andata",partenza)
+				.setParameter("ritorno",ritorno).getResultList();
 		postiOccupati = postiOccupati + listaViaggi.size();
 		
 	return (aereo.getPosti_Disponibili()-postiOccupati)>0;
