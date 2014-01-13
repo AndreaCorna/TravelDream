@@ -29,6 +29,10 @@ public class Prenotazione_PacchettoDTO {
 	@NotNull
 	private UtenteDTO utente;
 	
+	private Date checkInHotel;
+	
+	private Date checkOutHotel;
+	
 	public int getId() {
 		return id;
 	}
@@ -98,5 +102,21 @@ public class Prenotazione_PacchettoDTO {
 	
 	public void setData(Date data){
 		this.data = data;
+	}
+
+	public Date getCheckInHotel() {
+		return checkInHotel;
+	}
+
+	public void setCheckInHotel(Date checkInHotel) {
+		this.checkInHotel = checkInHotel;
+	}
+
+	public Date getCheckOutHotel() {
+		return checkOutHotel;
+	}
+
+	public void setCheckOutHotel(Date checkOutHotel) {
+		this.checkOutHotel = checkOutHotel;
 	}
 }

@@ -52,6 +52,8 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		nuova.setPacchetto(em.find(Pacchetto.class,prenotazione.getPacchetto().getId()));
 		nuova.setUtente(em.find(Utente.class, prenotazione.getUtente().getUsername()));
 		nuova.setEscursioni(convertListaEscursioni(prenotazione.getEscursioni()));
+		nuova.setDataCheckInHotel(prenotazione.getCheckInHotel());
+		nuova.setDataCheckOutHotel(prenotazione.getCheckOutHotel());
 		em.persist(nuova);
 		em.flush();
 		nuova = em.find(Prenotazione_Pacchetto.class, nuova.getId());

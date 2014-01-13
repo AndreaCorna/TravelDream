@@ -220,6 +220,7 @@ public class PacchettoManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String prenotaPacchetto(){
 		
 		setSelezioneAerei();
@@ -230,6 +231,10 @@ public class PacchettoManagedBean {
 			prenotazione.setPacchetto(pacchetto);
 			prenotazione.setUtente(gestioneUtente.getUtenteDTO());
 			prenotazione.setData(date);
+			Date dataCheckIn = prenotazione.getAereoAndata().getData();
+			Date dataCheckOut = prenotazione.getAereoRitorno().getData();
+			prenotazione.setCheckInHotel(new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate()));
+			prenotazione.setCheckOutHotel(new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate()));
 			return "riep&cond?faces-redirect=true";
 		}
 		return null;
@@ -439,17 +444,13 @@ public class PacchettoManagedBean {
 		
 	}
 	
-	@SuppressWarnings("deprecation")
+	
 	private void setSelezioneHotel(){
 		boolean hotelTrovato = false;
 		List<HotelDTO> lista = pacchetto.getHotels();
 		for(int i=0;i<lista.size() & !hotelTrovato; i++){
 			HotelDTO hotel = lista.get(i);
 			if (hotel.toString().equals(idHotel)){
-				Date dataCheckIn = prenotazione.getAereoAndata().getData();
-				Date dataCheckOut = prenotazione.getAereoRitorno().getData();
-				hotel.setDataInizio(new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate()));
-				hotel.setDataFine(new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate()));
 				prenotazione.setHotel(hotel);
 				hotelTrovato = true;
 			}

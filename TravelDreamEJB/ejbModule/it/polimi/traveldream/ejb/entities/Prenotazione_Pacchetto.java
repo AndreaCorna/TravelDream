@@ -65,6 +65,14 @@ public class Prenotazione_Pacchetto implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_Utente")
 	private Utente utente;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="Check_In_Hotel")
+	private Date dataCheckInHotel;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="Check_Out_Hotel")
+	private Date dataCheckOutHotel;
 
 	public Prenotazione_Pacchetto() {
 	}
@@ -153,6 +161,22 @@ public class Prenotazione_Pacchetto implements Serializable {
 
 	public void setUtente(Utente utente) {
 		this.utente = utente;
+	}
+
+	public Date getDataCheckInHotel() {
+		return dataCheckInHotel;
+	}
+
+	public void setDataCheckInHotel(Date dataCheckInHotel) {
+		this.dataCheckInHotel = dataCheckInHotel;
+	}
+
+	public Date getDataCheckOutHotel() {
+		return dataCheckOutHotel;
+	}
+
+	public void setDataCheckOutHotel(Date dataCheckOutHotel) {
+		this.dataCheckOutHotel = dataCheckOutHotel;
 	}
 
 }
