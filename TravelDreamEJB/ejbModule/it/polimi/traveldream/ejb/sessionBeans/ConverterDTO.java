@@ -23,7 +23,7 @@ import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
 import it.polimi.traveldream.ejb.entities.Utente;
 
-public class Coverter {
+public class ConverterDTO {
 	
 	@PersistenceContext
     private static EntityManager em;
