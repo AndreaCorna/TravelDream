@@ -77,12 +77,12 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio, Date andata) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data = startDate")
-			    .setParameter("nome", cittaAtterraggio)
+	public List<AereoDTO> getListaAereiAndata(String destinazione, Date andata) {
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:destinazione and a.data = startDate")
+			    .setParameter("destinazione", destinazione)
 			    .setParameter("startDate", andata, TemporalType.TIMESTAMP)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, cittaAtterraggio);
+		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, destinazione);
 		return listaAerei;
 	}
 

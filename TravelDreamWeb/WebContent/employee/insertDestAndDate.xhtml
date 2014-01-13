@@ -14,11 +14,11 @@
 			<h:panelGrid columns="3" id="regGrid">
 			
 				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
-				<p:inputText id="dest" value="#{viaggio.viaggio.destinazione}" />
+				<p:inputText id="dest" value="#{pacchetto.pacchetto.destinazione}" />
 				<p:message for="dest" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="data_inizio">Data di Inizio Validità:</h:outputLabel>
-				<p:calendar binding="#{data_inizio}" required="true" value="#{viaggio.viaggio.pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar binding="#{data_inizio}" required="true" value="#{pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
 				
 				<h:outputLabel for="data_fine">Data di Fine Validità</h:outputLabel>

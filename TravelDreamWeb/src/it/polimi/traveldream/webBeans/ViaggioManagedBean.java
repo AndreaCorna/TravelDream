@@ -8,10 +8,13 @@ import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.dataModels.PacchettoDataModel;
+import it.polimi.traveldream.dataModels.PrenotazioneViaggioDataModel;
+import it.polimi.traveldream.dataModels.ViaggioDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneViaggioBean;
@@ -59,7 +62,7 @@ public class ViaggioManagedBean {
 	
 	private EscursioneDataModel datiEscursioni;
 	
-	private PacchettoDTO viaggio;
+	private Prenotazione_ViaggioDTO viaggio;
 	
 	private List<PacchettoDTO> listaPacchetti;
 	
@@ -70,34 +73,22 @@ public class ViaggioManagedBean {
 	private SelectItem[] destinazioni;
 	
 	private AereoDTO aereoAndata;
-	
-	private AereoDTO aereoRitorno;
-	
-	public ViaggioManagedBean(){
-		
-		setViaggio(new PacchettoDTO());
-		setAereoAndata(new AereoDTO());
-			
-	}
 
-	private void setAereoAndata(AereoDTO aereoAndata) {
-		this.aereoAndata = aereoAndata;
-	}
 	public AereoDTO getAereoAndata() {
 		return aereoAndata;
 	}
 
-	public PacchettoDTO getViaggio() {
+	public Prenotazione_ViaggioDTO getViaggio() {
 		return viaggio;
 	}
 
-	public void setViaggio(PacchettoDTO viaggio) {
+	public void setViaggio(Prenotazione_ViaggioDTO viaggio) {
 		this.viaggio = viaggio;
 	}
 	
 	@PostConstruct
 	public void init(){
-		viaggio = new PacchettoDTO();
+		viaggio = new Prenotazione_ViaggioDTO();
 	}
 	/*
 	public void mostraOfferte(){
@@ -108,7 +99,11 @@ public class ViaggioManagedBean {
 	*/
 
 	public String aggiungiDestinazioneDate(){
-		gestioneViaggio.aggiungiAereoViaggio(aereoAndata);
+		String destinazione = aereoAndata.getCittaAtterraggio();
+		Date dataPartenza = aereoAndata.getData();
+		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
+		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
+		
 		return "insertAereo?faces-redirect=true";
 	}
 
@@ -182,11 +177,11 @@ public class ViaggioManagedBean {
 		this.datiAereiAndata = datiAerei;
 	}
 	
-	public PacchettoDTO getPacchetto() {
+	public Prenotazione_ViaggioDTO getPacchetto() {
 		return viaggio;
 	}
 
-	public void setPacchetto(PacchettoDTO pacchetto) {
+	public void setPacchetto(Prenotazione_ViaggioDTO pacchetto) {
 		this.viaggio = pacchetto;
 	}
 
