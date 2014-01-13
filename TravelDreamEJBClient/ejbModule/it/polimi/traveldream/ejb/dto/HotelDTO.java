@@ -11,7 +11,7 @@ public class HotelDTO {
 	
 	private int id;
 	@NotNull
-	private String citta;
+	private String città;
 	@NotNull
 	@Min(1)
 	private int camereDisponibili;
@@ -37,10 +37,10 @@ public class HotelDTO {
 		this.id = id;
 	}
 	public String getCitta() {
-		return citta;
+		return città;
 	}
-	public void setCitta(String citta) {
-		this.citta = citta;
+	public void setCitta(String città) {
+		this.città = città;
 	}
 	public int getCamereDisponibili() {
 		return camereDisponibili;

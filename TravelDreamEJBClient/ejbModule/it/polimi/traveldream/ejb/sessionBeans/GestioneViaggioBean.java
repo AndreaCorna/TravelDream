@@ -16,7 +16,6 @@ public interface GestioneViaggioBean {
 	
 	public List<AereoDTO> getListaAerei();
 	
-	public List<HotelDTO> getListaHotel();
 	
 	public List<EscursioneDTO> getListaEscursioni();
 	
@@ -29,4 +28,7 @@ public interface GestioneViaggioBean {
 			Date partenza);
 
 	public List<AereoDTO> aggiungiAereoViaggio(AereoDTO aereoAndata);
+
+	List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza,
+			Date dataFine);
 }

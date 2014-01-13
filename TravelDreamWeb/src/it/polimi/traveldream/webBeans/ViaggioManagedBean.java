@@ -73,6 +73,8 @@ public class ViaggioManagedBean {
 	private SelectItem[] destinazioni;
 	
 	private AereoDTO aereoAndata;
+	
+	private HotelDTO hotel;
 
 	public AereoDTO getAereoAndata() {
 		return aereoAndata;
@@ -88,8 +90,31 @@ public class ViaggioManagedBean {
 	
 	@PostConstruct
 	public void init(){
-	//	viaggio = new Prenotazione_ViaggioDTO();
 		aereoAndata = new AereoDTO();
+	}
+	
+
+	public String aggiungiDestinazioneDateAereo(){
+		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
+		Date dataPartenza = aereoAndata.getData();
+		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
+		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
+		
+		return "home?faces-redirect=true";
+	}
+
+	public String passaAHotel(){
+		return "acquistaHotelViaggio?faces-redirect=true";
+	}
+
+	public String aggiungiDestinazioneDateHotel(){
+		String destinazione = hotel.getCitta().toLowerCase();
+		Date dataPartenza = hotel.getDataInizio();
+		Date dataFine = hotel.getDataInizio();
+		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataPartenza, dataFine);
+		setDatiHotel(new HotelDataModel(listaHotelDB));
+		
+		return "home?faces-redirect=true";
 	}
 	/*
 	public void mostraOfferte(){
@@ -99,16 +124,6 @@ public class ViaggioManagedBean {
 	}
 	*/
 
-	public String aggiungiDestinazioneDate(){
-		String destinazione = aereoAndata.getCittaAtterraggio();
-		Date dataPartenza = aereoAndata.getData();
-		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
-		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
-		
-		return "insertAereo?faces-redirect=true";
-	}
-
-	
 
 	
 	public String aggiungiEscursioni(){
