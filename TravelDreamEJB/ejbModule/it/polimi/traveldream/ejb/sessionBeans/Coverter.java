@@ -47,7 +47,7 @@ public class Coverter {
 	
 	protected static HotelDTO convertToDTO(Hotel hotel){
 		HotelDTO nuovo = new HotelDTO();
-		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
+		//nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
 		nuovo.setCitta(hotel.getCittà());
 		nuovo.setNome(hotel.getNome());

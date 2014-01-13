@@ -179,13 +179,13 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@SuppressWarnings("unchecked")
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
-				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno and p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
+				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
 				+ "AND p.hotel =:hotel")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
 		List<Prenotazione_Pacchetto> prenotazioniViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p "
-				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno and p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
+				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
 				+ "AND p.hotel =:hotel")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
@@ -205,7 +205,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@SuppressWarnings("unchecked")
 	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno){
-		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome"
+		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome "
 				+ "AND (p.aereo1.data BETWEEN :andata AND :ritorno OR p.aereo2.data BETWEEN :andata AND :ritorno)")
 				.setParameter("nome", aereo)
 				.setParameter("andata",partenza)
