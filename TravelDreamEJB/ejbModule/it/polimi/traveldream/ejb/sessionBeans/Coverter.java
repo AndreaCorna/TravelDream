@@ -49,7 +49,7 @@ public class Coverter {
 		HotelDTO nuovo = new HotelDTO();
 		//nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCittà());
+		nuovo.setCitta(hotel.getCitta());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
@@ -111,9 +111,9 @@ public class Coverter {
 		PacchettoDTO nuovo = new PacchettoDTO();
 		nuovo.setDescrizione(pacchetto.getDescrizione());
 		nuovo.setDestinazione(pacchetto.getDestinazione());
-		nuovo.setFine_Validita(pacchetto.getFine_Validità());
+		nuovo.setFine_Validita(pacchetto.getFine_Validita());
 		nuovo.setId(pacchetto.getId());
-		nuovo.setInizio_Validita(pacchetto.getInizio_Validità());
+		nuovo.setInizio_Validita(pacchetto.getInizio_Validita());
 		nuovo.setHotels(convertListaHotelToDTO(pacchetto.getHotels()));
 		nuovo.setEscursioni(convertListaEscursioniToDTO(pacchetto.getEscursioni()));
 		nuovo.setAereiAndata(convertListaAereiAndataToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));

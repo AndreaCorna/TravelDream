@@ -27,8 +27,8 @@ public class Hotel implements Serializable {
 	@Column(name="Camere_Disponibili")
 	private int camere_Disponibili;
 
-	@Column(name="Città")
-	private String città;
+	@Column(name="Citta")
+	private String citta;
 	
 	@Column(name="Nome")
 	private String nome;
@@ -57,7 +57,7 @@ public class Hotel implements Serializable {
 	public Hotel(HotelDTO hotel) {
 		this.id = hotel.getId();
 		this.camere_Disponibili = hotel.getCamereDisponibili();
-		this.città= hotel.getCitta();
+		this.citta= hotel.getCitta();
 		this.nome = hotel.getNome();
 		this.stelle = hotel.getRating().intValue();
 		this.costoGiornaliero = hotel.getCostoGiornaliero();
@@ -81,12 +81,12 @@ public class Hotel implements Serializable {
 		this.camere_Disponibili = camere_Disponibili;
 	}
 
-	public String getCittà() {
-		return this.città;
+	public String getCitta() {
+		return this.citta;
 	}
 
-	public void setCittà(String città) {
-		this.città= città;
+	public void setCitta(String citta) {
+		this.citta= citta;
 	}
 
 	public List<Camera> getCamere() {

@@ -156,7 +156,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public void modificaHotel(HotelDTO hotel) {
 		Hotel modificato = em.find(Hotel.class, hotel.getId());
 		//setCamere_Disponibili(hotel.getCamereDisponibili());
-		modificato.setCittà(hotel.getCitta());
+		modificato.setCitta(hotel.getCitta());
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
 		modificato.setCostoGiornaliero(hotel.getCostoGiornaliero());
@@ -200,7 +200,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		HotelDTO nuovo = new HotelDTO();
 		//nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCittà());
+		nuovo.setCitta(hotel.getCitta());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
@@ -241,8 +241,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.aerei) a WHERE a=:nome")
 			    .setParameter("nome",aereo).getResultList();
 		for(Pacchetto pacchetto:pacchetti){
-			if(aereo.getData().before(pacchetto.getInizio_Validità()) ||
-					aereo.getData().after(pacchetto.getFine_Validità())){
+			if(aereo.getData().before(pacchetto.getInizio_Validita()) ||
+					aereo.getData().after(pacchetto.getFine_Validita())){
 				pacchetto.getAerei().remove(aereo);
 				if(!conRitornoAndata(pacchetto)){
 					em.remove(pacchetto);
@@ -257,8 +257,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.escursioni) e WHERE e=:nome")
 			    .setParameter("nome",escursione).getResultList();
 		for(Pacchetto pacchetto:pacchetti){
-			if(escursione.getData().before(pacchetto.getInizio_Validità()) ||
-					escursione.getData().after(pacchetto.getFine_Validità())){
+			if(escursione.getData().before(pacchetto.getInizio_Validita()) ||
+					escursione.getData().after(pacchetto.getFine_Validita())){
 				pacchetto.getAerei().remove(escursione);
 				if(pacchetto.getEscursioni().size() == 0){
 					em.remove(pacchetto);
