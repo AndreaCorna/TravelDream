@@ -10,20 +10,24 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Prenotazione_ViaggioDTO {
 
-	@NotNull
+	
 	private int id;
 	@NotNull
 	private Date data;
-	@NotNull
+	
 	private AereoDTO aereoAndata;
-	@NotNull
+	
 	private AereoDTO aereoRitorno;
-	@NotEmpty
+	
 	private List<EscursioneDTO> escursioni;
-	@NotNull
+	
 	private HotelDTO hotel;
 	@NotNull
 	private UtenteDTO utente;
+	
+	private Date checkInHotel;
+	
+	private Date checkOutHotel;
 
 	
 	public int getId() {
@@ -75,6 +79,22 @@ public class Prenotazione_ViaggioDTO {
 
 	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
+	}
+
+	public Date getCheckInHotel() {
+		return checkInHotel;
+	}
+
+	public void setCheckInHotel(Date checkInHotel) {
+		this.checkInHotel = checkInHotel;
+	}
+
+	public Date getCheckOutHotel() {
+		return checkOutHotel;
+	}
+
+	public void setCheckOutHotel(Date checkOutHotel) {
+		this.checkOutHotel = checkOutHotel;
 	}
 	public void setData(Date data) {
 		// TODO Auto-generated method stub

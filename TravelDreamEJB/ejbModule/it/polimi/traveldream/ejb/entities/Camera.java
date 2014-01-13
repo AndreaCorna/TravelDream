@@ -1,7 +1,11 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dto.CameraDTO;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -16,7 +20,7 @@ public class Camera implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name="Costo")
@@ -42,6 +46,14 @@ public class Camera implements Serializable {
 	private Hotel hotel;
 
 	public Camera() {
+	}
+	
+	public Camera(CameraDTO camera){
+		this.costo = camera.getCosto();
+		this.posti = camera.getPosti();
+		this.occupata = camera.getOccupata();
+		this.data_Checkin = camera.getData_Checkin();
+		this.data_Checkout = camera.getData_Checkout();
 	}
 
 	public int getId() {
