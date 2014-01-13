@@ -26,12 +26,12 @@ public class Pacchetto implements Serializable {
 	private String destinazione;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="Fine_Validit√†")
-	private Date fine_Validit√†;
+	@Column(name="Fine_Validit‡")
+	private Date fine_Validit‡;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="Inizio_Validit√†")
-	private Date inizio_Validit√†;
+	@Column(name="Inizio_Validit‡")
+	private Date inizio_Validit‡;
 	
 	@Column(name="Descrizione")
 	private String descrizione;
@@ -103,20 +103,20 @@ public class Pacchetto implements Serializable {
 	}
 
 
-	public Date getFine_Validit√†() {
-		return this.fine_Validit√†;
+	public Date getFine_Validit‡() {
+		return this.fine_Validit‡;
 	}
 
-	public void setFine_Validit√†(Date fine_Validit√†) {
-		this.fine_Validit√†= fine_Validit√†;
+	public void setFine_Validit‡(Date fine_Validit‡) {
+		this.fine_Validit‡= fine_Validit‡;
 	}
 
-	public Date getInizio_Validit√†() {
-		return this.inizio_Validit√†;
+	public Date getInizio_Validit‡() {
+		return this.inizio_Validit‡;
 	}
 
-	public void setInizio_Validit√†(Date inizio_Validit√†) {
-		this.inizio_Validit√†= inizio_Validit√†;
+	public void setInizio_Validit‡(Date inizio_Validit‡) {
+		this.inizio_Validit‡= inizio_Validit‡;
 	}
 
 	public List<Aereo> getAerei() {

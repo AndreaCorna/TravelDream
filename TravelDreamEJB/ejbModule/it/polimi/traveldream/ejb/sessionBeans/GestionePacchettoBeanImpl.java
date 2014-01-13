@@ -236,8 +236,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setDestinazione(pacchetto.getDestinazione());
 		nuovoPacchetto.setEscursioni(escursioni);
 		nuovoPacchetto.setHotels(hotel);
-		nuovoPacchetto.setFine_Validit√†(pacchetto.getFine_Validita());
-		nuovoPacchetto.setInizio_Validit√†(pacchetto.getInizio_Validita());
+		nuovoPacchetto.setFine_Validit‡(pacchetto.getFine_Validita());
+		nuovoPacchetto.setInizio_Validit‡(pacchetto.getInizio_Validita());
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
 		nuovoPacchetto.setNumeroPersone(pacchetto.getNumeroPersone());
@@ -266,8 +266,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		modificato.setDestinazione(pacchetto.getDestinazione());
 		modificato.setEscursioni(escursioni);
 		modificato.setHotels(hotel);
-		modificato.setFine_Validit√†(pacchetto.getFine_Validita());
-		modificato.setInizio_Validit√†(pacchetto.getInizio_Validita());
+		modificato.setFine_Validit‡(pacchetto.getFine_Validita());
+		modificato.setInizio_Validit‡(pacchetto.getInizio_Validita());
 		modificato.setAerei(aerei);
 		modificato.setNumeroPersone(pacchetto.getNumeroPersone());
 		em.merge(modificato);
@@ -301,7 +301,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		HotelDTO nuovo = new HotelDTO();
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCitt√†());
+		nuovo.setCitta(hotel.getCitt‡());
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
@@ -341,9 +341,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		PacchettoDTO nuovo = new PacchettoDTO();
 		nuovo.setDescrizione(pacchetto.getDescrizione());
 		nuovo.setDestinazione(pacchetto.getDestinazione());
-		nuovo.setFine_Validita(pacchetto.getFine_Validit√†());
+		nuovo.setFine_Validita(pacchetto.getFine_Validit‡());
 		nuovo.setId(pacchetto.getId());
-		nuovo.setInizio_Validita(pacchetto.getInizio_Validit√†());
+		nuovo.setInizio_Validita(pacchetto.getInizio_Validit‡());
 		nuovo.setHotels(convertListaHotelToDTO(pacchetto.getHotels()));
 		nuovo.setEscursioni(convertListaEscursioniToDTO(pacchetto.getEscursioni()));
 		nuovo.setAereiAndata(convertListaAereiAndataToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
