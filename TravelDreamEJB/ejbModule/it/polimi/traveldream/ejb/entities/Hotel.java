@@ -57,7 +57,7 @@ public class Hotel implements Serializable {
 	public Hotel(HotelDTO hotel) {
 		this.id = hotel.getId();
 		this.camere_Disponibili = hotel.getCamereDisponibili();
-		this.città= hotel.getCitta();
+		this.città= hotel.getCittà();
 		this.nome = hotel.getNome();
 		this.stelle = hotel.getRating().intValue();
 		this.costoGiornaliero = hotel.getCostoGiornaliero();

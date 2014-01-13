@@ -17,15 +17,15 @@
 			<h:panelGrid columns="3" id="regGrid">
 			
 				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
-				<p:inputText id="dest" value="#{viaggio.hotel.città}" />
+				<p:inputText id="dest" value="#{viaggio.albergo.città}" />
 				<p:message for="dest" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="data_inizio">Data di inizio soggiorno:</h:outputLabel>
-				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.hotel.dataInizio}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.albergo.dataInizio}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
 				
 				<h:outputLabel for="data_fine">Data di fine soggiorno:</h:outputLabel>
-				<p:calendar id="data_fine" binding="#{data_fine}" required="true" value="#{viaggio.hotel.dataFine}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar id="data_fine" binding="#{data_fine}" required="true" value="#{viaggio.albergo.dataFine}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
 
 				
