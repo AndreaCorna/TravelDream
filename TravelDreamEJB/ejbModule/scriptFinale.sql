@@ -82,6 +82,8 @@ CREATE TABLE `Prenotazione_Viaggio` (
   `id_Aereo_Ritorno` int(11) DEFAULT NULL,
   `id_Hotel` int(11) DEFAULT NULL,
   `id_Utente` varchar(45) NOT NULL,
+  `Check_In_Hotel` datetime DEFAULT NULL,
+  `Check_Out_Hotel` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Prenotazione_Viaggio_Utente` (`id_Utente`),
   KEY `fk_Prenotazione_Viaggio_Aereo_Andata` (`id_Aereo_Andata`),
@@ -400,7 +402,7 @@ DROP TABLE IF EXISTS `Camera`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Camera` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Data_Checkin` datetime DEFAULT NULL,
   `Data_Checkout` datetime DEFAULT NULL,
   `Costo` float NOT NULL,
@@ -410,7 +412,7 @@ CREATE TABLE `Camera` (
   PRIMARY KEY (`id`),
   KEY `fk_Camera_Hotel` (`id_Hotel`),
   CONSTRAINT `fk_Camera_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,6 +440,8 @@ CREATE TABLE `Prenotazione_Pacchetto` (
   `id_Hotel` int(11) NOT NULL,
   `id_Utente` varchar(45) NOT NULL,
   `id_Pacchetto` int(11) NOT NULL,
+  `Check_In_Hotel` datetime DEFAULT NULL,
+  `Check_Out_Hotel` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Prenotazione_Utente_Registrato1` (`id_Utente`),
   KEY `fk_Prenotazione_Aereo_Andata` (`id_Aereo_Andata`),
@@ -458,7 +462,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
 
 LOCK TABLES `Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56);
+INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL);
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -527,4 +531,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-12 21:46:28
+-- Dump completed on 2014-01-13 11:10:56
