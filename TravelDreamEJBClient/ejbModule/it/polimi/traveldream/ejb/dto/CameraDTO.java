@@ -2,20 +2,29 @@ package it.polimi.traveldream.ejb.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 public class CameraDTO {
 
 	private int id;
-	
+	@NotNull
+	@Min(0)
 	private float costo;
-
+	
 	private Date data_Checkin;
 
 	private Date data_Checkout;
 
 	private boolean occupata;
-
+	@NotNull
+	@Min(0)
 	private int posti;
+	@NotEmpty
+	private HotelDTO hotel;
 
 	public int getId() {
 		return id;
@@ -63,5 +72,13 @@ public class CameraDTO {
 
 	public void setPosti(int posti) {
 		this.posti = posti;
+	}
+
+	public HotelDTO getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(HotelDTO hotel) {
+		this.hotel = hotel;
 	}
 }

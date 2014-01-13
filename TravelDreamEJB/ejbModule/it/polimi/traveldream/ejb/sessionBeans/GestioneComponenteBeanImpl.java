@@ -72,7 +72,17 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		escursione.setId(nuovo.getId());
 		
 	}
-
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void aggiungiCameraDB(CameraDTO camera){
+		Camera nuovo = new Camera(camera);
+		nuovo.setHotel(em.find(Hotel.class,camera.getHotel().getId()));
+		em.persist(nuovo);
+		em.flush();
+		nuovo = em.find(Camera.class,nuovo.getId());
+		camera.setId(nuovo.getId());
+		
+	}
 	
 	
 
