@@ -91,6 +91,7 @@ public class ViaggioManagedBean {
 	@PostConstruct
 	public void init(){
 		aereoAndata = new AereoDTO();
+		hotel = new HotelDTO();
 	}
 	
 
@@ -108,7 +109,7 @@ public class ViaggioManagedBean {
 	}
 
 	public String aggiungiDestinazioneDateHotel(){
-		String destinazione = hotel.getCitta().toLowerCase();
+		String destinazione = hotel.getCittà().toLowerCase();
 		Date dataPartenza = hotel.getDataInizio();
 		Date dataFine = hotel.getDataInizio();
 		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataPartenza, dataFine);

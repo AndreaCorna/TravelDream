@@ -36,7 +36,7 @@ public class HotelDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCitta() {
+	public String getCittà() {
 		return città;
 	}
 	public void setCitta(String città) {
