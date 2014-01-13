@@ -117,21 +117,21 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public AereoDTO getAereoById(String id) {
 		Integer value = new Integer(id);
 		Aereo aereo = em.find(Aereo.class, value.intValue());
-		return convertToDTO(aereo);
+		return ConverterDTO.convertToDTO(aereo);
 	}
 	
 	@Override
 	public HotelDTO getHotelById(String id) {
 		Integer value = new Integer(id);
 		Hotel hotel = em.find(Hotel.class, value.intValue());
-		return convertToDTO(hotel);
+		return ConverterDTO.convertToDTO(hotel);
 	}
 	
 	@Override
 	public EscursioneDTO getEscursioneById(String id) {
 		Integer value = new Integer(id);
 		Escursione escursione = em.find(Escursione.class, value.intValue());
-		return convertToDTO(escursione);
+		return ConverterDTO.convertToDTO(escursione);
 	}
 
 	
@@ -184,7 +184,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		// TODO Auto-generated method stub
 		
 	}
-	
+/*	
 	private AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
 		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
@@ -209,7 +209,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		nuovo.setDataInizio(hotel.getDataCheckIn());
 		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
 		for(Camera camera:hotel.getCamere()){
-			camere.add(convertToDTO(camera));
+			camere.add(ConverterDTO.convertToDTO(camera));
 		}
 		nuovo.setCamere(camere);
 		return nuovo;
@@ -235,7 +235,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		nuovo.setPrezzo(escursione.getPrezzo());
 		return nuovo;
 	}
-	
+	*/
 	@SuppressWarnings("unchecked")
 	private void aggiornaPacchetti(Aereo aereo){
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.aerei) a WHERE a=:nome")
