@@ -74,12 +74,17 @@ public class ViaggioManagedBean {
 	
 	private AereoDTO aereoAndata;
 	
-	private HotelDTO hotel;
+	private HotelDTO albergo;
+	
 
 	public AereoDTO getAereoAndata() {
 		return aereoAndata;
 	}
-
+	
+	public HotelDTO getAlbergo() {
+		return albergo;
+	}
+	
 	public Prenotazione_ViaggioDTO getViaggio() {
 		return viaggio;
 	}
@@ -91,6 +96,8 @@ public class ViaggioManagedBean {
 	@PostConstruct
 	public void init(){
 		aereoAndata = new AereoDTO();
+		albergo = new HotelDTO();
+		viaggio = new Prenotazione_ViaggioDTO();
 	}
 	
 
@@ -100,21 +107,28 @@ public class ViaggioManagedBean {
 		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
 		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
 		
-		return "home?faces-redirect=true";
+		return "mostraAereiScelti?faces-redirect=true";
 	}
+	
 
 	public String passaAHotel(){
 		return "acquistaHotelViaggio?faces-redirect=true";
 	}
 
 	public String aggiungiDestinazioneDateHotel(){
-		String destinazione = hotel.getCitta().toLowerCase();
-		Date dataPartenza = hotel.getDataInizio();
-		Date dataFine = hotel.getDataInizio();
+		String destinazione = albergo.getCitta().toLowerCase();
+		Date dataPartenza = albergo.getDataInizio();
+		Date dataFine = albergo.getDataInizio();
 		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataPartenza, dataFine);
 		setDatiHotel(new HotelDataModel(listaHotelDB));
 		
 		return "home?faces-redirect=true";
+	}
+	
+	public String settaAereoScelto(){
+		
+		return "home?faces-redirect=true";	//qua va aggiunto il riferimento alla pagina di congratulazion
+		
 	}
 	/*
 	public void mostraOfferte(){
