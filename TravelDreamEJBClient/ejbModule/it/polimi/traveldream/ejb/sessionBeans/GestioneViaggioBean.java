@@ -31,4 +31,5 @@ public interface GestioneViaggioBean {
 
 	List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza,
 			Date dataFine);
-}
+
+	}

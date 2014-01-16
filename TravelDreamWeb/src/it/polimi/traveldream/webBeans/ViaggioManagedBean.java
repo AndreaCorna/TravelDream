@@ -76,6 +76,11 @@ public class ViaggioManagedBean {
 	
 	private HotelDTO albergo;
 	
+	private AereoDTO aereoRitorno;
+	
+	private String destinazioneRItorno;
+	
+	
 
 	public AereoDTO getAereoAndata() {
 		return aereoAndata;
@@ -98,6 +103,7 @@ public class ViaggioManagedBean {
 		aereoAndata = new AereoDTO();
 		albergo = new HotelDTO();
 		viaggio = new Prenotazione_ViaggioDTO();
+		aereoRitorno = new AereoDTO();
 	}
 	
 
@@ -110,7 +116,14 @@ public class ViaggioManagedBean {
 		return "mostraAereiScelti?faces-redirect=true";
 	}
 	
-
+	public String aggiungiDestinazioneDateAereoRitorno(){				//QUESTO QUI VA ANCORA IMPOSTATO TUTTO
+		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
+		Date dataPartenza = aereoAndata.getData();
+		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
+		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
+		
+		return "mostraAereiScelti?faces-redirect=true";
+	}
 	public String passaAHotel(){
 		return "acquistaHotelViaggio?faces-redirect=true";
 	}
@@ -125,11 +138,20 @@ public class ViaggioManagedBean {
 		return "home?faces-redirect=true";
 	}
 	
-	public String settaAereoScelto(){
+	public String settaAereoScelto(int scelta){
 		
-		return "home?faces-redirect=true";	//qua va aggiunto il riferimento alla pagina di congratulazion
+		viaggio.setAereo(listaAereiAndata.get(0));
 		
+		if (scelta==1)
+			return "proseguiAcquisto?faces-redirect=true";
+		if (scelta==2)
+			return "acquistaViaggio?faces-redirect=true";
+		if (scelta==3)
+			return "acquistaHotelViaggio?faces-redirect=true";
+		else
+			return null;
 	}
+
 	/*
 	public void mostraOfferte(){
 		listaPacchetti = gestioneViaggio.getListaPacchetti();

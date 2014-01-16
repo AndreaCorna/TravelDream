@@ -16,16 +16,16 @@
 		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
 			<h:panelGrid columns="3" id="regGrid">
 			
+			
 				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
 				<p:inputText id="dest" value="#{viaggio.aereoAndata.cittaAtterraggio}" />
 				<p:message for="dest" value="Inserisci il nome"/>
 				
-				<h:outputLabel for="data_inizio">Data di partenza:</h:outputLabel>
+				
+				<h:outputLabel for="data_inizio">Data di ritorno:</h:outputLabel>
 				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.aereoAndata.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
-				
-
-				
+			
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="prosegui"  update="regGrid"
              action="#{viaggio.aggiungiDestinazioneDateAereoRitorno()}" styleClass="ui-priority-primary"/>  
