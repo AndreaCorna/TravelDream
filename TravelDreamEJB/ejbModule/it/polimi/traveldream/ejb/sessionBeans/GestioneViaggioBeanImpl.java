@@ -98,7 +98,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			    .setParameter("nome", cittaDecollo)
 			    .setParameter("startDate", partenza)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei, cittaDecollo);
+		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
 	}
 	@Override
@@ -119,11 +119,10 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return aerei;
 	}
 	
-	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista, String destinazionePacchetto){
+	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
-			if(lista.get(i).getDecollo().toLowerCase().equals(destinazionePacchetto.toLowerCase())){
-				AereoDTO nuovo = convertToDTO(lista.get(i));
+			{	AereoDTO nuovo = convertToDTO(lista.get(i));
 				listaAereiAndata.add(nuovo);
 			}
 		}

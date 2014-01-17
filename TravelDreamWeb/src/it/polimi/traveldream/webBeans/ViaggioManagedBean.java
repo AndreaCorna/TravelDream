@@ -78,8 +78,11 @@ public class ViaggioManagedBean {
 	
 	private AereoDTO aereoRitorno;
 	
-	private String destinazioneRItorno;
 	
+	
+	public AereoDTO getAereoRitorno() {
+		return aereoAndata;
+	}
 	
 
 	public AereoDTO getAereoAndata() {
@@ -117,9 +120,9 @@ public class ViaggioManagedBean {
 	}
 	
 	public String aggiungiDestinazioneDateAereoRitorno(){				//QUESTO QUI VA ANCORA IMPOSTATO TUTTO
-		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
-		Date dataPartenza = aereoAndata.getData();
-		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
+		String destinazioneRitorno = aereoRitorno.getCittaAtterraggio().toLowerCase();
+		Date dataPartenzaRitorno = aereoRitorno.getData();
+		listaAereiAndataDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno);
 		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
 		
 		return "mostraAereiScelti?faces-redirect=true";
@@ -145,7 +148,7 @@ public class ViaggioManagedBean {
 		if (scelta==1)
 			return "proseguiAcquisto?faces-redirect=true";
 		if (scelta==2)
-			return "acquistaViaggio?faces-redirect=true";
+			return "acquistaRitorno?faces-redirect=true";
 		if (scelta==3)
 			return "acquistaHotelViaggio?faces-redirect=true";
 		else
