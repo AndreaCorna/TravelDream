@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+   >
+   
+<h:head>
+	<title>Acquista Viaggio</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
+			<h:panelGrid columns="3" id="regGrid">
+			
+				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
+				<p:inputText id="dest" value="#{viaggio.aereoAndata.cittaAtterraggio}" />
+				<p:message for="dest" value="Inserisci il nome"/>
+				
+				<h:outputLabel for="data_inizio">Data di partenza:</h:outputLabel>
+				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.aereoAndata.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p></p>
+				
+
+				
+			</h:panelGrid>
+			<p:commandButton value="Prosegui" id="prosegui"  update="regGrid"
+             action="#{viaggio.aggiungiDestinazioneDateEscursione()}" styleClass="ui-priority-primary"/>  
+             
+           	</p:panel>
+	</h:form>
+</h:body>
+</html>

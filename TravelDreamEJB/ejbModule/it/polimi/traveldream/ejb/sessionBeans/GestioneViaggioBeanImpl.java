@@ -61,7 +61,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza, Date dataFine ){
-		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.citt� =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
+		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.citta =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", dataFine)
@@ -72,8 +72,11 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<EscursioneDTO> getListaEscursioni() {
-		List<Escursione> escursioniDB = em.createNamedQuery("Escursione.findAll", Escursione.class).getResultList();
+	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
+		List<Escursione> escursioniDB = em.createNamedQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.dataInizio =:startDate", Escursione.class)
+				.setParameter("nome", destinazione)
+			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
+			    .getResultList();
 	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
     	return listaEscursioni;
 	}
