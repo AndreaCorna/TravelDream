@@ -7,6 +7,7 @@
 <h:head>
 #{utente.caricaProfiloUtente()}
 #{pacchetto.mostraOfferte()}
+#{prenotazione.mostraPrenotazioni()}
 </h:head>
 <h:body>
 <h:form>
@@ -104,7 +105,7 @@
         </p:tab>
         <p:tab title="Lista Offerte">
         	<h:panelGrid columns="4" id="regGrid">
-    			<p:dataTable id="tabella" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
+    			<p:dataTable id="tabellaOff" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
           			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
           			  		selectionMode="single" >  
   
@@ -141,6 +142,103 @@
 		        <p:column headerText="Personalizza" style="width:24%" >  
                 <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Personalizza"/>
          </p:column>  
+  
+		        	 </p:dataTable>  
+      	<p></p>
+      	</h:panelGrid>
+		
+			</p:tab>
+		<p:tab title="Mostra Prenotazioni">
+        	<h:panelGrid columns="4" id="regPren">
+    			<p:dataTable id="tabellaPren" var="pac" value="#{prenotazione.datiPrenotazione}" widgetVar="tabellaPrenotazioni"   
+          			  emptyMessage="Non hai effettuato alcuna prenotazione" filteredValue="#{prenotazione.prenotazioniSelezionate}"
+          			  		selectionMode="single" >  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value="PACCHETTI CHE HAI PRENOTATO -> Cerca  su tutti i campi:" />  
+               		 		<p:inputText id="globalFilter" onkeyup="tabellaPrenotazioni.filter()" style="width:150px" />  
+            			</p:outputPanel>  
+       			 </f:facet>  
+  
+		        <p:column id="id" filterBy="id"   
+		                headerText="id" footerText="id"
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.id}" />  
+		        </p:column> 
+		        
+		        <p:column id="pacchetto" filterBy="pacchetto"   
+		                headerText="pacchetto" footerText="pacchetto"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.pacchetto.id}" />  
+		        </p:column>
+		        
+		        <p:column id="data" filterBy="data"   
+		                headerText="data" footerText="data"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.data}" />  
+		        </p:column> 
+		        
+		       
+		        <p:column id="aereoAndata" filterBy="aereoAndata"   
+		                headerText="aereo Andata" footerText="aereoAndata"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.aereoAndata.data}" />  
+		        </p:column>   
+		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
+		                headerText="aereo Ritorno" footerText="aereoRItorno"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.aereoRitorno.data}" />  
+		        </p:column> 
+		        <p:column id="hotel" filterBy="hotel"   
+		                headerText="hotel" footerText="hotel"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.hotel.nome}" />  
+		        </p:column> 
+		        
+		        	 </p:dataTable>
+		        	 </h:panelGrid>
+		        	 <h:panelGrid columns="4" id="regGrid2">
+    			 
+  
+		        <p:dataTable id="tabellaViaggi" var="pacV" value="#{prenotazione.datiPrenotazioneViaggio}" widgetVar="tabellaPrenotazioniViaggi"   
+          			  emptyMessage="Non hai effettuato alcuna prenotazione" filteredValue="#{prenotazione.prenotazioniViaggioSelezionate}"
+          			selectionMode="single" >  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value="VIAGGI CHE HAI PRENOTATO -> Cerca  su tutti i campi:" />  
+               		 		<p:inputText id="globalFilter" onkeyup="tabellaPrenotazioniViaggi.filter()" style="width:150px" />  
+            			</p:outputPanel>  
+       			 </f:facet>  
+  
+		        <p:column id="id" filterBy="id"   
+		                headerText="id" footerText="id"
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pacV.id}" />  
+		        </p:column>  
+		      
+		        <p:column id="data" filterBy="data"   
+		                headerText="data" footerText="data"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pacV.data}" />  
+		        </p:column> 
+		       
+		        <p:column id="aereoAndata" filterBy="aereoAndata"   
+		                headerText="aereo Andata" footerText="aereoAndata"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pacV.aereoAndata.getData()}" />  
+		        </p:column>   
+		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
+		                headerText="aereo Ritorno" footerText="aereoRitorno"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pacV.aereoRitorno.getData()}" />  
+		        </p:column> 
+		        <p:column id="hotel" filterBy="hotel"   
+		                headerText="hotel" footerText="hotel"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{paVc.hotel.getNome}" />  
+		        </p:column> 
   
 		        	 </p:dataTable>  
       	<p></p>
