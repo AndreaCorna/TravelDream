@@ -166,7 +166,7 @@ public class ViaggioManagedBean {
 		viaggio.setAereo(listaAereiAndata.get(0));
 		
 		if (scelta==1)
-			return "proseguiAcquisto?faces-redirect=true";
+			return "riepilogo?faces-redirect=true";
 		if (scelta==2)
 			return "acquistaRitorno?faces-redirect=true";
 		if (scelta==3)
