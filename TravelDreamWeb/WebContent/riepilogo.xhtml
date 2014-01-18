@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+<h:form>
+		<p:panel header="Riepilogo Creazione">
+			<h:panelGrid columns="3" id="riepilogo">
+                <h:outputLabel for="nome" />Destinazione:
+                <h:outputText value="#{viaggio.viaggio.aereoAndata.getCittaAtterraggio}" />
+                <h:outputLabel for="andataAerei" />Aerei di Andata:
+				<p:dataList value="#{viaggio.viaggio.aereoAndata}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}  
+				</p:dataList>
+				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
+				<p:dataList value="#{viaggio.viaggio.aereoRitorno}" var="aereo" itemType="circle">  
+   				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
+				</p:dataList>  
+				<h:outputLabel for="hotel" />Hotel:
+				<p:dataList value="#{viaggio.viaggio.hotel}" var="hotel" itemType="circle">  
+   				 	#{hotel.id}, #{hotel.citta}, #{hotel.camereDisponibili}  
+				</p:dataList>  
+				<h:outputLabel for="escursioni" />Escursioni:
+				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+				</p:dataList>
+                
+            </h:panelGrid>
+
+            <p:commandButton id="ajax" value="Conferma"  action="#{pacchetto.creaPacchetto()}" styleClass="ui-priority-primary"/>  
+          </p:panel>
+</h:form>
+
+</body> 
+</html>

@@ -17,7 +17,7 @@ public interface GestioneViaggioBean {
 	public List<AereoDTO> getListaAerei();
 	
 	
-	public List<EscursioneDTO> getListaEscursioni();
+	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza);
 	
 	public void mostraRiepilogo();
 
@@ -31,4 +31,5 @@ public interface GestioneViaggioBean {
 
 	List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza,
 			Date dataFine);
-}
+
+	}

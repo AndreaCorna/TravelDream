@@ -61,7 +61,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza, Date dataFine ){
-		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.citt� =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
+		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.citta =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", dataFine)
@@ -72,8 +72,11 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<EscursioneDTO> getListaEscursioni() {
-		List<Escursione> escursioniDB = em.createNamedQuery("Escursione.findAll", Escursione.class).getResultList();
+	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
+		List<Escursione> escursioniDB = em.createNamedQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.dataInizio =:startDate", Escursione.class)
+				.setParameter("nome", destinazione)
+			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
+			    .getResultList();
 	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
     	return listaEscursioni;
 	}
@@ -98,7 +101,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			    .setParameter("nome", cittaDecollo)
 			    .setParameter("startDate", partenza)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei, cittaDecollo);
+		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
 	}
 	@Override
@@ -119,11 +122,10 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return aerei;
 	}
 	
-	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista, String destinazionePacchetto){
+	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
-			if(lista.get(i).getDecollo().toLowerCase().equals(destinazionePacchetto.toLowerCase())){
-				AereoDTO nuovo = convertToDTO(lista.get(i));
+			{	AereoDTO nuovo = convertToDTO(lista.get(i));
 				listaAereiAndata.add(nuovo);
 			}
 		}

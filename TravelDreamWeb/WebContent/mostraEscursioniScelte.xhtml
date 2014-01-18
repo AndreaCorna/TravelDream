@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+   >
+   
+<h:head>
+	<title>Ecco i voli disponibili</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
+		<h:form>
+			<p:panel header="Seleziona l'escursione di tuo gradimento ">
+				<h:panelGrid columns="3" id="aereiAndata">
+				<p:dataTable id="datiEscursioni" var="escursione" value="#{viaggio.datiEscursioni}" paginator="true" rows="30"  
+		                 selection="#{viaggio.listaEscursioni}">  
+		  		<f:facet name="header">  
+		            Lista Escursioni
+		        </f:facet>  
+		  
+		        <p:column selectionMode="multiple" style="width:2%" />  
+		  
+		        <p:column headerText="Id" style="width:25%">  
+		            #{escursione.id}  
+		        </p:column>  
+		  
+		        <p:column headerText="Luogo" style="width:25%">  
+		            #{escursione.luogo}  
+		        </p:column>  
+		  
+		        <p:column headerText="Prezzo" style="width:24%">  
+		            #{escursione.prezzo}  
+		        </p:column>  
+		  
+		        <p:column headerText="Breve Descrizione" style="width:24%">  
+		            #{escursione.descrizione}  
+		        </p:column>  
+		             
+		    </p:dataTable>  
+			</h:panelGrid>
+			
+	</p:panel>
+</h:form>
+			<p:commandButton value="Acquista la tua escursione" id="prosegui" 
+             action="#{viaggio.settaEscursioneScelta(1)}" styleClass="ui-priority-primary"/>  
+               	</p:panel>
+	</h:form>
+</h:body>
+</html>
