@@ -4,7 +4,7 @@ USE `TravelDreamDB`;
 --
 -- Host: localhost    Database: TravelDreamDB
 -- ------------------------------------------------------
--- Server version	5.5.34-0ubuntu0.12.04.1
+-- Server version	5.5.34-0ubuntu0.12.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `Prenotazione_Viaggio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Prenotazione_Viaggio` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Data` datetime NOT NULL,
   `id_Aereo_Andata` int(11) DEFAULT NULL,
   `id_Aereo_Ritorno` int(11) DEFAULT NULL,
@@ -188,7 +188,7 @@ CREATE TABLE `Gruppo_Utente` (
 
 LOCK TABLES `Gruppo_Utente` WRITE;
 /*!40000 ALTER TABLE `Gruppo_Utente` DISABLE KEYS */;
-INSERT INTO `Gruppo_Utente` VALUES ('admin','AMMINISTRATORE'),('andrea','DIPENDENTE'),('ciao','DIPENDENTE'),('hummer','DIPENDENTE'),('simone','UTENTE'),('utente','UTENTE');
+INSERT INTO `Gruppo_Utente` VALUES ('admin','AMMINISTRATORE'),('andrea','DIPENDENTE'),('ciao','DIPENDENTE'),('hummer','UTENTE'),('simone','UTENTE'),('utente','UTENTE');
 /*!40000 ALTER TABLE `Gruppo_Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +244,7 @@ CREATE TABLE `Escursioni_in_Prenotazione_Pacchetto` (
 
 LOCK TABLES `Escursioni_in_Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Escursioni_in_Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Escursioni_in_Prenotazione_Pacchetto` VALUES (3,56),(4,56),(5,56),(6,56),(7,56);
+INSERT INTO `Escursioni_in_Prenotazione_Pacchetto` VALUES (3,56),(4,56),(5,56),(6,56),(7,56),(8,56),(9,56),(10,56);
 /*!40000 ALTER TABLE `Escursioni_in_Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +305,7 @@ CREATE TABLE `Condivisione` (
 
 LOCK TABLES `Condivisione` WRITE;
 /*!40000 ALTER TABLE `Condivisione` DISABLE KEYS */;
-INSERT INTO `Condivisione` VALUES ('cond56userciaodate11400','2014-01-12 16:23:19','ciao',5),('cond56userciaodate11401','2014-01-13 14:09:30','ciao',6),('cond57userciaodate11401','2014-01-13 18:08:07','ciao',7),('prova','2013-05-08 00:00:00','ciao',1);
+INSERT INTO `Condivisione` VALUES ('cond54userciaodate11401','2014-01-13 21:00:54','ciao',8),('cond56userciaodate11400','2014-01-12 16:23:19','ciao',5),('cond56userciaodate11401','2014-01-13 14:09:30','ciao',6),('cond56userciaodate11402','2014-01-14 10:33:58','ciao',9),('cond57userciaodate11401','2014-01-13 18:08:07','ciao',7),('cond57userciaodate11402','2014-01-14 13:16:06','ciao',10),('prova','2013-05-08 00:00:00','ciao',1);
 /*!40000 ALTER TABLE `Condivisione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +453,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
   CONSTRAINT `fk_Prenotazione_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_Prenotazione_Pacchetto_Pacchetto1` FOREIGN KEY (`id_Pacchetto`) REFERENCES `Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_Prenotazione_Utente_Registrato1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -462,7 +462,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
 
 LOCK TABLES `Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL),(6,'2014-01-13 14:09:27',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(7,'2014-01-13 18:07:59',56,57,56,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00');
+INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL),(6,'2014-01-13 14:09:27',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(7,'2014-01-13 18:07:59',56,57,56,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(8,'2014-01-13 21:00:48',56,57,56,'ciao',54,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(9,'2014-01-14 10:33:51',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(10,'2014-01-14 13:15:56',56,57,100,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00');
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -531,4 +531,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-13 20:26:58
+-- Dump completed on 2014-01-19 13:38:30
