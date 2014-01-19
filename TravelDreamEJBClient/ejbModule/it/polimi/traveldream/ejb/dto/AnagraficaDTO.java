@@ -5,7 +5,11 @@ import java.util.Date;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.sun.istack.NotNull;
-
+/**
+ * Classe che rappresenta un DTO che permette il trasferimento di informazioni tra la logica di business e il tier client
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class AnagraficaDTO {
 
 	@NotEmpty
@@ -20,7 +24,9 @@ public class AnagraficaDTO {
 	private Date dataNascita;
 	@NotEmpty
 	private String residenza;
-	
+	/*
+	 * METODI GETTER E SETTER DEI VARI CAMPI
+	 */
 	
 	public String getNome() {
 		return nome;
