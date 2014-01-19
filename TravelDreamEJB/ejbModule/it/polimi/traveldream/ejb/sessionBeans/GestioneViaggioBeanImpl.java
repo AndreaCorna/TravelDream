@@ -104,9 +104,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date partenza) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.data = startDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate")
 			    .setParameter("nome", cittaDecollo)
-			    .setParameter("startDate", partenza)
+			    .setParameter("startDate", partenza, TemporalType.TIMESTAMP)
 			    .getResultList();
 		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
@@ -177,13 +177,13 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	}
 	
 	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista){
-		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
+		ArrayList<AereoDTO> listaAereiRitorno = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
 			{	AereoDTO nuovo = convertToDTO(lista.get(i));
-				listaAereiAndata.add(nuovo);
+			listaAereiRitorno.add(nuovo);
 			}
 		}
-		List<AereoDTO> aerei = listaAereiAndata;
+		List<AereoDTO> aerei = listaAereiRitorno;
 		return aerei;
 	}
 	private List<AereoDTO> convertListaAereiToDTO(List<Aereo> lista){

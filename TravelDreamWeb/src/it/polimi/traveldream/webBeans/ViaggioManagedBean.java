@@ -98,7 +98,7 @@ public class ViaggioManagedBean {
 	
 	
 	public AereoDTO getAereoRitorno() {
-		return aereoAndata;
+		return aereoRitorno;
 	}
 	
 
@@ -148,7 +148,7 @@ public class ViaggioManagedBean {
 		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno);
 		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
 		
-		return "mostraAereiScelti?faces-redirect=true";
+		return "mostraAereiSceltiRitorno?faces-redirect=true";
 	}
 	
 	public String passaAHotel(){
@@ -184,7 +184,7 @@ public class ViaggioManagedBean {
 			viaggio.setAereoRitorno(listaAereiRitorno.get(0));
 			modalita = 8;
 		}
-		else if(modalita == 0)
+		if(modalita == 0)
 			{
 			viaggio.setAereo(listaAereiAndata.get(0));
 			modalita = 1;

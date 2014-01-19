@@ -16,9 +16,9 @@
 		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
 		<h:form>
 			<p:panel header="Seleziona gli Aerei">
-				<h:panelGrid columns="3" id="aereiAndata">
-				<p:dataTable id="datiAereiAndata" var="aereo" value="#{viaggio.datiAereiAndata}" paginator="true" rows="30"  
-		                 selection="#{viaggio.listaAereiAndata}">  
+				<h:panelGrid columns="3" id="aereiRitorno">
+				<p:dataTable id="datiAereiAndata" var="aereo" value="#{viaggio.datiAereiRitorno}" paginator="true" rows="30"  
+		                 selection="#{viaggio.listaAereiRitorno}">  
 		  		<f:facet name="header">  
 		            Lista Aerei Andata
 		        </f:facet>  
