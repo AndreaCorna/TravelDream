@@ -152,11 +152,16 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		private Prenotazione_ViaggioDTO convertToDTO(Prenotazione_Viaggio prenotazione){
 			Prenotazione_ViaggioDTO nuovo = new Prenotazione_ViaggioDTO();
 			nuovo.setId(prenotazione.getId());
-			nuovo.setData(prenotazione.getData());
-			nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
-			nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));                //CONTINUARE DA QUI
-			nuovo.setAereoRitorno(convertAereoRitornoToDTO(prenotazione.getAereo2()));
-			nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
+			if (prenotazione.getData()!=null)
+				nuovo.setData(prenotazione.getData());
+			if(prenotazione.getEscursioni()!=null)
+				nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
+			if (prenotazione.getAereo1()!=null)
+				nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));                //CONTINUARE DA QUI
+			if (prenotazione.getAereo2()!=null)
+				nuovo.setAereoRitorno(convertAereoRitornoToDTO(prenotazione.getAereo2()));
+			if (prenotazione.getHotel()!=null)
+				nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
 			nuovo.setUtente(convertToDTO(prenotazione.getUtente()));
 			
 			return nuovo;
