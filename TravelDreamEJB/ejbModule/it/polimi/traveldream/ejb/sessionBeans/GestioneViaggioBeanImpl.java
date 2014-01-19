@@ -4,10 +4,17 @@ import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
+import it.polimi.traveldream.ejb.entities.Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
+import it.polimi.traveldream.ejb.entities.Utente;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -104,6 +111,53 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita) {
+		
+		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
+		if (modalita == 1|| modalita == 3||modalita == 2||modalita == 7||modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		{
+			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
+			nuovoViaggio.setData(aereiAndata.getData());
+			nuovoViaggio.setAereo1(aereiAndata);
+				
+		}
+		if (modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		{
+			Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
+			nuovoViaggio.setAereo2(aereiRitorno);
+			
+		}
+		if(modalita == 6||modalita == 4||modalita == 2|| modalita == 7||modalita == 9||modalita == 11)
+		{
+			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
+			
+			nuovoViaggio.setEscursioni(escursioni);
+			
+		}
+		
+		if(modalita == 5||modalita == 3||modalita == 4||modalita == 7||modalita ==10||modalita ==11){
+			Hotel hotel = convertHotel(viaggio.getHotel());
+			
+			nuovoViaggio.setHotel(hotel);
+			nuovoViaggio.setDataCheckInHotel(hotel.getDataCheckIn());
+			nuovoViaggio.setDataCheckOutHotel(hotel.getDataCheckOut());
+			
+			
+		}
+		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());
+		
+		nuovoViaggio.setUtente(utente);
+		em.persist(nuovoViaggio);
+		em.flush();
+		nuovoViaggio = em.find(Prenotazione_Viaggio.class, nuovoViaggio.getId());
+		viaggio.setId(nuovoViaggio.getId());
+		
+	}
+	
 	@Override
 	public void mostraRiepilogo() {
 		// TODO Auto-generated method stub
@@ -223,4 +277,41 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei);
 		return listaAerei;
 	}
+	/*
+	 * Metodi per la conversione di liste di oggetti del database
+	 */
+		private List<Escursione> convertListaEscursioni(List<EscursioneDTO> lista){
+			ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
+			for(int i=0;i<lista.size();i++){
+				Escursione nuova = em.find(Escursione.class, lista.get(i).getId());
+				listaEscursioni.add(nuova);
+			}
+			List<Escursione> escursioni = listaEscursioni;
+			return escursioni;
+		}
+		
+		private Hotel convertHotel(HotelDTO lista){
+			Hotel listaHotel = new Hotel();
+				Hotel nuovo = em.find(Hotel.class, lista.getId());
+				listaHotel = nuovo;
+			
+			Hotel hotel = listaHotel;
+			return hotel;
+		}
+		
+		private Aereo convertAereiAndata(AereoDTO aereoAndata){
+			Aereo listaAerei = new Aereo();
+				Aereo nuovo = em.find(Aereo.class, aereoAndata.getId());
+				listaAerei = nuovo;
+			
+			return listaAerei;
+		}
+		
+		private Aereo convertAereiRitorno(AereoDTO aereoRitorno){
+			Aereo listaAerei = new Aereo();
+				Aereo nuovo = em.find(Aereo.class, aereoRitorno.getId());
+				listaAerei = nuovo;
+			
+			return listaAerei;
+		}
 }

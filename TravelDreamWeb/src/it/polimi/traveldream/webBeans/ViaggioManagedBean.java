@@ -80,6 +80,21 @@ public class ViaggioManagedBean {
 	
 	private EscursioneDTO escursione;
 	
+	private int modalita;
+	/*	LEGENDA DELLE MODALITà
+	 * 1		solo aereo
+ 	   2		aereo escursioni
+	   3		aereo hotel
+	   4		hotel escursioni
+	   5		solo hotel
+	   6		solo escursioni
+	   7		viaggio completo
+	   8		doppio aereo
+	   9		doppio aereo escursione
+	   10		doppio aereo hotel
+	   11		viaggio completo con doppio aereo
+	 */
+	
 	
 	
 	public AereoDTO getAereoRitorno() {
@@ -114,6 +129,7 @@ public class ViaggioManagedBean {
 		viaggio = new Prenotazione_ViaggioDTO();
 		aereoRitorno = new AereoDTO();
 		escursione = new EscursioneDTO();
+		modalita = 0;
 	}
 	
 
@@ -130,7 +146,7 @@ public class ViaggioManagedBean {
 		String destinazioneRitorno = aereoRitorno.getCittaAtterraggio().toLowerCase();
 		Date dataPartenzaRitorno = aereoRitorno.getData();
 		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno);
-		setDatiAereiAndata(new AereoDataModel(listaAereiRitornoDB));
+		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
 		
 		return "mostraAereiScelti?faces-redirect=true";
 	}
@@ -163,10 +179,19 @@ public class ViaggioManagedBean {
 	
 	public String settaAereoScelto(int scelta){
 		
-		viaggio.setAereo(listaAereiAndata.get(0));
+		if (modalita == 1)
+		{
+			viaggio.setAereoRitorno(listaAereiRitorno.get(0));
+			modalita = 8;
+		}
+		else if(modalita == 0)
+			{
+			viaggio.setAereo(listaAereiAndata.get(0));
+			modalita = 1;
+			}
 		
 		if (scelta==1)
-			return "proseguiAcquisto?faces-redirect=true";
+			return "riepilogo?faces-redirect=true";
 		if (scelta==2)
 			return "acquistaRitorno?faces-redirect=true";
 		if (scelta==3)
@@ -178,6 +203,12 @@ public class ViaggioManagedBean {
 public String settaHotelScelto(int scelta){
 		
 		viaggio.setHotel(listaHotel.get(0));
+		if(modalita == 0)
+			modalita = 5;
+		else if(modalita == 1)
+			modalita = 3;
+		else if (modalita == 8)
+			modalita = 10;
 		
 		if (scelta==1)
 			return "proseguiAcquisto?faces-redirect=true";
@@ -190,6 +221,18 @@ public String settaHotelScelto(int scelta){
 public String settaEscursioneScelta(int scelta){
 	
 	viaggio.setEscursioni(listaEscursioni);
+	if(modalita == 0)
+		modalita = 6;
+	else if (modalita == 1)
+		modalita = 2;
+	else if (modalita == 5)
+		modalita = 4;
+	else if (modalita == 3)
+		modalita = 7;
+	else if (modalita == 8)
+		modalita = 9;
+	else if (modalita == 10)
+		modalita = 11;
 	
 	if (scelta==1)
 		return "proseguiAcquisto?faces-redirect=true";
@@ -197,6 +240,18 @@ public String settaEscursioneScelta(int scelta){
 		return "acquistaRitorno?faces-redirect=true";
 	else
 		return null;
+}
+
+public String acquistaViaggio(){
+	
+	gestioneViaggio.creaViaggio(viaggio, modalita);
+	//qua va aggiunto modalita = 0 per resettare
+	return "complimenti?faces-redirect=true";
+	
+}
+
+public String richiamaHome(){
+	return "home?faces-redirect=true";
 }
 	/*
 	public void mostraOfferte(){
