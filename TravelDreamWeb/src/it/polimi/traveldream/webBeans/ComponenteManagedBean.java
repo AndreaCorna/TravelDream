@@ -22,7 +22,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 
-
+/**
+ * Managed bean per la gestione dei componenti di un pacchetto
+ * @author Alessandro Brunitti - Andrea Corna
+ */
 @ManagedBean(name="componente")
 @ViewScoped
 public class ComponenteManagedBean {
@@ -61,29 +64,6 @@ public class ComponenteManagedBean {
 		setEscursione(new EscursioneDTO());
 	}
 
-	public AereoDTO getAereo() {
-		return aereo;
-	}
-
-	public void setAereo(AereoDTO aereo) {
-		this.aereo = aereo;
-	}
-	
-	public HotelDTO getHotel(){
-		return hotel;
-	}
-	
-	public void setHotel(HotelDTO hotel){
-		this.hotel = hotel;
-	}
-	
-	public EscursioneDTO getEscursione() {
-		return escursione;
-	}
-
-	public void setEscursione(EscursioneDTO escursione) {
-		this.escursione = escursione;
-	}
 	
 	public String aggiungiAereoDB(){
 		gestioneComp.aggiungiAereoDB(aereo);
@@ -169,36 +149,7 @@ public class ComponenteManagedBean {
 	/*
 	 * Validatori dei dati inseriti
 	 */
-	/*
-	public void validaIdAereo(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		if (!isNumeroCorretto(value.toString())){
-            throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
-		}
-		if (gestioneComp.esisteAereo(value.toString())){
-            throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
-		}
-		
-	}
 	
-	public void validaIdHotel(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		if (!isNumeroCorretto(value.toString())){
-            throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
-		}
-		if (gestioneComp.esisteHotel(value.toString())){
-            throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
-		}
-		
-	}
-	
-	public void validaIdEscursione(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		if (!isNumeroCorretto(value.toString())){
-            throw new ValidatorException(new FacesMessage("L'id può contenere solo numeri"));
-		}
-		if (gestioneComp.esisteEscursione(value.toString())){
-            throw new ValidatorException(new FacesMessage("Identificativo già utilizzato"));
-		}
-		
-	}*/
 	
 	
 	public void validaNumero(FacesContext context,UIComponent component,Object value) throws ValidatorException{
@@ -216,18 +167,18 @@ public class ComponenteManagedBean {
         }
 	}
 	
-	/*public void aereoVola(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		if(aereo.getCittaDecollo().compareTo((String)value) == 0){
-			throw new ValidatorException(new FacesMessage("Il decollo deve essere diverso dall'atterraggio"));
-		}
-	}*/
-	
+	/**
+	 * Il metodo verifica che la stringa contenga solo numeri
+	 * @param id - la stringa da verificare
+	 * @return <true> se contiene solo numeri, <false> altrimenti
+	 */
 	private boolean isNumeroCorretto(String id){
 		Pattern p1 = Pattern.compile("[0-9]+");
 		Matcher m1 = p1.matcher(id);
 		return  m1.find();
 	}
 
+	/*METODI GETTER E SETTER */
 	
 	public List<AereoDTO> getListaAereiDB() {
 		return listaAereiDB;
@@ -276,6 +227,31 @@ public class ComponenteManagedBean {
 	public void setEscursioniSelezionate(List<EscursioneDTO> escursioniSelezionate) {
 		this.escursioniSelezionate = escursioniSelezionate;
 	}
+	
+	public AereoDTO getAereo() {
+		return aereo;
+	}
+
+	public void setAereo(AereoDTO aereo) {
+		this.aereo = aereo;
+	}
+	
+	public HotelDTO getHotel(){
+		return hotel;
+	}
+	
+	public void setHotel(HotelDTO hotel){
+		this.hotel = hotel;
+	}
+	
+	public EscursioneDTO getEscursione() {
+		return escursione;
+	}
+
+	public void setEscursione(EscursioneDTO escursione) {
+		this.escursione = escursione;
+	}
+	
 
 	
 }
