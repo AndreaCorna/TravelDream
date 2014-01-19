@@ -12,7 +12,11 @@ import javax.faces.bean.SessionScoped;
 
 
 
-
+/**
+ * Il managaed bean si occupa della presentazione di una condivisione una volta inserito il link
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @ManagedBean(name="condivisione")
 @SessionScoped
 public class CondivisioneManagedBean {
@@ -32,12 +36,32 @@ public class CondivisioneManagedBean {
 	
 	private int idPrenotazione;
 	
-	
+	/**
+	 * Costruttore di default
+	 */
 	public CondivisioneManagedBean(){
 		setUtente(new UtenteDTO());
 		setCondivisione(new CondivisioneDTO());
 	}
-
+	
+	/**
+	 * Il metodo carica la condivisione richiesta dall'utente
+	 * @return redirect alla pagina per la visualizzazione della condivisione
+	 */
+	public String visualizzaCondivisione(){
+		condivisione = gestoreCondivisione.mostraCondivisione(link);
+		this.data = condivisione.getData();
+		this.utente = condivisione.getUtente();
+		this.link = condivisione.getLink();
+		this.idUtente = utente.getUsername();
+		this.idPrenotazione = condivisione.getId_Prenotazione();
+		
+		return "/condiv?link="+this.link+"&faces-redirect=true";
+		
+	}
+	
+	/*METODI GETTER E SETTER*/
+	
 	public UtenteDTO getUtente() {
 		return utente;
 	}
@@ -52,19 +76,6 @@ public class CondivisioneManagedBean {
 
 	public void setCondivisione(CondivisioneDTO condivisione) {
 		this.condivisione = condivisione;
-	}
-	
-
-	public String visualizzaCondivisione(){
-		condivisione = gestoreCondivisione.mostraCondivisione(link);
-		this.data = condivisione.getData();
-		this.utente = condivisione.getUtente();
-		this.link = condivisione.getLink();
-		this.idUtente = utente.getUsername();
-		this.idPrenotazione = condivisione.getId_Prenotazione();
-		
-		return "/condiv?link="+this.link+"&faces-redirect=true";
-		
 	}
 
 	public String getLink() {

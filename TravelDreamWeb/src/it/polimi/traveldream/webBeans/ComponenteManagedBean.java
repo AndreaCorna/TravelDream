@@ -53,10 +53,16 @@ public class ComponenteManagedBean {
 	
 	private List<EscursioneDTO> escursioniSelezionate;
 	
+	/**
+	 * Costruttore di default
+	 */
 	public ComponenteManagedBean(){
 		
 	}
 	
+	/**
+	 * Il metodo istanzia gli attributi aereo, hotel e escursione.
+	 */
 	@PostConstruct
 	public void init(){
 		setAereo(new AereoDTO());
@@ -64,7 +70,10 @@ public class ComponenteManagedBean {
 		setEscursione(new EscursioneDTO());
 	}
 
-	
+	/**
+	 * Il metodo chiama l'ejb per l'aggiunta di un aereo nel database
+	 * @return redirect to index page
+	 */
 	public String aggiungiAereoDB(){
 		gestioneComp.aggiungiAereoDB(aereo);
 		String message = "Aereo Aggiunto";
@@ -72,6 +81,10 @@ public class ComponenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo chiama l'ejb per l'aggiunta di un hotel nel database
+	 * @return redirect to index page
+	 */
 	public String aggiungiHotelDB(){
 		gestioneComp.aggiungiHotelDB(hotel);
 		String message = "Hotel Aggiunto";
@@ -79,6 +92,10 @@ public class ComponenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo chiama l'ejb per l'aggiunta di un'escursione nel database
+	 * @return redirect to index page
+	 */
 	public String aggiungiEscursioneDB(){
 		gestioneComp.aggiungiEscursioneDB(escursione);
 		String message = "Escursione Aggiunta";
@@ -86,41 +103,70 @@ public class ComponenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo salva la selezione dell'aereo realizzata nell'interfaccia utente
+	 * @return redirect alla pagina per la modifica
+	 */
 	public String selezionaAereo(){
 		aereo = aereiSelezionati.get(0);
 		return "modificaAereo?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo carica dal database la lista degli aerei
+	 */
 	public void caricaListaAerei(){
 		listaAereiDB = gestionePacchetto.getListaAerei();
 	}
 	
+	/**
+	 * Il metodo carica dal database la lista degli hotel
+	 */
 	public void caricaListaHotel(){
 		listaHotelDB = gestionePacchetto.getListaHotel();
 	}
 	
+	/**
+	 * Il metodo carica dal database la lista delle escursioni
+	 */
 	public void caricaListaEscursioni(){
 		listaEscursioniDB = gestionePacchetto.getListaEscursioni();
 	}
 	
+	/**
+	 * Il metodo carica dal database l'escursione che deve essere modificata
+	 * @param id - id dell'escursione
+	 */
 	public void initModificaEscursione(String id){
 		escursione = gestioneComp.getEscursioneById(id);
 	}
-	
+	/**
+	 * Il metodo carica dal database l'hotel che deve essere modificato
+	 * @param id - id dell'hotel
+	 */
 	public void initModificaHotel(String id){
 		hotel = gestioneComp.getHotelById(id);
 	}
-	
+	/**
+	 * Metodo per salvare le modifiche all'hotel selezionato
+	 * @return redirect alla index
+	 */
 	public String modificaHotel(){
 		gestioneComp.modificaHotel(hotel);
 		return "index?faces-redirect=true";
 	}
-	
+	/**
+	 * Metodo per salvare le modifiche all'aereo selezionato
+	 * @return redirect alla index
+	 */
 	public String modificaAereo(){
 		gestioneComp.modificaAereo(aereo);
 		return "index?faces-redirect=true";
 	}
-	
+	/**
+	 * Metodo per salvare le modifiche all'escursione selezionata
+	 * @return redirect alla index
+	 */
 	public String modificaEscursione(){
 		gestioneComp.modificaEscursione(escursione);
 		return "index?faces-redirect=true";
@@ -140,7 +186,10 @@ public class ComponenteManagedBean {
 		
 		return "index?faces-redirect=true";
 	}
-	
+	/**
+	 * Il metodo setta l'aereo che è stato selezionato per la modifica
+	 * @param id - id aereo selezionato
+	 */
 	public void initModificaAereo(String id){
 		aereo = gestioneComp.getAereoById(id);
 	}
@@ -151,13 +200,25 @@ public class ComponenteManagedBean {
 	 */
 	
 	
-	
+	/**
+	 * Validator chiamato per la verifica del campo numerico
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
 	public void validaNumero(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		if (!isNumeroCorretto(value.toString())){
             throw new ValidatorException(new FacesMessage("Il campo può contenere solo numeri"));
 		}
 	}
-	
+	/*/**
+	 * Validator chiamato per controllare la coerenza tra le date dell'hotel
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 
 	public void validaDateHotel(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
 		Date dataInizio = (Date)datainizio.getValue();
@@ -165,7 +226,7 @@ public class ComponenteManagedBean {
 		if (dataFine.before(dataInizio)){
                 throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
         }
-	}
+	}*/
 	
 	/**
 	 * Il metodo verifica che la stringa contenga solo numeri
