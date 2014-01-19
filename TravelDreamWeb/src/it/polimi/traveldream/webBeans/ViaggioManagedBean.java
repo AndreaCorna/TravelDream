@@ -74,7 +74,7 @@ public class ViaggioManagedBean {
 	
 	private AereoDTO aereoAndata;
 	
-	private HotelDTO albergo;
+	private HotelDTO hotel;
 	
 	private AereoDTO aereoRitorno;
 	
@@ -106,8 +106,8 @@ public class ViaggioManagedBean {
 		return aereoAndata;
 	}
 	
-	public HotelDTO getAlbergo() {
-		return albergo;
+	public HotelDTO getHotel() {
+		return hotel;
 	}
 	
 	public EscursioneDTO getEscursione(){
@@ -125,7 +125,7 @@ public class ViaggioManagedBean {
 	@PostConstruct
 	public void init(){
 		aereoAndata = new AereoDTO();
-		albergo = new HotelDTO();
+		hotel = new HotelDTO();
 		viaggio = new Prenotazione_ViaggioDTO();
 		aereoRitorno = new AereoDTO();
 		escursione = new EscursioneDTO();
@@ -157,13 +157,11 @@ public class ViaggioManagedBean {
 
 	public String aggiungiDestinazioneDateHotel(){
 		
-		String destinazione = albergo.getCitta().toLowerCase();
-		Date dataPartenza = albergo.getDataInizio();
-		Date dataFine = albergo.getDataInizio();
-		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataPartenza, dataFine);
+		String destinazione = hotel.getCitta().toLowerCase();
+		listaHotelDB = gestioneViaggio.getListaHotel(destinazione);
 		setDatiHotel(new HotelDataModel(listaHotelDB));
 		
-		return "home?faces-redirect=true";
+		return "mostraHotelScelti?faces-redirect=true";
 	}
 	
 	public String aggiungiDestinazioneDateEscursione(){

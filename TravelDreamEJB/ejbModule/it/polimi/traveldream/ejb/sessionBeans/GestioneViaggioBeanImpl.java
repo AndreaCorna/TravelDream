@@ -65,14 +65,14 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	   	List<AereoDTO> listaAerei = convertListaAereiToDTO(aereiDB);
     	return listaAerei;
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza, Date dataFine ){
-		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.citta =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
+	public List<HotelDTO> getListaHotel(String destinazione){
+		List<Hotel> hotels = em.createNamedQuery("SELECT h FROM Hotel h WHERE h.citta =:nome")
 				.setParameter("nome", destinazione)
-			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
-			    .setParameter("endDate", dataFine)
-				.getResultList();
+			    .getResultList();
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
