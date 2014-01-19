@@ -15,7 +15,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Session Bean implementation class CondivisioneBeanImpl
+ * Il session bean implementa tutti i metodi necessari per la gestione delle condivisioni presenti nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Stateless
 public class CondivisioneBeanImpl implements CondivisioneBean {
@@ -28,12 +30,13 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 	private EJBContext context;
 	
     /**
-     * Default constructor. 
+     * Costruttore di default
      */
     public CondivisioneBeanImpl() {
-        // TODO Auto-generated constructor stub
+       
     }
 
+    
 	@Override
 	public CondivisioneDTO mostraCondivisione(String link) {
 		CondivisioneDTO condivisione = new CondivisioneDTO();
@@ -57,7 +60,11 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		em.persist(nuova);
 	}
 
-	
+	/**
+	 * Metodo privato che permette di convertire un entità Utente in un data trasfert object UtenteDTO
+	 * @param utente - entità da convertire
+	 * @return UtenteDTO 
+	 */
 	private UtenteDTO convertToDTO(Utente utente){
 		UtenteDTO nuovo = new UtenteDTO();
 		nuovo.setUsername(utente.getUsername());
