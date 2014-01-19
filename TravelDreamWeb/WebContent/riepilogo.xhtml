@@ -11,7 +11,7 @@
 		<p:panel header="Riepilogo Creazione">
 			<h:panelGrid columns="3" id="riepilogo">
                 <h:outputLabel for="nome" />Destinazione:
-                <h:outputText value="#{viaggio.viaggio.aereoAndata.getCittaAtterraggio()}" />
+                <h:outputText value="#{viaggio.viaggio.aereoAndata.cittaAtterraggio}" />
                 <h:outputLabel for="andataAerei" />Aerei di Andata:
 				<p:dataList value="#{viaggio.viaggio.aereoAndata}" var="aereo" itemType="circle">  
    				 	Aereo numero #{aereo.id}, partenza il #{aereo.data}, da #{aereo.cittaDecollo}  
@@ -31,7 +31,7 @@
                 
             </h:panelGrid>
 
-            <p:commandButton id="ajax" value="Conferma"  action="#{pacchetto.creaPacchetto()}" styleClass="ui-priority-primary"/>  
+            <p:commandButton id="ajax" value="Conferma"  action="#{viaggio.acquistaViaggio()}" styleClass="ui-priority-primary"/>  
           </p:panel>
 </h:form>
 

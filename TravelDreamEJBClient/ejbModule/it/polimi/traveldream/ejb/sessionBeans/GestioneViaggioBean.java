@@ -33,6 +33,6 @@ public interface GestioneViaggioBean {
 	List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza,
 			Date dataFine);
 
-	void creaViaggio(Prenotazione_ViaggioDTO viaggio);
+	void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita);
 
 	}

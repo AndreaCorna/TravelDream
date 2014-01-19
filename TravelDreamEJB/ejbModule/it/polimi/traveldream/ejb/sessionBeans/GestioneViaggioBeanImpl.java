@@ -112,32 +112,52 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return listaAerei;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	@RolesAllowed({"DIPENDENTE"})
-	public void creaViaggio(Prenotazione_ViaggioDTO viaggio) {
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita) {
 		
 		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
-		List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
-		Hotel hotel = convertHotel(viaggio.getHotel());
-		Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
-		Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
-/*		//QUI VA FINITO IL METODO CREA VIAGGIO
-		Utente dipendente = em.find(Utente.class, context.getCallerPrincipal().getName());
-		nuovoViaggio.setDescrizione(viaggio.getDescrizione());
-		nuovoViaggio.setDestinazione(viaggio.getDestinazione());
-		nuovoViaggio.setEscursioni(escursioni);
-		nuovoViaggio.setHotel(viaggio.getHotel());
-		nuovoViaggio.setFine_Validita(pacchetto.getFine_Validita());
-		nuovoViaggio.setInizio_Validita(pacchetto.getInizio_Validita());
-		nuovoViaggio.setAerei(aerei);
-		nuovoViaggio.setDipendente(dipendente);
-		nuovoViaggio.setNumeroPersone(pacchetto.getNumeroPersone());
+		if (modalita == 1|| modalita == 3||modalita == 2||modalita == 7||modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		{
+			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
+			nuovoViaggio.setData(aereiAndata.getData());
+			nuovoViaggio.setAereo1(aereiAndata);
+				
+		}
+		if (modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		{
+			Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
+			nuovoViaggio.setAereo2(aereiRitorno);
+			
+		}
+		if(modalita == 6||modalita == 4||modalita == 2|| modalita == 7||modalita == 9||modalita == 11)
+		{
+			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
+			
+			nuovoViaggio.setEscursioni(escursioni);
+			
+		}
+		
+		if(modalita == 5||modalita == 3||modalita == 4||modalita == 7||modalita ==10||modalita ==11){
+			Hotel hotel = convertHotel(viaggio.getHotel());
+			
+			nuovoViaggio.setHotel(hotel);
+			nuovoViaggio.setDataCheckInHotel(hotel.getDataCheckIn());
+			nuovoViaggio.setDataCheckOutHotel(hotel.getDataCheckOut());
+			
+			
+		}
+		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());
+		
+		nuovoViaggio.setUtente(utente);
 		em.persist(nuovoViaggio);
 		em.flush();
-		nuovoPacchetto = em.find(Pacchetto.class, nuovoPacchetto.getId());
-		pacchetto.setId(nuovoPacchetto.getId());
-		*/
+		nuovoViaggio = em.find(Prenotazione_Viaggio.class, nuovoViaggio.getId());
+		viaggio.setId(nuovoViaggio.getId());
+		
 	}
+	
 	@Override
 	public void mostraRiepilogo() {
 		// TODO Auto-generated method stub

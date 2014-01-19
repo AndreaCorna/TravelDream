@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+   >
+   
+<h:head>
+	<title>Ecco i voli disponibili</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
+		<h:form>
+			<p:panel header="Seleziona gli Aerei">
+				<h:panelGrid columns="3" id="aereiAndata">
+				<p:dataTable id="datiAereiAndata" var="aereo" value="#{viaggio.datiAereiAndata}" paginator="true" rows="30"  
+		                 selection="#{viaggio.listaAereiAndata}">  
+		  		<f:facet name="header">  
+		            Lista Aerei Andata
+		        </f:facet>  
+		  
+		        <p:column selectionMode="multiple" style="width:2%" />  
+		  
+		        <p:column headerText="Id" style="width:25%">  
+		            #{aereo.id}  
+		        </p:column>  
+		  
+		        <p:column headerText="Decollo" style="width:25%">  
+		            #{aereo.cittaDecollo}  
+		        </p:column>  
+		  
+		        <p:column headerText="Atterraggio" style="width:24%">  
+		            #{aereo.cittaAtterraggio}  
+		        </p:column>  
+		  
+		        <p:column headerText="Data" style="width:24%">  
+		            #{aereo.data}  
+		        </p:column>  
+		        
+		        <p:column headerText="Posti" style="width:24%">  
+		            #{aereo.postiDisponibili}  
+		        </p:column> 
+		        
+		        <p:column headerText="Costo" style="width:24%">  
+		            #{aereo.costo}  
+		        </p:column> 
+		  
+		       
+		    </p:dataTable>  
+			</h:panelGrid>
+			
+	</p:panel>
+</h:form>
+			<p:commandButton value="Acquista i tuoi voli" id="prosegui" 
+             action="#{viaggio.settaAereoScelto(1)}" styleClass="ui-priority-primary"/>  
+             <p:commandButton value="Vorrei anche un hotel" id="proseguiVolo" 
+             action="#{viaggio.settaAereoScelto(3)}" styleClass="ui-priority-primary"/>  
+             
+           	</p:panel>
+	</h:form>
+</h:body>
+</html>
