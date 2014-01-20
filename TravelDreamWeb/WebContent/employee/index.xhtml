@@ -103,8 +103,21 @@
         <p></p>
  		 <p><a href="insertDestAndDate.xhtml">Crea un Pacchetto</a></p>  
         </p:tab>
+         <p:tab title="Acquista Viaggio">
+         <h:panelGrid columns="2" cellpadding="10">
+         	<p></p>
+       		<p><a href="../user/acquistaViaggio.xhtml">Cerca un Volo</a></p>
+			<p></p>
+			<p><a href="../user/acquistaHotelViaggio.xhtml">Cerca un Hotel</a></p>
+			<p></p>
+			<p></p>
+			<p><a href="../user/acquistaEscursione.xhtml">Cerca un Escursione</a></p>
+			<p></p>
+		</h:panelGrid>
+		
+		</p:tab>
         <p:tab title="Lista Offerte">
-        	<h:panelGrid columns="4" id="regGrid">
+        	<h:panelGrid columns="4" id="regOff">
     			<p:dataTable id="tabellaOff" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
           			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
           			  		selectionMode="single" >  

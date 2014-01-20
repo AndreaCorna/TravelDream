@@ -7,7 +7,7 @@
 <h:head>
 #{utente.caricaProfiloUtente()}
 #{prenotazione.mostraPrenotazioni()}
-
+#{pacchetto.mostraOfferte()}
 </h:head>
 <h:body>
 
@@ -26,7 +26,7 @@
     </p:selectOneMenu>
 	-->    
 	<p:outputLabel value="Benvenuto " />#{utente.getUsername()} 
-	<p:graphicImage value="../principale.jpg" />
+	<p:graphicImage value="../immagini/principale.jpg" />
                
     <p:tabView effect="drop" effectDuration="normal">
 
@@ -61,30 +61,15 @@
             </h:panelGrid>
         </p:tab>
   
-        <p:tab title="Godfather Part II">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. 
-                In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, 
-                killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."></h:outputText>
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Godfather Part III">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. 
-                    Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."></h:outputText>
-            </h:panelGrid>
-        </p:tab>
         <p:tab title="Acquista Viaggio">
          <h:panelGrid columns="2" cellpadding="10">
          	<p></p>
-       		<p><a href=".../acquistaViaggio.xhtml">Cerca un Volo</a></p>
+       		<p><a href="acquistaViaggio.xhtml">Cerca un Volo</a></p>
 			<p></p>
-			<p><a href=".../acquistaHotelViaggio.xhtml">Cerca un Hotel</a></p>
+			<p><a href="acquistaHotelViaggio.xhtml">Cerca un Hotel</a></p>
 			<p></p>
 			<p></p>
-			<p><a href=".../acquistaEscursione.xhtml">Cerca un Escursione</a></p>
+			<p><a href="acquistaEscursione.xhtml">Cerca un Escursione</a></p>
 			<p></p>
 		</h:panelGrid>
 		
@@ -188,6 +173,51 @@
 		        	 </p:dataTable>  
       	<p></p>
       	</h:panelGrid>
+			</p:tab>
+			<p:tab title="Lista Offerte">
+        	<h:panelGrid columns="4" id="regOff">
+    			<p:dataTable id="tabellaOff" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
+          			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
+          			  		selectionMode="single" >  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value="Cerca  su tutti i campi:" />  
+               		 		<p:inputText id="globalFilter" onkeyup="tabellaOfferte.filter()" style="width:150px" />  
+            			</p:outputPanel>  
+       			 </f:facet>  
+  
+		        <p:column id="dest" filterBy="destinazione"   
+		                headerText="Destinazione" footerText="Destinazione"
+		                filterOptions="#{pacchetto.destinazioni}"
+		                filterMatchMode="exact">  
+		            <h:outputText value="#{pac.destinazione}" />  
+		        </p:column> 
+		        
+		        <p:column id="inizio_Validita" filterBy="inizio_Validita"   
+		                headerText="Inizio Offerta" footerText="Inizio Offerta"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.inizio_Validita}" />  
+		        </p:column>
+		        
+		        <p:column id="fine_Validita" filterBy="fine_Validita"   
+		                headerText="Fine Offerta" footerText="Fine Offerta"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.fine_Validita}" />  
+		        </p:column> 
+		        
+		        <p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
+		            <h:outputText value="#{pac.descrizione}" />  
+		        </p:column>  
+		        
+		        <p:column headerText="Personalizza" style="width:24%" >  
+                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Personalizza"/>
+         </p:column>  
+  
+		        	 </p:dataTable>  
+      	<p></p>
+      	</h:panelGrid>
+		
 			</p:tab>
 	<!--	<p:tab title="Mostra Prenotazione">
          <h:panelGrid columns="2" cellpadding="10">
