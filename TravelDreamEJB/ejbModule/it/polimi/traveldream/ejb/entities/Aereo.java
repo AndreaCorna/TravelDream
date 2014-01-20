@@ -15,7 +15,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="Aereo")
-@NamedQuery(name="Aereo.findAll", query="SELECT a FROM Aereo a")
+@NamedQueries({
+	@NamedQuery(name="Aereo.findAll", query="SELECT a FROM Aereo a") ,
+	@NamedQuery(name="Aereo.findValidi", query="SELECT a FROM Aereo a WHERE a.valido=1")
+})
 public class Aereo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +41,9 @@ public class Aereo implements Serializable {
 
 	@Column(name="Posti_Disponibili")
 	private int posti_Disponibili;
+	
+	@Column(name="Valido")
+	private byte valido;
 
 	public Aereo() {
 	}
@@ -48,6 +54,7 @@ public class Aereo implements Serializable {
 		this.costo = aereo.getCosto();
 		this.data = aereo.getData();
 		this.posti_Disponibili = aereo.getPostiDisponibili();
+		this.valido = 1;
 	}
 
 	public int getId() {
@@ -96,6 +103,14 @@ public class Aereo implements Serializable {
 
 	public void setPosti_Disponibili(int posti_Disponibili) {
 		this.posti_Disponibili = posti_Disponibili;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 
 }

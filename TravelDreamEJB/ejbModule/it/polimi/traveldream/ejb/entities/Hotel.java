@@ -16,7 +16,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name="Hotel")
-@NamedQuery(name="Hotel.findAll", query="SELECT h FROM Hotel h")
+@NamedQueries({
+	@NamedQuery(name="Hotel.findAll", query="SELECT h FROM Hotel h") ,
+	@NamedQuery(name="Hotel.findValidi", query="SELECT h FROM Hotel h WHERE h.valido=1")
+})
+
 public class Hotel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,6 +51,8 @@ public class Hotel implements Serializable {
 	@Column(name="Data_Checkout")
 	private Date dataCheckOut;
 
+	@Column(name="Valido")
+	private byte valido;
 	
 	public Hotel() {
 	}
@@ -125,6 +131,14 @@ public class Hotel implements Serializable {
 
 	public void setDataCheckOut(Date dataFine) {
 		this.dataCheckOut = dataFine;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 
 }

@@ -50,6 +50,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void aggiungiHotelDB(HotelDTO hotel) {
 		Hotel nuovo = new Hotel(hotel);
+		nuovo.setValido((byte)1);
 		em.persist(nuovo);
 		em.flush();
 		nuovo = em.find(Hotel.class, nuovo.getId());
@@ -165,7 +166,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	
 	@Override
 	public void eliminaAereo(AereoDTO aereo) {
-		// TODO Auto-generated method stub
+		Aereo aereoDB = em.find(Aereo.class, aereo.getId());
+		aereoDB.setValido((byte)0);
+		em.merge(aereoDB);
 		
 	}
 /*	
@@ -226,10 +229,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 			    .setParameter("nome",aereo).getResultList();
 		for(Pacchetto pacchetto:pacchetti){
 			if(aereo.getData().before(pacchetto.getInizio_Validita()) ||
-					aereo.getData().after(pacchetto.getFine_Validita())){
+					aereo.getData().after(pacchetto.getFine_Validita()) || aereo.getValido()==0){
 				pacchetto.getAerei().remove(aereo);
 				if(!conRitornoAndata(pacchetto)){
-					em.remove(pacchetto);
+					pacchetto.setValido((byte)0);
+					em.merge(pacchetto);
 				}
 			}
 		}
@@ -245,7 +249,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 					escursione.getData().after(pacchetto.getFine_Validita())){
 				pacchetto.getAerei().remove(escursione);
 				if(pacchetto.getEscursioni().size() == 0){
-					em.remove(pacchetto);
+					pacchetto.setValido((byte)0);
+					em.merge(pacchetto);
 				}
 			}
 		}

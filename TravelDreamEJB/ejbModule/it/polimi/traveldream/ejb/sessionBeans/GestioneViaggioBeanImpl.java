@@ -230,6 +230,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovo.setData(aereo.getData());
 		nuovo.setId(aereo.getId());
 		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
+		nuovo.setValido(aereo.getValido());
 		return nuovo;
 	}
 	private HotelDTO convertToDTO(Hotel hotel){
@@ -240,6 +241,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
+		nuovo.setValido(hotel.getValido());
 		return nuovo;
 	}
 	
