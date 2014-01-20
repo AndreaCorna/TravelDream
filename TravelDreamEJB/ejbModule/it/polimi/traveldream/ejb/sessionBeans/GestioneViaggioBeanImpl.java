@@ -70,17 +70,18 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String destinazione){
-		List<Hotel> hotels = em.createNamedQuery("SELECT h FROM Hotel h WHERE h.citta =:nome")
+		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.camere_Disponibili > 0")
 				.setParameter("nome", destinazione)
 			    .getResultList();
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
-		List<Escursione> escursioniDB = em.createNamedQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.dataInizio =:startDate", Escursione.class)
+		List<Escursione> escursioniDB = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.dataInizio =:startDate")
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .getResultList();
@@ -136,6 +137,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
 			
 			nuovoViaggio.setEscursioni(escursioni);
+			nuovoViaggio.setData(viaggio.getData());
 			
 		}
 		
@@ -143,8 +145,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			Hotel hotel = convertHotel(viaggio.getHotel());
 			
 			nuovoViaggio.setHotel(hotel);
-			nuovoViaggio.setDataCheckInHotel(hotel.getDataCheckIn());
-			nuovoViaggio.setDataCheckOutHotel(hotel.getDataCheckOut());
+			nuovoViaggio.setData(viaggio.getHotel().getDataInizio());
+			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
+			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
 			
 			
 		}
@@ -290,13 +293,12 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			return escursioni;
 		}
 		
-		private Hotel convertHotel(HotelDTO lista){
+		private Hotel convertHotel(HotelDTO hotel){
 			Hotel listaHotel = new Hotel();
-				Hotel nuovo = em.find(Hotel.class, lista.getId());
+				Hotel nuovo = em.find(Hotel.class, hotel.getId());
 				listaHotel = nuovo;
 			
-			Hotel hotel = listaHotel;
-			return hotel;
+			return listaHotel;
 		}
 		
 		private Aereo convertAereiAndata(AereoDTO aereoAndata){

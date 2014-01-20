@@ -199,7 +199,7 @@ public class ViaggioManagedBean {
 	}
 	
 public String settaHotelScelto(int scelta){
-		
+		listaHotel.get(0).setDataInizio(hotel.getDataInizio());
 		viaggio.setHotel(listaHotel.get(0));
 		if(modalita == 0)
 			modalita = 5;
@@ -209,9 +209,9 @@ public String settaHotelScelto(int scelta){
 			modalita = 10;
 		
 		if (scelta==1)
-			return "proseguiAcquisto?faces-redirect=true";
+			return "riepilogo?faces-redirect=true";
 		if (scelta==2)
-			return "acquistaRitorno?faces-redirect=true";
+			return "acquistaEscursione?faces-redirect=true";
 		else
 			return null;
 	}
