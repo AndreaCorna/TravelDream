@@ -35,6 +35,9 @@ public class Escursione implements Serializable {
 	
 	@Column(name="Descrizione")
 	private String descrizione;
+	
+	@Column(name="Valido")
+	private byte valido;
 
 	public Escursione() {
 	}
@@ -85,6 +88,14 @@ public class Escursione implements Serializable {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 
 }

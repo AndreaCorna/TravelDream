@@ -66,6 +66,7 @@ public class ConverterDTO {
 		nuovo.setId(escursione.getId());
 		nuovo.setLuogo(escursione.getLuogo());
 		nuovo.setPrezzo(escursione.getPrezzo());
+		nuovo.setValido(escursione.getValido());
 		return nuovo;
 	}
 	

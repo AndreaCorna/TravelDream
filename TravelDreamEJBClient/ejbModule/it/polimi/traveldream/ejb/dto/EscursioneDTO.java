@@ -20,6 +20,8 @@ public class EscursioneDTO {
 	private Date data;
 	@NotEmpty
 	private String descrizione;
+	
+	private byte valido;
 
 	public int getId() {
 		return id;
@@ -59,6 +61,14 @@ public class EscursioneDTO {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 
 }
