@@ -60,7 +60,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAerei() {
 		List<Aereo> aereiDB = em.createNamedQuery("Aereo.findValidi",Aereo.class).getResultList();
-	   	List<AereoDTO> listaAerei = convertListaAereiToDTO(aereiDB);
+	   	List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiToDTO(aereiDB);
     	return listaAerei;
 	}
 	
@@ -310,6 +310,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
 		nuovo.setDataFine(hotel.getDataCheckOut());
 		nuovo.setDataInizio(hotel.getDataCheckIn());
+		nuovo.setValido(hotel.getValido());
 		return nuovo;
 	}
 	

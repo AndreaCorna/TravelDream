@@ -53,6 +53,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void aggiungiHotelDB(HotelDTO hotel) {
 		Hotel nuovo = new Hotel(hotel);
+		nuovo.setValido((byte)1);
 		em.persist(nuovo);
 		em.flush();
 		nuovo = em.find(Hotel.class, nuovo.getId());

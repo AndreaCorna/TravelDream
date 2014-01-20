@@ -26,6 +26,8 @@ public class HotelDTO {
 	
 	private Date dataFine;
 	
+	private byte valido;
+	
 	
 	
 	public int getId() {
@@ -75,6 +77,12 @@ public class HotelDTO {
 	}
 	public void setDataFine(Date dataFine) {
 		this.dataFine = dataFine;
+	}
+	public byte getValido() {
+		return valido;
+	}
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 	
 	

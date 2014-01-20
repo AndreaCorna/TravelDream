@@ -238,6 +238,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
+		nuovo.setValido(hotel.getValido());
 		return nuovo;
 	}
 	

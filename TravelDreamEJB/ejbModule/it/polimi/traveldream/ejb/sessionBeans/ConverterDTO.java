@@ -55,6 +55,7 @@ public class ConverterDTO {
 		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
 		nuovo.setDataFine(hotel.getDataCheckOut());
 		nuovo.setDataInizio(hotel.getDataCheckIn());
+		nuovo.setValido(hotel.getValido());
 		return nuovo;
 	}
 	
