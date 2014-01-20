@@ -1,7 +1,6 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
-import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 
@@ -91,6 +90,6 @@ public interface GestioneComponenteBean {
 	
 	void eliminaAereo(AereoDTO aereo);
 
-	void aggiungiCameraDB(CameraDTO camera);
+	
 
 }

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
-import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
-import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
@@ -70,17 +68,6 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		em.flush();
 		nuovo = em.find(Escursione.class,nuovo.getId());
 		escursione.setId(nuovo.getId());
-		
-	}
-	@Override
-	@RolesAllowed({"DIPENDENTE"})
-	public void aggiungiCameraDB(CameraDTO camera){
-		Camera nuovo = new Camera(camera);
-		nuovo.setHotel(em.find(Hotel.class,camera.getHotel().getId()));
-		em.persist(nuovo);
-		em.flush();
-		nuovo = em.find(Camera.class,nuovo.getId());
-		camera.setId(nuovo.getId());
 		
 	}
 	

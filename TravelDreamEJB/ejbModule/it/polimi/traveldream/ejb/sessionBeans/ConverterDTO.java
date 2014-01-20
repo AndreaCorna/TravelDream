@@ -10,14 +10,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
-import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
-import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
@@ -56,25 +54,9 @@ public class ConverterDTO {
 		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
 		nuovo.setDataFine(hotel.getDataCheckOut());
 		nuovo.setDataInizio(hotel.getDataCheckIn());
-		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
-		for(Camera camera:hotel.getCamere()){
-			camere.add(convertToDTO(camera));
-		}
-		nuovo.setCamere(camere);
 		return nuovo;
 	}
 	
-	protected static CameraDTO convertToDTO(Camera camera){
-		CameraDTO nuovo = new CameraDTO();
-		nuovo.setCosto(camera.getCosto());
-		nuovo.setData_Checkin(camera.getData_Checkin());
-		nuovo.setData_Checkout(camera.getData_Checkout());
-		nuovo.setId(camera.getId());
-		nuovo.setOccupata(camera.getOccupata());
-		nuovo.setPosti(camera.getPosti());
-		return nuovo;
-	}
-
 	protected static EscursioneDTO convertToDTO(Escursione escursione){
 		EscursioneDTO nuovo = new EscursioneDTO();
 		nuovo.setData(escursione.getData());

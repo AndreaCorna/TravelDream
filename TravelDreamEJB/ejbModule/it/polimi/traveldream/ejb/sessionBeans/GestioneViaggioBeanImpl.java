@@ -1,14 +1,12 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
-import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
-import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
@@ -240,22 +238,6 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovo.setNome(hotel.getNome());
 		Integer value = new Integer(hotel.getStelle());
 		nuovo.setRating(value);
-		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
-		for(Camera camera:hotel.getCamere()){
-			camere.add(convertToDTO(camera));
-		}
-		nuovo.setCamere(camere);
-		return nuovo;
-	}
-	
-	private CameraDTO convertToDTO(Camera camera){
-		CameraDTO nuovo = new CameraDTO();
-		nuovo.setCosto(camera.getCosto());
-		nuovo.setData_Checkin(camera.getData_Checkin());
-		nuovo.setData_Checkout(camera.getData_Checkout());
-		nuovo.setId(camera.getId());
-		nuovo.setOccupata(camera.getOccupata());
-		nuovo.setPosti(camera.getPosti());
 		return nuovo;
 	}
 	

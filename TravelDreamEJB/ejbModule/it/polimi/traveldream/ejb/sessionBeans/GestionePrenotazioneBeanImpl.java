@@ -1,7 +1,6 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
-import it.polimi.traveldream.ejb.dto.CameraDTO;
 import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
@@ -10,7 +9,6 @@ import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
-import it.polimi.traveldream.ejb.entities.Camera;
 import it.polimi.traveldream.ejb.entities.Condivisione;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
@@ -266,27 +264,11 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setDataInizio(hotel.getDataCheckIn());
 			Integer value = new Integer(hotel.getStelle());
 			nuovo.setRating(value);
-			ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
-			for(Camera camera:hotel.getCamere()){
-				camere.add(convertToDTO(camera));
-			}
-			nuovo.setCamere(camere);
 			return nuovo;
 		}
 
 		//metodi convertTODTO
 		
-		
-		private CameraDTO convertToDTO(Camera camera){
-			CameraDTO nuovo = new CameraDTO();
-			nuovo.setCosto(camera.getCosto());
-			nuovo.setData_Checkin(camera.getData_Checkin());
-			nuovo.setData_Checkout(camera.getData_Checkout());
-			nuovo.setId(camera.getId());
-			nuovo.setOccupata(camera.getOccupata());
-			nuovo.setPosti(camera.getPosti());
-			return nuovo;
-		}
 		
 		private List<EscursioneDTO> convertListaEscursioniToDTO(List<Escursione> lista){
 			ArrayList<EscursioneDTO> listaEscursioni = new ArrayList<EscursioneDTO>();

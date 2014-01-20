@@ -103,6 +103,8 @@ public class PacchettoManagedBean {
 	
 	private Date ritorno;
 	
+	private float costo;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -221,7 +223,7 @@ public class PacchettoManagedBean {
 	
 	@SuppressWarnings("deprecation")
 	public String prenotaPacchetto(){
-		
+		costo = 0;
 		setSelezioneAerei();
 		setSelezioneHotel();
 		setSelezioneEscursioni();
@@ -232,8 +234,13 @@ public class PacchettoManagedBean {
 			prenotazione.setData(date);
 			Date dataCheckIn = prenotazione.getAereoAndata().getData();
 			Date dataCheckOut = prenotazione.getAereoRitorno().getData();
-			prenotazione.setCheckInHotel(new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate()));
-			prenotazione.setCheckOutHotel(new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate()));
+			Date in = new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate());
+			Date out = new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate());
+			prenotazione.setCheckInHotel(in);
+			prenotazione.setCheckOutHotel(out);
+			int diffInDays = (int)( (out.getTime() - in.getTime()) 
+	                 / (1000 * 60 * 60 * 24.0) );
+			costo = costo + prenotazione.getHotel().getCostoGiornaliero() * (diffInDays);
 			return "riep&cond?faces-redirect=true";
 		}
 		return null;
@@ -414,6 +421,7 @@ public class PacchettoManagedBean {
 				if(idValue.toString().equals(selezione)){
 					escursioni.add(listaEscursioniDB.get(i));
 					trovato = true;
+					costo = costo + listaEscursioniDB.get(i).getPrezzo();
 				}
 			}
 		}
@@ -429,6 +437,7 @@ public class PacchettoManagedBean {
 			if (aereo.toString().equals(idAereoAndata)){
 				prenotazione.setAereo(aereo);
 				aereoTrovato = true;
+				costo = costo + aereo.getCosto();
 			}
 		}
 		System.out.println("Aereo andata "+prenotazione.getAereoAndata());
@@ -438,6 +447,7 @@ public class PacchettoManagedBean {
 			if (aereo.toString().equals(idAereoRitorno)){
 				prenotazione.setAereoRitorno(aereo);
 				aereoTrovato = true;
+				costo = costo + aereo.getCosto();
 			}
 		}
 		
@@ -451,6 +461,7 @@ public class PacchettoManagedBean {
 			if (hotel.toString().equals(idHotel)){
 				prenotazione.setHotel(hotel);
 				hotelTrovato = true;
+				
 			}
 		}
 	}
@@ -731,5 +742,13 @@ public class PacchettoManagedBean {
 
 	public void setDestinazioni(SelectItem[] destinazioni) {
 		this.destinazioni = destinazioni;
+	}
+
+	public float getCosto() {
+		return costo;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
 	}
 }

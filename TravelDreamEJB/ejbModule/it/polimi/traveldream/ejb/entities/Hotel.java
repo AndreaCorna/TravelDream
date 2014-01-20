@@ -7,7 +7,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
-import java.util.List;
+
 
 
 /**
@@ -47,10 +47,7 @@ public class Hotel implements Serializable {
 	@Column(name="Data_Checkout")
 	private Date dataCheckOut;
 
-	//bi-directional many-to-one association to Camera
-	@OneToMany(mappedBy="hotel")
-	private List<Camera> camere;
-
+	
 	public Hotel() {
 	}
 
@@ -89,27 +86,6 @@ public class Hotel implements Serializable {
 		this.citta= citta;
 	}
 
-	public List<Camera> getCamere() {
-		return this.camere;
-	}
-
-	public void setCamere(List<Camera> camere) {
-		this.camere = camere;
-	}
-
-	public Camera addCamere(Camera camere) {
-		getCamere().add(camere);
-		camere.setHotel(this);
-
-		return camere;
-	}
-
-	public Camera removeCamere(Camera camere) {
-		getCamere().remove(camere);
-		camere.setHotel(null);
-
-		return camere;
-	}
 
 	public String getNome() {
 		return nome;

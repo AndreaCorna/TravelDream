@@ -18,8 +18,6 @@ public class HotelDTO {
 	@NotNull
 	private String nome;
 	@NotNull
-	private List<CameraDTO> camere;
-	@NotNull
 	private Integer rating;
 	@NotNull
 	private float costoGiornaliero;
@@ -47,12 +45,6 @@ public class HotelDTO {
 	}
 	public void setCamereDisponibili(int camereDisponibili) {
 		this.camereDisponibili = camereDisponibili;
-	}
-	public List<CameraDTO> getCamere() {
-		return camere;
-	}
-	public void setCamere(List<CameraDTO> camere) {
-		this.camere = camere;
 	}
 	public String getNome() {
 		return nome;

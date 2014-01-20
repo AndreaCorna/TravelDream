@@ -42,6 +42,8 @@
 				<p:selectBooleanCheckbox value="#{pacchetto.checkCondivisione}">  
            			 <p:ajax update="msg,link" listener="#{pacchetto.messaggioCheckBox}"/>  
         		</p:selectBooleanCheckbox> 
+        		<h:outputLabel for="costo" />Costo:
+				<h:outputText value="#{pacchetto.costo}" />
         		
 			    <p:inputTextarea id="link" value="#{pacchetto.linkCondivisione}" rows="1" cols="60" />
 			 </h:panelGrid>
