@@ -145,10 +145,15 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			nuovoViaggio.setHotel(hotel);
 			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
-			em.createQuery("SELECT a FROM Hotel a SET a.camere_Disponibili=:a.camere_Disponibili-1 WHERE a.id =:nome")
-		    .setParameter("nome", viaggio.getHotel().getId())
+			/*
+			List<HotelDTO> postiDisponibili = em.createQuery("SELECT c FROM Hotel c WHERE c.id =:idHotel")
+				    .setParameter("idHotel", viaggio.getHotel().getId())
+				    .getResultList();
+			em.createQuery("UPDATE Hotel SET camere_Disponibili =posti WHERE id = idHotel")
+		    .setParameter("idHotel", viaggio.getHotel().getId())
+		    .setParameter("posti", (postiDisponibili.get(0).getCamereDisponibili()-1))
 		    .getResultList();
-			
+			*/
 		}
 		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());
 		nuovoViaggio.setData(new Date());
