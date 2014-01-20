@@ -143,7 +143,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaHotel(HotelDTO hotel) {
 		Hotel modificato = em.find(Hotel.class, hotel.getId());
-		//setCamere_Disponibili(hotel.getCamereDisponibili());
+		modificato.setCamere_Disponibili(hotel.getCamereDisponibili());
 		modificato.setCitta(hotel.getCitta());
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
@@ -172,6 +172,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		Aereo aereoDB = em.find(Aereo.class, aereo.getId());
 		aereoDB.setValido((byte)0);
 		em.merge(aereoDB);
+		aggiornaPacchetti(aereoDB);
 		
 	}
 /*	
@@ -249,8 +250,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 			    .setParameter("nome",escursione).getResultList();
 		for(Pacchetto pacchetto:pacchetti){
 			if(escursione.getData().before(pacchetto.getInizio_Validita()) ||
-					escursione.getData().after(pacchetto.getFine_Validita())){
-				pacchetto.getAerei().remove(escursione);
+					escursione.getData().after(pacchetto.getFine_Validita()) || escursione.getValido()==0){
+				pacchetto.getEscursioni().remove(escursione);
 				if(pacchetto.getEscursioni().size() == 0){
 					pacchetto.setValido((byte)0);
 					em.merge(pacchetto);
@@ -259,16 +260,34 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		}
 	}
 	
+	@SuppressWarnings({"unchecked" })
+	private void aggiornaPacchetti(Hotel hotel){
+		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.hotels) e WHERE e=:nome")
+			    .setParameter("nome",hotel).getResultList();
+		for(Pacchetto pacchetto:pacchetti){
+			if(hotel.getValido()==0){
+				pacchetto.getAerei().remove(hotel);
+				if(pacchetto.getHotels().size() == 0){
+					pacchetto.setValido((byte)0);
+					em.merge(pacchetto);
+				}
+			}
+		}
+	}
+	
+	
 		
 	private boolean conRitornoAndata(Pacchetto pacchetto){
 		boolean andata = false;
 		boolean ritorno = false;
 		List<Aereo> lista = pacchetto.getAerei();
 		for(int i=0;i<lista.size() && (!andata || !ritorno);i++){
-			if( lista.get(i).getAtterraggio().equals(pacchetto.getDestinazione())){
+			if( lista.get(i).getAtterraggio().equals(pacchetto.getDestinazione())
+					&& lista.get(i).getValido()==1){
 				andata = true;
 			}
-			else if( lista.get(i).getDecollo().equals(pacchetto.getDestinazione())){
+			else if( lista.get(i).getDecollo().equals(pacchetto.getDestinazione())
+						&& lista.get(i).getValido()==1){
 				ritorno = true;
 			}
 		}
@@ -281,6 +300,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		Hotel hotelDB = em.find(Hotel.class, hotel.getId());
 		hotelDB.setValido((byte)0);
 		em.merge(hotelDB);
+		aggiornaPacchetti(hotelDB);
 	}
 
 	@Override
@@ -289,6 +309,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		Escursione escursioneDB = em.find(Escursione.class, escursione.getId());
 		escursioneDB.setValido((byte)0);
 		em.merge(escursioneDB);
+		aggiornaPacchetti(escursioneDB);
 		
 	}
 

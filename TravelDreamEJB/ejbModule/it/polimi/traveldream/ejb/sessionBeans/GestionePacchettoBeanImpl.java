@@ -253,7 +253,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void eliminaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetto eliminato = em.find(Pacchetto.class, pacchetto.getId());
-		em.remove(eliminato);
+		eliminato.setValido((byte)0);
+		em.merge(eliminato);
 	}
 	
 	@Override
