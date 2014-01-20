@@ -145,7 +145,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			nuovoViaggio.setHotel(hotel);
 			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
-			
+			em.createQuery("SELECT a FROM Hotel a SET a.camere_Disponibili=:a.camere_Disponibili-1 WHERE a.id =:nome")
+		    .setParameter("nome", viaggio.getHotel().getId())
+		    .getResultList();
 			
 		}
 		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());

@@ -247,7 +247,7 @@ public String acquistaViaggio(){
 }
 
 public String richiamaHome(){
-	return "user/index?faces-redirect=true";
+	return "index?faces-redirect=true";
 }
 	/*
 	public void mostraOfferte(){
