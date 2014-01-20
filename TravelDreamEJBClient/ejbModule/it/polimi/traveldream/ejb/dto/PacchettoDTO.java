@@ -34,6 +34,8 @@ public class PacchettoDTO {
 	private String descrizione;
 	@Min(1) @Max(4) 
 	private int numeroPersone;
+	
+	private byte valido;
 
 	public int getId() {
 		return id;
@@ -121,5 +123,13 @@ public class PacchettoDTO {
 
 	public void setNumeroPersone(int numeroPersone) {
 		this.numeroPersone = numeroPersone;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 }

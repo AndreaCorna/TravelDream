@@ -14,7 +14,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="Pacchetto")
-@NamedQuery(name="Pacchetto.findAll", query="SELECT p FROM Pacchetto p")
+
+@NamedQueries({
+	@NamedQuery(name="Pacchetto.findAll", query="SELECT p FROM Pacchetto p"),
+	@NamedQuery(name="Pacchetto.findValidi", query="SELECT p FROM Pacchetto p WHERE p.valido=1")
+})
 public class Pacchetto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +42,9 @@ public class Pacchetto implements Serializable {
 	
 	@Column(name="Numero_Persone")
 	private int numeroPersone;
+	
+	@Column(name="Valido")
+	private byte valido;
 
 	//uni-directional many-to-many association to Aereo
 	@ManyToMany
@@ -165,6 +172,14 @@ public class Pacchetto implements Serializable {
 
 	public void setNumeroPersone(int numeroPersone) {
 		this.numeroPersone = numeroPersone;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 
 }

@@ -50,7 +50,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<PacchettoDTO> getListaPacchetti() {
-		List<Pacchetto> pacchettiDB = em.createNamedQuery("Pacchetto.findAll", Pacchetto.class).getResultList();
+		List<Pacchetto> pacchettiDB = em.createNamedQuery("Pacchetto.findValidi", Pacchetto.class).getResultList();
 		List<PacchettoDTO> pacchetti = convertListaPacchettiToDTO(pacchettiDB);
 		return pacchetti;
 		
@@ -203,7 +203,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@SuppressWarnings("unchecked")
 	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno){
-		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.aereo1 =:nome OR p.aereo2 =:nome "
+		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE ( p.aereo1 =:nome AND p.aereo1.valido=1)"
+				+ " OR ( p.aereo2 =:nome AND p.aereo2.valido=1 ) "
 				+ "AND (p.aereo1.data BETWEEN :andata AND :ritorno OR p.aereo2.data BETWEEN :andata AND :ritorno)")
 				.setParameter("nome", aereo)
 				.setParameter("andata",partenza)
@@ -212,7 +213,8 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		for(Prenotazione_Pacchetto prenotazione:listaPrenotazioniPac){
 			postiOccupati = postiOccupati + prenotazione.getPacchetto().getNumeroPersone();
 		}
-		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE p.aereo1 =:nome OR p.aereo2 =:nome "
+		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE ( p.aereo1 =:nome AND p.aereo1.valido=1)"
+				+ " OR ( p.aereo2 =:nome AND p.aereo2.valido=1 ) "
 				+ "AND (p.aereo1.data BETWEEN :andata AND :ritorno OR p.aereo2.data BETWEEN :andata AND :ritorno)")
 				.setParameter("nome", aereo)
 				.setParameter("andata",partenza)
@@ -239,6 +241,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovoPacchetto.setAerei(aerei);
 		nuovoPacchetto.setDipendente(dipendente);
 		nuovoPacchetto.setNumeroPersone(pacchetto.getNumeroPersone());
+		nuovoPacchetto.setValido((byte)1);
 		em.persist(nuovoPacchetto);
 		em.flush();
 		nuovoPacchetto = em.find(Pacchetto.class, nuovoPacchetto.getId());
@@ -292,6 +295,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		nuovo.setData(aereo.getData());
 		nuovo.setId(aereo.getId());
 		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
+		nuovo.setValido(aereo.getValido());
 		return nuovo;
 	}
 	
@@ -333,6 +337,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
 		nuovo.setDipendente(dipendente);
 		nuovo.setNumeroPersone(pacchetto.getNumeroPersone());
+		nuovo.setValido(pacchetto.getValido());
 		return nuovo;
 	}
 

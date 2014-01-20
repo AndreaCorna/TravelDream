@@ -25,6 +25,8 @@ public class AereoDTO {
 	@NotNull
 	@Min(0)
 	private float costo;
+	
+	private byte valido;
 
 		
 	public int getId(){
@@ -73,6 +75,14 @@ public class AereoDTO {
 
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 	
 	

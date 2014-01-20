@@ -40,6 +40,7 @@ public class ConverterDTO {
 		nuovo.setData(aereo.getData());
 		nuovo.setId(aereo.getId());
 		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
+		nuovo.setValido(aereo.getValido());
 		return nuovo;
 	}
 	
@@ -103,6 +104,7 @@ public class ConverterDTO {
 		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
 		nuovo.setDipendente(dipendente);
 		nuovo.setNumeroPersone(pacchetto.getNumeroPersone());
+		nuovo.setValido(pacchetto.getValido());
 		return nuovo;
 	}
 

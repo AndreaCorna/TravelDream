@@ -143,10 +143,18 @@ public class PacchettoManagedBean {
 	
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
+		filtraLista();
 		caricaDestinazioni();
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
+
+	private void filtraLista() {
+		for(PacchettoDTO pacchetto:listaPacchetti){
+			
+		}
+		
+	}
 
 	public String aggiungiDestinazioneDate(){
 		String destinazione = pacchetto.getDestinazione();

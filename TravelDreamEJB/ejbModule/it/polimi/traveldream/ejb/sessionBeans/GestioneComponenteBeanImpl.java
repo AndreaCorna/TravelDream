@@ -231,10 +231,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 			    .setParameter("nome",aereo).getResultList();
 		for(Pacchetto pacchetto:pacchetti){
 			if(aereo.getData().before(pacchetto.getInizio_Validita()) ||
-					aereo.getData().after(pacchetto.getFine_Validita())){
+					aereo.getData().after(pacchetto.getFine_Validita()) || aereo.getValido()==0){
 				pacchetto.getAerei().remove(aereo);
 				if(!conRitornoAndata(pacchetto)){
-					em.remove(pacchetto);
+					pacchetto.setValido((byte)0);
+					em.merge(pacchetto);
 				}
 			}
 		}
@@ -250,7 +251,8 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 					escursione.getData().after(pacchetto.getFine_Validita())){
 				pacchetto.getAerei().remove(escursione);
 				if(pacchetto.getEscursioni().size() == 0){
-					em.remove(pacchetto);
+					pacchetto.setValido((byte)0);
+					em.merge(pacchetto);
 				}
 			}
 		}
