@@ -67,7 +67,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(){
-		List<Hotel> hotels = em.createNamedQuery("Hotel.findAll", Hotel.class).getResultList();
+		List<Hotel> hotels = em.createNamedQuery("Hotel.findValidi", Hotel.class).getResultList();
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
@@ -76,7 +76,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String citta) {
-		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.città =:nome")
+		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.città =:nome and h.valido=1")
 			    .setParameter("nome", citta).getResultList();
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
@@ -112,7 +112,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni() {
-		List<Escursione> escursioniDB = em.createNamedQuery("Escursione.findAll", Escursione.class).getResultList();
+		List<Escursione> escursioniDB = em.createNamedQuery("Escursione.findValidi", Escursione.class).getResultList();
 	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
     	return listaEscursioni;
 	}
@@ -121,7 +121,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date inizioValidita, Date fineValidita) {
-		List<Escursione> escursioniDB = em.createQuery("SELECT e FROM Escursione e WHERE e.luogo =:nome and e.data BETWEEN :startDate AND :endDate")
+		List<Escursione> escursioniDB = em.createQuery("SELECT e FROM Escursione e WHERE e.luogo =:nome and e.valido=1 and e.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", destinazione)
 			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
@@ -178,13 +178,13 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
 				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
-				+ "AND p.hotel =:hotel")
+				+ "AND p.hotel =:hotel and p.valido=1")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
 		List<Prenotazione_Pacchetto> prenotazioniViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p "
 				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
-				+ "AND p.hotel =:hotel")
+				+ "AND p.hotel =:hotel and p.valido=1")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
