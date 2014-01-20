@@ -25,7 +25,9 @@
         <f:selectItem itemLabel="Scale" itemValue="scale" />
     </p:selectOneMenu>
 	-->    
-	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
+	<p:outputLabel value="Benvenuto " />#{utente.getUsername()} 
+	<p:graphicImage value="../principale.jpg" />
+               
     <p:tabView effect="drop" effectDuration="normal">
 
 		<p:tab title="Home">
@@ -39,22 +41,22 @@
          <p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage value="/images/godfather/godfather1.jpg" />
-                <h:outputLabel for="nome" />Nome:
-                <h:outputText value="#{utente.utente.nome}" />
+                <h:outputLabel  for="nome" />Nome:
+                <h:outputText id="nome" value="#{utente.utente.nome}" />
                 <h:outputLabel for="cognome">Cognome:</h:outputLabel>
-                <h:outputText value="#{utente.utente.cognome}" />
-                <h:outputLabel for="residenza">Residenza:</h:outputLabel>
-                <h:outputText value="#{utente.utente.residenza}" />
-                <h:outputLabel for="data_nascita">Data di Nascita:</h:outputLabel>
-                <h:outputText value="#{utente.utente.dataNascita}" />
+                <h:outputText id="cognome" value="#{utente.utente.cognome}" />
+                <h:outputLabel  for="residenza">Residenza:</h:outputLabel>
+                <h:outputText id="residenza" value="#{utente.utente.residenza}" />
+                <h:outputLabel  for="data_nascita">Data di Nascita:</h:outputLabel>
+                <h:outputText id="data_nascita" value="#{utente.utente.dataNascita}" />
                 <h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
-                <h:outputText value="#{utente.utente.luogoNascita}" />
-                <h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
-                <h:outputText value="#{utente.utente.codiceFiscale}" />
-                <h:outputLabel for="telefono">Telefono:</h:outputLabel>
-                <h:outputText value="#{utente.utente.telefono}" />
-                <h:outputLabel for="email">Email:</h:outputLabel>
-                <h:outputText value="#{utente.utente.email}" />
+                <h:outputText id="luogo_nascita" value="#{utente.utente.luogoNascita}" />
+                <h:outputLabel  for="cf">Codice Fiscale:</h:outputLabel>
+                <h:outputText id = "cf" value="#{utente.utente.codiceFiscale}" />
+                <h:outputLabel  for="telefono">Telefono:</h:outputLabel>
+                <h:outputText id = "telefono" value="#{utente.utente.telefono}" />
+                <h:outputLabel  for="email">Email:</h:outputLabel>
+                <h:outputText id = "email" value="#{utente.utente.email}" />
                 <p><a href="modificaProfilo.xhtml">Modifica il tuo profilo</a></p>
             </h:panelGrid>
         </p:tab>
@@ -80,6 +82,9 @@
        		<p><a href=".../acquistaViaggio.xhtml">Cerca un Volo</a></p>
 			<p></p>
 			<p><a href=".../acquistaHotelViaggio.xhtml">Cerca un Hotel</a></p>
+			<p></p>
+			<p></p>
+			<p><a href=".../acquistaEscursione.xhtml">Cerca un Escursione</a></p>
 			<p></p>
 		</h:panelGrid>
 		
@@ -123,17 +128,17 @@
 		        <p:column id="aereoAndata" filterBy="aereoAndata"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.aereoAndata.getData()}" />  
+		            <h:outputText value="#{pac.aereoAndata.data}" />  
 		        </p:column>   
 		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
 		                headerText="aereo Ritorno" footerText="aereoRItorno"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.aereoRitorno.getData()}" />  
+		            <h:outputText value="#{pac.aereoRitorno.data}" />  
 		        </p:column> 
 		        <p:column id="hotel" filterBy="hotel"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.hotel.getNome()}" />  
+		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
   
 		        	 </p:dataTable>
@@ -167,17 +172,17 @@
 		        <p:column id="aereoAndata" filterBy="aereoAndata"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.aereoAndata.getData()}" />  
+		            <h:outputText value="#{pacV.aereoAndata.data}" />  
 		        </p:column>   
 		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
 		                headerText="aereo Ritorno" footerText="aereoRitorno"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.aereoRitorno.getData()}" />  
+		            <h:outputText value="#{pacV.aereoRitorno.data}" />  
 		        </p:column> 
 		        <p:column id="hotel" filterBy="hotel"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{paVc.hotel.getNome}" />  
+		            <h:outputText value="#{pacV.hotel.nome}" />  
 		        </p:column> 
   
 		        	 </p:dataTable>  

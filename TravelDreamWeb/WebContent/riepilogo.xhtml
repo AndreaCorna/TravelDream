@@ -10,21 +10,21 @@
 <h:form>
 		<p:panel header="Riepilogo Creazione">
 			<h:panelGrid columns="3" id="riepilogo">
-                <h:outputLabel for="nome" />Destinazione:
+                <h:outputLabel  />Destinazione:
                 <h:outputText value="#{viaggio.viaggio.aereoAndata.cittaAtterraggio}" />
-                <h:outputLabel for="andataAerei" />Aerei di Andata:
+                <h:outputLabel />Aerei di Andata:
 				<p:dataList value="#{viaggio.viaggio.aereoAndata}" var="aereo" itemType="circle">  
    				 	Aereo numero #{aereo.id}, partenza il #{aereo.data}, da #{aereo.cittaDecollo}  
 				</p:dataList>
-				<h:outputLabel for="andataRitorno" />Aerei di Ritorno:
+				<h:outputLabel  />Aerei di Ritorno:
 				<p:dataList value="#{viaggio.viaggio.aereoRitorno}" var="aereo" itemType="circle">  
    				 	Aereo numero #{aereo.id}, partenza il #{aereo.data}, da #{aereo.cittaDecollo}   
 				</p:dataList>  
-				<h:outputLabel for="hotel" />Hotel:
+				<h:outputLabel  />Hotel:
 				<p:dataList value="#{viaggio.viaggio.hotel}" var="hotel" itemType="circle">  
    				 	#{hotel.id}, #{hotel.citta}, #{hotel.camereDisponibili}  
 				</p:dataList>  
-				<h:outputLabel for="escursioni" />Escursioni:
+				<h:outputLabel  />Escursioni:
 				<p:dataList value="#{pacchetto.pacchetto.escursioni}" var="escur" itemType="circle">  
    				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
 				</p:dataList>

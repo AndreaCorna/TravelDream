@@ -65,26 +65,27 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	   	List<AereoDTO> listaAerei = convertListaAereiToDTO(aereiDB);
     	return listaAerei;
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<HotelDTO> getListaHotel(String destinazione, Date dataPartenza, Date dataFine ){
-		List<Hotel> hotels = em.createNamedQuery("SELECT a FROM Hotel a WHERE a.citta =:nome and a.dataInizio =:startDate and a.dataFine =:endDate ", Hotel.class)
+	public List<HotelDTO> getListaHotel(String destinazione){
+		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.camere_Disponibili > 0")
 				.setParameter("nome", destinazione)
-			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
-			    .setParameter("endDate", dataFine)
-				.getResultList();
+			    .getResultList();
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
-		List<Escursione> escursioniDB = em.createNamedQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.dataInizio =:startDate", Escursione.class)
+		List<Escursione> escursioni = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.data =:startDate")
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .getResultList();
-	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
+	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioni);
     	return listaEscursioni;
 	}
 	
@@ -104,47 +105,49 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date partenza) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.data = startDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate")
 			    .setParameter("nome", cittaDecollo)
-			    .setParameter("startDate", partenza)
+			    .setParameter("startDate", partenza, TemporalType.TIMESTAMP)
 			    .getResultList();
 		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita) {
 		
 		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
-		if (modalita == 1|| modalita == 3||modalita == 2||modalita == 7||modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		if ((modalita == 1)|| (modalita == 3)||(modalita == 2)||(modalita == 7)||(modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
 			nuovoViaggio.setData(aereiAndata.getData());
 			nuovoViaggio.setAereo1(aereiAndata);
 				
 		}
-		if (modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		if ((modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
 			nuovoViaggio.setAereo2(aereiRitorno);
 			
 		}
-		if(modalita == 6||modalita == 4||modalita == 2|| modalita == 7||modalita == 9||modalita == 11)
+		if((modalita == 6)||(modalita == 4)||(modalita == 2)||( modalita == 7)||(modalita == 9)||(modalita == 11))
 		{
 			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
 			
 			nuovoViaggio.setEscursioni(escursioni);
+			nuovoViaggio.setData(viaggio.getEscursioni().get(0).getData());
 			
 		}
 		
-		if(modalita == 5||modalita == 3||modalita == 4||modalita == 7||modalita ==10||modalita ==11){
+		if((modalita == 5)||(modalita == 3)||(modalita == 4)||(modalita == 7)||(modalita ==10)||(modalita ==11)){
 			Hotel hotel = convertHotel(viaggio.getHotel());
 			
 			nuovoViaggio.setHotel(hotel);
-			nuovoViaggio.setDataCheckInHotel(hotel.getDataCheckIn());
-			nuovoViaggio.setDataCheckOutHotel(hotel.getDataCheckOut());
+			nuovoViaggio.setData(viaggio.getHotel().getDataInizio());
+			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
+			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
 			
 			
 		}
@@ -177,13 +180,13 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	}
 	
 	private List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista){
-		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
+		ArrayList<AereoDTO> listaAereiRitorno = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
 			{	AereoDTO nuovo = convertToDTO(lista.get(i));
-				listaAereiAndata.add(nuovo);
+			listaAereiRitorno.add(nuovo);
 			}
 		}
-		List<AereoDTO> aerei = listaAereiAndata;
+		List<AereoDTO> aerei = listaAereiRitorno;
 		return aerei;
 	}
 	private List<AereoDTO> convertListaAereiToDTO(List<Aereo> lista){
@@ -290,13 +293,12 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			return escursioni;
 		}
 		
-		private Hotel convertHotel(HotelDTO lista){
+		private Hotel convertHotel(HotelDTO hotel){
 			Hotel listaHotel = new Hotel();
-				Hotel nuovo = em.find(Hotel.class, lista.getId());
+				Hotel nuovo = em.find(Hotel.class, hotel.getId());
 				listaHotel = nuovo;
 			
-			Hotel hotel = listaHotel;
-			return hotel;
+			return listaHotel;
 		}
 		
 		private Aereo convertAereiAndata(AereoDTO aereoAndata){

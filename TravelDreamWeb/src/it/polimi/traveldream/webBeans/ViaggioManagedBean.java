@@ -74,7 +74,7 @@ public class ViaggioManagedBean {
 	
 	private AereoDTO aereoAndata;
 	
-	private HotelDTO albergo;
+	private HotelDTO hotel;
 	
 	private AereoDTO aereoRitorno;
 	
@@ -98,7 +98,7 @@ public class ViaggioManagedBean {
 	
 	
 	public AereoDTO getAereoRitorno() {
-		return aereoAndata;
+		return aereoRitorno;
 	}
 	
 
@@ -106,8 +106,8 @@ public class ViaggioManagedBean {
 		return aereoAndata;
 	}
 	
-	public HotelDTO getAlbergo() {
-		return albergo;
+	public HotelDTO getHotel() {
+		return hotel;
 	}
 	
 	public EscursioneDTO getEscursione(){
@@ -125,7 +125,7 @@ public class ViaggioManagedBean {
 	@PostConstruct
 	public void init(){
 		aereoAndata = new AereoDTO();
-		albergo = new HotelDTO();
+		hotel = new HotelDTO();
 		viaggio = new Prenotazione_ViaggioDTO();
 		aereoRitorno = new AereoDTO();
 		escursione = new EscursioneDTO();
@@ -148,7 +148,7 @@ public class ViaggioManagedBean {
 		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno);
 		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
 		
-		return "mostraAereiScelti?faces-redirect=true";
+		return "mostraAereiSceltiRitorno?faces-redirect=true";
 	}
 	
 	public String passaAHotel(){
@@ -157,13 +157,11 @@ public class ViaggioManagedBean {
 
 	public String aggiungiDestinazioneDateHotel(){
 		
-		String destinazione = albergo.getCitta().toLowerCase();
-		Date dataPartenza = albergo.getDataInizio();
-		Date dataFine = albergo.getDataInizio();
-		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataPartenza, dataFine);
+		String destinazione = hotel.getCitta().toLowerCase();
+		listaHotelDB = gestioneViaggio.getListaHotel(destinazione);
 		setDatiHotel(new HotelDataModel(listaHotelDB));
 		
-		return "home?faces-redirect=true";
+		return "mostraHotelScelti?faces-redirect=true";
 	}
 	
 	public String aggiungiDestinazioneDateEscursione(){
@@ -184,7 +182,7 @@ public class ViaggioManagedBean {
 			viaggio.setAereoRitorno(listaAereiRitorno.get(0));
 			modalita = 8;
 		}
-		else if(modalita == 0)
+		if(modalita == 0)
 			{
 			viaggio.setAereo(listaAereiAndata.get(0));
 			modalita = 1;
@@ -201,7 +199,7 @@ public class ViaggioManagedBean {
 	}
 	
 public String settaHotelScelto(int scelta){
-		
+		listaHotel.get(0).setDataInizio(hotel.getDataInizio());
 		viaggio.setHotel(listaHotel.get(0));
 		if(modalita == 0)
 			modalita = 5;
@@ -211,9 +209,9 @@ public String settaHotelScelto(int scelta){
 			modalita = 10;
 		
 		if (scelta==1)
-			return "proseguiAcquisto?faces-redirect=true";
+			return "riepilogo?faces-redirect=true";
 		if (scelta==2)
-			return "acquistaRitorno?faces-redirect=true";
+			return "acquistaEscursione?faces-redirect=true";
 		else
 			return null;
 	}
@@ -235,9 +233,7 @@ public String settaEscursioneScelta(int scelta){
 		modalita = 11;
 	
 	if (scelta==1)
-		return "proseguiAcquisto?faces-redirect=true";
-	if (scelta==2)
-		return "acquistaRitorno?faces-redirect=true";
+		return "riepilogo?faces-redirect=true";
 	else
 		return null;
 }
@@ -251,7 +247,7 @@ public String acquistaViaggio(){
 }
 
 public String richiamaHome(){
-	return "home?faces-redirect=true";
+	return "user/index?faces-redirect=true";
 }
 	/*
 	public void mostraOfferte(){
