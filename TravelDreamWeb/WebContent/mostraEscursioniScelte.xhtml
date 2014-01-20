@@ -13,10 +13,10 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
+		<p:panel header="Se vuoi prenotare un escursione inserisci la Destinazione e la Data">
 		<h:form>
 			<p:panel header="Seleziona l'escursione di tuo gradimento ">
-				<h:panelGrid columns="3" id="aereiAndata">
+				<h:panelGrid columns="3" id="escursioni">
 				<p:dataTable id="datiEscursioni" var="escursione" value="#{viaggio.datiEscursioni}" paginator="true" rows="30"  
 		                 selection="#{viaggio.listaEscursioni}">  
 		  		<f:facet name="header">  

@@ -81,11 +81,11 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
-		List<Escursione> escursioniDB = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.dataInizio =:startDate")
+		List<Escursione> escursioni = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.data =:startDate")
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .getResultList();
-	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
+	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioni);
     	return listaEscursioni;
 	}
 	
@@ -113,35 +113,35 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return listaAerei;
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita) {
 		
 		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
-		if (modalita == 1|| modalita == 3||modalita == 2||modalita == 7||modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		if ((modalita == 1)|| (modalita == 3)||(modalita == 2)||(modalita == 7)||(modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
 			nuovoViaggio.setData(aereiAndata.getData());
 			nuovoViaggio.setAereo1(aereiAndata);
 				
 		}
-		if (modalita == 8||modalita == 9||modalita == 10||modalita == 11)
+		if ((modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
 			nuovoViaggio.setAereo2(aereiRitorno);
 			
 		}
-		if(modalita == 6||modalita == 4||modalita == 2|| modalita == 7||modalita == 9||modalita == 11)
+		if((modalita == 6)||(modalita == 4)||(modalita == 2)||( modalita == 7)||(modalita == 9)||(modalita == 11))
 		{
 			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
 			
 			nuovoViaggio.setEscursioni(escursioni);
-			nuovoViaggio.setData(viaggio.getData());
+			nuovoViaggio.setData(viaggio.getEscursioni().get(0).getData());
 			
 		}
 		
-		if(modalita == 5||modalita == 3||modalita == 4||modalita == 7||modalita ==10||modalita ==11){
+		if((modalita == 5)||(modalita == 3)||(modalita == 4)||(modalita == 7)||(modalita ==10)||(modalita ==11)){
 			Hotel hotel = convertHotel(viaggio.getHotel());
 			
 			nuovoViaggio.setHotel(hotel);

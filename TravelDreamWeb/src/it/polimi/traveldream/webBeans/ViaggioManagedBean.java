@@ -233,9 +233,7 @@ public String settaEscursioneScelta(int scelta){
 		modalita = 11;
 	
 	if (scelta==1)
-		return "proseguiAcquisto?faces-redirect=true";
-	if (scelta==2)
-		return "acquistaRitorno?faces-redirect=true";
+		return "riepilogo?faces-redirect=true";
 	else
 		return null;
 }
@@ -249,7 +247,7 @@ public String acquistaViaggio(){
 }
 
 public String richiamaHome(){
-	return "home?faces-redirect=true";
+	return "user/index?faces-redirect=true";
 }
 	/*
 	public void mostraOfferte(){
