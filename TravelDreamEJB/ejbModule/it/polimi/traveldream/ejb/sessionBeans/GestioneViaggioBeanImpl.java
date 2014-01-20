@@ -120,7 +120,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		if ((modalita == 1)|| (modalita == 3)||(modalita == 2)||(modalita == 7)||(modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
-			nuovoViaggio.setData(aereiAndata.getData());
+			
 			nuovoViaggio.setAereo1(aereiAndata);
 				
 		}
@@ -135,7 +135,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
 			
 			nuovoViaggio.setEscursioni(escursioni);
-			nuovoViaggio.setData(viaggio.getEscursioni().get(0).getData());
+			
 			
 		}
 		
@@ -143,14 +143,13 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			Hotel hotel = convertHotel(viaggio.getHotel());
 			
 			nuovoViaggio.setHotel(hotel);
-			nuovoViaggio.setData(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
 			
 			
 		}
 		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());
-		
+		nuovoViaggio.setData(new Date());
 		nuovoViaggio.setUtente(utente);
 		em.persist(nuovoViaggio);
 		em.flush();
