@@ -15,7 +15,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="Aereo")
-@NamedQuery(name="Aereo.findAll", query="SELECT a FROM Aereo a")
+@NamedQueries({
+	@NamedQuery(name="Aereo.findAll", query="SELECT a FROM Aereo a") ,
+	@NamedQuery(name="Aereo.findValidi", query="SELECT a FROM Aereo a WHERE a.valido=1")
+})
 public class Aereo implements Serializable {
 	private static final long serialVersionUID = 1L;
 

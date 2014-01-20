@@ -59,7 +59,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAerei() {
-		List<Aereo> aereiDB = em.createNamedQuery("Aereo.findAll", Aereo.class).getResultList();
+		List<Aereo> aereiDB = em.createNamedQuery("Aereo.findValidi",Aereo.class).getResultList();
 	   	List<AereoDTO> listaAerei = convertListaAereiToDTO(aereiDB);
     	return listaAerei;
 	}
@@ -87,7 +87,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiAndata(String cittaAtterraggio, Date inizioValidita, Date fineValidita) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data BETWEEN :startDate AND :endDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.valido=1 and a.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", cittaAtterraggio)
 			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
@@ -100,7 +100,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date inizioValidita, Date fineValidita) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.data BETWEEN :startDate AND :endDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:nome and a.valido=1 and a.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", cittaDecollo)
 			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
