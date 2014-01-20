@@ -31,8 +31,9 @@ CREATE TABLE `Aereo` (
   `Data` datetime NOT NULL,
   `Posti_Disponibili` int(11) NOT NULL DEFAULT '0',
   `Costo` float NOT NULL DEFAULT '0',
+  `Valido` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21242 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21243 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `Aereo` (
 
 LOCK TABLES `Aereo` WRITE;
 /*!40000 ALTER TABLE `Aereo` DISABLE KEYS */;
-INSERT INTO `Aereo` VALUES (1,'Milano','Roma','2011-05-16 00:00:00',400,10),(2,'Roma','Milano','1998-03-04 00:00:00',100,10),(3,'cia','ciai','2013-12-08 00:00:00',20,20),(5,'Milano','Roma','2012-12-03 05:11:00',200,30),(8,'Milano','Roma','2011-01-18 00:00:00',15,12.2),(49,'Roma','Milano','2014-01-07 00:00:00',400,45),(56,'Roma','Milano','2014-01-01 00:00:00',100,14),(57,'Milano','Roma','2014-01-04 00:00:00',100,14),(59,'Roma','Bergamo','2013-12-10 00:00:00',200,59.9),(67,'milano','roma','2011-12-03 05:00:00',500,10),(100,'Milano','Roma','2014-02-01 00:00:00',250,12),(101,'Roma','Milano','2032-11-05 00:00:00',250,12),(21234,'Milano','Barcellona','2014-01-15 09:37:21',100,84),(21235,'Bergamo','Roma','2014-01-01 00:00:00',120,14),(21236,'Bergamo','Londra','2014-01-01 00:00:00',120,15),(21237,'Bergamo','Firenze','2014-01-25 00:00:00',150,14.2),(21238,'Barcellona','Stoccolma','2014-02-20 13:19:00',12,33.8),(21239,'Stoccolma','Parigi','2014-02-27 17:31:00',34,66.9),(21240,'Stoccolma','Parigi','2014-02-27 17:31:00',34,66.9),(21241,'Bergamo','Bari','2014-01-13 00:00:00',150,14);
+INSERT INTO `Aereo` VALUES (1,'Milano','Roma','2011-05-16 00:00:00',400,10,0),(2,'Roma','Milano','1998-03-04 00:00:00',100,10,1),(3,'cia','ciai','2013-12-08 00:00:00',20,20,1),(5,'Milano','Roma','2012-12-03 05:11:00',200,30,1),(8,'Milano','Roma','2011-01-18 00:00:00',15,12.2,1),(49,'Roma','Milano','2014-01-07 00:00:00',400,45,1),(56,'Roma','Milano','2014-01-01 00:00:00',100,14,1),(57,'Milano','Roma','2014-01-04 00:00:00',100,14,1),(59,'Roma','Bergamo','2013-12-10 00:00:00',200,59.9,1),(67,'milano','roma','2011-12-03 05:00:00',500,10,0),(100,'Milano','Roma','2014-02-01 00:00:00',250,12,1),(101,'Roma','Milano','2032-11-05 00:00:00',250,12,1),(21234,'Milano','Barcellona','2014-01-15 09:37:21',100,84,0),(21235,'Bergamo','Roma','2014-01-01 00:00:00',120,14,1),(21236,'Bergamo','Londra','2014-01-01 00:00:00',120,15,1),(21237,'Bergamo','Firenze','2014-01-25 00:00:00',150,14.2,1),(21238,'Barcellona','Stoccolma','2014-02-20 13:19:00',12,33.8,1),(21239,'Stoccolma','Parigi','2014-02-27 17:31:00',34,66.9,1),(21240,'Stoccolma','Parigi','2014-02-27 17:31:00',34,66.9,1),(21241,'Bergamo','Bari','2014-01-13 00:00:00',150,14,1),(21242,'Londra','Milano','2014-01-30 00:00:00',120,14,1);
 /*!40000 ALTER TABLE `Aereo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +120,7 @@ CREATE TABLE `Escursione` (
   `Prezzo` float NOT NULL,
   `Data` datetime NOT NULL,
   `Descrizione` varchar(500) NOT NULL,
+  `Valido` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=501 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,7 +131,7 @@ CREATE TABLE `Escursione` (
 
 LOCK TABLES `Escursione` WRITE;
 /*!40000 ALTER TABLE `Escursione` DISABLE KEYS */;
-INSERT INTO `Escursione` VALUES (1,'Roma',100,'2013-03-02 00:00:00','gita a roma come dico io'),(3,'milano',100,'2013-12-02 00:00:00','gita a milano'),(56,'Milano',14,'2014-01-02 00:00:00','Gita a milano'),(498,'Milano',12,'2013-12-12 00:00:00','gita al duomo'),(499,'Milano',14,'2014-01-10 00:00:00','OOOOO'),(500,'Bergamo',14,'2014-01-13 00:00:00','GIta sui colli bergamaschi');
+INSERT INTO `Escursione` VALUES (1,'Roma',100,'2013-03-02 00:00:00','gita a roma come dico io',0),(3,'milano',100,'2013-12-02 00:00:00','gita a milano',1),(56,'Milano',14,'2014-01-02 00:00:00','Gita a milano',0),(498,'Milano',12,'2013-12-12 00:00:00','gita al duomo',1),(499,'Milano',14,'2014-01-10 00:00:00','OOOOO',1),(500,'Bergamo',14,'2014-01-13 00:00:00','GIta sui colli bergamaschi',1);
 /*!40000 ALTER TABLE `Escursione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +247,7 @@ CREATE TABLE `Escursioni_in_Prenotazione_Pacchetto` (
 
 LOCK TABLES `Escursioni_in_Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Escursioni_in_Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Escursioni_in_Prenotazione_Pacchetto` VALUES (3,56),(4,56),(5,56),(6,56),(7,56),(8,56),(9,56),(10,56),(11,56),(12,56);
+INSERT INTO `Escursioni_in_Prenotazione_Pacchetto` VALUES (3,56),(4,56),(5,56),(6,56),(7,56),(8,56),(9,56),(10,56),(11,56),(12,56),(13,56),(14,56);
 /*!40000 ALTER TABLE `Escursioni_in_Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,6 +266,7 @@ CREATE TABLE `Pacchetto` (
   `id_Dipendente` varchar(45) NOT NULL,
   `Descrizione` varchar(500) NOT NULL,
   `Numero_Persone` int(11) NOT NULL,
+  `Valido` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `fk_Pacchetto_Dipendente1` (`id_Dipendente`),
   CONSTRAINT `fk_Pacchetto_Dipendente1` FOREIGN KEY (`id_Dipendente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE CASCADE
@@ -276,7 +279,7 @@ CREATE TABLE `Pacchetto` (
 
 LOCK TABLES `Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Pacchetto` DISABLE KEYS */;
-INSERT INTO `Pacchetto` VALUES (43,'milano','2013-01-01','2014-01-31','ciao','ciao',1),(54,'Milano','2004-01-12','2018-01-11','ciao','OOOOOOO',4),(56,'Milano','2013-12-31','2014-01-05','ciao','Pacchetto a milano',4),(57,'Milano','2005-01-12','2020-01-31','ciao','Prova autoincremento',3);
+INSERT INTO `Pacchetto` VALUES (43,'milano','2013-01-01','2014-01-31','ciao','ciao',1,0),(54,'Milano','2004-01-12','2018-01-11','ciao','OOOOOOO',4,1),(56,'Milano','2013-12-31','2014-01-05','ciao','Pacchetto a milano',4,0),(57,'Milano','2005-01-12','2020-01-31','ciao','Prova autoincremento',3,1);
 /*!40000 ALTER TABLE `Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +309,7 @@ CREATE TABLE `Condivisione` (
 
 LOCK TABLES `Condivisione` WRITE;
 /*!40000 ALTER TABLE `Condivisione` DISABLE KEYS */;
-INSERT INTO `Condivisione` VALUES ('cond54userciaodate11401','2014-01-13 21:00:54','ciao',8),('cond56userciaodate11400','2014-01-12 16:23:19','ciao',5),('cond56userciaodate11401','2014-01-13 14:09:30','ciao',6),('cond56userciaodate11402','2014-01-14 10:33:58','ciao',9),('cond56userutentedate11401','2014-01-20 13:18:48','utente',11),('cond57userciaodate11401','2014-01-13 18:08:07','ciao',7),('cond57userciaodate11402','2014-01-14 13:16:06','ciao',10),('prova','2013-05-08 00:00:00','ciao',1);
+INSERT INTO `Condivisione` VALUES ('','2014-01-20 20:12:32','ciao',14),('cond54userciaodate11401','2014-01-13 21:00:54','ciao',8),('cond56userciaodate11400','2014-01-12 16:23:19','ciao',5),('cond56userciaodate11401','2014-01-13 14:09:30','ciao',6),('cond56userciaodate11402','2014-01-14 10:33:58','ciao',9),('cond56userutentedate11401','2014-01-20 13:18:48','utente',11),('cond57userciaodate11401','2014-01-13 18:08:07','ciao',7),('cond57userciaodate11402','2014-01-14 13:16:06','ciao',10),('prova','2013-05-08 00:00:00','ciao',1);
 /*!40000 ALTER TABLE `Condivisione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -326,6 +329,7 @@ CREATE TABLE `Hotel` (
   `Costo_Giornaliero` float NOT NULL,
   `Data_Checkin` datetime DEFAULT NULL,
   `Data_Checkout` varchar(45) DEFAULT NULL,
+  `Valido` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -336,7 +340,7 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'Roma',1,'Ciao',5,0,NULL,NULL),(56,'Milano',14,'Hotel Milano',5,15,NULL,NULL),(100,'Milano',29,'HotelMilano',4,14,NULL,NULL),(101,'Milano',15,'HotelPdor',5,15,NULL,NULL),(102,'Ilio',50,'Hotel Ele',5,14,NULL,NULL),(103,'Bergamo',5,'HotelBergamo',1,14,NULL,NULL),(104,'Milano',14,'HotelProvaCamere',5,14,NULL,NULL);
+INSERT INTO `Hotel` VALUES (1,'Roma',1,'Ciao',5,0,NULL,NULL,1),(56,'Milano',14,'Hotel Milano',5,15,NULL,NULL,1),(100,'Milano',29,'HotelMilano',4,14,NULL,NULL,1),(101,'Milano',15,'HotelPdor',5,15,NULL,NULL,1),(102,'Ilio',50,'Hotel Ele',5,14,NULL,NULL,0),(103,'Bergamo',5,'HotelBergamo',1,14,NULL,NULL,1),(104,'Milano',14,'HotelProvaCamere',5,14,NULL,NULL,1);
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,7 +427,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
   CONSTRAINT `fk_Prenotazione_Hotel` FOREIGN KEY (`id_Hotel`) REFERENCES `Hotel` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_Prenotazione_Pacchetto_Pacchetto1` FOREIGN KEY (`id_Pacchetto`) REFERENCES `Pacchetto` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_Prenotazione_Utente_Registrato1` FOREIGN KEY (`id_Utente`) REFERENCES `Utente` (`Username`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +436,7 @@ CREATE TABLE `Prenotazione_Pacchetto` (
 
 LOCK TABLES `Prenotazione_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL),(6,'2014-01-13 14:09:27',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(7,'2014-01-13 18:07:59',56,57,56,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(8,'2014-01-13 21:00:48',56,57,56,'ciao',54,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(9,'2014-01-14 10:33:51',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(10,'2014-01-14 13:15:56',56,57,100,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(11,'2014-01-20 13:18:41',56,57,56,'utente',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(12,'2014-01-20 13:45:26',56,57,56,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00');
+INSERT INTO `Prenotazione_Pacchetto` VALUES (1,'2013-05-08 00:00:00',1,2,1,'ciao',43,NULL,NULL),(3,'2014-01-12 16:12:17',56,57,56,'ciao',56,NULL,NULL),(4,'2014-01-12 16:22:41',56,57,56,'ciao',56,NULL,NULL),(5,'2014-01-12 16:23:16',56,57,56,'ciao',56,NULL,NULL),(6,'2014-01-13 14:09:27',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(7,'2014-01-13 18:07:59',56,57,56,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(8,'2014-01-13 21:00:48',56,57,56,'ciao',54,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(9,'2014-01-14 10:33:51',56,57,56,'ciao',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(10,'2014-01-14 13:15:56',56,57,100,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(11,'2014-01-20 13:18:41',56,57,56,'utente',56,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(12,'2014-01-20 13:45:26',56,57,56,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(13,'2014-01-20 20:12:01',56,57,100,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00'),(14,'2014-01-20 20:12:01',56,57,100,'ciao',57,'2014-01-01 00:00:00','2014-01-04 00:00:00');
 /*!40000 ALTER TABLE `Prenotazione_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +464,7 @@ CREATE TABLE `Aereo_in_Pacchetto` (
 
 LOCK TABLES `Aereo_in_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Aereo_in_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Aereo_in_Pacchetto` VALUES (49,43),(21234,43),(1,54),(5,54),(8,54),(49,54),(56,54),(57,54),(67,54),(100,54),(21234,54),(56,56),(57,56),(1,57),(5,57),(8,57),(49,57),(56,57),(57,57),(67,57),(100,57),(21234,57);
+INSERT INTO `Aereo_in_Pacchetto` VALUES (49,43),(21234,43),(1,54),(5,54),(8,54),(49,54),(56,54),(57,54),(100,54),(21234,54),(56,56),(57,56),(1,57),(5,57),(8,57),(49,57),(56,57),(57,57),(100,57),(21234,57);
 /*!40000 ALTER TABLE `Aereo_in_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -488,7 +492,7 @@ CREATE TABLE `Escursione_in_Pacchetto` (
 
 LOCK TABLES `Escursione_in_Pacchetto` WRITE;
 /*!40000 ALTER TABLE `Escursione_in_Pacchetto` DISABLE KEYS */;
-INSERT INTO `Escursione_in_Pacchetto` VALUES (3,43),(498,43),(3,54),(56,54),(498,54),(56,56),(3,57),(56,57),(498,57),(499,57);
+INSERT INTO `Escursione_in_Pacchetto` VALUES (3,43),(498,43),(3,54),(498,54),(3,57),(498,57),(499,57);
 /*!40000 ALTER TABLE `Escursione_in_Pacchetto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -501,4 +505,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-20 13:54:46
+-- Dump completed on 2014-01-21  0:12:21
