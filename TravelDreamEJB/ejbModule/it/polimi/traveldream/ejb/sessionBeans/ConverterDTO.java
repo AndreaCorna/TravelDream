@@ -46,7 +46,7 @@ public class ConverterDTO {
 	
 	protected static HotelDTO convertToDTO(Hotel hotel){
 		HotelDTO nuovo = new HotelDTO();
-		//nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
+		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
 		nuovo.setId(hotel.getId());
 		nuovo.setCitta(hotel.getCitta());
 		nuovo.setNome(hotel.getNome());
@@ -66,6 +66,7 @@ public class ConverterDTO {
 		nuovo.setId(escursione.getId());
 		nuovo.setLuogo(escursione.getLuogo());
 		nuovo.setPrezzo(escursione.getPrezzo());
+		nuovo.setValido(escursione.getValido());
 		return nuovo;
 	}
 	

@@ -176,12 +176,12 @@ public class ComponenteManagedBean {
 	}
 	
 	public String eliminaHotel(){
-		
+		gestioneComp.eliminaHotel(hotel);
 		return "index?faces-redirect=true";
 	}
 	
 	public String eliminaEscursione(){
-		
+		gestioneComp.eliminaEscursione(escursione);
 		return "index?faces-redirect=true";
 	}
 	/**

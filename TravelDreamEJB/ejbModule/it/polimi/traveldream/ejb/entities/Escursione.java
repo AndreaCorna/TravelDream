@@ -15,7 +15,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name="Escursione")
-@NamedQuery(name="Escursione.findAll", query="SELECT e FROM Escursione e")
+@NamedQueries({
+	@NamedQuery(name="Escursione.findAll", query="SELECT e FROM Escursione e"),
+	@NamedQuery(name="Escursione.findValidi", query="SELECT e FROM Escursione e WHERE e.valido=1")
+})
+
 public class Escursione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,6 +39,9 @@ public class Escursione implements Serializable {
 	
 	@Column(name="Descrizione")
 	private String descrizione;
+	
+	@Column(name="Valido")
+	private byte valido;
 
 	public Escursione() {
 	}
@@ -85,6 +92,14 @@ public class Escursione implements Serializable {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public byte getValido() {
+		return valido;
+	}
+
+	public void setValido(byte valido) {
+		this.valido = valido;
 	}
 
 }
