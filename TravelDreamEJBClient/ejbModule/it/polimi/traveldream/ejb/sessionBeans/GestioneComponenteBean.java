@@ -87,8 +87,23 @@ public interface GestioneComponenteBean {
 	 */
 	void modificaEscursione(EscursioneDTO escursione);
 
-	
+	/**
+	 * Il metodo setta a 0 il bit di valido dell'aereo
+	 * @param aereo - aereo da eliminare
+	 */
 	void eliminaAereo(AereoDTO aereo);
+
+	/**
+	 * Il metodo setta a 0 il bit di valido dell'hotel
+	 * @param hotel - hotel da eliminare
+	 */
+	void eliminaHotel(HotelDTO hotel);
+
+	/**
+	 * Il metodo setta a 0 il bit di valido dell'escursione
+	 * @param escursione - escursione da eliminare
+	 */
+	void eliminaEscursione(EscursioneDTO escursione);
 
 	
 

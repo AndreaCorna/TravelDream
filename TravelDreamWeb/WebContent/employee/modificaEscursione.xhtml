@@ -34,7 +34,9 @@
 				
 			</h:panelGrid>
 			<p:commandButton value="Modifica" id="ajax"  update="regGrid"
-             action="#{componente.modificaEscursione()}" styleClass="ui-priority-primary"/>  
+             action="#{componente.modificaEscursione()}" styleClass="ui-priority-primary"/>
+             <p:commandButton value="Elimina" id="ajax1"  update="regGrid"
+             action="#{componente.eliminaEscursione()}" styleClass="ui-priority-primary"/>  
 			 <p><a href="index.xhtml">Torna alla homepage</a></p>
 		</p:panel>
 	</h:form>

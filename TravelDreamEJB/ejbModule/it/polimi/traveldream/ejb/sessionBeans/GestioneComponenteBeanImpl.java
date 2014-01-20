@@ -275,6 +275,23 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return andata & ritorno;
 	}
 
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void eliminaHotel(HotelDTO hotel) {
+		Hotel hotelDB = em.find(Hotel.class, hotel.getId());
+		hotelDB.setValido((byte)0);
+		em.merge(hotelDB);
+	}
+
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void eliminaEscursione(EscursioneDTO escursione) {
+		Escursione escursioneDB = em.find(Escursione.class, escursione.getId());
+		escursioneDB.setValido((byte)0);
+		em.merge(escursioneDB);
+		
+	}
+
 	
 	
 	
