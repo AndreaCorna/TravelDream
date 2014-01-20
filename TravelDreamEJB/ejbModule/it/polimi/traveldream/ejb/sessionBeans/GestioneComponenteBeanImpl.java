@@ -168,7 +168,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	
 	@Override
 	public void eliminaAereo(AereoDTO aereo) {
-		// TODO Auto-generated method stub
+		Aereo aereoDB = em.find(Aereo.class, aereo.getId());
+		aereoDB.setValido((byte)0);
+		em.merge(aereoDB);
 		
 	}
 /*	
