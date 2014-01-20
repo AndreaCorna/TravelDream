@@ -1,6 +1,5 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
@@ -16,8 +15,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.PersistenceContext;
 
 /**

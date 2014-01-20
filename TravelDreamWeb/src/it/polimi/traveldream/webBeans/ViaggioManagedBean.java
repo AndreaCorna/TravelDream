@@ -8,15 +8,11 @@ import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.dataModels.PacchettoDataModel;
-import it.polimi.traveldream.dataModels.PrenotazioneViaggioDataModel;
-import it.polimi.traveldream.dataModels.ViaggioDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
-import it.polimi.traveldream.ejb.dto.UtenteDTO;
-import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneViaggioBean;
 
 import javax.annotation.PostConstruct;

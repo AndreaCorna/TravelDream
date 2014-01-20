@@ -1,13 +1,10 @@
 package it.polimi.traveldream.webBeans;
 
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import it.polimi.traveldream.dataModels.PrenotazioneDataModel;
 import it.polimi.traveldream.dataModels.PrenotazioneViaggioDataModel;
-import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean;
@@ -16,7 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
 
 @ManagedBean(name="prenotazione")
 @SessionScoped

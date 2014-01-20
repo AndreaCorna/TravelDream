@@ -3,7 +3,6 @@ package it.polimi.traveldream.dataModels;
 import java.util.List;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
-import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 
 import javax.faces.model.ListDataModel;
 
