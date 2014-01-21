@@ -76,7 +76,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String citta) {
-		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.città =:nome and h.valido=1")
+		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.valido=1")
 			    .setParameter("nome", citta).getResultList();
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
@@ -178,13 +178,13 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
 				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
-				+ "AND p.hotel =:hotel and p.valido=1")
+				+ "AND p.hotel =:hotel and p.hotel.valido=1")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
 		List<Prenotazione_Pacchetto> prenotazioniViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p "
 				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
-				+ "AND p.hotel =:hotel and p.valido=1")
+				+ "AND p.hotel =:hotel and p.hotel.valido=1")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
