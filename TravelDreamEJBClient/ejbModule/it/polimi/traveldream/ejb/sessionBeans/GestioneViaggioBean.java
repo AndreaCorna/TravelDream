@@ -30,8 +30,9 @@ public interface GestioneViaggioBean {
 
 	public List<AereoDTO> aggiungiAereoViaggio(AereoDTO aereoAndata);
 
-	List<HotelDTO> getListaHotel(String destinazione);
-
 	void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita);
+
+	List<HotelDTO> getListaHotel(String destinazione, Date dataAndata,
+			Date dataRitorno);
 
 	}

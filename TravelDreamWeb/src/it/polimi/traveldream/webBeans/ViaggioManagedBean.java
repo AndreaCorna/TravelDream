@@ -154,7 +154,9 @@ public class ViaggioManagedBean {
 	public String aggiungiDestinazioneDateHotel(){
 		
 		String destinazione = hotel.getCitta().toLowerCase();
-		listaHotelDB = gestioneViaggio.getListaHotel(destinazione);
+		Date dataAndata = hotel.getDataInizio();
+		Date dataRitorno = hotel.getDataFine();
+		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataAndata, dataRitorno);
 		setDatiHotel(new HotelDataModel(listaHotelDB));
 		
 		return "mostraHotelScelti?faces-redirect=true";

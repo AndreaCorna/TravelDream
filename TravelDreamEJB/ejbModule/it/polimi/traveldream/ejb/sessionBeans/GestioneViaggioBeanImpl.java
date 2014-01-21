@@ -7,6 +7,7 @@ import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
 
@@ -63,19 +64,42 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<HotelDTO> getListaHotel(String destinazione){
-		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.camere_Disponibili > 0")
+	public List<HotelDTO> getListaHotel(String destinazione, Date dataAndata, Date dataRitorno){
+		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.valido = 1")
 				.setParameter("nome", destinazione)
 			    .getResultList();
+		for (int i = 0;i<hotels.size();i++)
+		{
+			if(!haCamereDisponibili(hotels.get(i),dataAndata, dataRitorno))
+					hotels.remove(i);
+		}
 		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
 		return listaHotels;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
+		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
+				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
+				+ "AND p.hotel =:hotel and p.valido=1")
+				.setParameter("hotel", hotel)
+				.setParameter("ritorno", ritorno)
+				.setParameter("andata",partenza).getResultList();
+		List<Prenotazione_Pacchetto> prenotazioniViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p "
+				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
+				+ "AND p.hotel =:hotel and p.valido=1")
+				.setParameter("hotel", hotel)
+				.setParameter("ritorno", ritorno)
+				.setParameter("andata",partenza).getResultList();
+		int camereOccupate = prenotazioniPac.size() + prenotazioniViaggi.size();
+		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
-		List<Escursione> escursioni = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.data =:startDate")
+		List<Escursione> escursioni = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.data =:startDate and a.valido= 1")
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .getResultList();
@@ -87,7 +111,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiAndata(String destinazione, Date andata) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate and a.valido = 1")
 			    .setParameter("nome", destinazione)
 			    .setParameter("startDate", andata, TemporalType.TIMESTAMP)
 			    .getResultList();
@@ -99,7 +123,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date partenza) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate and a.valido = 1")
 			    .setParameter("nome", cittaDecollo)
 			    .setParameter("startDate", partenza, TemporalType.TIMESTAMP)
 			    .getResultList();
