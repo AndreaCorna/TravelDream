@@ -62,6 +62,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void aggiungiEscursioneDB(EscursioneDTO escursione) {
 		Escursione nuovo = new Escursione(escursione);
+		nuovo.setValido((byte)1);
 		em.persist(nuovo);
 		em.flush();
 		nuovo = em.find(Escursione.class,nuovo.getId());

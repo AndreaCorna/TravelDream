@@ -108,6 +108,10 @@ public class PacchettoManagedBean {
 	
 	private float costo;
 	
+	private List<String> numeroPersone;
+	
+	private String numero;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -132,7 +136,14 @@ public class PacchettoManagedBean {
 		listaHotelDB = pacchetto.getHotels();
 		listaEscursioniDB = pacchetto.getEscursioni();
 		loadListaEscursioni();
-		
+		ArrayList<String> lista = new ArrayList<String>();
+		for(int i=1;i<=pacchetto.getNumeroPersone();i++){
+			Integer value = new Integer(i);
+			String numero = value.toString();
+			lista.add(numero);
+			
+		}
+		numeroPersone = lista;
 	}
 	
 	public void initModifica(String id){
@@ -771,9 +782,21 @@ public class PacchettoManagedBean {
 
 	public PacchettoDataModel getDatiPacchettiCasuali() {
 		return datiPacchettiCasuali;
+	public String getNumero() {
+		return numero;
 	}
 
 	public void setDatiPacchettiCasuali(PacchettoDataModel datiPacchettiCasuali) {
 		this.datiPacchettiCasuali = datiPacchettiCasuali;
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public List<String> getNumeroPersone() {
+		return numeroPersone;
+	}
+
+	public void setNumeroPersone(List<String> numeroPersone) {
+		this.numeroPersone = numeroPersone;
 	}
 }
