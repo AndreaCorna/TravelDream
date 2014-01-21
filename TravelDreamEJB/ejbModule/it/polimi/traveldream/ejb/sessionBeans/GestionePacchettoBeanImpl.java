@@ -132,12 +132,12 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto) {
+	public List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto, Integer value) {
 		ArrayList<Aereo> aerei = new ArrayList<Aereo>();
 		for(AereoDTO aereo:pacchetto.getAereiAndata()){
 			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
 			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
-					&& haPostiDisponibili(aereoDB,partenza,ritorno)){
+					&& haPostiDisponibili(aereoDB,partenza,ritorno,value)){
 				aerei.add(em.find(Aereo.class,aereo.getId()));
 			}
 		}
@@ -147,12 +147,12 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto) {
+	public List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto, Integer value) {
 		ArrayList<Aereo> aerei = new ArrayList<Aereo>();
 		for(AereoDTO aereo:pacchetto.getAereiRitorno()){
 			Aereo aereoDB = em.find(Aereo.class,aereo.getId());
 			if(isAfterPartenza(aereoDB, partenza) && isBeforeRitorno(aereoDB,ritorno) 
-					&& haPostiDisponibili(aereoDB,partenza,ritorno)){
+					&& haPostiDisponibili(aereoDB,partenza,ritorno,value)){
 				aerei.add(em.find(Aereo.class,aereo.getId()));
 			}
 		}
@@ -202,7 +202,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno){
+	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno,Integer value){
 		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE ( p.aereo1 =:nome AND p.aereo1.valido=1)"
 				+ " OR ( p.aereo2 =:nome AND p.aereo2.valido=1 ) "
 				+ "AND (p.aereo1.data BETWEEN :andata AND :ritorno OR p.aereo2.data BETWEEN :andata AND :ritorno)")
@@ -211,7 +211,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 				.setParameter("ritorno",ritorno).getResultList();
 		int postiOccupati = 0;
 		for(Prenotazione_Pacchetto prenotazione:listaPrenotazioniPac){
-			postiOccupati = postiOccupati + prenotazione.getPacchetto().getNumeroPersone();
+			postiOccupati = postiOccupati + prenotazione.getNumeroPersone();
 		}
 		List<Prenotazione_Viaggio> listaViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p WHERE ( p.aereo1 =:nome AND p.aereo1.valido=1)"
 				+ " OR ( p.aereo2 =:nome AND p.aereo2.valido=1 ) "
@@ -221,7 +221,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 				.setParameter("ritorno",ritorno).getResultList();
 		postiOccupati = postiOccupati + listaViaggi.size();
 		
-	return (aereo.getPosti_Disponibili()-postiOccupati)>0;
+	return (aereo.getPosti_Disponibili()-postiOccupati)>=value;
 	}
 	
 	@Override

@@ -33,6 +33,8 @@ public class Prenotazione_PacchettoDTO {
 	
 	private Date checkOutHotel;
 	
+	private int numeroPersone;
+	
 	public int getId() {
 		return id;
 	}
@@ -118,6 +120,14 @@ public class Prenotazione_PacchettoDTO {
 
 	public void setCheckOutHotel(Date checkOutHotel) {
 		this.checkOutHotel = checkOutHotel;
+	}
+
+	public int getNumeroPersone() {
+		return numeroPersone;
+	}
+
+	public void setNumeroPersone(int numeroPersone) {
+		this.numeroPersone = numeroPersone;
 	}
 	
 }

@@ -69,6 +69,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		nuova.setEscursioni(convertListaEscursioni(prenotazione.getEscursioni()));
 		nuova.setDataCheckInHotel(prenotazione.getCheckInHotel());
 		nuova.setDataCheckOutHotel(prenotazione.getCheckOutHotel());
+		nuova.setNumeroPersone(prenotazione.getNumeroPersone());
 		em.persist(nuova);
 		em.flush();
 		nuova = em.find(Prenotazione_Pacchetto.class, nuova.getId());
@@ -173,7 +174,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
 			nuovo.setUtente(convertToDTO(prenotazione.getUtente()));
 			nuovo.setPacchetto(convertToDTO(prenotazione.getPacchetto()));
-			
+			nuovo.setNumeroPersone(prenotazione.getNumeroPersone());
 			return nuovo;
 		}
 		

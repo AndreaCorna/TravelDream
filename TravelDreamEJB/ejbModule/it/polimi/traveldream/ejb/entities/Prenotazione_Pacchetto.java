@@ -73,6 +73,9 @@ public class Prenotazione_Pacchetto implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="Check_Out_Hotel")
 	private Date dataCheckOutHotel;
+	
+	@Column(name="NumeroPersone")
+	private int numeroPersone;
 
 	public Prenotazione_Pacchetto() {
 	}
@@ -177,6 +180,14 @@ public class Prenotazione_Pacchetto implements Serializable {
 
 	public void setDataCheckOutHotel(Date dataCheckOutHotel) {
 		this.dataCheckOutHotel = dataCheckOutHotel;
+	}
+
+	public int getNumeroPersone() {
+		return numeroPersone;
+	}
+
+	public void setNumeroPersone(int numeroPersone) {
+		this.numeroPersone = numeroPersone;
 	}
 
 }

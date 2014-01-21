@@ -99,18 +99,20 @@ public interface GestionePacchettoBean {
 	 * @param partenza - data di partenza della prenotazione
 	 * @param ritorno - data di rientro
 	 * @param pacchetto - pacchetto scelto dal cliente
+	 * @param value - numero di persone
 	 * @return la lista degli aerei
 	 */
-	List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto);
+	List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto, Integer value);
 
 	/**
 	 * Il metodo ritorna gli aerei di ritorno di un pacchetto che hanno posti disponibili tra le date indicate
 	 * @param partenza - data di partenza della prenotazione
 	 * @param ritorno - data di rientro
 	 * @param pacchetto - pacchetto scelto dal cliente
+	 * @param value - numero di persone
 	 * @return la lista degli aerei
 	 */
-	List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto);
+	List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto, Integer value);
 
 	/**
 	 * Il metodo ritorna gli hotel di un pacchetto che hanno posti disponibili tra le date indicate

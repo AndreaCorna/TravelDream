@@ -269,9 +269,6 @@ public class PacchettoManagedBean {
 			int diffInDays = (int)( (out.getTime() - in.getTime()) 
 	                 / (1000 * 60 * 60 * 24.0) );
 			costo = costo + prenotazione.getHotel().getCostoGiornaliero() * (diffInDays);
-			Integer value = new Integer(numero);
-			costo = costo * value.intValue();
-			prenotazione.setNumeroPersone(value.intValue());
 			return "riep&cond?faces-redirect=true";
 		}
 		return null;
@@ -520,8 +517,7 @@ public class PacchettoManagedBean {
 			return;
 		}
 		ArrayList<AereoDTO> listaAndata = new ArrayList<AereoDTO>();
-		Integer value = new Integer(numero);
-		List<AereoDTO> aereiPossibili = gestionePacchetto.getListaAereiAndataDisp(partenza, ritorno, pacchetto, value);
+		List<AereoDTO> aereiPossibili = gestionePacchetto.getListaAereiAndataDisp(partenza, ritorno, pacchetto);
 		for(AereoDTO aereo:aereiPossibili){
 			if((aereo.getData().after(partenza) || aereo.getData().equals(partenza)) && 
 					aereo.getData().before(ritorno)){
@@ -530,7 +526,7 @@ public class PacchettoManagedBean {
 		}
 		listaAereiAndataDB = listaAndata;
 		ArrayList<AereoDTO> listaRitorno = new ArrayList<AereoDTO>();
-		aereiPossibili = gestionePacchetto.getListaAereiRitornoDisp(partenza, ritorno, pacchetto, value);
+		aereiPossibili = gestionePacchetto.getListaAereiRitornoDisp(partenza, ritorno, pacchetto);
 		for(AereoDTO aereo:aereiPossibili){
 			if(aereo.getData().after(partenza) && 
 					(aereo.getData().before(ritorno) || aereo.getData().equals(ritorno))){
@@ -784,16 +780,18 @@ public class PacchettoManagedBean {
 		this.costo = costo;
 	}
 
+<<<<<<< HEAD
 	public PacchettoDataModel getDatiPacchettiCasuali() {
 		return datiPacchettiCasuali;
-	}
-	public String getNumero() {
-		return numero;
 	}
 
 	public void setDatiPacchettiCasuali(PacchettoDataModel datiPacchettiCasuali) {
 		this.datiPacchettiCasuali = datiPacchettiCasuali;
+=======
+	public String getNumero() {
+		return numero;
 	}
+
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
@@ -804,5 +802,6 @@ public class PacchettoManagedBean {
 
 	public void setNumeroPersone(List<String> numeroPersone) {
 		this.numeroPersone = numeroPersone;
+>>>>>>> branch_andrea
 	}
 }
