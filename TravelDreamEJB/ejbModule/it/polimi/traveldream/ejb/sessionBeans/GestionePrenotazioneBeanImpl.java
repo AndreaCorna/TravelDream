@@ -51,11 +51,17 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
     	
     }
 
+    /**
+     * getter della lista delle prenotazioni
+     */
 	@Override
 	public List<Prenotazione_PacchettoDTO> getPrenotazioni() {
 		return null;
 	}
 
+	/**
+	 * Metodo che si occupa data la prenotazione di costruire la prenotazione del pacchetto 
+	 */
 	@Override
 	public void inserisciPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione) {
 		Prenotazione_Pacchetto nuova = new Prenotazione_Pacchetto();
@@ -73,22 +79,11 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		em.flush();
 		nuova = em.find(Prenotazione_Pacchetto.class, nuova.getId());
 		prenotazione.setId(nuova.getId());
-		
 	}
 	
-	private List<Escursione> convertListaEscursioni(List<EscursioneDTO> lista){
-		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
-		for(int i=0;i<lista.size();i++){
-			Escursione nuova = new Escursione(lista.get(i));
-			listaEscursioni.add(nuova);
-		}
-		List<Escursione> escursioni = listaEscursioni;
-		return escursioni;
-	}
-	
-
-
-
+	/**
+	 * metodo che permette di recuperare le prenotazioni relative ai pacchetti prenotati dell'utente che richiama il metodo chiamante
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -102,6 +97,9 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		return listaUtenti;
 	}
 	
+	/**
+	 * metodo che permette di recuperare le prenotazioni relative ai viaggi prenotati dell'utente che richiama il metodo chiamante
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -119,6 +117,17 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 	/*
 	 * Metodi privati per la conversione di un oggetto prelevato dal database in un oggetto che verrà inviato alla view.
 	 */
+	
+	
+	private List<Escursione> convertListaEscursioni(List<EscursioneDTO> lista){
+		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
+		for(int i=0;i<lista.size();i++){
+			Escursione nuova = new Escursione(lista.get(i));
+			listaEscursioni.add(nuova);
+		}
+		List<Escursione> escursioni = listaEscursioni;
+		return escursioni;
+	}
 	
 	private List<Prenotazione_ViaggioDTO> convertListaUtentiOnlineViaggiToDTO(List<Prenotazione_Viaggio> lista, String idUtenteOnline){
 		ArrayList<Prenotazione_ViaggioDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_ViaggioDTO>();
@@ -152,7 +161,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			if(prenotazione.getEscursioni()!=null)
 				nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
 			if (prenotazione.getAereo1()!=null)
-				nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));                //CONTINUARE DA QUI
+				nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));               
 			if (prenotazione.getAereo2()!=null)
 				nuovo.setAereoRitorno(convertAereoToDTO(prenotazione.getAereo2()));
 			if (prenotazione.getHotel()!=null)
@@ -168,7 +177,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setData(prenotazione.getData());
 			nuovo.setCondivisioni(convertListaCondivisioniToDTO(prenotazione.getCondivisioni()));
 			nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
-			nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));                //CONTINUARE DA QUI
+			nuovo.setAereo(convertAereoToDTO(prenotazione.getAereo1()));             
 			nuovo.setAereoRitorno(convertAereoToDTO(prenotazione.getAereo2()));
 			nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
 			nuovo.setUtente(convertToDTO(prenotazione.getUtente()));
@@ -194,18 +203,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setValido(pacchetto.getValido());
 			return nuovo;
 		}
-		
-		/*private AereoDTO convertAereoRitornoToDTO(Aereo aereo){
-			AereoDTO nuovo = new AereoDTO();
-			nuovo.setCittaAtterraggio(aereo.getAtterraggio());
-			nuovo.setCittaDecollo(aereo.getDecollo());
-			nuovo.setCosto(aereo.getCosto());
-			nuovo.setData(aereo.getData());
-			nuovo.setId(aereo.getId());
-			nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
-			return nuovo;
-		}*/
-		
+
 		private AereoDTO convertAereoToDTO(Aereo aereo){
 			AereoDTO nuovo = new AereoDTO();
 			nuovo.setCittaAtterraggio(aereo.getAtterraggio());
@@ -303,20 +301,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			List<AereoDTO> aerei = listaAereiAndata;
 			return aerei;
 		}
-		/*
-		private List<AereoDTO> convertToDTO(Aereo lista){
-			ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
-			for(int i=0;i<lista.size();i++){
-					AereoDTO nuovo = convertToDTO(lista.get(i));
-					listaAereiAndata.add(nuovo);
 	
-			}
-			List<AereoDTO> aerei = listaAereiAndata;
-			return aerei;
-		}
-		*/
-
-		
 		private List<HotelDTO> convertListaHotelToDTO(List<Hotel> lista){
 			ArrayList<HotelDTO> listaHotel = new ArrayList<HotelDTO>();
 			for(int i=0;i<lista.size();i++){
@@ -337,13 +322,5 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setValido(escursione.getValido());
 			return nuovo;
 		}
-		/*
-		private List<PacchettoDTO> convertListaPacchettiToDTO(List<Pacchetto> lista){
-			ArrayList<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();
-			for (int i=0;i<lista.size();i++){
-				pacchetti.add(convertToDTO(lista.get(i)));
-			}
-			List<PacchettoDTO> listaPacchetti = pacchetti;
-			return listaPacchetti;
-		}*/
+
 }
