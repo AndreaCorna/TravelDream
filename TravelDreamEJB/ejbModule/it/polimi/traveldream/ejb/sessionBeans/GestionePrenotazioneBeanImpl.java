@@ -48,12 +48,11 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
      * Default constructor. 
      */
     public GestionePrenotazioneBeanImpl() {
-        // TODO Auto-generated constructor stub
+    	
     }
 
 	@Override
 	public List<Prenotazione_PacchettoDTO> getPrenotazioni() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

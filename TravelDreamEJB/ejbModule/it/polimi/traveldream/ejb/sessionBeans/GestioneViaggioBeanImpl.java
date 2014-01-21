@@ -44,23 +44,11 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
      * Default constructor. 
      */
     public GestioneViaggioBeanImpl() {
-        // TODO Auto-generated constructor stub
     }
 
-	@Override
-	public void prenotaViaggio() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAerei() {
-		List<Aereo> aereiDB = em.createNamedQuery("Aereo.findAll", Aereo.class).getResultList();
-	   	List<AereoDTO> listaAerei = convertListaAereiToDTO(aereiDB);
-    	return listaAerei;
-	}
-	
+    /**
+     * Metodo che dato il luogo in cui vi è l'hotel e la data di checkin e di checkout restituisce la lista di hotel che soddisfano la ricerca
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -77,6 +65,13 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return listaHotels;
 	}
 	
+	/**
+	 * metodo che permette di verificare dato un hotel se questo ha camere disponibili in un dato periodo
+	 * @param hotel
+	 * @param partenza
+	 * @param ritorno
+	 * @return true se l'hotel ha camere disponibili per il periodo dato in ingresso
+	 */
 	@SuppressWarnings("unchecked")
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
@@ -95,6 +90,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
 	}
 
+	/**
+	 * Metodo che preso in ingresso il luogo in cui il cliente vuole effettuare l'escursione e la data restituisce la lista di escursioni che soddisfano la ricerca
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -107,6 +105,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
     	return listaEscursioni;
 	}
 	
+	/**
+	 * Metodo che preso in ingresso la destinazione e la data del viaggio restituisce la lista di aerei che soddisfano la ricerca
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -119,6 +120,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return listaAerei;
 	}
 
+	/**
+	 * Metodo che preso in ingresso la destinazione e la data dell'aereo di ritorno restituisce la lista di aerei che soddisfano la ricerca
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -131,49 +135,37 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return listaAerei;
 	}
 	
-	
+	/**
+	 * metodo che data la tipologia del viaggio e il viaggio si occupa di creare il viaggio compilando i campi appropriati all'interno del database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita) {
+	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita)
+	{
 		
 		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
 		if ((modalita == 1)|| (modalita == 3)||(modalita == 2)||(modalita == 7)||(modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
-			
-			nuovoViaggio.setAereo1(aereiAndata);
-				
+			nuovoViaggio.setAereo1(aereiAndata);	
 		}
 		if ((modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
 			nuovoViaggio.setAereo2(aereiRitorno);
-			
 		}
 		if((modalita == 6)||(modalita == 4)||(modalita == 2)||( modalita == 7)||(modalita == 9)||(modalita == 11))
 		{
 			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
-			
 			nuovoViaggio.setEscursioni(escursioni);
-			
-			
 		}
 		
-		if((modalita == 5)||(modalita == 3)||(modalita == 4)||(modalita == 7)||(modalita ==10)||(modalita ==11)){
+		if((modalita == 5)||(modalita == 3)||(modalita == 4)||(modalita == 7)||(modalita ==10)||(modalita ==11))
+		{
 			Hotel hotel = convertHotel(viaggio.getHotel());
-			
 			nuovoViaggio.setHotel(hotel);
 			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
-			/*
-			List<HotelDTO> postiDisponibili = em.createQuery("SELECT c FROM Hotel c WHERE c.id =:idHotel")
-				    .setParameter("idHotel", viaggio.getHotel().getId())
-				    .getResultList();
-			em.createQuery("UPDATE Hotel SET camere_Disponibili =posti WHERE id = idHotel")
-		    .setParameter("idHotel", viaggio.getHotel().getId())
-		    .setParameter("posti", (postiDisponibili.get(0).getCamereDisponibili()-1))
-		    .getResultList();
-			*/
 		}
 		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());
 		nuovoViaggio.setData(new Date());
@@ -182,15 +174,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		em.flush();
 		nuovoViaggio = em.find(Prenotazione_Viaggio.class, nuovoViaggio.getId());
 		viaggio.setId(nuovoViaggio.getId());
-		
 	}
-	
-	@Override
-	public void mostraRiepilogo() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 	//ELENCO DEI CONVERTLISTA QUALCOSA TO DTO
 	private List<AereoDTO> convertListaAereiAndataToDTO(List<Aereo> lista){
@@ -211,15 +195,6 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			}
 		}
 		List<AereoDTO> aerei = listaAereiRitorno;
-		return aerei;
-	}
-	private List<AereoDTO> convertListaAereiToDTO(List<Aereo> lista){
-		ArrayList<AereoDTO> listaAerei = new ArrayList<AereoDTO>();
-		for(int i=0;i<lista.size();i++){
-			AereoDTO nuovo = convertToDTO(lista.get(i));
-			listaAerei.add(nuovo);
-		}
-		List<AereoDTO> aerei = listaAerei;
 		return aerei;
 	}
 	
@@ -280,17 +255,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		return nuovo;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> aggiungiAereoViaggio(AereoDTO aereoAndata) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data = startDate")
-			    .setParameter("nome", aereoAndata.getCittaAtterraggio())
-			    .setParameter("startDate", aereoAndata.getData())
-			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei);
-		return listaAerei;
-	}
+
 	/*
 	 * Metodi per la conversione di liste di oggetti del database
 	 */
