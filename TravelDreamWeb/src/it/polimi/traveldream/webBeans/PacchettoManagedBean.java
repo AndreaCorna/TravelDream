@@ -3,6 +3,7 @@ package it.polimi.traveldream.webBeans;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
@@ -79,6 +80,8 @@ public class PacchettoManagedBean {
 	
 	private PacchettoDataModel datiPacchetti;
 	
+	private PacchettoDataModel datiPacchettiCasuali;
+	
 	private SelectItem[] destinazioni;
 	
 	private DualListModel<String> listaSelezioneEscursioni;
@@ -145,6 +148,12 @@ public class PacchettoManagedBean {
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
 		filtraLista();
 		caricaDestinazioni();
+		Random random = new Random();
+		int high = listaPacchetti.size();
+		int numeroCasuale = random.nextInt(high)+ 0;
+		if (numeroCasuale==0)
+			numeroCasuale = 1;
+		datiPacchettiCasuali = new PacchettoDataModel(listaPacchetti.subList(numeroCasuale-1, numeroCasuale));
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
@@ -758,5 +767,13 @@ public class PacchettoManagedBean {
 
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}
+
+	public PacchettoDataModel getDatiPacchettiCasuali() {
+		return datiPacchettiCasuali;
+	}
+
+	public void setDatiPacchettiCasuali(PacchettoDataModel datiPacchettiCasuali) {
+		this.datiPacchettiCasuali = datiPacchettiCasuali;
 	}
 }
