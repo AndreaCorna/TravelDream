@@ -28,8 +28,7 @@
 	<p:graphicImage value="../immagini/principale.jpg" />
                
     <p:tabView effect="drop" effectDuration="normal">
-
-		   <p:tab title="Offerte Speciali">
+		 <p:tab title="Offerte Speciali">
         	<h:panelGrid columns="4" id="regOff">
     			<p:dataTable id="tabellaOff" var="pac" value="#{pacchetto.datiPacchettiCasuali}" widgetVar="tabellaOfferte"   
           			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
@@ -76,6 +75,7 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
  
 		
         </p:tab>
+		  
          <p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage value="/images/godfather/godfather1.jpg" />

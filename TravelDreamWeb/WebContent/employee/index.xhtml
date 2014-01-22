@@ -16,16 +16,49 @@
 	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
     	<p:graphicImage value="../immagini/principale.jpg" />
     	<p:tabView effect="drop" effectDuration="normal">
+		<p:tab title="Offerte Speciali">
+        	<h:panelGrid columns="4">
+    			<p:dataTable id="tabellaOffSpe" var="pac" value="#{pacchetto.datiPacchettiCasuali}" widgetVar="tabellaOfferte"   
+          			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
+          			  		selectionMode="single" >  
+  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value=" Benvenuto #{utente.getUsername()} 
+							acquista una delle nostre offerte speciali scelte per te e personalizzala come vuoi!!!" />  
+               		 		</p:outputPanel>  
+       			 </f:facet>  
+  
+		        <p:column id="dest"
+		                headerText="Destinazione" 
+		               >  
+		            <h:outputText value="#{pac.destinazione}" />  
+		        </p:column> 
+		        
+		        <p:column id="hotel"   
+		                headerText="Soggiorno presso " >  
+		            <h:outputText value="#{pac.hotels.get(0).nome}" />  
+		        </p:column>
+		        
+		        <p:column id="fine_Validita"   
+		                headerText="Puoi acquistare il pacchetto fino al " >  
+		            <h:outputText value="#{pac.fine_Validita}" />  
+		        </p:column> 
+		        
+		        <p:column id="descri" headerText="Descrizione"   >  
+		            <h:outputText value="#{pac.descrizione}" />  
+		        </p:column>  
+		        
+		        <p:column headerText="" style="width:24%" >  
+                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="ACQUISTALO SUBITO"/>
+         </p:column>  
+  
+		 </p:dataTable>  
+      	</h:panelGrid>
+      	</p:tab>
 		
-		<p:tab title="Home">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. 
-                In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, 
-                killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."></h:outputText>
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Profilo">
+		<p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage value="/images/godfather/godfather1.jpg" />
                 <h:outputLabel for="nome" />Nome:
