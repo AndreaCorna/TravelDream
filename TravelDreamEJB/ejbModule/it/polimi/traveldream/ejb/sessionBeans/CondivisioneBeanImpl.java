@@ -42,7 +42,7 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		Condivisione dato = em.find(Condivisione.class, link);
 		condivisione.setData(dato.getData());
 		condivisione.setLink(dato.getLink());
-		condivisione.setUtente(convertToDTO(dato.getUtente()));
+		condivisione.setUtente(ConverterDTO.convertToDTO(dato.getUtente()));
 		condivisione.setId_Prenotazione(dato.getPrenotazionePacchetto().getId());
 		return condivisione;
 		
@@ -59,17 +59,6 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		em.persist(nuova);
 	}
 
-	/**
-	 * Metodo privato che permette di convertire un entità Utente in un data trasfert object UtenteDTO
-	 * @param utente - entità da convertire
-	 * @return UtenteDTO 
-	 */
-	private UtenteDTO convertToDTO(Utente utente){
-		UtenteDTO nuovo = new UtenteDTO();
-		nuovo.setUsername(utente.getUsername());
-		nuovo.setEmail(utente.getEmail());
-		nuovo.setTelefono(utente.getTelefono());
-		return nuovo;
-	}
+	
 
 }

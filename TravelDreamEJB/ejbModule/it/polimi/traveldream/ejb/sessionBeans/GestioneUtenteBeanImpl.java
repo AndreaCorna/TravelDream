@@ -90,7 +90,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO() {
-		UtenteDTO userDTO = convertToDTO(getUtenteAttivo());
+		UtenteDTO userDTO = ConverterDTO.convertToDTO(getUtenteAttivo());
 		
 		return userDTO;
 		
@@ -99,7 +99,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO(String dipendente) {
 		Utente dip = em.find(Utente.class, dipendente);
-		return convertToDTO(dip);
+		return ConverterDTO.convertToDTO(dip);
 	}
 	
 	/*
@@ -124,7 +124,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
                 .getResultList();
     	ArrayList<UtenteDTO> utenti = new ArrayList<UtenteDTO>();
     	for(int i=0; i<utentiDB.size();i++){
-    		UtenteDTO user = convertToDTO(utentiDB.get(i));
+    		UtenteDTO user = ConverterDTO.convertToDTO(utentiDB.get(i));
     		utenti.add(user);
     	}
     	List<UtenteDTO> listaUtenti = utenti;
@@ -139,7 +139,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 			    .setParameter("nome", "UTENTE").getResultList();
     	ArrayList<UtenteDTO> utenti = new ArrayList<UtenteDTO>();
     	for(int i=0; i<utentiDB.size();i++){
-    		UtenteDTO user = convertToDTO(utentiDB.get(i));
+    		UtenteDTO user = ConverterDTO.convertToDTO(utentiDB.get(i));
     		utenti.add(user);
     	}
     	List<UtenteDTO> listaUtenti = utenti;
@@ -166,7 +166,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return context.getCallerPrincipal().getName();
     }
 
-    protected UtenteDTO convertToDTO(Utente utente) {
+   /* protected UtenteDTO convertToDTO(Utente utente) {
 		UtenteDTO dto = new UtenteDTO();
 		dto.setUsername(utente.getUsername());
 		dto.setTelefono(utente.getTelefono());
@@ -185,7 +185,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		nuovo.setNome(anagrafica.getNome());
 		nuovo.setResidenza(anagrafica.getResidenza());
 		return nuovo;
-	}
+	}*/
 
 
 

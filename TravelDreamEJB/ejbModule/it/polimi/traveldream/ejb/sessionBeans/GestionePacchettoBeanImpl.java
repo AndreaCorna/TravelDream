@@ -51,7 +51,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<PacchettoDTO> getListaPacchetti() {
 		List<Pacchetto> pacchettiDB = em.createNamedQuery("Pacchetto.findValidi", Pacchetto.class).getResultList();
-		List<PacchettoDTO> pacchetti = convertListaPacchettiToDTO(pacchettiDB);
+		List<PacchettoDTO> pacchetti = ConverterDTO.convertListaPacchettiToDTO(pacchettiDB);
 		return pacchetti;
 		
 	}
@@ -68,7 +68,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(){
 		List<Hotel> hotels = em.createNamedQuery("Hotel.findValidi", Hotel.class).getResultList();
-		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
+		List<HotelDTO> listaHotels = ConverterDTO.convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
 	
@@ -78,7 +78,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	public List<HotelDTO> getListaHotel(String citta) {
 		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.valido=1")
 			    .setParameter("nome", citta).getResultList();
-		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
+		List<HotelDTO> listaHotels = ConverterDTO.convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
 	
@@ -92,7 +92,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei, cittaAtterraggio);
+		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiAndataToDTO(aerei, cittaAtterraggio);
 		return listaAerei;
 	}
 
@@ -105,7 +105,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei, cittaDecollo);
+		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiRitornoToDTO(aerei, cittaDecollo);
 		return listaAerei;
 	}
 	
@@ -113,7 +113,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni() {
 		List<Escursione> escursioniDB = em.createNamedQuery("Escursione.findValidi", Escursione.class).getResultList();
-	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
+	   	List<EscursioneDTO> listaEscursioni = ConverterDTO.convertListaEscursioniToDTO(escursioniDB);
     	return listaEscursioni;
 	}
 
@@ -126,7 +126,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 			    .setParameter("startDate", inizioValidita, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineValidita, TemporalType.TIMESTAMP)
 			    .getResultList();
-		List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioniDB);
+		List<EscursioneDTO> listaEscursioni = ConverterDTO.convertListaEscursioniToDTO(escursioniDB);
     	return listaEscursioni;
 	}
 	
@@ -141,7 +141,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 				aerei.add(em.find(Aereo.class,aereo.getId()));
 			}
 		}
-		List<AereoDTO> listaAerei = convertListaAereiToDTO(aerei);
+		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiToDTO(aerei);
 		return listaAerei;
 	}
 	
@@ -156,7 +156,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 				aerei.add(em.find(Aereo.class,aereo.getId()));
 			}
 		}
-		List<AereoDTO> listaAerei = convertListaAereiToDTO(aerei);
+		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiToDTO(aerei);
 		return listaAerei;
 	}
 	
@@ -170,7 +170,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 				hotels.add(hotelDB);
 			}
 		}
-		List<HotelDTO> listaHotel = convertListaHotelToDTO(hotels);
+		List<HotelDTO> listaHotel = ConverterDTO.convertListaHotelToDTO(hotels);
 		return listaHotel;
 	}
 	
@@ -228,9 +228,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void creaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetto nuovoPacchetto = new Pacchetto();
-		List<Escursione> escursioni = covertListaEscursioni(pacchetto.getEscursioni());
-		List<Hotel> hotel = convertListaHotel(pacchetto.getHotels());
-		List<Aereo> aerei = convertListaAerei(pacchetto.getAereiAndata(),pacchetto.getAereiRitorno());
+		List<Escursione> escursioni = ConverterDTO.covertListaEscursioni(pacchetto.getEscursioni());
+		List<Hotel> hotel = ConverterDTO.convertListaHotel(pacchetto.getHotels());
+		List<Aereo> aerei = ConverterDTO.convertListaAerei(pacchetto.getAereiAndata(),pacchetto.getAereiRitorno());
 		Utente dipendente = em.find(Utente.class, context.getCallerPrincipal().getName());
 		nuovoPacchetto.setDescrizione(pacchetto.getDescrizione());
 		nuovoPacchetto.setDestinazione(pacchetto.getDestinazione());
@@ -261,9 +261,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetto modificato = em.find(Pacchetto.class, pacchetto.getId());
-		List<Escursione> escursioni = covertListaEscursioni(pacchetto.getEscursioni());
-		List<Hotel> hotel = convertListaHotel(pacchetto.getHotels());
-		List<Aereo> aerei = convertListaAerei(pacchetto.getAereiAndata(),pacchetto.getAereiRitorno());
+		List<Escursione> escursioni = ConverterDTO.covertListaEscursioni(pacchetto.getEscursioni());
+		List<Hotel> hotel = ConverterDTO.convertListaHotel(pacchetto.getHotels());
+		List<Aereo> aerei = ConverterDTO.convertListaAerei(pacchetto.getAereiAndata(),pacchetto.getAereiRitorno());
 		modificato.setDescrizione(pacchetto.getDescrizione());
 		modificato.setDestinazione(pacchetto.getDestinazione());
 		modificato.setEscursioni(escursioni);
@@ -288,7 +288,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 /*
  * Metodi privati per la conversione di un oggetto prelevato dal database in un oggetto che verrà inviato alla view.
  */
-	private AereoDTO convertToDTO(Aereo aereo){
+	/*private AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
 		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
 		nuovo.setCittaDecollo(aereo.getDecollo());
@@ -344,9 +344,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return nuovo;
 	}
 
-/*
+
  * Metodi per la conversione di liste di oggetti del database
- */
+ 
 	private List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
@@ -447,7 +447,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 
 	
 
-	
+	*/
 	
 
 	

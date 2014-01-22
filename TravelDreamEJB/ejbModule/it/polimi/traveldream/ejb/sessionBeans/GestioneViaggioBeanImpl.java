@@ -47,7 +47,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
     }
 
     /**
-     * Metodo che dato il luogo in cui vi è l'hotel e la data di checkin e di checkout restituisce la lista di hotel che soddisfano la ricerca
+     * Metodo che dato il luogo in cui vi ï¿½ l'hotel e la data di checkin e di checkout restituisce la lista di hotel che soddisfano la ricerca
      */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -61,7 +61,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			if(!haCamereDisponibili(hotels.get(i),dataAndata, dataRitorno))
 					hotels.remove(i);
 		}
-		List<HotelDTO> listaHotels = convertListaHotelToDTO(hotels);
+		List<HotelDTO> listaHotels = ConverterDTO.convertListaHotelToDTO(hotels);
 		return listaHotels;
 	}
 	
@@ -101,7 +101,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 				.setParameter("nome", destinazione)
 			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
 			    .getResultList();
-	   	List<EscursioneDTO> listaEscursioni = convertListaEscursioniToDTO(escursioni);
+	   	List<EscursioneDTO> listaEscursioni = ConverterDTO.convertListaEscursioniToDTO(escursioni);
     	return listaEscursioni;
 	}
 	
@@ -116,7 +116,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			    .setParameter("nome", destinazione)
 			    .setParameter("startDate", andata, TemporalType.TIMESTAMP)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiAndataToDTO(aerei);
+		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiAndataToDTO(aerei);
 		return listaAerei;
 	}
 
@@ -131,7 +131,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			    .setParameter("nome", cittaDecollo)
 			    .setParameter("startDate", partenza, TemporalType.TIMESTAMP)
 			    .getResultList();
-		List<AereoDTO> listaAerei = convertListaAereiRitornoToDTO(aerei);
+		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
 	}
 	
@@ -146,23 +146,23 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
 		if ((modalita == 1)|| (modalita == 3)||(modalita == 2)||(modalita == 7)||(modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
-			Aereo aereiAndata = convertAereiAndata(viaggio.getAereoAndata());
+			Aereo aereiAndata = em.find(Aereo.class,viaggio.getAereoAndata().getId());
 			nuovoViaggio.setAereo1(aereiAndata);	
 		}
 		if ((modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
-			Aereo aereiRitorno = convertAereiRitorno(viaggio.getAereoRitorno());
+			Aereo aereiRitorno = new Aereo(viaggio.getAereoRitorno());
 			nuovoViaggio.setAereo2(aereiRitorno);
 		}
 		if((modalita == 6)||(modalita == 4)||(modalita == 2)||( modalita == 7)||(modalita == 9)||(modalita == 11))
 		{
-			List<Escursione> escursioni = convertListaEscursioni(viaggio.getEscursioni());
+			List<Escursione> escursioni = ConverterDTO.convertListaEscursioni(viaggio.getEscursioni());
 			nuovoViaggio.setEscursioni(escursioni);
 		}
 		
 		if((modalita == 5)||(modalita == 3)||(modalita == 4)||(modalita == 7)||(modalita ==10)||(modalita ==11))
 		{
-			Hotel hotel = convertHotel(viaggio.getHotel());
+			Hotel hotel = em.find(Hotel.class, viaggio.getHotel().getId());
 			nuovoViaggio.setHotel(hotel);
 			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
@@ -175,7 +175,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovoViaggio = em.find(Prenotazione_Viaggio.class, nuovoViaggio.getId());
 		viaggio.setId(nuovoViaggio.getId());
 	}
-	
+	/*
 	//ELENCO DEI CONVERTLISTA QUALCOSA TO DTO
 	private List<AereoDTO> convertListaAereiAndataToDTO(List<Aereo> lista){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
@@ -256,9 +256,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	}
 
 
-	/*
+	
 	 * Metodi per la conversione di liste di oggetti del database
-	 */
+	 
 		private List<Escursione> convertListaEscursioni(List<EscursioneDTO> lista){
 			ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 			for(int i=0;i<lista.size();i++){
@@ -291,5 +291,5 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 				listaAerei = nuovo;
 			
 			return listaAerei;
-		}
+		}*/
 }

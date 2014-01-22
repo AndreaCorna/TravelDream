@@ -54,7 +54,7 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 			    .setParameter("nome", "DIPENDENTE").getResultList();
     	ArrayList<UtenteDTO> dipendenti = new ArrayList<UtenteDTO>();
     	for(int i=0; i<dipendentiDB.size();i++){
-    		UtenteDTO user = convertToDTO(dipendentiDB.get(i));
+    		UtenteDTO user = ConverterDTO.convertToDTO(dipendentiDB.get(i));
     		dipendenti.add(user);
     	}
     	List<UtenteDTO> listaDip = dipendenti;

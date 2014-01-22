@@ -71,7 +71,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		nuova.setHotel(em.find(Hotel.class,prenotazione.getHotel().getId()));
 		nuova.setPacchetto(em.find(Pacchetto.class,prenotazione.getPacchetto().getId()));
 		nuova.setUtente(em.find(Utente.class, prenotazione.getUtente().getUsername()));
-		nuova.setEscursioni(convertListaEscursioni(prenotazione.getEscursioni()));
+		nuova.setEscursioni(ConverterDTO.convertListaEscursioni(prenotazione.getEscursioni()));
 		nuova.setDataCheckInHotel(prenotazione.getCheckInHotel());
 		nuova.setDataCheckOutHotel(prenotazione.getCheckOutHotel());
 		nuova.setNumeroPersone(prenotazione.getNumeroPersone());
@@ -93,7 +93,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		List<Prenotazione_Pacchetto> prenotazioniUtente = em.createQuery("SELECT a FROM Prenotazione_Pacchetto a WHERE a.utente =:nome")
 			    .setParameter("nome", utenteOnline)
 			    .getResultList();
-		List<Prenotazione_PacchettoDTO> listaUtenti = convertListaUtentiOnlineToDTO(prenotazioniUtente, utenteOnline.getUsername());
+		List<Prenotazione_PacchettoDTO> listaUtenti = ConverterDTO.convertListaUtentiOnlineToDTO(prenotazioniUtente, utenteOnline.getUsername());
 		return listaUtenti;
 	}
 	
@@ -109,7 +109,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		List<Prenotazione_Viaggio> prenotazioniUtente = em.createQuery("SELECT a FROM Prenotazione_Viaggio a WHERE a.utente =:nome")
 			    .setParameter("nome", utenteOnline)
 			    .getResultList();
-		List<Prenotazione_ViaggioDTO> listaUtenti = convertListaUtentiOnlineViaggiToDTO(prenotazioniUtente, utenteOnline.getUsername());
+		List<Prenotazione_ViaggioDTO> listaUtenti = ConverterDTO.convertListaUtentiOnlineViaggiToDTO(prenotazioniUtente, utenteOnline.getUsername());
 		return listaUtenti;
 	}
 
@@ -128,7 +128,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		List<Escursione> escursioni = listaEscursioni;
 		return escursioni;
 	}
-	
+	/*
 	private List<Prenotazione_ViaggioDTO> convertListaUtentiOnlineViaggiToDTO(List<Prenotazione_Viaggio> lista, String idUtenteOnline){
 		ArrayList<Prenotazione_ViaggioDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_ViaggioDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -322,5 +322,5 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			nuovo.setValido(escursione.getValido());
 			return nuovo;
 		}
-
+*/
 }

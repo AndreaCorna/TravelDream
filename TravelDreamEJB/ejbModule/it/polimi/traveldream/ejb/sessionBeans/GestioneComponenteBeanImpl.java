@@ -166,6 +166,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 	
 	@Override
+	@RolesAllowed({"DIPENDENTE"})
 	public void eliminaAereo(AereoDTO aereo) {
 		Aereo aereoDB = em.find(Aereo.class, aereo.getId());
 		aereoDB.setValido((byte)0);
@@ -173,58 +174,26 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		aggiornaPacchetti(aereoDB);
 		
 	}
-/*	
-	private AereoDTO convertToDTO(Aereo aereo){
-		AereoDTO nuovo = new AereoDTO();
-		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
-		nuovo.setCittaDecollo(aereo.getDecollo());
-		nuovo.setCosto(aereo.getCosto());
-		nuovo.setData(aereo.getData());
-		nuovo.setId(aereo.getId());
-		nuovo.setPostiDisponibili(aereo.getPosti_Disponibili());
-		return nuovo;
-	}
 	
-	private HotelDTO convertToDTO(Hotel hotel){
-		HotelDTO nuovo = new HotelDTO();
-		//nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
-		nuovo.setId(hotel.getId());
-		nuovo.setCitta(hotel.getCitta());
-		nuovo.setNome(hotel.getNome());
-		Integer value = new Integer(hotel.getStelle());
-		nuovo.setRating(value);
-		nuovo.setCostoGiornaliero(hotel.getCostoGiornaliero());
-		nuovo.setDataFine(hotel.getDataCheckOut());
-		nuovo.setDataInizio(hotel.getDataCheckIn());
-		ArrayList<CameraDTO> camere = new ArrayList<CameraDTO>();
-		for(Camera camera:hotel.getCamere()){
-			camere.add(ConverterDTO.convertToDTO(camera));
-		}
-		nuovo.setCamere(camere);
-		return nuovo;
-	}
-	
-	private CameraDTO convertToDTO(Camera camera){
-		CameraDTO nuovo = new CameraDTO();
-		nuovo.setCosto(camera.getCosto());
-		nuovo.setData_Checkin(camera.getData_Checkin());
-		nuovo.setData_Checkout(camera.getData_Checkout());
-		nuovo.setId(camera.getId());
-		nuovo.setOccupata(camera.getOccupata());
-		nuovo.setPosti(camera.getPosti());
-		return nuovo;
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void eliminaHotel(HotelDTO hotel) {
+		Hotel hotelDB = em.find(Hotel.class, hotel.getId());
+		hotelDB.setValido((byte)0);
+		em.merge(hotelDB);
+		aggiornaPacchetti(hotelDB);
 	}
 
-	private EscursioneDTO convertToDTO(Escursione escursione){
-		EscursioneDTO nuovo = new EscursioneDTO();
-		nuovo.setData(escursione.getData());
-		nuovo.setDescrizione(escursione.getDescrizione());
-		nuovo.setId(escursione.getId());
-		nuovo.setLuogo(escursione.getLuogo());
-		nuovo.setPrezzo(escursione.getPrezzo());
-		return nuovo;
+	@Override
+	@RolesAllowed({"DIPENDENTE"})
+	public void eliminaEscursione(EscursioneDTO escursione) {
+		Escursione escursioneDB = em.find(Escursione.class, escursione.getId());
+		escursioneDB.setValido((byte)0);
+		em.merge(escursioneDB);
+		aggiornaPacchetti(escursioneDB);
+		
 	}
-	*/
+
 	@SuppressWarnings("unchecked")
 	private void aggiornaPacchetti(Aereo aereo){
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.aerei) a WHERE a=:nome")
@@ -292,24 +261,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return andata & ritorno;
 	}
 
-	@Override
-	@RolesAllowed({"DIPENDENTE"})
-	public void eliminaHotel(HotelDTO hotel) {
-		Hotel hotelDB = em.find(Hotel.class, hotel.getId());
-		hotelDB.setValido((byte)0);
-		em.merge(hotelDB);
-		aggiornaPacchetti(hotelDB);
-	}
-
-	@Override
-	@RolesAllowed({"DIPENDENTE"})
-	public void eliminaEscursione(EscursioneDTO escursione) {
-		Escursione escursioneDB = em.find(Escursione.class, escursione.getId());
-		escursioneDB.setValido((byte)0);
-		em.merge(escursioneDB);
-		aggiornaPacchetti(escursioneDB);
-		
-	}
+	
 
 	
 	

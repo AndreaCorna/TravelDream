@@ -10,15 +10,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.polimi.traveldream.ejb.dto.AereoDTO;
+import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
+import it.polimi.traveldream.ejb.entities.Condivisione;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
 import it.polimi.traveldream.ejb.entities.Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 public class ConverterDTO {
@@ -26,8 +32,8 @@ public class ConverterDTO {
 	@PersistenceContext
     private static EntityManager em;
 	
-	@EJB
-	private static GestioneUtenteBean gestioneUtente;
+	
+	private static GestioneUtenteBean gestioneUtente = new GestioneUtenteBeanImpl();
 	
 	@Resource
 	private EJBContext context;
@@ -76,7 +82,7 @@ public class ConverterDTO {
 		dto.setTelefono(dipendente.getTelefono());
 		dto.setEmail(dipendente.getEmail());
 		dto.setCodiceFiscale(dipendente.getAnagrafica().getCf());
-		Anagrafica anag = em.find(Anagrafica.class, dipendente.getAnagrafica().getCf());
+		Anagrafica anag = dipendente.getAnagrafica();
 		dto = convertToAnagraficaDTO(anag,dto);
 		return dto;
 	}
@@ -103,7 +109,7 @@ public class ConverterDTO {
 		nuovo.setEscursioni(convertListaEscursioniToDTO(pacchetto.getEscursioni()));
 		nuovo.setAereiAndata(convertListaAereiAndataToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
 		nuovo.setAereiRitorno(convertListaAereiRitornoToDTO(pacchetto.getAerei(), pacchetto.getDestinazione()));
-		UtenteDTO dipendente = gestioneUtente.getUtenteDTO(pacchetto.getDipendente().getUsername());
+		UtenteDTO dipendente = convertToDTO(pacchetto.getDipendente());
 		nuovo.setDipendente(dipendente);
 		nuovo.setNumeroPersone(pacchetto.getNumeroPersone());
 		nuovo.setValido(pacchetto.getValido());
@@ -207,6 +213,114 @@ public class ConverterDTO {
 		}
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
+	}
+	
+	protected static List<Escursione> convertListaEscursioni(List<EscursioneDTO> lista){
+		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
+		for(int i=0;i<lista.size();i++){
+			Escursione nuova = new Escursione(lista.get(i));
+			listaEscursioni.add(nuova);
+		}
+		List<Escursione> escursioni = listaEscursioni;
+		return escursioni;
+	}
+	
+	protected static List<Prenotazione_ViaggioDTO> convertListaUtentiOnlineViaggiToDTO(List<Prenotazione_Viaggio> lista, String idUtenteOnline){
+		ArrayList<Prenotazione_ViaggioDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_ViaggioDTO>();
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).getUtente().getUsername().toLowerCase().equals(idUtenteOnline.toLowerCase()))
+			{	Prenotazione_ViaggioDTO nuovo = convertToDTO(lista.get(i));
+				listaPacchettiPrenotati.add(nuovo);
+			}
+		}
+		List<Prenotazione_ViaggioDTO> prenotazioni = listaPacchettiPrenotati;
+		return prenotazioni;
+	}
+	
+	protected static List<Prenotazione_PacchettoDTO> convertListaUtentiOnlineToDTO(List<Prenotazione_Pacchetto> lista, String idUtenteOnline){
+		ArrayList<Prenotazione_PacchettoDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_PacchettoDTO>();
+		for(int i=0;i<lista.size();i++){
+			if(lista.get(i).getUtente().getUsername().toLowerCase().equals(idUtenteOnline.toLowerCase()))
+			{	Prenotazione_PacchettoDTO nuovo = convertToDTO(lista.get(i));
+				listaPacchettiPrenotati.add(nuovo);
+			}
+		}
+		List<Prenotazione_PacchettoDTO> prenotazioni = listaPacchettiPrenotati;
+		return prenotazioni;
+	}
+	
+	protected static Prenotazione_ViaggioDTO convertToDTO(Prenotazione_Viaggio prenotazione){
+		Prenotazione_ViaggioDTO nuovo = new Prenotazione_ViaggioDTO();
+		nuovo.setId(prenotazione.getId());
+		if (prenotazione.getData()!=null)
+			nuovo.setData(prenotazione.getData());
+		if(prenotazione.getEscursioni()!=null)
+			nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
+		if (prenotazione.getAereo1()!=null)
+			nuovo.setAereo(convertToDTO(prenotazione.getAereo1()));               
+		if (prenotazione.getAereo2()!=null)
+			nuovo.setAereoRitorno(convertToDTO(prenotazione.getAereo2()));
+		if (prenotazione.getHotel()!=null)
+			nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
+		nuovo.setUtente(convertToDTO(prenotazione.getUtente()));
+		
+		return nuovo;
+	}
+	
+	protected static Prenotazione_PacchettoDTO convertToDTO(Prenotazione_Pacchetto prenotazione){
+		Prenotazione_PacchettoDTO nuovo = new Prenotazione_PacchettoDTO();
+		nuovo.setId(prenotazione.getId());
+		nuovo.setData(prenotazione.getData());
+		nuovo.setCondivisioni(convertListaCondivisioniToDTO(prenotazione.getCondivisioni()));
+		nuovo.setEscursioni(convertListaEscursioniToDTO(prenotazione.getEscursioni()));
+		nuovo.setAereo(convertToDTO(prenotazione.getAereo1()));             
+		nuovo.setAereoRitorno(convertToDTO(prenotazione.getAereo2()));
+		nuovo.setHotel(convertToDTO(prenotazione.getHotel()));
+		nuovo.setUtente(convertToDTO(prenotazione.getUtente()));
+		nuovo.setPacchetto(convertToDTO(prenotazione.getPacchetto()));
+		nuovo.setNumeroPersone(prenotazione.getNumeroPersone());
+		return nuovo;
+	}
+	
+	protected static List<CondivisioneDTO> convertListaCondivisioniToDTO(List<Condivisione> lista){
+		ArrayList<CondivisioneDTO> listaCondivisione = new ArrayList<CondivisioneDTO>();
+		for(int i=0;i<lista.size();i++){
+				CondivisioneDTO nuovo = convertToDTO(lista.get(i));
+				listaCondivisione.add(nuovo);
+
+		}
+		List<CondivisioneDTO> condivisioni = listaCondivisione;
+		return condivisioni;
+	}
+	
+	protected static CondivisioneDTO convertToDTO(Condivisione condivisione){
+		CondivisioneDTO nuovo = new CondivisioneDTO();
+		nuovo.setLink(condivisione.getLink());
+		nuovo.setData(condivisione.getData());
+		nuovo.setId_Prenotazione(condivisione.getPrenotazionePacchetto().getId());
+		nuovo.setUtente(convertToDTO(condivisione.getUtente()));
+		return nuovo;
+	}
+	
+	protected static List<AereoDTO> convertListaAereiAndataToDTO(List<Aereo> lista){
+		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
+		for(int i=0;i<lista.size();i++){
+				AereoDTO nuovo = convertToDTO(lista.get(i));
+				listaAereiAndata.add(nuovo);
+				}
+		List<AereoDTO> aerei = listaAereiAndata;
+		return aerei;
+	}
+	
+	protected static List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista){
+		ArrayList<AereoDTO> listaAereiRitorno = new ArrayList<AereoDTO>();
+		for(int i=0;i<lista.size();i++){
+			{	AereoDTO nuovo = convertToDTO(lista.get(i));
+			listaAereiRitorno.add(nuovo);
+			}
+		}
+		List<AereoDTO> aerei = listaAereiRitorno;
+		return aerei;
 	}
 
 
