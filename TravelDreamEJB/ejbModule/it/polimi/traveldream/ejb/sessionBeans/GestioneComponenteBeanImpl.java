@@ -146,8 +146,6 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		modificato.setNome(hotel.getNome());
 		modificato.setStelle(hotel.getRating().intValue());
 		modificato.setCostoGiornaliero(hotel.getCostoGiornaliero());
-		modificato.setDataCheckOut(hotel.getDataFine());
-		modificato.setDataCheckIn(hotel.getDataInizio());
 		em.merge(modificato);
 		//aggiornaPacchetti(modificato);
 	}

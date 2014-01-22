@@ -519,6 +519,11 @@ public class PacchettoManagedBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 			return;
 		}
+		if(numero == null){
+			String message = "Seleziona il numero di persone";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return;
+		}
 		ArrayList<AereoDTO> listaAndata = new ArrayList<AereoDTO>();
 		Integer value = new Integer(numero);
 		List<AereoDTO> aereiPossibili = gestionePacchetto.getListaAereiAndataDisp(partenza, ritorno, pacchetto, value);

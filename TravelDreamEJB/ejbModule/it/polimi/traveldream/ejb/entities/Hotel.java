@@ -43,14 +43,6 @@ public class Hotel implements Serializable {
 	@Column(name="Costo_Giornaliero")
 	private float costoGiornaliero;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="Data_Checkin")
-	private Date dataCheckIn;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="Data_Checkout")
-	private Date dataCheckOut;
-
 	@Column(name="Valido")
 	private byte valido;
 	
@@ -64,8 +56,7 @@ public class Hotel implements Serializable {
 		this.nome = hotel.getNome();
 		this.stelle = hotel.getRating().intValue();
 		this.costoGiornaliero = hotel.getCostoGiornaliero();
-		this.dataCheckOut = hotel.getDataFine();
-		this.dataCheckIn = hotel.getDataInizio();
+		
 	}
 
 	public int getId() {
@@ -117,22 +108,7 @@ public class Hotel implements Serializable {
 		this.costoGiornaliero = costoGiornaliero;
 	}
 
-	public Date getDataCheckIn() {
-		return dataCheckIn;
-	}
-
-	public void setDataCheckIn(Date dataInizio) {
-		this.dataCheckIn = dataInizio;
-	}
-
-	public Date getDataCheckOut() {
-		return dataCheckOut;
-	}
-
-	public void setDataCheckOut(Date dataFine) {
-		this.dataCheckOut = dataFine;
-	}
-
+	
 	public byte getValido() {
 		return valido;
 	}
