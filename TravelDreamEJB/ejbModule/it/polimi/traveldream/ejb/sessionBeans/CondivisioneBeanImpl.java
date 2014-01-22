@@ -35,7 +35,10 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
        
     }
 
-    
+   /**
+    * metodo che riceve il link inserito da un utente nella pagina principale
+    * e restituisce la condivisione relativa a quel link 
+    */
 	@Override
 	public CondivisioneDTO mostraCondivisione(String link) {
 		CondivisioneDTO condivisione = new CondivisioneDTO();
@@ -48,6 +51,9 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		
 	}
 	
+	/**
+	 * Metodo che crea la condivisione data la condivisione dto e la prenotazione
+	 */
 	@Override
 	public void creaCondivisione(CondivisioneDTO condivisione, Prenotazione_PacchettoDTO prenotazione){
 		Condivisione nuova = new Condivisione(condivisione);

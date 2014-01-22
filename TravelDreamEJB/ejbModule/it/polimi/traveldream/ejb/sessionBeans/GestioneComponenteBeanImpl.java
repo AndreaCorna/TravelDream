@@ -35,6 +35,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * metodo che dato l'aereo permette di aggiungerlo al database
+     */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void aggiungiAereoDB(AereoDTO aereo) {
@@ -46,6 +49,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		
 	}
 	
+	/**
+	 * Metodo che dato l'hotel permette di aggiungerlo al database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void aggiungiHotelDB(HotelDTO hotel) {
@@ -58,6 +64,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		
 	}
 	
+	/**
+	 * Metodo che data l'escursione permette di aggiungerla al database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void aggiungiEscursioneDB(EscursioneDTO escursione) {
@@ -70,7 +79,10 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		
 	}
 	
-	
+	/**
+	 * metodo che dato l'id di un aereo permette di restituire un booleano che è true se 
+	 * l'aereo esiste nel database false altrimenti
+	 */
 
 	@Override
 	public boolean esisteAereo(String id) {
@@ -81,6 +93,10 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	   return false;
 	}
 
+	/**
+	 * metodo che dato l'id di un hotel permette di restituire un booleano che è true se 
+	 * l'hotel esiste nel database false altrimenti
+	 */
 	@Override
 	public boolean esisteHotel(String id) {
 		Integer num = new Integer(id);
@@ -90,6 +106,10 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	   return false;
 	}
 
+	/**
+	 * metodo che dato l'id di un'escursione permette di restituire un booleano che è true se 
+	 * l'escursione esiste nel database false altrimenti
+	 */
 	@Override
 	public boolean esisteEscursione(String id) {
 		Integer num = new Integer(id);
@@ -99,6 +119,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	   return false;
 	}
 
+	/**
+	 * Metodo che permette dato l'id di un aereo di restituire l'aereo cercato nel database
+	 */
 	@Override
 	public AereoDTO getAereoById(String id) {
 		Integer value = new Integer(id);
@@ -106,6 +129,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return ConverterDTO.convertToDTO(aereo);
 	}
 	
+	/**
+	 * Metodo che permette dato l'id di un hotel di restituire l'hotel cercato nel database
+	 */
 	@Override
 	public HotelDTO getHotelById(String id) {
 		Integer value = new Integer(id);
@@ -113,6 +139,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		return ConverterDTO.convertToDTO(hotel);
 	}
 	
+	/**
+	 * Metodo che permette dato l'id di un'escursione di ritornare l'escursione cercata nel database
+	 */
 	@Override
 	public EscursioneDTO getEscursioneById(String id) {
 		Integer value = new Integer(id);
@@ -121,9 +150,10 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 
 	
-
-	
-
+	/**
+	 * Metodo che prende un aereo che è stato modificato e si occupa di integrare le modifiche
+	 *  all'interno del database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaAereo(AereoDTO aereo) {
@@ -136,7 +166,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		em.merge(modificato);
 		aggiornaPacchetti(modificato);
 	}
-	
+
+	/**
+	 * Metodo che prende un hotel che è stato modificato e si occupa di integrare le modifiche
+	 *  all'interno del database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaHotel(HotelDTO hotel) {
@@ -150,6 +184,10 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		//aggiornaPacchetti(modificato);
 	}
 	
+	/**
+	 * Metodo che prende un'escursione che è stata modificata e si occupa di integrare le modifiche
+	 *  all'interno del database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaEscursione(EscursioneDTO escursione) {
@@ -163,6 +201,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		
 	}
 	
+	/**
+	 * Metodo che prende un aereo e permette di eliminarlo dal database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void eliminaAereo(AereoDTO aereo) {
@@ -173,6 +214,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		
 	}
 	
+	/**
+	 * Metodo che prende un hotel e permette di eliminarlo dal database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void eliminaHotel(HotelDTO hotel) {
@@ -182,6 +226,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		aggiornaPacchetti(hotelDB);
 	}
 
+	/**
+	 * Metodo che prende un'escursione e permette di eliminarla dal database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void eliminaEscursione(EscursioneDTO escursione) {
@@ -191,6 +238,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		aggiornaPacchetti(escursioneDB);
 		
 	}
+
 
 	@SuppressWarnings("unchecked")
 	private void aggiornaPacchetti(Aereo aereo){
