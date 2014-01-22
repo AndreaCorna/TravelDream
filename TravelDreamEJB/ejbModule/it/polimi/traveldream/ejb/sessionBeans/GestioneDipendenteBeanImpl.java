@@ -30,8 +30,12 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
      * Default constructor. 
      */
     public GestioneDipendenteBeanImpl() {
-        // TODO Auto-generated constructor stub
+       
     }
+    
+    /**
+     * Metodo che dato un utente lo rende dipendente
+     */
 	@Override
 	@RolesAllowed({"AMMINISTRATORE"})
 	public void creaDipendente(UtenteDTO utenteDTO) {
@@ -46,6 +50,9 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		em.merge(nuovoDip);
 	}
 	
+	/**
+	 * Metodo che permette di restituire la lista dei dipendenti 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"AMMINISTRATORE"})
@@ -61,6 +68,9 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
     	return listaDip;
 	}
 	
+	/**
+	 * Metodo che dato un dipendente permette di eliminarlo e quindi di retrocederlo a utente
+	 */
 	@Override
 	@RolesAllowed({"AMMINISTRATORE"})
 	public void eliminaDipendente(UtenteDTO utenteDTO) {
@@ -73,31 +83,6 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		em.merge(dip);
 		
 	}
-
-	
-	private UtenteDTO convertToDTO(Utente dipendente) {
-		UtenteDTO dto = new UtenteDTO();
-		dto.setUsername(dipendente.getUsername());
-		dto.setTelefono(dipendente.getTelefono());
-		dto.setEmail(dipendente.getEmail());
-		dto.setCodiceFiscale(dipendente.getAnagrafica().getCf());
-		Anagrafica anag = em.find(Anagrafica.class, dipendente.getAnagrafica().getCf());
-		dto = convertToAnagraficaDTO(anag,dto);
-		return dto;
-	}
-    
-    private UtenteDTO convertToAnagraficaDTO(Anagrafica anagrafica, UtenteDTO nuovo) {
-		
-		nuovo.setCognome(anagrafica.getCognome());
-		nuovo.setDataNascita(anagrafica.getData_Nascita());
-		nuovo.setLuogoNascita(anagrafica.getLuogo_Nascita());
-		nuovo.setNome(anagrafica.getNome());
-		nuovo.setResidenza(anagrafica.getResidenza());
-		return nuovo;
-	}
-	
-
-
 
 
 }

@@ -44,9 +44,12 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
      * Default constructor. 
      */
     public GestionePacchettoBeanImpl() {
-        // TODO Auto-generated constructor stub
+       
     }
     
+    /**
+     * Metodo che restituisce la lista dei pacchetti prenotabili
+     */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<PacchettoDTO> getListaPacchetti() {
@@ -56,6 +59,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		
 	}
 
+	/**
+	 * Metodo che restituisce la lista degli aerei prenotabili
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAerei() {
@@ -64,6 +70,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     	return listaAerei;
 	}
 	
+	/**
+	 * Metodo che restituisce la lista degli hotel prenotabili
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(){
@@ -72,6 +81,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaHotels;
 	}
 	
+	/**
+	 * Metodo che restituisce la lista delle escursioni prenotabili
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -82,7 +94,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaHotels;
 	}
 	
-
+	/**
+	 * Metodo che restituisce la lista degli aerei prenotabili data la città di destinazione
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -96,6 +110,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaAerei;
 	}
 
+	/**
+	 * Metodo che restituisce la lista degli aerei prenotabili data la città di destinazione
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -109,6 +126,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaAerei;
 	}
 	
+	/**
+	 * Metodo che restituisce la lista delle escursioni prenotabili
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<EscursioneDTO> getListaEscursioni() {
@@ -117,6 +137,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     	return listaEscursioni;
 	}
 
+	/**
+	 * Metodo che restituisce la lista delle escursioni prenotabili dato il luogo dove avverranno e la data dell'escursione
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
@@ -130,6 +153,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     	return listaEscursioni;
 	}
 	
+	/**
+	 * Metodo che restituisce gli aerei di andata prenotabili che corrispondono ai parametri inseriti
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiAndataDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto, Integer value) {
@@ -145,6 +171,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaAerei;
 	}
 	
+	/**
+	 * Metodo che restituisce gli aerei di ritorno prenotabili che corrispondono ai parametri inseriti
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiRitornoDisp(Date partenza, Date ritorno,PacchettoDTO pacchetto, Integer value) {
@@ -160,6 +189,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaAerei;
 	}
 	
+	/**
+	 * Metodo che restituisce gli hotel prenotabili che corrispondono ai parametri dati
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotelDip(Date partenza, Date ritorno, PacchettoDTO pacchetto) {
@@ -174,6 +206,13 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return listaHotel;
 	}
 	
+	/**
+	 * metodo che dato un albergo verifica se questo ha camere disponibili tra una certa data di partenza e di ritorno
+	 * @param hotel di cui si vuole verificare la disponibilità
+	 * @param partenza data di checkin nell'hotel
+	 * @param ritorno data di checkout nell'hotel
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
@@ -191,7 +230,6 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		int camereOccupate = prenotazioniPac.size() + prenotazioniViaggi.size();
 		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
 	}
-	
 	
 	private boolean isAfterPartenza(Aereo aereo, Date partenza){
 		return (aereo.getData().after(partenza) || aereo.getData().equals(partenza));

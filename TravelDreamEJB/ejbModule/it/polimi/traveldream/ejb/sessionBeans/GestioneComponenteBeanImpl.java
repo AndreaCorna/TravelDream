@@ -240,6 +240,10 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 
 
+	/**
+	 * Metodo che permette di aggiornare i pacchetti contenenti un dato aereo
+	 * @param aereo
+	 */
 	@SuppressWarnings("unchecked")
 	private void aggiornaPacchetti(Aereo aereo){
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.aerei) a WHERE a=:nome")
@@ -257,6 +261,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
    
 	}
 	
+
+	/**
+	 * Metodo che permette di aggiornare i pacchetti contenenti un datoa data escursione
+	 * @param aereo
+	 */
 	@SuppressWarnings({"unchecked" })
 	private void aggiornaPacchetti(Escursione escursione){
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.escursioni) e WHERE e=:nome")
@@ -273,6 +282,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		}
 	}
 	
+
+	/**
+	 * Metodo che permette di aggiornare i pacchetti contenenti un dato hotel
+	 * @param aereo
+	 */
 	@SuppressWarnings({"unchecked" })
 	private void aggiornaPacchetti(Hotel hotel){
 		List<Pacchetto> pacchetti = em.createQuery("SELECT p FROM Pacchetto p, IN (p.hotels) e WHERE e=:nome")
@@ -288,8 +302,11 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 		}
 	}
 	
-	
-		
+	/**
+	 * Metodo che restituisce se un dato pacchetto è provvisto sia di aereo di andata che di ritorno
+	 * @param pacchetto
+	 * @return
+	 */
 	private boolean conRitornoAndata(Pacchetto pacchetto){
 		boolean andata = false;
 		boolean ritorno = false;
