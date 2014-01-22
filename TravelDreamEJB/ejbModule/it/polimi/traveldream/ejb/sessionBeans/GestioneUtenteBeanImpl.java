@@ -166,6 +166,16 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return context.getCallerPrincipal().getName();
     }
 
+
+	@Override
+	public boolean isUtente() {
+		Utente utente = getUtenteAttivo();
+		for(Gruppo gruppo:utente.getGruppi())
+			if(gruppo.getNome().equals("DIPENDENTE"))
+				return false;
+		return true;
+	}
+
    /* protected UtenteDTO convertToDTO(Utente utente) {
 		UtenteDTO dto = new UtenteDTO();
 		dto.setUsername(utente.getUsername());

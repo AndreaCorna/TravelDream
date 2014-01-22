@@ -13,6 +13,7 @@ import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
+import it.polimi.traveldream.ejb.sessionBeans.GestioneUtenteBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestioneViaggioBean;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,8 @@ public class ViaggioManagedBean {
 
 	@EJB
 	private GestioneViaggioBean gestioneViaggio;
+	@EJB
+	private GestioneUtenteBean	gestioneUtente;
 	
 	private List<AereoDTO> listaAereiAndata;
 	
@@ -77,7 +80,7 @@ public class ViaggioManagedBean {
 	private EscursioneDTO escursione;
 	
 	private int modalita;
-	/*	LEGENDA DELLE MODALITà
+	/*	LEGENDA DELLE MODALITï¿½
 	 * 1		solo aereo
  	   2		aereo escursioni
 	   3		aereo hotel
@@ -245,7 +248,10 @@ public String acquistaViaggio(){
 }
 
 public String richiamaHome(){
-	return "index?faces-redirect=true";
+	if(gestioneUtente.isUtente())
+		return "index?faces-redirect=true";
+	else
+		return "/employee/index?faces-redirect=true";
 }
 	/*
 	public void mostraOfferte(){

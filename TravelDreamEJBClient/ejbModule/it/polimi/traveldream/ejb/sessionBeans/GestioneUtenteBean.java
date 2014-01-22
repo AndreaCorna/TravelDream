@@ -65,6 +65,10 @@ public interface GestioneUtenteBean {
 	 * @return DTO con le informazioni
 	 */
 	UtenteDTO getUtenteDTO(String dipendente);
+	/**
+	 * Il metodo verifica che l'utente sia solo un utente e non un dipendente
+	 */
+	boolean isUtente();
 
 	
 }
