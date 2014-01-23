@@ -14,7 +14,7 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
+		<p:panel header="Se vuoi prenotare un hotel inserisci la Destinazione e la Data di checkin e di checkout">
 			<h:panelGrid columns="3" id="regGrid">
 			
 				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
@@ -39,7 +39,7 @@
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="vaiAvanti"  update="regGrid"
              action="#{viaggio.aggiungiDestinazioneDateHotel()}" styleClass="ui-priority-primary"/>  
-       
+       		 <p><a href="index.xhtml">Torna alla homepage</a></p>
 		</p:panel>
 	</h:form>
 </h:body>

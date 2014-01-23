@@ -146,8 +146,10 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
 		        <p:column id="escursioni" filterBy="escursioni"   
 		                headerText="escursioni" footerText="escursioni"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.escursioni}" />  
-		        </p:column> 
+		        		<p:dataList value="#{pac.escursioni}" var="escur" itemType="circle">  
+   				 			#{escur.luogo}, #{escur.data}  
+				</p:dataList>   
+				</p:column> 
 		        <p:column id="aereoAndata" filterBy="aereoAndata"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  

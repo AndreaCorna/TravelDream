@@ -14,7 +14,7 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
+		<p:panel header="Se vuoi prenotare un volo di ritorno inserisci la Destinazione e la Data">
 			<h:panelGrid columns="3" id="Grid">
 			
 				<h:outputLabel for="destinazione">Destinazione:</h:outputLabel>
@@ -31,7 +31,7 @@
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="proseguiAvanti"  update="Grid"
              action="#{viaggio.aggiungiDestinazioneDateAereoRitorno()}" styleClass="ui-priority-primary"/>  
-            
+             <p><a href="index.xhtml">Torna alla homepage</a></p>
             </p:panel>
 	</h:form>
 </h:body>

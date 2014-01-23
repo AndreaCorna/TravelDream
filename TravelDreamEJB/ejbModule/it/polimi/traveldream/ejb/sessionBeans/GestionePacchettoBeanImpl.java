@@ -235,14 +235,34 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		return (hotel.getCamere_Disponibili()-camereOccupate)>0;
 	}
 	
+	/** 
+	 * metodo che verifica se la data di ritorno è dopo quella della partenza di un dato aereo
+	 * @param aereo
+	 * @param partenza
+	 * @return true se il vincolo è rispettato
+	 */
 	private boolean isAfterPartenza(Aereo aereo, Date partenza){
 		return (aereo.getData().after(partenza) || aereo.getData().equals(partenza));
 	}
 	
+	/**
+	 * Metood che verifica se la data di andata è prima di quella di ritorno di un dato aereo 
+	 * @param aereo
+	 * @param ritorno
+	 * @return true se il vincolo è rispettato 
+	 */
 	private boolean isBeforeRitorno(Aereo aereo, Date ritorno){
 		return (aereo.getData().before(ritorno) || aereo.getData().equals(ritorno));
 	}
 	
+	/**
+	 * Metodo che verifica se un dato aereo ha posti disponibili in un dato periodo
+	 * @param aereo di cui si vuole saperne la disponibilita 
+	 * @param partenza data in cui si desidera partire
+	 * @param ritorno data in cui si desidera tornare 
+	 * @param value numero di posti che si desidera prenotare
+	 * @return un booleano che è true se vi sono posti disponibili
+	 */
 	@SuppressWarnings("unchecked")
 	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno,Integer value){
 		List<Prenotazione_Pacchetto> listaPrenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE ( p.aereo1 =:nome AND p.aereo1.valido=1)"
@@ -266,6 +286,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	return (aereo.getPosti_Disponibili()-postiOccupati)>=value;
 	}
 	
+	/**
+	 * Metodo che inserisce il pacchetto all'interno del database
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void creaPacchetto(PacchettoDTO pacchetto) {
@@ -292,6 +315,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		
 	}
 	
+	/**
+	 * Metodo che si occupa di eliminare il pacchetto passato in ingresso
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void eliminaPacchetto(PacchettoDTO pacchetto) {
@@ -300,6 +326,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		em.merge(eliminato);
 	}
 	
+	/**
+	 *  Metodo che si occupa di modificare il pacchetto passato in ingresso
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE"})
 	public void modificaPacchetto(PacchettoDTO pacchetto) {
@@ -319,6 +348,9 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		
 	}
 	
+	/**
+	 *  Metodo che si occupa dato l'id di un dato pachetto verifica se questo esiste e ritorna true se esiste false altrimenti
+	 */
 	@Override
 	public boolean esisteIdPacchetto(String id) {
 		Integer value = new Integer(id);

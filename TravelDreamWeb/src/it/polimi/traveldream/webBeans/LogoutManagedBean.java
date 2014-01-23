@@ -9,6 +9,10 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class LogoutManagedBean {
 
+	/**
+	 * Metodo che permette il logout
+	 * @return
+	 */
 	public String logout() {
 	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	    return "/home?faces-redirect=true";

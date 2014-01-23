@@ -32,23 +32,44 @@ public class DipendenteManagedBean {
 	private UtenteDataModel datiUtenti;
 	
 
+	/**
+	 * Costruttore di default
+	 */
 	public DipendenteManagedBean(){
 		setUtente(new UtenteDTO());
 		listaUtenti = new ArrayList<UtenteDTO>();  
 		
 	}
 	
+	/**
+	 * Metodo che si occupa dell'inizializzazione della pagina utente
+	 */
 	public void initUtenti(){
 		listaUtenti = gestioneUtente.getListaUtentiBase();
 		datiUtenti = new UtenteDataModel(listaUtenti);
 	}
 	
+
+	/**
+	 * Metodo che si occupa dell'inizializzazione della pagina dipendente
+	 */
 	public void initDipendenti(){
 		listaUtenti = gestioneDip.getListaDipendenti();
 		datiUtenti = new UtenteDataModel(listaUtenti);
 	}
 
+	/**
+	 * Metodo che elimina un dipendente dal database 
+	 * @return la pagina alla quale si viene rediretti
+	 */
+	public String eliminaDipendente(){
+		gestioneDip.eliminaDipendente(utenteTrovato);
+		return "index?faces-redirect=true";
+	}
 	
+	/*
+	 * Metodi GETTER E SETTER
+	 */
 	public UtenteDTO getUtente() {
 		return utente;
 	}
@@ -79,10 +100,6 @@ public class DipendenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
-	public String eliminaDipendente(){
-		gestioneDip.eliminaDipendente(utenteTrovato);
-		return "index?faces-redirect=true";
-	}
 
 	public UtenteDataModel getDatiUtenti() {
 		return datiUtenti;

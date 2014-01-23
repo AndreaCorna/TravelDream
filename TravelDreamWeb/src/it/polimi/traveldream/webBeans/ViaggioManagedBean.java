@@ -37,9 +37,9 @@ public class ViaggioManagedBean {
 	@EJB
 	private GestioneUtenteBean	gestioneUtente;
 	
-	private List<AereoDTO> listaAereiAndata;
+	private AereoDTO listaAereiAndata;
 	
-	private List<AereoDTO> listaAereiRitorno;
+	private AereoDTO listaAereiRitorno;
 	
 	private List<AereoDTO> listaAereiAndataDB;
 	
@@ -51,7 +51,7 @@ public class ViaggioManagedBean {
 	
 	private List<HotelDTO> listaHotelDB;
 	
-	private List<HotelDTO> listaHotel;
+	private HotelDTO listaHotel;
 	
 	private HotelDataModel datiHotel;
 	
@@ -184,12 +184,12 @@ public class ViaggioManagedBean {
 		
 		if (modalita == 1)
 		{
-			viaggio.setAereoRitorno(listaAereiRitorno.get(0));
+			viaggio.setAereoRitorno(listaAereiRitorno);
 			modalita = 8;
 		}
 		if(modalita == 0)
 			{
-			viaggio.setAereo(listaAereiAndata.get(0));
+			viaggio.setAereo(listaAereiAndata);
 			modalita = 1;
 			}
 		
@@ -204,8 +204,8 @@ public class ViaggioManagedBean {
 	}
 	
 public String settaHotelScelto(int scelta){
-		listaHotel.get(0).setDataInizio(hotel.getDataInizio());
-		viaggio.setHotel(listaHotel.get(0));
+		listaHotel.setDataInizio(hotel.getDataInizio());
+		viaggio.setHotel(listaHotel);
 		if(modalita == 0)
 			modalita = 5;
 		else if(modalita == 1)
@@ -257,15 +257,6 @@ public String richiamaHome(){
 	else
 		return "/employee/index?faces-redirect=true";
 }
-	/*
-	public void mostraOfferte(){
-		listaPacchetti = gestioneViaggio.getListaPacchetti();
-		caricaDestinazioni();
-		datiPacchetti = new PacchettoDataModel(listaPacchetti);
-	}
-	*/
-
-
 	
 	public String aggiungiEscursioni(){
 		if ( listaEscursioni.size()>0 ){
@@ -282,7 +273,7 @@ public String richiamaHome(){
 		Date dataInizio = (Date)datainizio.getValue();
 		Date dataFine = (Date)value;
 		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validit√† deve essere successiva a quella di inizio"));
+                throw new ValidatorException(new FacesMessage("La data di fine validit‡† deve essere successiva a quella di inizio"));
         }
 	}
 
@@ -310,19 +301,19 @@ public String richiamaHome(){
 		this.datiAereiRitorno = datiAereiRitorno;
 	}
 	
-	public List<AereoDTO> getListaAereiAndata() {
+	public AereoDTO getListaAereiAndata() {
 		return listaAereiAndata;
 	}
 
-	public void setListaAereiAndata(List<AereoDTO> listaAereiAndata) {
+	public void setListaAereiAndata(AereoDTO listaAereiAndata) {
 		this.listaAereiAndata = listaAereiAndata;
 	}
 
-	public List<AereoDTO> getListaAereiRitorno() {
+	public AereoDTO getListaAereiRitorno() {
 		return listaAereiRitorno;
 	}
 
-	public void setListaAereiRitorno(List<AereoDTO> listaAereiRitorno) {
+	public void setListaAereiRitorno(AereoDTO listaAereiRitorno) {
 		this.listaAereiRitorno = listaAereiRitorno;
 	}
 
@@ -342,11 +333,11 @@ public String richiamaHome(){
 		this.viaggio = pacchetto;
 	}
 
-	public List<HotelDTO> getListaHotel() {
+	public HotelDTO getListaHotel() {
 		return listaHotel;
 	}
 
-	public void setListaHotel(List<HotelDTO> listaHotel) {
+	public void setListaHotel(HotelDTO listaHotel) {
 		this.listaHotel = listaHotel;
 	}
 	
@@ -416,7 +407,7 @@ public String richiamaHome(){
 	public void setDatiPacchetti(PacchettoDataModel datiPacchetti) {
 		this.datiPacchetti = datiPacchetti;
 	}
-
+/*
 	private void caricaDestinazioni(){
 		ArrayList<String> listaDestinazioni = new ArrayList<String>();
 		for(PacchettoDTO pacchetto:listaPacchetti){
@@ -431,7 +422,7 @@ public String richiamaHome(){
 			destinazioni[i+1] = new SelectItem(dest, dest);
 		}
 	}
-
+*/
 	public SelectItem[] getDestinazioni() {
 		return destinazioni;
 	}

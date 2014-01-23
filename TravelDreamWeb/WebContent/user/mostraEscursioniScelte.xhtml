@@ -26,10 +26,7 @@
 		  
 		        <p:column selectionMode="multiple" style="width:2%" />  
 		  
-		        <p:column headerText="Id" style="width:25%">  
-		            #{escursione.id}  
-		        </p:column>  
-		  
+
 		        <p:column headerText="Luogo" style="width:25%">  
 		            #{escursione.luogo}  
 		        </p:column>  
@@ -41,6 +38,11 @@
 		        <p:column headerText="Breve Descrizione" style="width:24%">  
 		            #{escursione.descrizione}  
 		        </p:column>  
+		        
+		        <p:column headerText="Ora di partenza" style="width:25%">  
+		            #{escursione.data.hours}  
+		        </p:column>  
+		  
 		             
 		    </p:dataTable>  
 			</h:panelGrid>
@@ -48,7 +50,8 @@
 	</p:panel>
 </h:form>
 			<p:commandButton value="Acquista la tua escursione" id="prosegui" 
-             action="#{viaggio.settaEscursioneScelta(1)}" styleClass="ui-priority-primary"/>  
+             action="#{viaggio.settaEscursioneScelta(1)}" styleClass="ui-priority-primary"/>
+              <p><a href="index.xhtml">Torna alla homepage</a></p>  
                	</p:panel>
 	</h:form>
 </h:body>
