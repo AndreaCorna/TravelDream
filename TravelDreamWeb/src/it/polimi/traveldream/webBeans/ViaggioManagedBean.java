@@ -79,6 +79,8 @@ public class ViaggioManagedBean {
 	
 	private EscursioneDTO escursione;
 	
+	private Date minData;
+	
 	private int modalita;
 	/*	LEGENDA DELLE MODALIT�
 	 * 1		solo aereo
@@ -109,6 +111,7 @@ public class ViaggioManagedBean {
 		return hotel;
 	}
 	
+	
 	public EscursioneDTO getEscursione(){
 		return escursione;
 	}
@@ -123,6 +126,7 @@ public class ViaggioManagedBean {
 	
 	@PostConstruct
 	public void init(){
+		minData= new Date();
 		aereoAndata = new AereoDTO();
 		hotel = new HotelDTO();
 		viaggio = new Prenotazione_ViaggioDTO();
@@ -434,6 +438,16 @@ public String richiamaHome(){
 
 	public void setDestinazioni(SelectItem[] destinazioni) {
 		this.destinazioni = destinazioni;
+	}
+
+
+	public Date getMinData() {
+		return minData;
+	}
+
+
+	public void setMinData(Date minData) {
+		this.minData = minData;
 	}
 
 

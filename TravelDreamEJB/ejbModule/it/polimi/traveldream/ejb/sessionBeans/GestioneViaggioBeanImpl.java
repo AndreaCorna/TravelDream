@@ -53,6 +53,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<HotelDTO> getListaHotel(String destinazione, Date dataAndata, Date dataRitorno){
+		
 		List<Hotel> hotels = em.createQuery("SELECT h FROM Hotel h WHERE h.citta =:nome and h.valido = 1")
 				.setParameter("nome", destinazione)
 			    .getResultList();
@@ -76,13 +77,13 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	private boolean haCamereDisponibili(Hotel hotel, Date partenza, Date ritorno){
 		List<Prenotazione_Pacchetto> prenotazioniPac = em.createQuery("SELECT p FROM Prenotazione_Pacchetto p "
 				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
-				+ "AND p.hotel =:hotel and p.valido=1")
+				+ "AND p.hotel =:hotel and p.hotel.valido=1")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
 		List<Prenotazione_Pacchetto> prenotazioniViaggi = em.createQuery("SELECT p FROM Prenotazione_Viaggio p "
 				+ "WHERE p.dataCheckInHotel BETWEEN :andata AND :ritorno AND p.dataCheckOutHotel BETWEEN :andata AND :ritorno "
-				+ "AND p.hotel =:hotel and p.valido=1")
+				+ "AND p.hotel =:hotel and p.hotel.valido=1")
 				.setParameter("hotel", hotel)
 				.setParameter("ritorno", ritorno)
 				.setParameter("andata",partenza).getResultList();
@@ -96,10 +97,18 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza) {
-		List<Escursione> escursioni = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.data =:startDate and a.valido= 1")
+	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date andata) {
+		Date inizioGiorno = andata;
+		Date fineGiorno = andata;
+		inizioGiorno= new Date(andata.getYear(),andata.getMonth(), andata.getDate());
+		fineGiorno.setHours(23);
+		fineGiorno.setMinutes(59);
+		fineGiorno.setSeconds(59);
+		
+		List<Escursione> escursioni = em.createQuery("SELECT a FROM Escursione a WHERE a.luogo =:nome and a.valido= 1 and a.data BETWEEN :startDate and :endDate")
 				.setParameter("nome", destinazione)
-			    .setParameter("startDate", dataPartenza, TemporalType.TIMESTAMP)
+			    .setParameter("startDate", inizioGiorno, TemporalType.TIMESTAMP)
+			    .setParameter("endDate", fineGiorno, TemporalType.TIMESTAMP)
 			    .getResultList();
 	   	List<EscursioneDTO> listaEscursioni = ConverterDTO.convertListaEscursioniToDTO(escursioni);
     	return listaEscursioni;
@@ -112,31 +121,47 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<AereoDTO> getListaAereiAndata(String destinazione, Date andata) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate and a.valido = 1")
+		Date inizioGiorno = andata;
+		Date fineGiorno = andata;
+		inizioGiorno= new Date(andata.getYear(),andata.getMonth(), andata.getDate());
+		fineGiorno.setHours(23);
+		fineGiorno.setMinutes(59);
+		fineGiorno.setSeconds(59);
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.valido = 1 and a.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", destinazione)
-			    .setParameter("startDate", andata, TemporalType.TIMESTAMP)
+			    .setParameter("startDate", inizioGiorno, TemporalType.TIMESTAMP)
+			    .setParameter("endDate", fineGiorno, TemporalType.TIMESTAMP)
 			    .getResultList();
 		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiAndataToDTO(aerei);
 		return listaAerei;
 	}
 
+	
 	/**
 	 * Metodo che preso in ingresso la destinazione e la data dell'aereo di ritorno restituisce la lista di aerei che soddisfano la ricerca
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date partenza) {
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.data =:startDate and a.valido = 1")
+	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date andata) {
+		Date inizioGiorno = andata;
+		Date fineGiorno = andata;
+		inizioGiorno= new Date(andata.getYear(),andata.getMonth(), andata.getDate());
+		fineGiorno.setHours(23);
+		fineGiorno.setMinutes(59);
+		fineGiorno.setSeconds(59);
+		
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.valido = 1 and a.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", cittaDecollo)
-			    .setParameter("startDate", partenza, TemporalType.TIMESTAMP)
+			    .setParameter("startDate", inizioGiorno, TemporalType.TIMESTAMP)
+			    .setParameter("endDate",fineGiorno, TemporalType.TIMESTAMP)
 			    .getResultList();
 		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiRitornoToDTO(aerei);
 		return listaAerei;
 	}
 	
 	/**
-	 * metodo che data la tipologia del viaggio e il viaggio si occupa di creare il viaggio compilando i campi appropriati all'interno del database
+	 * Metodo che data la tipologia del viaggio e il viaggio si occupa di creare il viaggio compilando i campi appropriati all'interno del database
 	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
