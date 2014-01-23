@@ -50,10 +50,14 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
     /**
      * Metodo che restituisce la lista dei pacchetti prenotabili
      */
+	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public List<PacchettoDTO> getListaPacchetti() {
-		List<Pacchetto> pacchettiDB = em.createNamedQuery("Pacchetto.findValidi", Pacchetto.class).getResultList();
+		Date data = new Date();
+		List<Pacchetto> pacchettiDB = em.createQuery("SELECT p FROM Pacchetto p WHERE p.valido=1 and p.fine_Validita > :data")
+				.setParameter("data", data, TemporalType.TIMESTAMP)
+				.getResultList();
 		List<PacchettoDTO> pacchetti = ConverterDTO.convertListaPacchettiToDTO(pacchettiDB);
 		return pacchetti;
 		
@@ -95,7 +99,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	/**
-	 * Metodo che restituisce la lista degli aerei prenotabili data la città di destinazione
+	 * Metodo che restituisce la lista degli aerei prenotabili data la cittï¿½ di destinazione
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -111,7 +115,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 
 	/**
-	 * Metodo che restituisce la lista degli aerei prenotabili data la città di destinazione
+	 * Metodo che restituisce la lista degli aerei prenotabili data la cittï¿½ di destinazione
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -208,7 +212,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	
 	/**
 	 * metodo che dato un albergo verifica se questo ha camere disponibili tra una certa data di partenza e di ritorno
-	 * @param hotel di cui si vuole verificare la disponibilità
+	 * @param hotel di cui si vuole verificare la disponibilitï¿½
 	 * @param partenza data di checkin nell'hotel
 	 * @param ritorno data di checkout nell'hotel
 	 * @return

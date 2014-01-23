@@ -37,6 +37,7 @@ public class PrenotazioneManagedBean {
 	
 	private Prenotazione_ViaggioDTO prenotazioneViaggio;
 	
+	
 		
 	@PostConstruct
 	public void init(){

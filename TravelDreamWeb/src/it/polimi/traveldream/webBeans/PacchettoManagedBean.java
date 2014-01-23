@@ -177,6 +177,7 @@ public class PacchettoManagedBean {
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
+	
 
 	public String aggiungiDestinazioneDate(){
 		String destinazione = pacchetto.getDestinazione();
