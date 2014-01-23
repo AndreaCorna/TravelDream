@@ -112,6 +112,8 @@ public class PacchettoManagedBean {
 	
 	private String numero;
 	
+	private Date dataOdierna;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -119,12 +121,16 @@ public class PacchettoManagedBean {
 	}
 	
 	public void initPersonalizza(String id){
+		dataOdierna = new Date();
 		prenotazione = new Prenotazione_PacchettoDTO();
 		if(	!id.equals("")){
 			Integer value = new Integer(id);
 			this.id = value.intValue();
 		}
 		boolean found = false;
+		if(listaPacchetti == null){
+			listaPacchetti = gestionePacchetto.getListaPacchetti();
+		}
 		for(int i=0; i<listaPacchetti.size() && !found; i++){
 			if(listaPacchetti.get(i).getId() == this.id){
 				pacchetto = listaPacchetti.get(i);
@@ -341,6 +347,10 @@ public class PacchettoManagedBean {
 			gestioneCondivisione.creaCondivisione(condivisione, prenotazione);
 		}
 		return "index?faces-redirect=true";
+	}
+	
+	public String prova(){
+		return "buyPacchetto?id=56";
 	}
 	
 	private void setCondivisione(){
@@ -809,5 +819,13 @@ public class PacchettoManagedBean {
 
 	public void setNumeroPersone(List<String> numeroPersone) {
 		this.numeroPersone = numeroPersone;
+	}
+
+	public Date getDataOdierna() {
+		return dataOdierna;
+	}
+
+	public void setDataOdierna(Date dataOdierna) {
+		this.dataOdierna = dataOdierna;
 	}
 }

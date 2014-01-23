@@ -244,7 +244,9 @@
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
-		        
+		        <p:column headerText="Modifica" style="width:24%" >  
+                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Modifica"/>
+                </p:column>
 		        	 </p:dataTable>
 		        	 </h:panelGrid>
 		        	 <h:panelGrid columns="4" id="regGrid2">
