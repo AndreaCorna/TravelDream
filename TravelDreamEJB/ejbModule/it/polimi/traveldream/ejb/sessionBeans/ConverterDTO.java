@@ -26,7 +26,12 @@ import it.polimi.traveldream.ejb.entities.Pacchetto;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
-
+/**
+ * La classe fornisce una serie di metodi necessari per la conversione da entita del database a oggetti DTO per la comunicazione
+ * con il tier client. 
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class ConverterDTO {
 	
 	@PersistenceContext
@@ -37,7 +42,11 @@ public class ConverterDTO {
 	
 	@Resource
 	private EJBContext context;
-	
+	/**
+	 * Il metodo converte un'istanza aereo del database in in oggetto DTO
+	 * @param aereo - aereo da convertire
+	 * @return DTO equivalente al parametro
+	 */
 	protected static AereoDTO convertToDTO(Aereo aereo){
 		AereoDTO nuovo = new AereoDTO();
 		nuovo.setCittaAtterraggio(aereo.getAtterraggio());
@@ -49,7 +58,11 @@ public class ConverterDTO {
 		nuovo.setValido(aereo.getValido());
 		return nuovo;
 	}
-	
+	/**
+	 * Il metodo converte un'istanza hotel del database in in oggetto DTO
+	 * @param hotel - hotel da convertire
+	 * @return DTO equivalente al parametro
+	 */
 	protected static HotelDTO convertToDTO(Hotel hotel){
 		HotelDTO nuovo = new HotelDTO();
 		nuovo.setCamereDisponibili(hotel.getCamere_Disponibili());
@@ -62,7 +75,11 @@ public class ConverterDTO {
 		nuovo.setValido(hotel.getValido());
 		return nuovo;
 	}
-	
+	/**
+	 * Il metodo converte un'istanza escursione del database in in oggetto DTO
+	 * @param escursione - escursione da convertire
+	 * @return DTO equivalente al parametro
+	 */
 	protected static EscursioneDTO convertToDTO(Escursione escursione){
 		EscursioneDTO nuovo = new EscursioneDTO();
 		nuovo.setData(escursione.getData());
@@ -73,7 +90,11 @@ public class ConverterDTO {
 		nuovo.setValido(escursione.getValido());
 		return nuovo;
 	}
-	
+	/**
+	 * Il metodo converte un'istanza utente del database in in oggetto DTO
+	 * @param dipendente - utente da convertire
+	 * @return DTO equivalente al parametro
+	 */
 	protected static UtenteDTO convertToDTO(Utente dipendente) {
 		UtenteDTO dto = new UtenteDTO();
 		dto.setUsername(dipendente.getUsername());
@@ -84,7 +105,12 @@ public class ConverterDTO {
 		dto = convertToAnagraficaDTO(anag,dto);
 		return dto;
 	}
-    
+	/**
+	 * Il metodo setta i campi anagrafica di un utente
+	 * @param anagrafica - anagrafica da convertire
+	 * @param nuovo - utente al quale aggiungere l'anagrafica
+	 * @return utenteDTO con anagrafica
+	 */
 	protected static UtenteDTO convertToAnagraficaDTO(Anagrafica anagrafica, UtenteDTO nuovo) {
 		
 		nuovo.setCognome(anagrafica.getCognome());
@@ -95,7 +121,11 @@ public class ConverterDTO {
 		return nuovo;
 	}
 	
-		
+	/**
+	 * Il metodo converte un'istanza pacchetto in un oggetto DTO
+	 * @param pacchetto - pacchetto da convertire
+	 * @return DTO equivalente al parametro
+	 */
 	protected static PacchettoDTO convertToDTO(Pacchetto pacchetto){
 		PacchettoDTO nuovo = new PacchettoDTO();
 		nuovo.setDescrizione(pacchetto.getDescrizione());
@@ -114,7 +144,11 @@ public class ConverterDTO {
 		return nuovo;
 	}
 
-
+	/**
+	 * Il metodo converte una lista di EscursioniDTO in una lista di Escursioni
+	 * @param lista - lista dei dto
+	 * @return lista di istanze del database
+	 */
 	protected static List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
@@ -124,7 +158,11 @@ public class ConverterDTO {
 		List<Escursione> escursioni = listaEscursioni;
 		return escursioni;
 	}
-	
+	/**
+	 * Il metodo converte una lista di entita escursione in una lista di escursioneDTO
+	 * @param lista - lista delle escursioni
+	 * @return lista di oggetti dto
+	 */
 	protected static List<EscursioneDTO> convertListaEscursioniToDTO(List<Escursione> lista){
 		ArrayList<EscursioneDTO> listaEscursioni = new ArrayList<EscursioneDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -134,7 +172,12 @@ public class ConverterDTO {
 		List<EscursioneDTO> escursioni = listaEscursioni;
 		return escursioni;
 	}
-	
+	/**
+	 * Il metodo ritorna una lista di entita aereo 
+	 * @param listaAndata - lista aereoDTO andata
+	 * @param listaRitorno - lista aereoDTO ritorno
+	 * @return lista di aerei, unione degli elementi delle liste in ingresso
+	 */
 	protected static List<Aereo> convertListaAerei(List<AereoDTO> listaAndata, List<AereoDTO> listaRitorno){
 		ArrayList<Aereo> listaAerei = new ArrayList<Aereo>();
 		for(int i=0;i<listaAndata.size();i++){
@@ -148,7 +191,12 @@ public class ConverterDTO {
 		List<Aereo> aerei = listaAerei;
 		return aerei;
 	}
-	
+	/**
+	 * Il metodo prende da una lista di aerei la lista degli aerei di andata
+	 * @param lista - lista da scorrere
+	 * @param destinazionePacchetto - stringa che rappresenta la destinazione del pacchetto al quale appartiene la lista
+	 * @return lista degli aerei di andata del pacchetto
+	 */
 	protected static List<AereoDTO> convertListaAereiAndataToDTO(List<Aereo> lista, String destinazionePacchetto){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -160,7 +208,12 @@ public class ConverterDTO {
 		List<AereoDTO> aerei = listaAereiAndata;
 		return aerei;
 	}
-	
+	/**
+	 * Il metodo ritorna la lista dei pacchetti di ritorno di un pacchetto
+	 * @param lista - lista degli aerei del pacchetto
+	 * @param destinazionePacchetto - stringa rappresentante la destinazione del pacchetto
+	 * @return lista degli aerei di ritorno del pacchetto
+	 */
 	protected static List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista, String destinazionePacchetto){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -172,7 +225,11 @@ public class ConverterDTO {
 		List<AereoDTO> aerei = listaAereiAndata;
 		return aerei;
 	}
-	
+	/**
+	 * Il metodo converte una lista di entita aereo in una lista di oggetti DTO
+	 * @param lista - lista degli aerei
+	 * @return lista di oggetti AereoDTO
+	 */
 	protected static List<AereoDTO> convertListaAereiToDTO(List<Aereo> lista){
 		ArrayList<AereoDTO> listaAerei = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -183,7 +240,11 @@ public class ConverterDTO {
 		return aerei;
 	}
 	
-	
+	/**
+	 * Il metodo converte una lista di oggetti DTO in una lista di istanze entity Hotel
+	 * @param lista - lista di oggetti dto
+	 * @return lista di entity hotel
+	 */
 	protected static List<Hotel> convertListaHotel(List<HotelDTO> lista){
 		ArrayList<Hotel> listaHotel = new ArrayList<Hotel>();
 		for(int i=0;i<lista.size();i++){
@@ -193,7 +254,11 @@ public class ConverterDTO {
 		List<Hotel> hotel = listaHotel;
 		return hotel;
 	}
-	
+	/**
+	 * Il metodo converte una lista di entity hotel in una lista di oggetti DTO
+	 * @param lista - lista degli hotel da convertire
+	 * @return lista di oggetti dto.
+	 */
 	protected static List<HotelDTO> convertListaHotelToDTO(List<Hotel> lista){
 		ArrayList<HotelDTO> listaHotel = new ArrayList<HotelDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -203,7 +268,11 @@ public class ConverterDTO {
 		List<HotelDTO> hotel = listaHotel;
 		return hotel;
 	}
-	
+	/**
+	 * Il metodo converte una lista di entity pacchetto in una lista di oggetti dto
+	 * @param lista - lista da convertire
+	 * @return lista di oggetti dto
+	 */
 	protected static List<PacchettoDTO> convertListaPacchettiToDTO(List<Pacchetto> lista){
 		ArrayList<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();
 		for (int i=0;i<lista.size();i++){
@@ -212,7 +281,11 @@ public class ConverterDTO {
 		List<PacchettoDTO> listaPacchetti = pacchetti;
 		return listaPacchetti;
 	}
-	
+	/**
+	 * Il metodo converte una lista di EscursioniDTO in una lista di entity Escursione
+	 * @param lista - la lista da convertire
+	 * @return lista di entity
+	 */
 	protected static List<Escursione> convertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
@@ -222,7 +295,12 @@ public class ConverterDTO {
 		List<Escursione> escursioni = listaEscursioni;
 		return escursioni;
 	}
-	
+	/**
+	 * Il metodo converte la lista delle prenotazioni viaggio di un utente in una lista equivalente di prenotazione viaggio DTO
+	 * @param lista - la lista da convertire
+	 * @param idUtenteOnline - username dell'utente
+	 * @return la lista di oggetti dto
+	 */
 	protected static List<Prenotazione_ViaggioDTO> convertListaUtentiOnlineViaggiToDTO(List<Prenotazione_Viaggio> lista, String idUtenteOnline){
 		ArrayList<Prenotazione_ViaggioDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_ViaggioDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -234,7 +312,12 @@ public class ConverterDTO {
 		List<Prenotazione_ViaggioDTO> prenotazioni = listaPacchettiPrenotati;
 		return prenotazioni;
 	}
-	
+	/**
+	 * Il metodo converte una lista di prenotazione pacchetto di un utente in una lista di oggetti DTO equivalenti
+	 * @param lista - lista da convertire
+	 * @param idUtenteOnline - username dell'utente
+	 * @return lista di oggetti dto
+	 */
 	protected static List<Prenotazione_PacchettoDTO> convertListaUtentiOnlineToDTO(List<Prenotazione_Pacchetto> lista, String idUtenteOnline){
 		ArrayList<Prenotazione_PacchettoDTO> listaPacchettiPrenotati = new ArrayList<Prenotazione_PacchettoDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -246,7 +329,11 @@ public class ConverterDTO {
 		List<Prenotazione_PacchettoDTO> prenotazioni = listaPacchettiPrenotati;
 		return prenotazioni;
 	}
-	
+	/**
+	 * Il metodo converte una prenotazione viaggio in un oggetto dto equivalente
+	 * @param prenotazione - la prenotazione da convertire
+	 * @return la prenotazione viaggio DTO
+	 */
 	protected static Prenotazione_ViaggioDTO convertToDTO(Prenotazione_Viaggio prenotazione){
 		Prenotazione_ViaggioDTO nuovo = new Prenotazione_ViaggioDTO();
 		nuovo.setId(prenotazione.getId());
@@ -264,7 +351,11 @@ public class ConverterDTO {
 		
 		return nuovo;
 	}
-	
+	/**
+	 * Il metodo converte una prenotazione pacchetto in un oggetto dto equivalente
+	 * @param prenotazione - la prenotazione da convertire
+	 * @return la prenotazione pacchetto DTO
+	 */
 	protected static Prenotazione_PacchettoDTO convertToDTO(Prenotazione_Pacchetto prenotazione){
 		Prenotazione_PacchettoDTO nuovo = new Prenotazione_PacchettoDTO();
 		nuovo.setId(prenotazione.getId());
@@ -279,7 +370,11 @@ public class ConverterDTO {
 		nuovo.setNumeroPersone(prenotazione.getNumeroPersone());
 		return nuovo;
 	}
-	
+	/**
+	 * Il metodo converte una lista di convidisioni in una equivalente costituita da oggetti CondivisioneDTO
+	 * @param lista - lista da convertire
+	 * @return lista di oggetti DTO
+	 */
 	protected static List<CondivisioneDTO> convertListaCondivisioniToDTO(List<Condivisione> lista){
 		ArrayList<CondivisioneDTO> listaCondivisione = new ArrayList<CondivisioneDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -290,7 +385,11 @@ public class ConverterDTO {
 		List<CondivisioneDTO> condivisioni = listaCondivisione;
 		return condivisioni;
 	}
-	
+	/**
+	 * Il metodo converte una entity condivisione in un oggetto dto equivalente
+	 * @param condivisione - la condivisione da convertire
+	 * @return l'oggetto dto 
+	 */
 	protected static CondivisioneDTO convertToDTO(Condivisione condivisione){
 		CondivisioneDTO nuovo = new CondivisioneDTO();
 		nuovo.setLink(condivisione.getLink());
@@ -299,7 +398,11 @@ public class ConverterDTO {
 		nuovo.setUtente(convertToDTO(condivisione.getUtente()));
 		return nuovo;
 	}
-	
+	/**
+	 * Il metodo converte una lista di entity aereo in una lista di oggetti dto equivalenti
+	 * @param lista - la lista da convertire
+	 * @return lista di oggetti DTO convertiti
+	 */
 	protected static List<AereoDTO> convertListaAereiAndataToDTO(List<Aereo> lista){
 		ArrayList<AereoDTO> listaAereiAndata = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
@@ -309,7 +412,11 @@ public class ConverterDTO {
 		List<AereoDTO> aerei = listaAereiAndata;
 		return aerei;
 	}
-	
+	/**
+	 * Il metodo converte una lista di entity aereo in una lista di oggetti dto equivalenti
+	 * @param lista - la lista da convertire
+	 * @return lista di oggetti DTO convertiti
+	 */
 	protected static List<AereoDTO> convertListaAereiRitornoToDTO(List<Aereo> lista){
 		ArrayList<AereoDTO> listaAereiRitorno = new ArrayList<AereoDTO>();
 		for(int i=0;i<lista.size();i++){
