@@ -27,6 +27,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@Resource
 	private EJBContext context;
     
+	/**
+	 *  Metodo che si occupa dato un utente di aggiungerlo al database
+	 */
 	@Override
 	public void aggiungiNuovoUtente(UtenteDTO utente) {
 		Anagrafica nuovaAnagrafica = new Anagrafica(utente);
@@ -41,7 +44,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		
 	}
 
-
+	/**
+	 *  Metodo che si occupa di verificare dato lo username di un utente se questo esiste già nel database ritorna true false altrimenti
+	 */
 	@Override
 	public boolean esisteUsername(String username) {
 		if (em.find(Utente.class,username)!=null){
@@ -50,6 +55,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
         return false;
 	}
 	
+	/**
+	 * Metodo che dato un codice fiscale si occupa di verificare se esiste nel database ritorna true altrimenti false
+	 */
 	@Override
 	public boolean esisteCodiceFiscale(String codiceFiscale) {
 		if (em.find(Anagrafica.class, codiceFiscale)!=null){
@@ -59,6 +67,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	}
 
 
+	/**
+	 * Metodo che dato un utente si occupa di integrare le eventuali modifiche all'interno del database
+	 */
 	
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
@@ -77,8 +88,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		
 	}
 
-
-	
+	/**
+	 *  Metodo che si occupa dato un codice fiscale di eliminarne il profilo all'interno del database
+	 */
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public void eliminaProfilo(String cf) {
@@ -87,6 +99,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		em.remove(old);
 	}
 	
+	/**
+	 * Metodo che viene chiamato sull'utente attivo per richiamarne il profilo
+	 */
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO() {
@@ -95,6 +110,10 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		return userDTO;
 		
 	}
+	
+	/**
+	 *  Metodo che viene chiamato sul dipendente attivo per richiamarne il profilo
+	 */
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public UtenteDTO getUtenteDTO(String dipendente) {
@@ -112,11 +131,18 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	}
 */
 	
-	
+	/**
+	 * Metodo che dato lo username di un utente lo ricerca all'interno del database
+	 * @param username dell'utente da ricercare
+	 * @return il profilo dell'utente ricercato
+	 */
     public Utente cerca(String username) {
     	return em.find(Utente.class, username);
     }
     
+    /**
+     * Metodo che recupera la lista degli utenti e dei dipendenti all'interno del database
+     */
     @Override
 	@RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
     public List<UtenteDTO> getListaUtenti() {
@@ -131,6 +157,9 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return listaUtenti;
     }
     
+    /**
+     * Metodo che recupera la lista degli utenti standard all'interno del database
+     */
     @SuppressWarnings("unchecked")
 	@Override
     @RolesAllowed({"AMMINISTRATORE","DIPENDENTE"})
@@ -146,27 +175,42 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     	return listaUtenti;
 	}
     
-	
+	/**
+	 * Metodo che dato lo username di un utente lo elimina dal database
+	 * @param username dell'utente che va eliminato
+	 */
     public void rimuovi(String username) {
 		Utente utente = cerca(username);
         em.remove(utente);
 	}
     
+    /**
+     * Metodo che dato il profilo di un utente si occupa di rimuoverlo dal database 
+     * @param utente profilo dell'utente che va eliminato 
+     */
     public void rimuovi(Utente utente) {
     	em.remove(utente);
 	}
     
-    
+    /**
+     * Metodo che viene chiamato su un utente e restituisce il profilo
+     * @return il profilo dell'utente attiv
+     */
     public Utente getUtenteAttivo() {
     	return cerca(getUsernameAttivo());
     }
 	
-    
+    /**
+     * Metodo che viene chiamato sull'utente attivo e ne ritrna lo username
+     * @return
+     */
     public String getUsernameAttivo() {
     	return context.getCallerPrincipal().getName();
     }
 
-
+    /**
+     * Metodo che verifica se un dato utente è attivo 
+     */
 	@Override
 	public boolean isUtente() {
 		Utente utente = getUtenteAttivo();

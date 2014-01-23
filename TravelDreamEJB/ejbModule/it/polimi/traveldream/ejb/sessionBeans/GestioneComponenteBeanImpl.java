@@ -305,7 +305,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	/**
 	 * Metodo che restituisce se un dato pacchetto è provvisto sia di aereo di andata che di ritorno
 	 * @param pacchetto
-	 * @return
+	 * @return booleano che è true se l'aereo ha un ritorno
 	 */
 	private boolean conRitornoAndata(Pacchetto pacchetto){
 		boolean andata = false;

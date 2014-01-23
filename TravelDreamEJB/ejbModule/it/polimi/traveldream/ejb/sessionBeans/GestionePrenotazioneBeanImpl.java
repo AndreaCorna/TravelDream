@@ -115,7 +115,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 
 	
 	/*
-	 * Metodi privati per la conversione di un oggetto prelevato dal database in un oggetto che verr√† inviato alla view.
+	 * Metodi privati per la conversione di un oggetto prelevato dal database in un oggetto che verr‡† inviato alla view.
 	 */
 	
 	
