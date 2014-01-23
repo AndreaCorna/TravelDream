@@ -1,6 +1,8 @@
 package it.polimi.traveldream.webBeans;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import it.polimi.traveldream.dataModels.PrenotazioneDataModel;
@@ -54,6 +56,19 @@ public class PrenotazioneManagedBean {
 		datiPrenotazioneViaggio = new PrenotazioneViaggioDataModel(listaPrenotazioniViaggi);
 		}
 	
+		
+	public URL modificaPrenotazione(String idPacchetto, String idPrenotazione){
+		System.out.println(idPacchetto + " "+idPrenotazione);
+		URL aURL;
+		try {
+			 aURL = new URL("http://localhost:8080/TravelDreamWeb/employee/buyPacchetto?id="+idPacchetto+"&pre="+idPrenotazione);
+			 return aURL;
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public Prenotazione_PacchettoDTO getPrenotazionePacchetto() {
 		return prenotazionePacchetto;
 	}
