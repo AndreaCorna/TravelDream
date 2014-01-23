@@ -114,7 +114,9 @@ public class PacchettoManagedBean {
 	
 	private Date dataOdierna;
 	
-	
+	/**
+	 * Metodo che si occupa di inizializzare la pagina relativa ai pacchetti 
+	 */
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
@@ -124,6 +126,10 @@ public class PacchettoManagedBean {
 		listaAereiRitornoDB = new ArrayList<AereoDTO>();
 	}
 	
+	/**
+	 * Metodo che si occupa di inizializzare la pagina relativa alla personalizzazione dei pacchetti 
+	 * @param id
+	 */
 	public void initPersonalizza(String id){
 		dataOdierna = new Date();
 		prenotazione = new Prenotazione_PacchettoDTO();
@@ -156,6 +162,10 @@ public class PacchettoManagedBean {
 		numeroPersone = lista;
 	}
 	
+	/**
+	 * Metodo che si occupa di inizializzare la pagina di modifiche del pacchetto 
+	 * @param id
+	 */
 	public void initModifica(String id){
 		initPersonalizza(id);
 		datiAereiAndata = new AereoDataModel(pacchetto.getAereiAndata());
@@ -165,6 +175,9 @@ public class PacchettoManagedBean {
 		resetSelezioni();
 	}
 	
+	/**
+	 * Metodo che si occupa di mostrare le offerte all'interno delle pagine 
+	 */
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
 		caricaDestinazioni();
@@ -177,6 +190,10 @@ public class PacchettoManagedBean {
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
+	/**
+	 * Metodo che si occupa di aggiungere tutte le informazioni relative agli aerei che l'utente ha inserito, all'interno del database
+	 * @return
+	 */
 
 	public String aggiungiDestinazioneDate(){
 		String destinazione = pacchetto.getDestinazione();
@@ -190,6 +207,10 @@ public class PacchettoManagedBean {
 	}
 
 	
+	/**
+	 * Metodo che aggiunge gli aerei all'interno di un pacchetto nel database 
+	 * @return
+	 */
 	public String aggiungiAerei(){
 		
 		if (validaAerei()){
@@ -205,6 +226,10 @@ public class PacchettoManagedBean {
 	
 	
 	
+	/**
+	 * Metodo che aggiunge gli hotel all'interno di un pacchetto nel database
+	 * @return
+	 */
 	public String aggiungiHotel(){
 		if ( listaHotel.size()>0 ){
 			pacchetto.setHotels(listaHotel);
@@ -218,6 +243,10 @@ public class PacchettoManagedBean {
 		
 	}
 	
+	/**
+	 * Metodo che aggiunge le escursione all'interno di un pacchetto nel database
+	 * @return
+	 */
 	public String aggiungiEscursioni(){
 		if ( listaEscursioni.size()>0 ){
 			pacchetto.setEscursioni(listaEscursioni);
@@ -227,11 +256,19 @@ public class PacchettoManagedBean {
 			return  null;
 	}
 	
+	/**
+	 * Metodo che presi tutti i dati che l'utente ha inserito li mette all'interno del pacchetto nel database 
+	 * @return
+	 */
 	public String creaPacchetto(){
 		gestionePacchetto.creaPacchetto(pacchetto);
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Metodo che viene chiamato per modificare un pacchetto all'interno del database
+	 * @return
+	 */
 	public String modificaPacchetto(){
 		if(validaModifiche()){
 			pacchetto.setAereiAndata(listaAereiAndata);
@@ -245,12 +282,20 @@ public class PacchettoManagedBean {
 		return "modificaPacchetto.xhtml?id="+id;
 	}
 	
+	/**
+	 * Metodo che elmina un pacchetto all'interno del database
+	 * @return
+	 */
 	public String eliminaPacchetto(){
 		pacchetto.setId(id);
 		gestionePacchetto.eliminaPacchetto(pacchetto);
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Metodo che viene utilizzato per effettuare la prenotazione di un pacchetto
+	 * @return
+	 */
 	@SuppressWarnings("deprecation")
 	public String prenotaPacchetto(){
 		costo = 0;
@@ -279,10 +324,18 @@ public class PacchettoManagedBean {
 		return null;
 	}
 	
+	/**
+	 * Metodo che ritorna true se una data selezione Ë possibile false altrimenti  
+	 * @return un booleano che Ë true se la selezione Ë possibile false altrimenti 
+	 */
 	private boolean selezionePossibile(){
 		return checkNumeroPosti() && checkDate() && checkAerei();
 	}
 	
+	/**
+	 * Metodoc he dati due aerei controlla che soddisfino determinati vincoli
+	 * @return
+	 */
 	private boolean checkAerei(){
 		AereoDTO andata = prenotazione.getAereoAndata();
 		AereoDTO ritorno = prenotazione.getAereoRitorno();
@@ -299,6 +352,10 @@ public class PacchettoManagedBean {
 		return true;
 	}
 	
+	/**
+	 * Metodo che serve per controllare se vi sono posti disponibili sugli aerei di andata e ritorno e sull'hotel
+	 * @return true se vi sono posti, false altrimenti 
+	 */
 	private boolean checkNumeroPosti(){
 		AereoDTO andata = prenotazione.getAereoAndata();
 		AereoDTO ritorno = prenotazione.getAereoRitorno();
@@ -321,6 +378,10 @@ public class PacchettoManagedBean {
 		return true;
 	}
 	
+	/**
+	 * Metodo che si occupa di controllare se le date soddisfano determinati vincoli 
+	 * @return
+	 */
 	private boolean checkDate(){
 		AereoDTO andata = prenotazione.getAereoAndata();
 		AereoDTO ritorno = prenotazione.getAereoRitorno();
@@ -328,7 +389,7 @@ public class PacchettoManagedBean {
 		for(EscursioneDTO escursione:lista){
 			if(escursione.getData().before(andata.getData()) ||
 					escursione.getData().after(ritorno.getData())){
-				String message = "La data dell'escursione "+escursione.getId()+"  non √® compresa tra le date degli aerei scelti";
+				String message = "La data dell'escursione "+escursione.getId()+"  non Ë compresa tra le date degli aerei scelti";
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 				return false;
 			}
@@ -336,6 +397,10 @@ public class PacchettoManagedBean {
 		return true;
 	}
 		
+	/**
+	 * Metodo che conferma la prenotazione 
+	 * @return
+	 */
 	public String confermaPrenotazione(){
 		gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
 		if(checkCondivisione){
@@ -348,7 +413,9 @@ public class PacchettoManagedBean {
 	public String prova(){
 		return "buyPacchetto?id=56";
 	}
-	
+	/**
+	 * Metodo setter della condivisione
+	 */
 	private void setCondivisione(){
 		condivisione = new CondivisioneDTO();
 		condivisione.setData(new Date());
@@ -356,6 +423,10 @@ public class PacchettoManagedBean {
 		condivisione.setUtente(gestioneUtente.getUtenteDTO());
 	}
 	
+	/**
+	 * Metodo che gestisce l'interfaccia utente
+	 * @param event
+	 */
 	public void onTransfer(TransferEvent event){
 		StringBuilder builder = new StringBuilder();  
         for(Object item : event.getItems()) {  
@@ -369,22 +440,39 @@ public class PacchettoManagedBean {
 		
 	}
 	
+	/**
+	 * Metodo che si occupa di validare le date e di verificare se la data di fine validit‡ Ë successiva a quella di inizio
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
 	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
 		Date dataInizio = (Date)datainizio.getValue();
 		Date dataFine = (Date)value;
 		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validit√† deve essere successiva a quella di inizio"));
+                throw new ValidatorException(new FacesMessage("La data di fine validit‡† deve essere successiva a quella di inizio"));
         }
 	}
 	
+	/**
+	 * Metodo che valida l'id se non Ë gi‡ utilizzato 
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
 	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
         if (gestionePacchetto.esisteIdPacchetto(value.toString())){
-                throw new ValidatorException(new FacesMessage("Id gi√† utilizzato. Scegline un altro"));
+                throw new ValidatorException(new FacesMessage("Id gi‡† utilizzato. Scegline un altro"));
         }
 	}
-
 	
+	
+	/**
+	 * Metodo che si occupa di caricare le destinazioni
+	 */
 
 	private void caricaDestinazioni(){
 		ArrayList<String> listaDestinazioni = new ArrayList<String>();
@@ -401,6 +489,10 @@ public class PacchettoManagedBean {
 		}
 	}
 
+	/**
+	 * Metodo che verifica se gli aerei rispettano determinati vincoli 
+	 * @return
+	 */
 	private boolean validaAerei(){
 		boolean corretto = false;
 		if(listaAereiAndata.size()==0 || listaAereiRitorno.size()==0)
@@ -422,10 +514,17 @@ public class PacchettoManagedBean {
 		return corretto;
 	}
 
+	/**
+	 * Metodo che rispetta se le modifiche fatte verificano i vincoli imposti
+	 * @return
+	 */
 	private boolean validaModifiche(){
 		return validaAerei() && listaHotel.size()>0 && listaEscursioni.size()>=0;
 	}
 	
+	/**
+	 * Metodo che si occupa di resettare le selezioni
+	 */
 	private void resetSelezioni(){
 		if(listaAereiAndata != null)
 			listaAereiAndata.clear();
@@ -437,6 +536,9 @@ public class PacchettoManagedBean {
 			listaHotel.clear();
 	}
 
+	/**
+	 * Metodo che si occupa di caricare la lista delle escursioni
+	 */
 	private void loadListaEscursioni(){
 		ArrayList<String> escursioni = new ArrayList<String>();
 		for(EscursioneDTO escursione:listaEscursioniDB){
@@ -447,6 +549,12 @@ public class PacchettoManagedBean {
 		setListaSelezioneEscursioni(new DualListModel<>(escursioni, escursioniTarget));
 	}
 	
+	
+	/*
+	 * Metodi getter e setter dei dati e dell'interfaccia 
+	 */
+	
+
 	private void setSelezioneEscursioni(){
 		boolean trovato = false;
 		List<String> selezioneEscursioni = listaSelezioneEscursioni.getTarget();
@@ -562,7 +670,6 @@ public class PacchettoManagedBean {
 		String message = "Selezionata la data";
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 	}
-	
 	public Date getRitorno() {
 		return ritorno;
 	}
