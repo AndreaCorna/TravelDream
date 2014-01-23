@@ -22,7 +22,10 @@
 				<p:message for="dest" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="data_inizio">Data di partenza:</h:outputLabel>
-				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.aereoAndata.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.aereoAndata.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
+					mindate="#{viaggio.minData}">  
+      				 </p:calendar>  
+    			
 				<p></p>
 				
 
