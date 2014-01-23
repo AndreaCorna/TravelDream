@@ -120,23 +120,26 @@ public class PacchettoManagedBean {
 	
 	private boolean modifica;
 	
+	private int idPrenotazione;
+	
+	
 	
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
-		/*listaEscursioniDB = new ArrayList<EscursioneDTO>();
-		listaHotelDB = new ArrayList<HotelDTO>();
-		listaAereiAndataDB = new ArrayList<AereoDTO>();
-		listaAereiRitornoDB = new ArrayList<AereoDTO>();*/
 			
 	}
 	
-	public void initPersonalizza(String id){
+	public void initPersonalizza(String id, String pre){
 		dataOdierna = new Date();
 		prenotazione = new Prenotazione_PacchettoDTO();
 		if(	!id.equals("")){
 			Integer value = new Integer(id);
 			this.id = value.intValue();
+		}
+		if(!pre.equals("")){
+			Integer value = new Integer(pre);
+			this.idPrenotazione = value.intValue();
 		}
 		boolean found = false;
 		if(listaPacchetti == null){
@@ -177,7 +180,7 @@ public class PacchettoManagedBean {
        
 	
 	public void initModifica(String id){
-		initPersonalizza(id);
+		initPersonalizza(id,null);
 		datiAereiAndata = new AereoDataModel(pacchetto.getAereiAndata());
 		datiAereiRitorno = new AereoDataModel(pacchetto.getAereiRitorno());
 		datiHotel = new HotelDataModel(pacchetto.getHotels());
@@ -362,17 +365,16 @@ public class PacchettoManagedBean {
 	public String confermaPrenotazione(){
 		if(!modifica)
 			gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
-		else
+		else{
+			prenotazione.setId(idPrenotazione);
 			gestionePrenotazione.aggiornaPrenotazionePacchetto(prenotazione);
+			
+		}
 		if(checkCondivisione){
 			setCondivisione();
 			gestioneCondivisione.creaCondivisione(condivisione, prenotazione);
 		}
 		return "index?faces-redirect=true";
-	}
-	
-	public String prova(){
-		return "buyPacchetto?id=56";
 	}
 	
 	private void setCondivisione(){
@@ -859,5 +861,12 @@ public class PacchettoManagedBean {
 		this.modifica = modifica;
 	}
 
+	public int getIdPrenotazione() {
+		return idPrenotazione;
+	}
 
-}
+	public void setIdPrenotazione(int idPrenotazione) {
+		this.idPrenotazione = idPrenotazione;
+	}
+
+	}

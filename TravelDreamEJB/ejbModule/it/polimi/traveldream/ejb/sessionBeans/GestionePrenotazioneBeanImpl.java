@@ -86,6 +86,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public void aggiornaPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione) {
 		Prenotazione_Pacchetto nuova = em.find(Prenotazione_Pacchetto.class,prenotazione.getId());
+		System.out.println(em.find(Aereo.class,prenotazione.getAereoAndata().getId()));
 		nuova.setAereo1(em.find(Aereo.class,prenotazione.getAereoAndata().getId()));
 		nuova.setAereo2(em.find(Aereo.class,prenotazione.getAereoRitorno().getId()));
 		nuova.setData(prenotazione.getData());
