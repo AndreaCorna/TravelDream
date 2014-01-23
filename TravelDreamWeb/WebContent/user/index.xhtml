@@ -125,31 +125,6 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
             			</p:outputPanel>  
        			 </f:facet>  
   
-		        <p:column id="id" filterBy="id"   
-		                headerText="id" footerText="id"
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.id}" />  
-		        </p:column> 
-		        
-		        <p:column id="pacchetto" filterBy="pacchetto"   
-		                headerText="pacchetto" footerText="pacchetto"  
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.pacchetto.getId()}" />  
-		        </p:column>
-		        
-		        <p:column id="data" filterBy="data"   
-		                headerText="data" footerText="data"  
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.data}" />  
-		        </p:column> 
-		        
-		        <p:column id="escursioni" filterBy="escursioni"   
-		                headerText="escursioni" footerText="escursioni"  
-		                filterMatchMode="contains">  
-		        		<p:dataList value="#{pac.escursioni}" var="escur" itemType="circle">  
-   				 			#{escur.luogo}, #{escur.data}  
-				</p:dataList>   
-				</p:column> 
 		        <p:column id="aereoAndata" filterBy="aereoAndata"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
@@ -165,6 +140,15 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
+		        
+		        		        <p:column id="escursioni" filterBy="escursioni"   
+		                headerText="escursioni" footerText="escursioni"  
+		                filterMatchMode="contains">  
+		        		<p:dataList value="#{pac.escursioni}" var="escur" itemType="circle">  
+   				 			#{escur.luogo}, #{escur.data}  
+				</p:dataList>   
+				</p:column> 
+				
 		        <p:column headerText="Modifica" style="width:24%" >  
 		          <h:link outcome = "buyPacchetto?id=#{pac.pacchetto.id}&amp;pre=#{pac.id}"  value="Modifica"/>
                 </p:column>
@@ -184,18 +168,6 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
                		 		<p:inputText id="globalFilter" onkeyup="tabellaPrenotazioniViaggi.filter()" style="width:150px" />  
             			</p:outputPanel>  
        			 </f:facet>  
-  
-		        <p:column id="id" filterBy="id"   
-		                headerText="id" footerText="id"
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.id}" />  
-		        </p:column>  
-		      
-		        <p:column id="data" filterBy="data"   
-		                headerText="data" footerText="data"  
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.data}" />  
-		        </p:column> 
 		       
 		        <p:column id="aereoAndata" filterBy="aereoAndata"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
@@ -207,11 +179,19 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoRitorno.data}" />  
 		        </p:column> 
+		      
 		        <p:column id="hotel" filterBy="hotel"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.hotel.nome}" />  
 		        </p:column> 
+		        		        <p:column id="escursioni" filterBy="escursioni"   
+		                headerText="escursioni" footerText="escursioni"  
+		                filterMatchMode="contains">  
+		        		<p:dataList value="#{pacV.escursioni}" var="escur" itemType="circle">  
+   				 			#{escur.luogo}, #{escur.data}  
+				</p:dataList>   
+				</p:column> 
   
 		        	 </p:dataTable>  
       	<p></p>
