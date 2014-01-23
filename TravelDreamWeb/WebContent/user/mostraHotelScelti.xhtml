@@ -26,8 +26,8 @@
 		  
 		        <p:column selectionMode="single" style="width:2%" />  
 		  
-		        <p:column headerText="Id" style="width:25%">  
-		            #{hotel.id}  
+		        <p:column headerText="nome" style="width:25%">  
+		            #{hotel.nome}  
 		        </p:column>  
 		  
 		        <p:column headerText="città" style="width:25%">  
@@ -54,7 +54,7 @@
              action="#{viaggio.settaHotelScelto(1)}" styleClass="ui-priority-primary"/>  
              <p:commandButton value="Voglio anche un'escursione" id="proseguiHotel" 
              action="#{viaggio.settaHotelScelto(2)}" styleClass="ui-priority-primary"/>  
-             
+              <p><a href="index.xhtml">Torna alla homepage</a></p>
            	</p:panel>
 	</h:form>
 </h:body>
