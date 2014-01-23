@@ -13,6 +13,8 @@ public class CondivisioneDTO {
 	private int id_Prenotazione;
 
 	private UtenteDTO utente;
+	
+	private Prenotazione_PacchettoDTO prenotazione;
 
 		
 	public String getLink() {
@@ -45,6 +47,14 @@ public class CondivisioneDTO {
 
 	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
+	}
+
+	public Prenotazione_PacchettoDTO getPrenotazione() {
+		return prenotazione;
+	}
+
+	public void setPrenotazione(Prenotazione_PacchettoDTO prenotazione) {
+		this.prenotazione = prenotazione;
 	}
 
 }

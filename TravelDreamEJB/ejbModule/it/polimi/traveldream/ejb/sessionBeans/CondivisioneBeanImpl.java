@@ -47,6 +47,9 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 		condivisione.setLink(dato.getLink());
 		condivisione.setUtente(ConverterDTO.convertToDTO(dato.getUtente()));
 		condivisione.setId_Prenotazione(dato.getPrenotazionePacchetto().getId());
+		Prenotazione_PacchettoDTO prenotazione = 
+				ConverterDTO.convertToDTO(em.find(Prenotazione_Pacchetto.class,dato.getPrenotazionePacchetto().getId()));
+		condivisione.setPrenotazione(prenotazione);
 		return condivisione;
 		
 	}

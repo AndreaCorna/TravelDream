@@ -229,6 +229,12 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
                		 		<p:inputText id="globalFilter" onkeyup="tabellaOfferte.filter()" style="width:150px" />  
             			</p:outputPanel>  
        			 </f:facet>  
+       			 
+       			  <p:column id="idPacchetto" filterBy="id"   
+		                headerText="Id" footerText="Id"
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.id}" />  
+		        </p:column>
   
 		        <p:column id="dest" filterBy="destinazione"   
 		                headerText="Destinazione" footerText="Destinazione"

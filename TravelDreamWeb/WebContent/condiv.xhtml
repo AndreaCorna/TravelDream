@@ -30,7 +30,17 @@ alert(first);
 				<p:outputLabel value="Link"/> <p:outputLabel value="#{condivisione.link}"/>
 				<p:outputLabel value="Utente"/> <p:outputLabel value="#{condivisione.idUtente}"/>
 				<p:outputLabel value="Prenotazione"/> <p:outputLabel value="#{condivisione.idPrenotazione}"/>
-				<p:outputLabel value="Data"/> <p:outputLabel value="#{condivisione.data}"/>
+				<p:outputLabel value="Data della Prenotazione"/> <p:outputLabel value="#{condivisione.data}"/>
+				<p:outputLabel value="Pacchetto"/> <p:outputLabel value="#{condivisione.prenotazione.pacchetto.id}"/>
+				<p:outputLabel value="Destinazione"/> <p:outputLabel value="#{condivisione.prenotazione.pacchetto.destinazione}"/>
+				<p:outputLabel value="Aereo Andata"/> <p:outputLabel value="#{condivisione.prenotazione.aereoAndata.id}"/>
+				<p:outputLabel value="Aereo Ritorno"/> <p:outputLabel value="#{condivisione.prenotazione.aereoRitorno.id}"/>
+				<p:outputLabel value="Hotel"/> <p:outputLabel value="#{condivisione.prenotazione.hotel.nome}"/>
+				<h:outputLabel value="Escursioni"/>
+				<p:dataList value="#{pacchetto.prenotazione.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+				</p:dataList>
+
 				<p></p>
 				<!-- 
 				<script language="JavaScript">

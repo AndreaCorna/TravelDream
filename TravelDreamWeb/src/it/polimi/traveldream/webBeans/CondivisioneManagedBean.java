@@ -3,6 +3,7 @@ package it.polimi.traveldream.webBeans;
 import java.util.Date;
 
 import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.sessionBeans.CondivisioneBean;
 
@@ -36,6 +37,8 @@ public class CondivisioneManagedBean {
 	
 	private int idPrenotazione;
 	
+	private Prenotazione_PacchettoDTO prenotazione;
+	
 	/**
 	 * Costruttore di default
 	 */
@@ -55,6 +58,7 @@ public class CondivisioneManagedBean {
 		this.link = condivisione.getLink();
 		this.idUtente = utente.getUsername();
 		this.idPrenotazione = condivisione.getId_Prenotazione();
+		this.prenotazione = condivisione.getPrenotazione();
 		
 		return "/condiv?link="+this.link+"&faces-redirect=true";
 		
@@ -108,6 +112,14 @@ public class CondivisioneManagedBean {
 
 	public void setIdPrenotazione(int idPrenotazione) {
 		this.idPrenotazione = idPrenotazione;
+	}
+
+	public Prenotazione_PacchettoDTO getPrenotazione() {
+		return prenotazione;
+	}
+
+	public void setPrenotazione(Prenotazione_PacchettoDTO prenotazione) {
+		this.prenotazione = prenotazione;
 	}
 
 }
