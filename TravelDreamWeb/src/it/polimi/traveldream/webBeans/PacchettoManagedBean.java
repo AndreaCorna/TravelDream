@@ -136,7 +136,7 @@ public class PacchettoManagedBean {
 	 * Metodo che si occupa di inizializzare la pagina relativa alla personalizzazione dei pacchetti 
 	 * @param id
 	 */
-	public void initPersonalizza(String id){
+	public void initPersonalizza(String id, String pre){
 		dataOdierna = new Date();
 		prenotazione = new Prenotazione_PacchettoDTO();
 		if(	!id.equals("")){
@@ -181,7 +181,7 @@ public class PacchettoManagedBean {
 		if (event.getTab().getId().equals("tabPrenotazione")) {
 		      modifica = true;
 		      resetSelezioni();
-		else
+		}else
 			modifica = false;
 		System.out.print(modifica);
 	}
