@@ -19,4 +19,6 @@ public interface GestionePrenotazioneBean {
 	List<Prenotazione_PacchettoDTO> getListaPrenotazioni();
 
 	List<Prenotazione_ViaggioDTO> getListaPrenotazioniViaggio();
+
+	void aggiornaPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione);
 }

@@ -9,12 +9,15 @@ import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.dataModels.PacchettoDataModel;
+import it.polimi.traveldream.dataModels.PrenotazioneDataModel;
+import it.polimi.traveldream.dataModels.PrenotazioneViaggioDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
+import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.sessionBeans.CondivisioneBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean;
@@ -31,6 +34,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
@@ -114,14 +118,17 @@ public class PacchettoManagedBean {
 	
 	private Date dataOdierna;
 	
+	private boolean modifica;
+	
 	
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
-		listaEscursioniDB = new ArrayList<EscursioneDTO>();
+		/*listaEscursioniDB = new ArrayList<EscursioneDTO>();
 		listaHotelDB = new ArrayList<HotelDTO>();
 		listaAereiAndataDB = new ArrayList<AereoDTO>();
-		listaAereiRitornoDB = new ArrayList<AereoDTO>();
+		listaAereiRitornoDB = new ArrayList<AereoDTO>();*/
+			
 	}
 	
 	public void initPersonalizza(String id){
@@ -141,6 +148,7 @@ public class PacchettoManagedBean {
 				found = true;
 			}
 		}
+		
 		listaAereiAndataDB = pacchetto.getAereiAndata();
 		listaAereiRitornoDB = pacchetto.getAereiRitorno();
 		listaHotelDB = pacchetto.getHotels();
@@ -155,6 +163,18 @@ public class PacchettoManagedBean {
 		}
 		numeroPersone = lista;
 	}
+	
+	public void attivaModifica(TabChangeEvent event) {  
+		if (event.getTab().getId().equals("tabPrenotazione")) {
+		      modifica = true;
+		      resetSelezioni();
+		}
+		else
+			modifica = false;
+		System.out.print(modifica);
+	}
+     
+       
 	
 	public void initModifica(String id){
 		initPersonalizza(id);
@@ -175,6 +195,7 @@ public class PacchettoManagedBean {
 			numeroCasuale = 1;
 		datiPacchettiCasuali = new PacchettoDataModel(listaPacchetti.subList(numeroCasuale-1, numeroCasuale));
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
+		
 	}
 	
 	
@@ -229,6 +250,7 @@ public class PacchettoManagedBean {
 	}
 	
 	public String creaPacchetto(){
+		System.out.println(pacchetto.getEscursioni());
 		gestionePacchetto.creaPacchetto(pacchetto);
 		return "index?faces-redirect=true";
 	}
@@ -338,7 +360,10 @@ public class PacchettoManagedBean {
 	}
 		
 	public String confermaPrenotazione(){
-		gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
+		if(!modifica)
+			gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
+		else
+			gestionePrenotazione.aggiornaPrenotazionePacchetto(prenotazione);
 		if(checkCondivisione){
 			setCondivisione();
 			gestioneCondivisione.creaCondivisione(condivisione, prenotazione);
@@ -825,4 +850,14 @@ public class PacchettoManagedBean {
 	public void setDataOdierna(Date dataOdierna) {
 		this.dataOdierna = dataOdierna;
 	}
+
+	public boolean isModifica() {
+		return modifica;
+	}
+
+	public void setModifica(boolean modifica) {
+		this.modifica = modifica;
+	}
+
+
 }

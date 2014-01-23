@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
 
+
 @ManagedBean(name="prenotazione")
 @SessionScoped
 public class PrenotazioneManagedBean {
@@ -43,6 +44,7 @@ public class PrenotazioneManagedBean {
 	public void init(){
 		setPrenotazionePacchetto(new Prenotazione_PacchettoDTO());
 		setPrenotazioneViaggio(new Prenotazione_ViaggioDTO());
+		
 	}
 		public void mostraPrenotazioni(){
 		listaPrenotazioni = gestionePrenotazione.getListaPrenotazioni();
@@ -89,4 +91,5 @@ public class PrenotazioneManagedBean {
 			List<Prenotazione_ViaggioDTO> prenotazioniViaggioSelezionate) {
 		this.prenotazioniViaggioSelezionate = prenotazioniViaggioSelezionate;
 	}
+	
 }

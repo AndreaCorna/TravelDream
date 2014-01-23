@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -39,6 +38,7 @@ public class ConverterDTO {
 	
 	
 	private static GestioneUtenteBean gestioneUtente = new GestioneUtenteBeanImpl();
+	
 	
 	@Resource
 	private EJBContext context;
@@ -144,20 +144,7 @@ public class ConverterDTO {
 		return nuovo;
 	}
 
-	/**
-	 * Il metodo converte una lista di EscursioniDTO in una lista di Escursioni
-	 * @param lista - lista dei dto
-	 * @return lista di istanze del database
-	 */
-	protected static List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
-		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
-		for(int i=0;i<lista.size();i++){
-			Escursione nuova = em.find(Escursione.class, lista.get(i).getId());
-			listaEscursioni.add(nuova);
-		}
-		List<Escursione> escursioni = listaEscursioni;
-		return escursioni;
-	}
+	
 	/**
 	 * Il metodo converte una lista di entita escursione in una lista di escursioneDTO
 	 * @param lista - lista delle escursioni
@@ -172,25 +159,7 @@ public class ConverterDTO {
 		List<EscursioneDTO> escursioni = listaEscursioni;
 		return escursioni;
 	}
-	/**
-	 * Il metodo ritorna una lista di entita aereo 
-	 * @param listaAndata - lista aereoDTO andata
-	 * @param listaRitorno - lista aereoDTO ritorno
-	 * @return lista di aerei, unione degli elementi delle liste in ingresso
-	 */
-	protected static List<Aereo> convertListaAerei(List<AereoDTO> listaAndata, List<AereoDTO> listaRitorno){
-		ArrayList<Aereo> listaAerei = new ArrayList<Aereo>();
-		for(int i=0;i<listaAndata.size();i++){
-			Aereo nuovo = em.find(Aereo.class, listaAndata.get(i).getId());
-			listaAerei.add(nuovo);
-		}
-		for(int i=0;i<listaRitorno.size();i++){
-			Aereo nuovo = em.find(Aereo.class, listaRitorno.get(i).getId());
-			listaAerei.add(nuovo);
-		}
-		List<Aereo> aerei = listaAerei;
-		return aerei;
-	}
+	
 	/**
 	 * Il metodo prende da una lista di aerei la lista degli aerei di andata
 	 * @param lista - lista da scorrere
@@ -240,20 +209,7 @@ public class ConverterDTO {
 		return aerei;
 	}
 	
-	/**
-	 * Il metodo converte una lista di oggetti DTO in una lista di istanze entity Hotel
-	 * @param lista - lista di oggetti dto
-	 * @return lista di entity hotel
-	 */
-	protected static List<Hotel> convertListaHotel(List<HotelDTO> lista){
-		ArrayList<Hotel> listaHotel = new ArrayList<Hotel>();
-		for(int i=0;i<lista.size();i++){
-			Hotel nuovo = em.find(Hotel.class, lista.get(i).getId());
-			listaHotel.add(nuovo);
-		}
-		List<Hotel> hotel = listaHotel;
-		return hotel;
-	}
+	
 	/**
 	 * Il metodo converte una lista di entity hotel in una lista di oggetti DTO
 	 * @param lista - lista degli hotel da convertire

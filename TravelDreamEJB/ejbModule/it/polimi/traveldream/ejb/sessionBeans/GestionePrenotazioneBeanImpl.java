@@ -63,6 +63,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 	 * Metodo che si occupa data la prenotazione di costruire la prenotazione del pacchetto 
 	 */
 	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public void inserisciPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione) {
 		Prenotazione_Pacchetto nuova = new Prenotazione_Pacchetto();
 		nuova.setAereo1(em.find(Aereo.class,prenotazione.getAereoAndata().getId()));
@@ -79,6 +80,23 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		em.flush();
 		nuova = em.find(Prenotazione_Pacchetto.class, nuova.getId());
 		prenotazione.setId(nuova.getId());
+	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public void aggiornaPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione) {
+		Prenotazione_Pacchetto nuova = em.find(Prenotazione_Pacchetto.class,prenotazione.getId());
+		nuova.setAereo1(em.find(Aereo.class,prenotazione.getAereoAndata().getId()));
+		nuova.setAereo2(em.find(Aereo.class,prenotazione.getAereoRitorno().getId()));
+		nuova.setData(prenotazione.getData());
+		nuova.setHotel(em.find(Hotel.class,prenotazione.getHotel().getId()));
+		nuova.setPacchetto(em.find(Pacchetto.class,prenotazione.getPacchetto().getId()));
+		nuova.setUtente(em.find(Utente.class, prenotazione.getUtente().getUsername()));
+		nuova.setEscursioni(ConverterDTO.convertListaEscursioni(prenotazione.getEscursioni()));
+		nuova.setDataCheckInHotel(prenotazione.getCheckInHotel());
+		nuova.setDataCheckOutHotel(prenotazione.getCheckOutHotel());
+		nuova.setNumeroPersone(prenotazione.getNumeroPersone());
+		em.merge(nuova);
 	}
 	
 	/**
@@ -323,4 +341,6 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			return nuovo;
 		}
 */
+
+	
 }

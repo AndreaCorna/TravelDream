@@ -122,5 +122,11 @@ public interface GestionePacchettoBean {
 	 * @return la lista degli hotel
 	 */
 	List<HotelDTO> getListaHotelDip(Date partenza, Date ritorno, PacchettoDTO pacchetto);
+	/**
+	 * Il metodo ritorna il pacchetto
+	 * @param id - id del pacchetto
+	 * @return pacchetto
+	 */
+	PacchettoDTO getPacchetto(String id);
 
 }

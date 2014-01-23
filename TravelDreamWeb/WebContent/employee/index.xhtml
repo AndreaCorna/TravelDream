@@ -15,7 +15,9 @@
 <h:form>
 	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
     	<p:tabView effect="drop" effectDuration="normal">
-		<p:tab title="Offerte Speciali">
+    	<p:ajax event="tabChange" listener="#{pacchetto.attivaModifica}"/>  
+    	<p:growl id="msg" showDetail="true" escape="false" />  
+    	<p:tab title="Offerte Speciali">
         	<h:panelGrid columns="4">
     			<p:dataTable id="tabellaOffSpe" var="pac" value="#{pacchetto.datiPacchettiCasuali}" widgetVar="tabellaOfferte"   
           			  emptyMessage="Nessuna offeta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
@@ -196,7 +198,8 @@
       	</h:panelGrid>
 		
 			</p:tab>
-		<p:tab title="Mostra Prenotazioni">
+		<p:tab title="Mostra Prenotazioni" id="tabPrenotazione">
+			
         	<h:panelGrid columns="4" id="regPren">
     			<p:dataTable id="tabellaPren" var="pac" value="#{prenotazione.datiPrenotazione}" widgetVar="tabellaPrenotazioni"   
           			  emptyMessage="Non hai effettuato alcuna prenotazione" filteredValue="#{prenotazione.prenotazioniSelezionate}"
@@ -244,7 +247,7 @@
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
 		        <p:column headerText="Modifica" style="width:24%" >  
-                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Modifica"/>
+                <h:link outcome = "buyPacchetto?id=#{pac.pacchetto.id}"  value="Modifica"/>
                 </p:column>
 		        	 </p:dataTable>
 		        	 </h:panelGrid>
