@@ -37,8 +37,7 @@ public class PrenotazioneManagedBean {
 	
 	private Prenotazione_ViaggioDTO prenotazioneViaggio;
 	
-	private PacchettoManagedBean bean = new PacchettoManagedBean();
-	
+		
 	@PostConstruct
 	public void init(){
 		setPrenotazionePacchetto(new Prenotazione_PacchettoDTO());

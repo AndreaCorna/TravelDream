@@ -118,6 +118,10 @@ public class PacchettoManagedBean {
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
+		listaEscursioniDB = new ArrayList<EscursioneDTO>();
+		listaHotelDB = new ArrayList<HotelDTO>();
+		listaAereiAndataDB = new ArrayList<AereoDTO>();
+		listaAereiRitornoDB = new ArrayList<AereoDTO>();
 	}
 	
 	public void initPersonalizza(String id){
@@ -163,7 +167,6 @@ public class PacchettoManagedBean {
 	
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
-		filtraLista();
 		caricaDestinazioni();
 		Random random = new Random();
 		int high = listaPacchetti.size();
@@ -174,13 +177,6 @@ public class PacchettoManagedBean {
 		datiPacchetti = new PacchettoDataModel(listaPacchetti);
 	}
 	
-
-	private void filtraLista() {
-		for(PacchettoDTO pacchetto:listaPacchetti){
-			
-		}
-		
-	}
 
 	public String aggiungiDestinazioneDate(){
 		String destinazione = pacchetto.getDestinazione();
