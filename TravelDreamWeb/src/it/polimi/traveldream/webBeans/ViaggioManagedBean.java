@@ -27,6 +27,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.event.TransferEvent;
+
 
 @ManagedBean(name="viaggio")
 @SessionScoped
@@ -82,6 +84,9 @@ public class ViaggioManagedBean {
 	private Date minData;
 	
 	private int modalita;
+	
+	private String errore;
+	
 	/*	LEGENDA DELLE MODALITï¿½
 	 * 1		solo aereo
  	   2		aereo escursioni
@@ -95,7 +100,6 @@ public class ViaggioManagedBean {
 	   10		doppio aereo hotel
 	   11		viaggio completo con doppio aereo
 	 */
-	
 	
 	
 	public AereoDTO getAereoRitorno() {
@@ -133,6 +137,7 @@ public class ViaggioManagedBean {
 		aereoRitorno = new AereoDTO();
 		escursione = new EscursioneDTO();
 		modalita = 0;
+		setErrore("");
 	}
 	
 
@@ -140,18 +145,35 @@ public class ViaggioManagedBean {
 		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
 		Date dataPartenza = aereoAndata.getData();
 		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
-		setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
-		
-		return "mostraAereiScelti?faces-redirect=true";
+		if (listaAereiAndataDB.size()!=0)
+		{
+			setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
+			errore ="";
+			return "mostraAereiScelti?faces-redirect=true";
+		}
+		else
+		{
+			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			return "acquistaViaggio?faces-redirect=true";
+		}
 	}
 	
 	public String aggiungiDestinazioneDateAereoRitorno(){				
 		String destinazioneRitorno = aereoRitorno.getCittaAtterraggio().toLowerCase();
 		Date dataPartenzaRitorno = aereoRitorno.getData();
 		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno);
-		setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
+		if(listaAereiRitornoDB.size()!=0)
+		{
+			setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
+			errore ="";
+			return "mostraAereiSceltiRitorno?faces-redirect=true";
+		}
+		else
+		{
+			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			return "acquistaRitorno?faces-redirect=true";
 		
-		return "mostraAereiSceltiRitorno?faces-redirect=true";
+		}
 	}
 	
 	public String passaAHotel(){
@@ -164,9 +186,18 @@ public class ViaggioManagedBean {
 		Date dataAndata = hotel.getDataInizio();
 		Date dataRitorno = hotel.getDataFine();
 		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataAndata, dataRitorno);
-		setDatiHotel(new HotelDataModel(listaHotelDB));
-		
+		if(listaHotelDB.size()!=0)
+		{
+		setDatiHotel(new HotelDataModel(listaHotelDB));	
+		errore ="";
 		return "mostraHotelScelti?faces-redirect=true";
+		}
+		else
+		{
+			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			return "acquistaHotelViaggio?faces-redirect=true";
+		
+		}
 	}
 	
 	public String aggiungiDestinazioneDateEscursione(){
@@ -174,9 +205,18 @@ public class ViaggioManagedBean {
 		String destinazione = escursione.getLuogo().toLowerCase();
 		Date dataPartenza = escursione.getData();
 		listaEscursioniDB = gestioneViaggio.getListaEscursioni(destinazione,dataPartenza);
-		setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
+		if(listaEscursioniDB.size()!=0)
+		{
+			setDatiEscursioni(new EscursioneDataModel(listaEscursioniDB));
+			errore = "";
+			return "mostraEscursioniScelte?faces-redirect=true";
+		}
+		else
+		{
+			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			return "acquistaEscursione?faces-redirect=true";
 		
-		return "mostraEscursioniScelte?faces-redirect=true";
+		}
 	}
 	
 	
@@ -184,11 +224,15 @@ public class ViaggioManagedBean {
 		
 		if (modalita == 1)
 		{
+			if(listaAereiRitorno==null)
+				return "mostraAereiSceltiRitorno?faces-redirect=true";
 			viaggio.setAereoRitorno(listaAereiRitorno);
 			modalita = 8;
 		}
 		if(modalita == 0)
 			{
+			if(listaAereiAndata==null)
+				return "mostraAereiScelti?faces-redirect=true";
 			viaggio.setAereo(listaAereiAndata);
 			modalita = 1;
 			}
@@ -204,6 +248,10 @@ public class ViaggioManagedBean {
 	}
 	
 public String settaHotelScelto(int scelta){
+	
+		if(listaHotel==null)
+			return "mostraHotelScelti?faces-redirect=true";
+	
 		listaHotel.setDataInizio(hotel.getDataInizio());
 		viaggio.setHotel(listaHotel);
 		if(modalita == 0)
@@ -222,6 +270,9 @@ public String settaHotelScelto(int scelta){
 	}
 
 public String settaEscursioneScelta(int scelta){
+	
+	if(listaEscursioni.size()==0)
+		return "mostraEscursioniScelte?faces-redirect=true";
 	
 	viaggio.setEscursioni(listaEscursioni);
 	if(modalita == 0)
@@ -267,7 +318,7 @@ public String richiamaHome(){
 			return "insertEscursione?faces-redirect=true";
 	}
 
-	
+	/*
 	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
 		Date dataInizio = (Date)datainizio.getValue();
@@ -276,7 +327,7 @@ public String richiamaHome(){
                 throw new ValidatorException(new FacesMessage("La data di fine validità  deve essere successiva a quella di inizio"));
         }
 	}
-
+*/
 	public List<AereoDTO> getListaAereiAndataDB() {
 		return listaAereiAndataDB;
 	}
@@ -440,6 +491,17 @@ public String richiamaHome(){
 	public void setMinData(Date minData) {
 		this.minData = minData;
 	}
+
+
+	public String getErrore() {
+		return errore;
+	}
+
+
+	public void setErrore(String errore) {
+		this.errore = errore;
+	}
+
 
 
 
