@@ -120,17 +120,18 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiAndata(String destinazione, Date andata) {
+	public List<AereoDTO> getListaAereiAndata(String destinazione, Date andata, String cittaPartenza) {
 		Date inizioGiorno = andata;
 		Date fineGiorno = andata;
 		inizioGiorno= new Date(andata.getYear(),andata.getMonth(), andata.getDate());
 		fineGiorno.setHours(23);
 		fineGiorno.setMinutes(59);
 		fineGiorno.setSeconds(59);
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.valido = 1 and a.data BETWEEN :startDate AND :endDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.decollo =:partenza and a.valido = 1 and a.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", destinazione)
 			    .setParameter("startDate", inizioGiorno, TemporalType.TIMESTAMP)
 			    .setParameter("endDate", fineGiorno, TemporalType.TIMESTAMP)
+			    .setParameter("partenza", cittaPartenza)
 			    .getResultList();
 		List<AereoDTO> listaAerei = ConverterDTO.convertListaAereiAndataToDTO(aerei);
 		return listaAerei;
@@ -143,7 +144,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@SuppressWarnings("unchecked")
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
-	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date andata) {
+	public List<AereoDTO> getListaAereiRitorno(String cittaDecollo, Date andata, String cittaArrivo) {
 		Date inizioGiorno = andata;
 		Date fineGiorno = andata;
 		inizioGiorno= new Date(andata.getYear(),andata.getMonth(), andata.getDate());
@@ -151,8 +152,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		fineGiorno.setMinutes(59);
 		fineGiorno.setSeconds(59);
 		
-		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.atterraggio =:nome and a.valido = 1 and a.data BETWEEN :startDate AND :endDate")
+		List<Aereo> aerei = em.createQuery("SELECT a FROM Aereo a WHERE a.decollo =:partenza and a.atterraggio =:nome and a.valido = 1 and a.data BETWEEN :startDate AND :endDate")
 			    .setParameter("nome", cittaDecollo)
+			    .setParameter("partenza", cittaArrivo)
 			    .setParameter("startDate", inizioGiorno, TemporalType.TIMESTAMP)
 			    .setParameter("endDate",fineGiorno, TemporalType.TIMESTAMP)
 			    .getResultList();

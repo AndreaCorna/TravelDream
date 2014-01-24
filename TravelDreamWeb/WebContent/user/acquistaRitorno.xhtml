@@ -21,6 +21,10 @@
 				<p:inputText id="destinazione" value="#{viaggio.aereoRitorno.cittaAtterraggio}" />
 				<p:message for="destinazione" value="Inserisci il nome"/>
 				
+				<h:outputLabel for="destRitorno">Partenza da:</h:outputLabel>
+				<p:inputText id="destRitorno" value="#{viaggio.aereoRitorno.cittaDecollo}" />
+				<p:message for="destRitorno" value="Inserisci il nome"/>
+				
 				<h:outputLabel for="data_ritorno">Data di partenza:</h:outputLabel>
 				<p:calendar id="data_ritorno" binding="#{data_ritorno}" required="true" value="#{viaggio.aereoRitorno.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
 				mindate="#{viaggio.aereoAndata.data}">  

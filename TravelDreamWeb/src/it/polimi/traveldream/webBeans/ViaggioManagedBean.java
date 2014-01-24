@@ -166,8 +166,9 @@ public class ViaggioManagedBean {
 
 	public String aggiungiDestinazioneDateAereo(){
 		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
+		String cittaPartenza = aereoAndata.getCittaDecollo().toLowerCase();
 		Date dataPartenza = aereoAndata.getData();
-		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza);
+		listaAereiAndataDB = gestioneViaggio.getListaAereiAndata(destinazione, dataPartenza, cittaPartenza);
 		if (listaAereiAndataDB.size()!=0)
 		{
 			setDatiAereiAndata(new AereoDataModel(listaAereiAndataDB));
@@ -183,8 +184,9 @@ public class ViaggioManagedBean {
 	
 	public String aggiungiDestinazioneDateAereoRitorno(){				
 		String destinazioneRitorno = aereoRitorno.getCittaAtterraggio().toLowerCase();
+		String cittaPartenza = aereoRitorno.getCittaDecollo().toLowerCase();
 		Date dataPartenzaRitorno = aereoRitorno.getData();
-		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno);
+		listaAereiRitornoDB = gestioneViaggio.getListaAereiRitorno(destinazioneRitorno, dataPartenzaRitorno, cittaPartenza);
 		if(listaAereiRitornoDB.size()!=0)
 		{
 			setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
