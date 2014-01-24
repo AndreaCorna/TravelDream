@@ -35,6 +35,8 @@ public class Prenotazione_PacchettoDTO {
 	
 	private int numeroPersone;
 	
+	private String link;
+	
 	public int getId() {
 		return id;
 	}
@@ -53,6 +55,10 @@ public class Prenotazione_PacchettoDTO {
 	
 	public void setCondivisioni(List<CondivisioneDTO> condivisioni){
 		this.condivisioni = condivisioni;
+		if(condivisioni.size()>0){
+			this.link = condivisioni.get(0).getLink();
+		}else
+			this.link ="Nessun link richiesto";
 	}
 	
 	public List<EscursioneDTO> getEscursioni() {
@@ -128,6 +134,14 @@ public class Prenotazione_PacchettoDTO {
 
 	public void setNumeroPersone(int numeroPersone) {
 		this.numeroPersone = numeroPersone;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 }
