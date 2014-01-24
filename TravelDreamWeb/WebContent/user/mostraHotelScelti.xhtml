@@ -14,14 +14,14 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Se vuoi prenotare un hotel inserisci la Destinazione e la Data">
+
 		<h:form>
-			<p:panel header="Seleziona l'hotel">
+			
 				<h:panelGrid columns="3" id="hotel">
 				<p:dataTable id="datiHotel" var="hotel" value="#{viaggio.datiHotel}" paginator="true" rows="30"  
 		                 selection="#{viaggio.listaHotel}">  
 		  		<f:facet name="header">  
-		            Lista Hotel
+		            Seleziona l'hotel che preferisci
 		        </f:facet>  
 		  
 		        <p:column selectionMode="single" style="width:2%" />  
@@ -48,14 +48,14 @@
 		    </p:dataTable>  
 			</h:panelGrid>
 			
-	</p:panel>
+
 </h:form>
 			<p:commandButton value="Acquista il tuo Hotel" id="prosegui" 
              action="#{viaggio.settaHotelScelto(1)}" styleClass="ui-priority-primary"/>  
              <p:commandButton value="Voglio anche un'escursione" id="proseguiHotel" 
              action="#{viaggio.settaHotelScelto(2)}" styleClass="ui-priority-primary"/>  
               <p><a href="index.xhtml">Torna alla homepage</a></p>
-           	</p:panel>
+
 	</h:form>
 </h:body>
 </html>

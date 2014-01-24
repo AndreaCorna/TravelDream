@@ -14,14 +14,14 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Se vuoi prenotare un volo di ritorno inserisci la Destinazione e la Data">
+		
 		<h:form>
-			<p:panel header="Seleziona l'Aereo">
+		
 				<h:panelGrid columns="3" id="aereiRitorno">
 				<p:dataTable id="datiAereiAndata" var="aereo" value="#{viaggio.datiAereiRitorno}" paginator="true" rows="30"  
 		                 selection="#{viaggio.listaAereiRitorno}">  
 		  		<f:facet name="header">  
-		            Lista Aerei Andata
+		            Seleziona l'Aereo di tuo gradimento
 		        </f:facet>  
 		  
 		        <p:column selectionMode="single" style="width:2%" />  
@@ -54,14 +54,14 @@
 		    </p:dataTable>  
 			</h:panelGrid>
 			
-	</p:panel>
+
 </h:form>
 			<p:commandButton value="Acquista i tuoi voli" id="prosegui" 
              action="#{viaggio.settaAereoScelto(1)}" styleClass="ui-priority-primary"/>  
              <p:commandButton value="Vorrei anche un hotel" id="proseguiVolo" 
              action="#{viaggio.settaAereoScelto(3)}" styleClass="ui-priority-primary"/>  
               <p><a href="index.xhtml">Torna alla homepage</a></p>
-           	</p:panel>
+
 	</h:form>
 </h:body>
 </html>

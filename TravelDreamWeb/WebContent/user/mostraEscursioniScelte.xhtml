@@ -10,18 +10,17 @@
  <p:graphicImage value="../immagini/principale.jpg" />
       
 <h:head>
-	<title>Ecco i voli disponibili</title>
+	<title>Ecco le escursioni disponibili</title>
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Se vuoi prenotare un escursione inserisci la Destinazione e la Data">
+
 		<h:form>
-			<p:panel header="Seleziona l'escursione di tuo gradimento ">
 				<h:panelGrid columns="3" id="escursioni">
 				<p:dataTable id="datiEscursioni" var="escursione" value="#{viaggio.datiEscursioni}" paginator="true" rows="30"  
 		                 selection="#{viaggio.listaEscursioni}">  
 		  		<f:facet name="header">  
-		            Lista Escursioni
+		            Seleziona l'escursione di tuo gradimento
 		        </f:facet>  
 		  
 		        <p:column selectionMode="multiple" style="width:2%" />  
@@ -47,12 +46,12 @@
 		    </p:dataTable>  
 			</h:panelGrid>
 			
-	</p:panel>
+
 </h:form>
 			<p:commandButton value="Acquista la tua escursione" id="prosegui" 
              action="#{viaggio.settaEscursioneScelta(1)}" styleClass="ui-priority-primary"/>
               <p><a href="index.xhtml">Torna alla homepage</a></p>  
-               	</p:panel>
+
 	</h:form>
 </h:body>
 </html>
