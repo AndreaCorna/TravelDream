@@ -251,6 +251,13 @@
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
+		         <p:column id="escursioni" filterBy="escursioni"   
+		                headerText="escursioni" footerText="escursioni"  
+		                filterMatchMode="contains">  
+		        		<p:dataList value="#{pac.escursioni}" var="escur" itemType="circle">  
+   				 			#{escur.luogo}, #{escur.data}  
+						</p:dataList>   
+				</p:column> 
 		         <p:column headerText="Informazioni" style="width:24%" >  
 		         <p:commandButton id="info" update=":form:display" oncomplete="PF('dlg2').show()" icon="ui-icon-search" title="View">  
                				 <f:setPropertyActionListener value="#{pac}" target="#{prenotazione.selezione}" />  
@@ -311,23 +318,33 @@
           
     </p:tabView>
 
-	<p:dialog  header="Dettagli Prenotazione" widgetVar="dlg2" modal="true" height="100">  
+	<p:dialog  header="Dettagli Prenotazione" widgetVar="dlg2" modal="true" height="500">  
 		<h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;"> 
 		<f:facet name="header">   
 	    <h:outputText value="Dettagli prenotazione." />
 	    </f:facet>
 	    <h:outputText value="Id prenotazione"/>
 	    <h:outputText value="#{prenotazione.selezione.id}" style="font-weight:bold"/>  
-	     <h:outputText value="Id Pacchetto" />
+	    <h:outputText value="Id Pacchetto" />
 	    <h:outputText value="#{prenotazione.selezione.pacchetto.id}" style="font-weight:bold"/> 
-	     <h:outputText value="Id Aereo Andata" />
+	    <h:outputText value="Id Aereo Andata" />
 	    <h:outputText value="#{prenotazione.selezione.aereoAndata.id}" style="font-weight:bold"/>   
 	    <h:outputText value="Id Aereo Ritorno" />
 	    <h:outputText value="#{prenotazione.selezione.aereoRitorno.id}" style="font-weight:bold"/>   
 	    <h:outputText value="Hotel" />
 	    <h:outputText value="#{prenotazione.selezione.hotel.nome}" style="font-weight:bold"/> 
 	    <h:outputText value="Link per la condivisione" />
-	    <h:outputText value="#{prenotazione.selezione.link}" style="font-weight:bold"/>     
+	    <h:outputText value="#{prenotazione.selezione.link}" style="font-weight:bold"/> 
+	    <h:outputLabel value="Escursioni" />
+		<p:dataList value="#{prenotazione.selezione.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+		</p:dataList>   
+		<h:outputText value="Data Partenza" />
+	    <h:outputText value="#{prenotazione.selezione.aereoAndata.data}" style="font-weight:bold"/> 
+	    <h:outputText value="Data Ritorno" />
+	    <h:outputText value="#{prenotazione.selezione.aereoRitorno.data}" style="font-weight:bold"/> 
+	    <h:outputText value="Data della Prenotazione" />
+	    <h:outputText value="#{prenotazione.selezione.data}" style="font-weight:bold"/>   
 	    </h:panelGrid>
 	</p:dialog>  
 </h:form>

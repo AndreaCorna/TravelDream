@@ -11,20 +11,8 @@
 </h:head>
 <h:body>
 	
-<h:form>
-   <!--      
-    <p:selectOneMenu value="#{tabBean.effect}" onchange="$('#tabform').submit()" style="margin-bottom:10px">
-        <f:selectItem itemLabel="Fade" itemValue="fade" />
-        <f:selectItem itemLabel="Slide" itemValue="slide" />
-        <f:selectItem itemLabel="Blind" itemValue="blind" />
-        <f:selectItem itemLabel="Clip" itemValue="clip" />
-        <f:selectItem itemLabel="Drop" itemValue="drop" />
-        <f:selectItem itemLabel="Explode" itemValue="explode" />
-        <f:selectItem itemLabel="Fold" itemValue="fold" />
-        <f:selectItem itemLabel="Puff" itemValue="puff" />
-        <f:selectItem itemLabel="Scale" itemValue="scale" />
-    </p:selectOneMenu>
-	-->    
+<h:form id="form">
+   
 	<p:graphicImage value="../immagini/principale.jpg" />
                
     <p:tabView effect="drop" effectDuration="normal">
@@ -148,6 +136,12 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
    				 			#{escur.luogo}, #{escur.data}  
 				</p:dataList>   
 				</p:column> 
+				 <p:column headerText="Informazioni" style="width:24%" >  
+		         <p:commandButton id="info" update=":form:display" oncomplete="PF('dlg2').show()" icon="ui-icon-search" title="View">  
+               				 <f:setPropertyActionListener value="#{pac}" target="#{prenotazione.selezione}" />  
+           		</p:commandButton> 
+		        
+		         </p:column>
 				
 		        <p:column headerText="Modifica" style="width:24%" >  
 		          <h:link outcome = "buyPacchetto?id=#{pac.pacchetto.id}&amp;pre=#{pac.id}"  value="Modifica"/>
@@ -192,6 +186,7 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
    				 			#{escur.luogo}, #{escur.data}  
 				</p:dataList>   
 				</p:column> 
+				
   
 		        	 </p:dataTable>  
       	<p></p>
@@ -248,15 +243,37 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
       	</h:panelGrid>
 		
 			</p:tab>
-	<!--	<p:tab title="Mostra Prenotazione">
-         <h:panelGrid columns="2" cellpadding="10">
-         	<p></p>
-       		<p><a href=".../mostraPrenotazione.xhtml">Le tue Prenotazioni</a></p>
-			<p></p>
-		</h:panelGrid>
-		</p:tab> -->
-
+	
     </p:tabView>
+    <p:dialog  header="Dettagli Prenotazione" widgetVar="dlg2" modal="true" height="500">  
+		<h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;"> 
+		<f:facet name="header">   
+	    <h:outputText value="Dettagli prenotazione." />
+	    </f:facet>
+	    <h:outputText value="Id prenotazione"/>
+	    <h:outputText value="#{prenotazione.selezione.id}" style="font-weight:bold"/>  
+	    <h:outputText value="Id Pacchetto" />
+	    <h:outputText value="#{prenotazione.selezione.pacchetto.id}" style="font-weight:bold"/> 
+	    <h:outputText value="Id Aereo Andata" />
+	    <h:outputText value="#{prenotazione.selezione.aereoAndata.id}" style="font-weight:bold"/>   
+	    <h:outputText value="Id Aereo Ritorno" />
+	    <h:outputText value="#{prenotazione.selezione.aereoRitorno.id}" style="font-weight:bold"/>   
+	    <h:outputText value="Hotel" />
+	    <h:outputText value="#{prenotazione.selezione.hotel.nome}" style="font-weight:bold"/> 
+	    <h:outputText value="Link per la condivisione" />
+	    <h:outputText value="#{prenotazione.selezione.link}" style="font-weight:bold"/> 
+	    <h:outputLabel value="Escursioni" />
+		<p:dataList value="#{prenotazione.selezione.escursioni}" var="escur" itemType="circle">  
+   				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
+		</p:dataList>   
+		<h:outputText value="Data Partenza" />
+	    <h:outputText value="#{prenotazione.selezione.aereoAndata.data}" style="font-weight:bold"/> 
+	    <h:outputText value="Data Ritorno" />
+	    <h:outputText value="#{prenotazione.selezione.aereoRitorno.data}" style="font-weight:bold"/> 
+	    <h:outputText value="Data della Prenotazione" />
+	    <h:outputText value="#{prenotazione.selezione.data}" style="font-weight:bold"/>   
+	    </h:panelGrid>
+	</p:dialog>  
 
 </h:form>
 		<h:form>
