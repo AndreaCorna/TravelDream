@@ -176,7 +176,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		}
 		if ((modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
-			Aereo aereiRitorno = new Aereo(viaggio.getAereoRitorno());
+			Aereo aereiRitorno = em.find(Aereo.class,viaggio.getAereoRitorno().getId());
 			nuovoViaggio.setAereo2(aereiRitorno);
 		}
 		if((modalita == 6)||(modalita == 4)||(modalita == 2)||( modalita == 7)||(modalita == 9)||(modalita == 11))
