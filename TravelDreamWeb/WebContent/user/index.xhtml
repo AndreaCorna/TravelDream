@@ -163,16 +163,26 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
             			</p:outputPanel>  
        			 </f:facet>  
 		       
-		        <p:column id="aereoAndata" filterBy="aereoAndata"   
-		                headerText="aereo Andata" footerText="aereoAndata"  
+		        <p:column id="partenza" filterBy="partenza"   
+		                headerText="aereo Andata" footerText="aereo Andata"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoAndata.data}" />  
 		        </p:column>   
-		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
-		                headerText="aereo Ritorno" footerText="aereoRitorno"  
+		       	<p:column id="destinazione" filterBy="aereoAndata"   
+		                headerText="destinazione " footerText="destinazione"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pacV.aereoAndata.cittaAtterraggio}" />  
+		        </p:column>   
+				 <p:column id="ritorno" filterBy="partenza"   
+		                headerText="aereo Ritorno" footerText="aereo Ritorno"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoRitorno.data}" />  
-		        </p:column> 
+		        </p:column>   
+		       	<p:column id="destinazione" filterBy="aereoRitorno"   
+		                headerText="destinazione " footerText="destinazione"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pacV.aereoRitorno.cittaAtterraggio}" />  
+		        </p:column>
 		      
 		        <p:column id="hotel" filterBy="hotel"   
 		                headerText="hotel" footerText="hotel"  

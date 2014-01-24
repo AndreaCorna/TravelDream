@@ -16,10 +16,10 @@ public interface GestioneViaggioBean {
 	public List<EscursioneDTO> getListaEscursioni(String destinazione, Date dataPartenza);
 
 	List<AereoDTO> getListaAereiAndata(String cittaAtterraggio,
-			Date partenza);
+			Date partenza, String cittaPartenza);
 
 	List<AereoDTO> getListaAereiRitorno(String cittaDecollo,
-			Date partenza);
+			Date partenza, String cittaPartenza);
 
 	void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita);
 

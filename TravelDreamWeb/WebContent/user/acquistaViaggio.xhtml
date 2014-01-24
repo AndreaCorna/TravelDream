@@ -17,9 +17,13 @@
 		<p:panel header="Se vuoi prenotare un volo inserisci la Destinazione e la Data">
 			<h:panelGrid columns="3" id="regGrid">
 			
-				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
+				<h:outputLabel for="dest">Città di destinazione:</h:outputLabel>
 				<p:inputText id="dest" value="#{viaggio.aereoAndata.cittaAtterraggio}" />
 				<p:message for="dest" value="Inserisci il nome"/>
+				
+				<h:outputLabel for="destRitorno">Partenza da:</h:outputLabel>
+				<p:inputText id="destRitorno" value="#{viaggio.aereoAndata.cittaDecollo}" />
+				<p:message for="destRitorno" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="data_inizio">Data di partenza:</h:outputLabel>
 				<p:calendar id="data_inizio" binding="#{data_inizio}" required="true" value="#{viaggio.aereoAndata.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
