@@ -11,10 +11,14 @@ import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 
 @ManagedBean(name="prenotazione")
@@ -40,6 +44,8 @@ public class PrenotazioneManagedBean {
 	
 	private Prenotazione_ViaggioDTO prenotazioneViaggio;
 	
+	private Prenotazione_PacchettoDTO selezione;
+	
 	
 		
 	@PostConstruct
@@ -56,7 +62,7 @@ public class PrenotazioneManagedBean {
 		datiPrenotazioneViaggio = new PrenotazioneViaggioDataModel(listaPrenotazioniViaggi);
 		}
 	
-		
+	
 	public URL modificaPrenotazione(String idPacchetto, String idPrenotazione){
 		System.out.println(idPacchetto + " "+idPrenotazione);
 		URL aURL;
@@ -105,6 +111,12 @@ public class PrenotazioneManagedBean {
 	public void setPrenotazioniViaggioSelezionate(
 			List<Prenotazione_ViaggioDTO> prenotazioniViaggioSelezionate) {
 		this.prenotazioniViaggioSelezionate = prenotazioniViaggioSelezionate;
+	}
+	public Prenotazione_PacchettoDTO getSelezione() {
+		return selezione;
+	}
+	public void setSelezione(Prenotazione_PacchettoDTO selezione) {
+		this.selezione = selezione;
 	}
 	
 }

@@ -12,7 +12,7 @@
 #{prenotazione.mostraPrenotazioni()}
 </h:head>
 <h:body>
-<h:form>
+<h:form id="form">
 	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
     	<p:tabView effect="drop" effectDuration="normal">
     	<p:ajax event="tabChange" listener="#{pacchetto.attivaModifica}"/>  
@@ -208,8 +208,7 @@
 			
         	<h:panelGrid columns="4" id="regPren">
     			<p:dataTable id="tabellaPren" var="pac" value="#{prenotazione.datiPrenotazione}" widgetVar="tabellaPrenotazioni"   
-          			  emptyMessage="Non hai effettuato alcuna prenotazione" filteredValue="#{prenotazione.prenotazioniSelezionate}"
-          			  		selectionMode="single" >  
+          			  emptyMessage="Non hai effettuato alcuna prenotazione"  >  
   
          		<f:facet name="header">  
           			  <p:outputPanel>  
@@ -252,6 +251,12 @@
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
+		         <p:column headerText="Informazioni" style="width:24%" >  
+		         <p:commandButton id="info" update=":form:display" oncomplete="PF('dlg2').show()" icon="ui-icon-search" title="View">  
+               				 <f:setPropertyActionListener value="#{pac}" target="#{prenotazione.selezione}" />  
+           		</p:commandButton> 
+		        
+		         </p:column>
 		        <p:column headerText="Modifica" style="width:24%" >  
 		          <h:link outcome = "buyPacchetto?id=#{pac.pacchetto.id}&amp;pre=#{pac.id}"  value="Modifica"/>
                 </p:column>
@@ -306,6 +311,19 @@
           
     </p:tabView>
 
+	<p:dialog  header="Dettagli Prenotazione" widgetVar="dlg2" modal="true" height="100">  
+		<h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;"> 
+		<f:facet name="header">   
+	    <h:outputText value="Dettagli prenotazione." />
+	    </f:facet>
+	    <h:outputText value="Id prenotazione"/>
+	    <h:outputText value="#{prenotazione.selezione.id}" style="font-weight:bold"/>  
+	     <h:outputText value="Id Pacchetto" />
+	    <h:outputText value="#{prenotazione.selezione.pacchetto.id}" style="font-weight:bold"/> 
+	     <h:outputText value="Id Aereo Andata" />
+	    <h:outputText value="#{prenotazione.selezione.aereoAndata.id}" style="font-weight:bold"/>   
+	    </h:panelGrid>
+	</p:dialog>  
 </h:form>
 
 	<h:form>
