@@ -102,6 +102,29 @@ public class ViaggioManagedBean {
 	 */
 	
 	
+	public void resettaTutto(){
+		aereoAndata = null;
+		listaAereiAndata = null;
+		listaAereiAndataDB = null;
+		datiAereiAndata = null;
+		
+		aereoRitorno = null;
+		listaAereiRitorno = null;
+		listaAereiRitornoDB = null;
+		datiAereiRitorno = null;
+		
+		hotel = null;
+		listaHotel = null;
+		listaHotelDB = null;
+		datiHotel = null;
+		
+		escursione = null;
+		listaEscursioni = null;
+		listaEscursioniDB = null;
+		datiEscursioni = null;
+		
+	}
+	
 	public AereoDTO getAereoRitorno() {
 		return aereoRitorno;
 	}
@@ -298,6 +321,8 @@ public String acquistaViaggio(){
 	
 	gestioneViaggio.creaViaggio(viaggio, modalita);
 	//qua va aggiunto modalita = 0 per resettare
+	resettaTutto();
+	errore = "";
 	return "complimenti?faces-redirect=true";
 	
 }
@@ -317,6 +342,7 @@ public String richiamaHome(){
 		else
 			return "insertEscursione?faces-redirect=true";
 	}
+
 
 	/*
 	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
