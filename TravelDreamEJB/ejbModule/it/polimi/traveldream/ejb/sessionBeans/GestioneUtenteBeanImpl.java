@@ -6,7 +6,10 @@ import java.util.Properties;
 
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
+import it.polimi.traveldream.ejb.entities.Condivisione;
 import it.polimi.traveldream.ejb.entities.Gruppo;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
+import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
 
 import javax.annotation.Resource;
@@ -102,6 +105,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 	@Override
 	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
 	public void eliminaProfilo(String cf) {
+		eliminaPrenotazioni(cf);
 		Anagrafica old = em.find(Anagrafica.class, cf);
 		rimuovi(getUtenteAttivo());
 		em.remove(old);
@@ -228,27 +232,37 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		return true;
 	}
 
-   /* protected UtenteDTO convertToDTO(Utente utente) {
-		UtenteDTO dto = new UtenteDTO();
-		dto.setUsername(utente.getUsername());
-		dto.setTelefono(utente.getTelefono());
-		dto.setEmail(utente.getEmail());
-		dto.setCodiceFiscale(utente.getAnagrafica().getCf());
-		Anagrafica anag = em.find(Anagrafica.class, utente.getAnagrafica().getCf());
-		dto = convertToAnagraficaDTO(anag,dto);
-		return dto;
-	}
-    
-    private UtenteDTO convertToAnagraficaDTO(Anagrafica anagrafica, UtenteDTO nuovo) {
-		
-		nuovo.setCognome(anagrafica.getCognome());
-		nuovo.setDataNascita(anagrafica.getData_Nascita());
-		nuovo.setLuogoNascita(anagrafica.getLuogo_Nascita());
-		nuovo.setNome(anagrafica.getNome());
-		nuovo.setResidenza(anagrafica.getResidenza());
-		return nuovo;
-	}*/
+	/**
+	 * Il metodo elimina tutte le prenotazioni e le condivisioni di un utente che
+	 * ha richiesto di eliminare il proprio profilo
+	 * @param username - lo username dell'utente
+	 */
+   @SuppressWarnings("unchecked")
+   private void eliminaPrenotazioni(String username){
+	   Utente utente = em.find(Utente.class, username);
+	   List<Condivisione> condivisioni = em.createQuery("SELECT c FROM Condivisione c WHERE c.utente =:user")
+			   .setParameter("user", utente).getResultList();
+	   List<Prenotazione_Pacchetto> prenotazioniPacchetto = 
+			   em.createQuery("SELECT p FROM Prenotazione_Pacchetto p where p.utente =:utente")
+			   .setParameter("utente", utente).getResultList();
+	   List<Prenotazione_Viaggio> prenotazioniViaggio = 
+			   em.createQuery("SELECT p FROM Prenotazione_Viaggio p where p.utente =:utente")
+			   .setParameter("utente", utente).getResultList();
+	   for(Condivisione condivisione:condivisioni){
+		   em.remove(condivisione);
+	   }
+	   for(Prenotazione_Pacchetto prenotazione:prenotazioniPacchetto){
+		   em.remove(prenotazione);
+	   }
+	   for(Prenotazione_Viaggio prenotazione:prenotazioniViaggio){
+		   em.remove(prenotazione);
+	   }
+   }
 
+   /**
+    * Il metodo invia una mail di notifica nel momento della registrazione di un nuovo utente
+    * @param utente - l'utente a cui inviare la mail di notifica
+    */
 	private void inviaEmail(Utente utente){
 		Session mailSession = createSmtpSession();
 		mailSession.setDebug (true);

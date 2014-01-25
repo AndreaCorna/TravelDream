@@ -4,7 +4,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"> 
-
 <p:graphicImage value="../immagini/principale.jpg" />
     
 <h:head></h:head> 
@@ -21,7 +20,7 @@
                 <h:outputLabel for="fine" />Fine Validita:
                 <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
                 <h:outputLabel for="fine" />Numero di Persone:
-                <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
+                <h:outputText value="#{pacchetto.numero}" />
                 <h:outputLabel for="andataAereo" />Aereo di Andata:
                  <p:dataList value="#{pacchetto.prenotazione.aereoAndata}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
@@ -44,6 +43,8 @@
 				<p:selectBooleanCheckbox value="#{pacchetto.checkCondivisione}">  
            			 <p:ajax update="msg,link" listener="#{pacchetto.messaggioCheckBox}"/>  
         		</p:selectBooleanCheckbox> 
+        		<h:outputLabel for="costo" />Costo:
+				<h:outputText value="#{pacchetto.costo}" />
         		
 			    <p:inputTextarea id="link" value="#{pacchetto.linkCondivisione}" rows="1" cols="60" />
 			 </h:panelGrid>
@@ -55,3 +56,4 @@
 
 </body> 
 </html>
+
