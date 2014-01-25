@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
-import it.polimi.traveldream.ejb.entities.Anagrafica;
 import it.polimi.traveldream.ejb.entities.Gruppo;
 import it.polimi.traveldream.ejb.entities.Utente;
 
@@ -16,7 +15,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Session Bean implementation class GestioneDipendenteBeanImpl
+ * Session bean per la gestione dei dipendenti.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Stateless
 public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
@@ -80,6 +81,7 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		nuovoGruppo.setNome("UTENTE");
 		gruppi.add(nuovoGruppo);
 		dip.setGruppi(gruppi);
+		dip.setAmministratoreCreatore(null);
 		em.merge(dip);
 		
 	}

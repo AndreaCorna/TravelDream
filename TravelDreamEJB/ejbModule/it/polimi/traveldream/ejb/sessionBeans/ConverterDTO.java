@@ -37,9 +37,7 @@ public class ConverterDTO {
     private static EntityManager em;
 	
 	
-	private static GestioneUtenteBean gestioneUtente = new GestioneUtenteBeanImpl();
-	
-	
+		
 	@Resource
 	private EJBContext context;
 	/**

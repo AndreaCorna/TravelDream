@@ -27,7 +27,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Session Bean implementation class GestioneUtenteBeanImpl
+ * Session bean per la gestione dell'utente.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Stateless
 public class GestioneUtenteBeanImpl implements GestioneUtenteBean {

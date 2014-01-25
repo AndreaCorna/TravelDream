@@ -163,7 +163,7 @@ CREATE TABLE `Utente` (
 
 LOCK TABLES `Utente` WRITE;
 /*!40000 ALTER TABLE `Utente` DISABLE KEYS */;
-INSERT INTO `Utente` VALUES ('admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@amdmi.com','45425','aaaaaaaaaaaaaaa','admin'),('andrea','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna.ac.91@gmail.com','3407901064','crnndr91n44r787w','admin'),('ciao','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna@gmail.com','2222','bbbbbbbbbbbbbbb','admin'),('hummer','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andra@gmail.com','15484','crnndr91b22i628w','admin'),('utente','44c2dbe2c24719aae64ed42989c9e3f1e504474d0f4871bc26bab6695f95d912','andrea@gmail.com','21525621','crnndr91c33o628e','admin');
+INSERT INTO `Utente` VALUES ('admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@amdmi.com','45425','aaabbb91b88i222w','admin'),('andrea','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna.ac.91@gmail.com','3407901064','crnndr91n44r787w',NULL),('ciao','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andrea.corna@gmail.com','2222','bbbccc91b22i444r','admin'),('hummer','b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2','andra@gmail.com','15484','crnndr91b22i628w','admin'),('utente','44c2dbe2c24719aae64ed42989c9e3f1e504474d0f4871bc26bab6695f95d912','andrea@gmail.com','21525621','crnndr91c33o628e','admin');
 /*!40000 ALTER TABLE `Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +191,7 @@ CREATE TABLE `Gruppo_Utente` (
 
 LOCK TABLES `Gruppo_Utente` WRITE;
 /*!40000 ALTER TABLE `Gruppo_Utente` DISABLE KEYS */;
-INSERT INTO `Gruppo_Utente` VALUES ('admin','AMMINISTRATORE'),('andrea','DIPENDENTE'),('ciao','DIPENDENTE'),('hummer','UTENTE'),('utente','UTENTE');
+INSERT INTO `Gruppo_Utente` VALUES ('admin','AMMINISTRATORE'),('ciao','DIPENDENTE'),('andrea','UTENTE'),('hummer','UTENTE'),('utente','UTENTE');
 /*!40000 ALTER TABLE `Gruppo_Utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +219,7 @@ CREATE TABLE `Anagrafica` (
 
 LOCK TABLES `Anagrafica` WRITE;
 /*!40000 ALTER TABLE `Anagrafica` DISABLE KEYS */;
-INSERT INTO `Anagrafica` VALUES ('aaaaaaaaaaaaaaa','Admin','Admin','2013-02-04','admin','serita'),('bbbbbbbbbbbbbbb','skdkja','jmgdzik','2013-12-01','Bergamo','dskjackna'),('crnndr91b22i628w','Andrea','Corna','2013-12-03','seriate','cisanoh'),('crnndr91c33o628e','a','a','2013-12-01','a','jsn'),('crnndr91n44r787w','Andrea','Corna','2013-12-01','ciao','cisano');
+INSERT INTO `Anagrafica` VALUES ('aaabbb91b88i222w','Admin','Admin','2013-02-04','admin','serita'),('bbbccc91b22i444r','skdkja','jmgdzik','2013-12-01','Bergamo','dskjackna'),('crnndr91b22i628w','Andrea','Corna','2013-12-03','seriate','cisanoh'),('crnndr91c33o628e','a','a','2013-12-01','a','jsn'),('crnndr91n44r787w','Andrea','Corna','2013-12-01','ciao','cisano');
 /*!40000 ALTER TABLE `Anagrafica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,4 +504,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-26  0:35:16
+-- Dump completed on 2014-01-26  0:43:40

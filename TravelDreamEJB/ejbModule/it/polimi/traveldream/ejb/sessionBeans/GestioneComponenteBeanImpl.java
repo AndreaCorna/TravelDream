@@ -18,7 +18,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Session Bean implementation class GestioneComponenteBeanImpl
+ * La classe implementa il session bean per la gestione dei componenti: aerei, hotel ed escursioni.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Stateless
 public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
@@ -80,7 +82,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 	
 	/**
-	 * metodo che dato l'id di un aereo permette di restituire un booleano che è true se 
+	 * metodo che dato l'id di un aereo permette di restituire un booleano che ï¿½ true se 
 	 * l'aereo esiste nel database false altrimenti
 	 */
 
@@ -94,7 +96,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 
 	/**
-	 * metodo che dato l'id di un hotel permette di restituire un booleano che è true se 
+	 * metodo che dato l'id di un hotel permette di restituire un booleano che ï¿½ true se 
 	 * l'hotel esiste nel database false altrimenti
 	 */
 	@Override
@@ -107,7 +109,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 
 	/**
-	 * metodo che dato l'id di un'escursione permette di restituire un booleano che è true se 
+	 * metodo che dato l'id di un'escursione permette di restituire un booleano che ï¿½ true se 
 	 * l'escursione esiste nel database false altrimenti
 	 */
 	@Override
@@ -151,7 +153,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 
 	
 	/**
-	 * Metodo che prende un aereo che è stato modificato e si occupa di integrare le modifiche
+	 * Metodo che prende un aereo che ï¿½ stato modificato e si occupa di integrare le modifiche
 	 *  all'interno del database
 	 */
 	@Override
@@ -168,7 +170,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 
 	/**
-	 * Metodo che prende un hotel che è stato modificato e si occupa di integrare le modifiche
+	 * Metodo che prende un hotel che ï¿½ stato modificato e si occupa di integrare le modifiche
 	 *  all'interno del database
 	 */
 	@Override
@@ -185,7 +187,7 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 	
 	/**
-	 * Metodo che prende un'escursione che è stata modificata e si occupa di integrare le modifiche
+	 * Metodo che prende un'escursione che ï¿½ stata modificata e si occupa di integrare le modifiche
 	 *  all'interno del database
 	 */
 	@Override
@@ -303,9 +305,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	}
 	
 	/**
-	 * Metodo che restituisce se un dato pacchetto è provvisto sia di aereo di andata che di ritorno
+	 * Metodo che restituisce se un dato pacchetto ï¿½ provvisto sia di aereo di andata che di ritorno
 	 * @param pacchetto
-	 * @return booleano che è true se l'aereo ha un ritorno
+	 * @return booleano che ï¿½ true se l'aereo ha un ritorno
 	 */
 	private boolean conRitornoAndata(Pacchetto pacchetto){
 		boolean andata = false;

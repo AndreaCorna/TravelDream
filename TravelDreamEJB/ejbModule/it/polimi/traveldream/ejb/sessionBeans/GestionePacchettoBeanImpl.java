@@ -4,7 +4,6 @@ import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
-import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
 import it.polimi.traveldream.ejb.entities.Escursione;
 import it.polimi.traveldream.ejb.entities.Hotel;
@@ -27,7 +26,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 
 /**
- * Session Bean implementation class GestionePacchettoBeanImpl
+ * Session bean per la gestione delle operazioni inerenti ad un pacchetto
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Stateless
 public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
@@ -236,20 +237,20 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	/** 
-	 * metodo che verifica se la data di ritorno è dopo quella della partenza di un dato aereo
+	 * metodo che verifica se la data di ritorno ï¿½ dopo quella della partenza di un dato aereo
 	 * @param aereo
 	 * @param partenza
-	 * @return true se il vincolo è rispettato
+	 * @return true se il vincolo ï¿½ rispettato
 	 */
 	private boolean isAfterPartenza(Aereo aereo, Date partenza){
 		return (aereo.getData().after(partenza) || aereo.getData().equals(partenza));
 	}
 	
 	/**
-	 * Metood che verifica se la data di andata è prima di quella di ritorno di un dato aereo 
+	 * Metood che verifica se la data di andata ï¿½ prima di quella di ritorno di un dato aereo 
 	 * @param aereo
 	 * @param ritorno
-	 * @return true se il vincolo è rispettato 
+	 * @return true se il vincolo ï¿½ rispettato 
 	 */
 	private boolean isBeforeRitorno(Aereo aereo, Date ritorno){
 		return (aereo.getData().before(ritorno) || aereo.getData().equals(ritorno));
@@ -261,7 +262,7 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	 * @param partenza data in cui si desidera partire
 	 * @param ritorno data in cui si desidera tornare 
 	 * @param value numero di posti che si desidera prenotare
-	 * @return un booleano che è true se vi sono posti disponibili
+	 * @return un booleano che ï¿½ true se vi sono posti disponibili
 	 */
 	@SuppressWarnings("unchecked")
 	private boolean haPostiDisponibili(Aereo aereo,Date partenza, Date ritorno,Integer value){
