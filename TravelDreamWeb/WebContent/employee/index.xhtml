@@ -13,10 +13,11 @@
 </h:head>
 <h:body>
 <h:form id="form">
+
 	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
     	<p:tabView effect="drop" effectDuration="normal">
     	<p:ajax event="tabChange" listener="#{pacchetto.attivaModifica}"/>  
-    	<p:growl id="msg" showDetail="true" escape="false" />  
+    	  
     	<p:tab title="Offerte Speciali">
         	<h:panelGrid columns="4">
     			<p:dataTable id="tabellaOffSpe" var="pac" value="#{pacchetto.datiPacchettiCasuali}" widgetVar="tabellaOfferte"   
@@ -217,12 +218,7 @@
             			</p:outputPanel>  
        			 </f:facet>  
   
-		        <p:column id="id" filterBy="id"   
-		                headerText="id" footerText="id"
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.id}" />  
-		        </p:column> 
-		        
+		         
 		        <p:column id="pacchetto" filterBy="pacchetto"   
 		                headerText="pacchetto" footerText="pacchetto"  
 		                filterMatchMode="contains">  
@@ -262,10 +258,12 @@
 		         <p:commandButton id="info" update=":form:display" oncomplete="PF('dlg2').show()" icon="ui-icon-search" title="View">  
                				 <f:setPropertyActionListener value="#{pac}" target="#{prenotazione.selezione}" />  
            		</p:commandButton> 
-		        
+		        <p:growl id="msg" showDetail="true" escape="false" />
 		         </p:column>
-		        <p:column headerText="Modifica" style="width:24%" >  
-		          <h:link outcome = "buyPacchetto?id=#{pac.pacchetto.id}&amp;pre=#{pac.id}"  value="Modifica"/>
+		        <p:column headerText="Modifica" style="width:24%" > 
+		         <p:commandLink value="Modifica" action="#{prenotazione.modificaPrenotazione}" 
+		         		actionListener="#{prenotazione.settaPrenotazione(pac.id)}" update="msg"/>
+		      	
                 </p:column>
 		        	 </p:dataTable>
 		        	 </h:panelGrid>

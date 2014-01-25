@@ -3,6 +3,7 @@ package it.polimi.traveldream.webBeans;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import it.polimi.traveldream.dataModels.PrenotazioneDataModel;
@@ -63,18 +64,37 @@ public class PrenotazioneManagedBean {
 		}
 	
 	
-	public URL modificaPrenotazione(String idPacchetto, String idPrenotazione){
-		System.out.println(idPacchetto + " "+idPrenotazione);
-		URL aURL;
-		try {
-			 aURL = new URL("http://localhost:8080/TravelDreamWeb/employee/buyPacchetto?id="+idPacchetto+"&pre="+idPrenotazione);
-			 return aURL;
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	@SuppressWarnings("deprecation")
+	public String modificaPrenotazione(){
+		Date oggi = new Date();
+		Date dataPrenotazione = new Date(selezione.getData().getYear(),selezione.getData().getMonth(),selezione.getData().getDate());
+		int diffInDays = (int)( (oggi.getTime() - dataPrenotazione.getTime()) 
+                / (1000 * 60 * 60 * 24.0) );
+		if(selezione.getPacchetto().getValido() == 0){
+			String message = "Non puoi modificare questa prenotazione, il pacchetto non e piu valido";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return null;
+		}else if(diffInDays < 7){
+			String message = "Non puoi modificare questa prenotazione, tra pochi giorni parti!";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return null;
 		}
-		return null;
+		else
+			return "buyPacchetto?id="+selezione.getPacchetto().getId()+"&pre="+selezione.getId()+"&faces-redirect=true";
 	}
+	
+	public void settaPrenotazione(String id){
+		System.out.println("In setta selezione id "+id);
+		int value = (new Integer(id)).intValue();
+		boolean found = false;
+		for(int i=0;i<listaPrenotazioni.size() && !found;i++){
+			if(listaPrenotazioni.get(i).getId() == value){
+				selezione = listaPrenotazioni.get(i);
+				found = true;
+			}
+		}
+	}
+	
 	public Prenotazione_PacchettoDTO getPrenotazionePacchetto() {
 		return prenotazionePacchetto;
 	}

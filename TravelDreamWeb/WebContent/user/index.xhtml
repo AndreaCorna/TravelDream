@@ -141,10 +141,12 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
                				 <f:setPropertyActionListener value="#{pac}" target="#{prenotazione.selezione}" />  
            		</p:commandButton> 
 		        
+		         <p:growl id="msg" showDetail="true" escape="false" />
 		         </p:column>
-				
-		        <p:column headerText="Modifica" style="width:24%" >  
-		          <h:link outcome = "buyPacchetto?id=#{pac.pacchetto.id}&amp;pre=#{pac.id}"  value="Modifica"/>
+		        <p:column headerText="Modifica" style="width:24%" > 
+		         <p:commandLink value="Modifica" action="#{prenotazione.modificaPrenotazione}" 
+		         		actionListener="#{prenotazione.settaPrenotazione(pac.id)}" update="msg"/>
+		      	
                 </p:column>
   
 		        	 </p:dataTable>
@@ -168,7 +170,7 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoAndata.data}" />  
 		        </p:column>   
-		       	<p:column id="destinazione" filterBy="aereoAndata"   
+		       	<p:column id="destinazionea" filterBy="aereoAndata"   
 		                headerText="destinazione " footerText="destinazione"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoAndata.cittaAtterraggio}" />  
