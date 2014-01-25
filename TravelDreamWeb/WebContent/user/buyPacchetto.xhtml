@@ -33,6 +33,10 @@
                 <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
                 <h:outputLabel for="fine" />Numero di Persone:
                 <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
+                <p:selectOneListbox value="#{pacchetto.numero}" >
+    				<f:selectItems value="#{pacchetto.numeroPersone}" var="numero"
+      				  itemValue="#{numero}" />
+				</p:selectOneListbox>
                 <h:outputLabel for="andataAerei" />Aerei di Andata:
                 <p:dataList value="#{pacchetto.listaAereiAndataDB}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
