@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb.sessionBeans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Anagrafica;
@@ -12,6 +13,13 @@ import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -41,11 +49,11 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		gruppi.add(nuovoGruppo);
 		nuovoUtente.setGruppi(gruppi);
 		em.persist(nuovoUtente);
-		
+		inviaEmail(nuovoUtente);
 	}
 
 	/**
-	 *  Metodo che si occupa di verificare dato lo username di un utente se questo esiste già nel database ritorna true false altrimenti
+	 *  Metodo che si occupa di verificare dato lo username di un utente se questo esiste giï¿½ nel database ritorna true false altrimenti
 	 */
 	@Override
 	public boolean esisteUsername(String username) {
@@ -209,7 +217,7 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
     }
 
     /**
-     * Metodo che verifica se un dato utente è attivo 
+     * Metodo che verifica se un dato utente ï¿½ attivo 
      */
 	@Override
 	public boolean isUtente() {
@@ -241,27 +249,48 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		return nuovo;
 	}*/
 
+	private void inviaEmail(Utente utente){
+		Session mailSession = createSmtpSession();
+		mailSession.setDebug (true);
 
+		try {
+		    Transport transport = mailSession.getTransport ();
 
+		    MimeMessage message = new MimeMessage (mailSession);
 
+		    message.setSubject ("Welcome");
+		    message.setFrom (new InternetAddress ("traveldream.com"));
+		    message.setContent ("<h1>Benvenuto in TravelDream "+utente.getUsername()+"</h1>\n"
+		    		+ "Utilizza le tue credenziali per cercare il tuo viaggio dei sogni nella "
+		    		+ "nostra agenzia.", "text/html");
+		    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
 
-	
+		    transport.connect ();
+		    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
+		}
+		catch (MessagingException e) {
+		    System.err.println("Cannot Send email");
+		    e.printStackTrace();
+		}
+		}
 
+		private Session createSmtpSession() {
+		final Properties props = new Properties();
+		props.setProperty ("mail.host", "smtp.gmail.com");
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.smtp.port", "" + 587);
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty ("mail.transport.protocol", "smtp");
+		
+		return Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+		    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
+				}
+			});
+		}
 
-
-
-
-
-
-
-	
-
-
-
-
-	
-
-	   
+		
+	  
 	
 
 }
