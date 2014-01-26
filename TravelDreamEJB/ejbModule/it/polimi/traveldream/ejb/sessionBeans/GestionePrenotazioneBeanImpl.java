@@ -94,7 +94,9 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		prenotazione.setId(nuova.getId());
 		notificaAcquistoPacchetto(nuova,false);
 	}
-	
+	/**
+	 * Il metodo aggiorna la prenotazione di un pacchetto
+	 */
 	@Override
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public void aggiornaPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione) {

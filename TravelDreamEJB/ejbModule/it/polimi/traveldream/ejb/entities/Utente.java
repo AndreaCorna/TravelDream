@@ -12,8 +12,9 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Utente database table.
- * 
+ * Classe rappresentante l'entity Utente presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Utente")

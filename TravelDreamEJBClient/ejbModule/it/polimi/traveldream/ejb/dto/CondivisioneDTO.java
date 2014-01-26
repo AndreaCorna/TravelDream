@@ -3,7 +3,11 @@ package it.polimi.traveldream.ejb.dto;
 import java.util.Date;
 
 
-
+/**
+ * Classe per creare oggetti CondivisioneDTO necessari per il passaggio di informazioni tra la business logic e il client tier
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class CondivisioneDTO {
 	
 	private String link;

@@ -10,8 +10,9 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the Anagrafica database table.
- * 
+ * Classe rappresentante l'entity Anagrafica presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Anagrafica")

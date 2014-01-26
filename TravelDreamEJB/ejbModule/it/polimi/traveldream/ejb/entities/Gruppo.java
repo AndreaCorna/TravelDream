@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-
 /**
- * The persistent class for the Gruppo database table.
- * 
+ * Classe rappresentante l'entity Gruppo presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Gruppo")

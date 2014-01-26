@@ -7,7 +7,11 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.sun.istack.NotNull;
-
+/**
+ * Classe per creare oggetti UtenteDTO necessari per il passaggio di informazioni tra la business logic e il client tier
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class UtenteDTO {
 	
 	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",

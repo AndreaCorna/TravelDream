@@ -11,8 +11,9 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the Hotel database table.
- * 
+ * Classe rappresentante l'entity Hotel presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Hotel")

@@ -5,6 +5,11 @@ import java.util.Date;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Classe per creare oggetti HotelDTO necessari per il passaggio di informazioni tra la business logic e il client tier
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class HotelDTO {
 
 	

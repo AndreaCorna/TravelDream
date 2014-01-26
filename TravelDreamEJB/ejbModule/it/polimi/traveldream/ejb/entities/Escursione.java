@@ -10,8 +10,9 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the Escursione database table.
- * 
+ * Classe rappresentante l'entity Escursione presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Escursione")

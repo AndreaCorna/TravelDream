@@ -7,7 +7,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-
+/**
+ * Classe per creare oggetti Prenotazione_PacchettoDTO necessari per il passaggio di informazioni tra la business logic e il client tier
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class Prenotazione_PacchettoDTO {
 
 	

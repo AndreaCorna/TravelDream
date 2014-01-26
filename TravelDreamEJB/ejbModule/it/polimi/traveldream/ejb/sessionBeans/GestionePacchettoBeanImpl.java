@@ -370,7 +370,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 
 
  // Metodi per la conversione di liste di oggetti del database
- 
+	/**
+	 * Il metodo converte una lista di oggetti EscursioneDTO in entity Escursione
+	 * @param lista - la lista da convertire
+	 * @return la lista convertita
+	 */
 	private List<Escursione> covertListaEscursioni(List<EscursioneDTO> lista){
 		ArrayList<Escursione> listaEscursioni = new ArrayList<Escursione>();
 		for(int i=0;i<lista.size();i++){
@@ -380,7 +384,12 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 		List<Escursione> escursioni = listaEscursioni;
 		return escursioni;
 	}
-	
+	/**
+	 * Il metodo crea una lista di entity Aereo prendendo le informazioni da due liste di oggetti AereoDTO
+	 * @param listaAndata - la lista di andata degli aerei
+	 * @param listaRitorno - la lista di ritorno
+	 * @return la lista con le informazioni di entrambe le liste
+	 */
 	private List<Aereo> convertListaAerei(List<AereoDTO> listaAndata, List<AereoDTO> listaRitorno){
 		ArrayList<Aereo> listaAerei = new ArrayList<Aereo>();
 		for(int i=0;i<listaAndata.size();i++){
@@ -396,9 +405,11 @@ public class GestionePacchettoBeanImpl implements GestionePacchettoBean {
 	}
 	
 	
-	
-	
-	
+	/**
+	 * Il metodo converte una lista di oggetti HotelDTO in entity Hotel
+	 * @param lista - la lista da convertire
+	 * @return la lista convertita
+	 */
 	private List<Hotel> convertListaHotel(List<HotelDTO> lista){
 		ArrayList<Hotel> listaHotel = new ArrayList<Hotel>();
 		for(int i=0;i<lista.size();i++){

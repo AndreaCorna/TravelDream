@@ -9,8 +9,9 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Prenotazione_Viaggio database table.
- * 
+ * Classe rappresentante l'entity Prenotazione_Viaggio presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Prenotazione_Viaggio")

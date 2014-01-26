@@ -10,8 +10,9 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the Aereo database table.
- * 
+ * Classe rappresentante l'entity Aereo presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Aereo")

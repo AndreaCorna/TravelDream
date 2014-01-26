@@ -6,7 +6,11 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 
-
+/**
+ * Classe per creare oggetti Prenotazione_ViaggioDTO necessari per il passaggio di informazioni tra la business logic e il client tier
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 public class Prenotazione_ViaggioDTO {
 
 	

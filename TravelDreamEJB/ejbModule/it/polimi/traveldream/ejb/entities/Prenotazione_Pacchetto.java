@@ -7,8 +7,9 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Prenotazione_Pacchetto database table.
- * 
+ * Classe rappresentante l'entity Prenotazione_Pacchetto presente nel database.
+ * @author Alessandro Brunitti - Andrea Corna
+ *
  */
 @Entity
 @Table(name="Prenotazione_Pacchetto")

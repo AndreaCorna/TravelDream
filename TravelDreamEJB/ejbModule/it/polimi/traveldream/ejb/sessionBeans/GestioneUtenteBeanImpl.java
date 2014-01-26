@@ -135,15 +135,6 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		return ConverterDTO.convertToDTO(dip);
 	}
 	
-	/*
-	@Override
-	@RolesAllowed({"UTENTE","AMMINISTRATORE","DIPENDENTE"})
-	public AnagraficaDTO getAnagraficaDTO(String idAnagrafica) {
-		Anagrafica anag = em.find(Anagrafica.class, idAnagrafica);
-		
-		return convertToAnagraficaDTO(anag);
-	}
-*/
 	
 	/**
 	 * Metodo che dato lo username di un utente lo ricerca all'interno del database
