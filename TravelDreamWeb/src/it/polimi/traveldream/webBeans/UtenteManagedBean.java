@@ -1,6 +1,7 @@
 package it.polimi.traveldream.webBeans;
 
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +28,8 @@ public class UtenteManagedBean {
 	static private String username;
 	
 	static private String cf;
+	
+	private Date oggi = new Date();
 	
 	public UtenteManagedBean(){
 		
@@ -122,6 +125,14 @@ public class UtenteManagedBean {
 
 	public void setCf(String cod) {
 		cf = cod;
+	}
+
+	public Date getOggi() {
+		return oggi;
+	}
+
+	public void setOggi(Date oggi) {
+		this.oggi = oggi;
 	}
 	
 	
