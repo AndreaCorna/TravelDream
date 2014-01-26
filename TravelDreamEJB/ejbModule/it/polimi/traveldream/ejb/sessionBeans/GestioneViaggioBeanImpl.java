@@ -13,6 +13,7 @@ import it.polimi.traveldream.ejb.entities.Utente;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
@@ -20,6 +21,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
@@ -170,17 +178,22 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 	@RolesAllowed({"DIPENDENTE","UTENTE"})
 	public void creaViaggio(Prenotazione_ViaggioDTO viaggio, int modalita)
 	{
-		
+		String messaggio = "Di seguito viene riportato il report del tuo acquisto\n";
+		float costo = 0;
 		Prenotazione_Viaggio nuovoViaggio = new Prenotazione_Viaggio();
 		if ((modalita == 1)|| (modalita == 3)||(modalita == 2)||(modalita == 7)||(modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiAndata = em.find(Aereo.class,viaggio.getAereoAndata().getId());
-			nuovoViaggio.setAereo1(aereiAndata);	
+			nuovoViaggio.setAereo1(aereiAndata);
+			messaggio = messaggio+"<h1>Partenza "+aereiAndata.getData()+" con aereo "+aereiAndata.getId()+"</h1>\n ";
+			costo = costo+aereiAndata.getCosto();
 		}
 		if ((modalita == 8)||(modalita == 9)||(modalita == 10)||(modalita == 11))
 		{
 			Aereo aereiRitorno = em.find(Aereo.class,viaggio.getAereoRitorno().getId());
 			nuovoViaggio.setAereo2(aereiRitorno);
+			messaggio = messaggio+"<h1>Ritorno "+aereiRitorno.getData()+" con aereo "+aereiRitorno.getId()+"</h1>\n ";
+			costo = costo+aereiRitorno.getCosto();
 		}
 		if((modalita == 6)||(modalita == 4)||(modalita == 2)||( modalita == 7)||(modalita == 9)||(modalita == 11))
 		{
@@ -194,6 +207,16 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			nuovoViaggio.setHotel(hotel);
 			nuovoViaggio.setDataCheckInHotel(viaggio.getHotel().getDataInizio());
 			nuovoViaggio.setDataCheckOutHotel(viaggio.getHotel().getDataFine());
+			Date dataCheckIn =viaggio.getHotel().getDataInizio();
+			Date dataCheckOut = viaggio.getHotel().getDataFine();
+			@SuppressWarnings("deprecation")
+			Date in = new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate());
+			@SuppressWarnings("deprecation")
+			Date out = new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate());
+			int diffInDays = (int)( (out.getTime() - in.getTime()) 
+	                 / (1000 * 60 * 60 * 24.0) );
+			costo = hotel.getCostoGiornaliero()*diffInDays;
+			messaggio = messaggio+"<h1>Hotel "+hotel.getNome()+" a "+hotel.getStelle()+" stelle</h1>\n";
 		}
 		Utente utente = em.find(Utente.class, context.getCallerPrincipal().getName());
 		nuovoViaggio.setData(new Date());
@@ -202,6 +225,62 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		em.flush();
 		nuovoViaggio = em.find(Prenotazione_Viaggio.class, nuovoViaggio.getId());
 		viaggio.setId(nuovoViaggio.getId());
+		notificaAcquistoViaggio(nuovoViaggio, messaggio, costo);
 	}
+	
+	/**
+	 * Il metodo notifica all'utente l'acquisto di un viaggio.
+	 * @param prenotazione - la prenotazione effettuata
+	 */
+	private void notificaAcquistoViaggio(Prenotazione_Viaggio prenotazione, String messaggio, float costo){
+		Session mailSession = createSmtpSession();
+		mailSession.setDebug (true);
+		try {
+		    Transport transport = mailSession.getTransport ();
+		    
+		    MimeMessage message = new MimeMessage (mailSession);
+		    messaggio = messaggio+ "<h1>Escursioni: \n";
+		    for(Escursione escursione:prenotazione.getEscursioni()){
+		    	String add = "\nEscursione: "+escursione.getId()+
+		    			", Luogo: "+escursione.getLuogo()+
+		    			", Descrizione: "+escursione.getDescrizione()+"</h1>\n";
+		    	messaggio = messaggio + add;
+		    	costo += escursione.getPrezzo();
+		    }
+		    message.setSubject ("Welcome");
+		    message.setFrom (new InternetAddress ("traveldream.com"));
+		    String inizio = "Hai appena creato un tuo viaggio \n";
+		    message.setContent ("<h1>Caro "+prenotazione.getUtente().getUsername()+"</h1>\n "
+		    		+ inizio+messaggio
+		    		+ "<h1>Costo: "+costo
+		    		+ "</h1>\n"
+		    		+ "A Presto.\n"
+		    		+ "<h1>Il Team di TravelDream</h1>\n ", "text/html");
+		    message.addRecipient (Message.RecipientType.TO, new InternetAddress (prenotazione.getUtente().getEmail()));
+
+		    transport.connect ();
+		    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
+		}
+		catch (MessagingException e) {
+		    System.err.println("Cannot Send email");
+		    e.printStackTrace();
+		}
+		}
+
+		private Session createSmtpSession() {
+		final Properties props = new Properties();
+		props.setProperty ("mail.host", "smtp.gmail.com");
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.smtp.port", "" + 587);
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty ("mail.transport.protocol", "smtp");
+		
+		return Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+		    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
+				}
+			});
+		}
+
 	
 }

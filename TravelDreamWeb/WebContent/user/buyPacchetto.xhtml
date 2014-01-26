@@ -36,6 +36,7 @@
                 <p:selectOneListbox value="#{pacchetto.numero}" >
     				<f:selectItems value="#{pacchetto.numeroPersone}" var="numero"
       				  itemValue="#{numero}" />
+      				  <p:ajax listener="#{pacchetto.listenerData}" update="msg,regGrid" />
 				</p:selectOneListbox>
                 <h:outputLabel for="andataAerei" />Aerei di Andata:
                 <p:dataList value="#{pacchetto.listaAereiAndataDB}" var="aereo" itemType="circle">  

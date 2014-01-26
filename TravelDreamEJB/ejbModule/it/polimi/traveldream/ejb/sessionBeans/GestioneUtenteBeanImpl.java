@@ -278,7 +278,8 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		    message.setFrom (new InternetAddress ("traveldream.com"));
 		    message.setContent ("<h1>Benvenuto in TravelDream "+utente.getUsername()+"</h1>\n"
 		    		+ "Utilizza le tue credenziali per cercare il tuo viaggio dei sogni nella "
-		    		+ "nostra agenzia.", "text/html");
+		    		+ "nostra agenzia.\n"
+		    		+ "<h1>Il Team di TravelDream</h1>", "text/html");
 		    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
 
 		    transport.connect ();

@@ -153,6 +153,7 @@ public class ViaggioManagedBean {
 	
 	@PostConstruct
 	public void init(){
+		resettaTutto();
 		minData= new Date();
 		aereoAndata = new AereoDTO();
 		hotel = new HotelDTO();
@@ -352,7 +353,7 @@ public String richiamaHome(){
 		Date dataInizio = (Date)datainizio.getValue();
 		Date dataFine = (Date)value;
 		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validità  deve essere successiva a quella di inizio"));
+                throw new ValidatorException(new FacesMessage("La data di fine validitï¿½ deve essere successiva a quella di inizio"));
         }
 	}
 */

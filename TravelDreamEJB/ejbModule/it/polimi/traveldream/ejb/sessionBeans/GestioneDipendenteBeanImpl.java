@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb.sessionBeans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 import it.polimi.traveldream.ejb.entities.Gruppo;
@@ -11,6 +12,13 @@ import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -49,6 +57,7 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		Utente amministratore = em.find(Utente.class, context.getCallerPrincipal().getName());
 		nuovoDip.setAmministratoreCreatore(amministratore);
 		em.merge(nuovoDip);
+		notificaUpgrade(nuovoDip);
 	}
 	
 	/**
@@ -85,6 +94,53 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		em.merge(dip);
 		
 	}
+	
+	/**
+	    * Il metodo invia una mail di notifica nel momento in cui un utente viene elevato al ruolo di dipendente
+	    * @param utente - l'utente a cui inviare la mail di notifica
+	    */
+		private void notificaUpgrade(Utente utente){
+			Session mailSession = createSmtpSession();
+			mailSession.setDebug (true);
+
+			try {
+			    Transport transport = mailSession.getTransport ();
+
+			    MimeMessage message = new MimeMessage (mailSession);
+
+			    message.setSubject ("Welcome");
+			    message.setFrom (new InternetAddress ("traveldream.com"));
+			    message.setContent ("<h1>Caro "+utente.getUsername()+"</h1>\n "
+			    		+ "Da questo momento sei un nostro dipendente e il tuo account verra "
+			    		+ "arricchito con nuove funzionalita\n "
+			    		+ "Buon Lavoro\n"
+			    		+ "<h1>Il Team di TravelDream</h1>", "text/html");
+			    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
+
+			    transport.connect ();
+			    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
+			}
+			catch (MessagingException e) {
+			    System.err.println("Cannot Send email");
+			    e.printStackTrace();
+			}
+			}
+
+			private Session createSmtpSession() {
+			final Properties props = new Properties();
+			props.setProperty ("mail.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.auth", "true");
+			props.setProperty("mail.smtp.port", "" + 587);
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty ("mail.transport.protocol", "smtp");
+			
+			return Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+			    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
+					}
+				});
+			}
+
 
 
 }
