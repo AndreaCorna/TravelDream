@@ -83,9 +83,14 @@ public class ViaggioManagedBean {
 	
 	private Date minData;
 	
+	private Date maxData;
+	
 	private int modalita;
 	
 	private String errore;
+	
+	private Boolean checkPrivacy;
+	
 	
 	/*	LEGENDA DELLE MODALIT�
 	 * 1		solo aereo
@@ -139,7 +144,8 @@ public class ViaggioManagedBean {
 		escursione = new EscursioneDTO();
 		modalita = 0;
 		setErrore("");
-	}
+		checkPrivacy = false;
+		}
 	
 
 	public String aggiungiDestinazioneDateAereo(){
@@ -299,10 +305,12 @@ public String settaEscursioneScelta(int scelta){
 }
 
 public String acquistaViaggio(){
-	
+	if(checkPrivacy){
 	gestioneViaggio.creaViaggio(viaggio, modalita);
 	errore = "";
 	return "complimenti?faces-redirect=true";
+	}
+	return "riepilogo?faces-redirect=true";
 	
 }
 
@@ -503,7 +511,7 @@ public String richiamaHome(){
 		
 	}
 	
-	public void resetViaggio(){
+	private void resetViaggio(){
 		viaggio.setAereo(null);
 		viaggio.setAereoRitorno(null);
 		viaggio.setData(null);
@@ -513,7 +521,7 @@ public String richiamaHome(){
 		viaggio.setEscursioni(null);
 		
 	}
-	public void resetRitorno(){
+	private void resetRitorno(){
 		
 		aereoRitorno.setCittaAtterraggio(null);
 		aereoRitorno.setCittaDecollo(null);
@@ -522,7 +530,7 @@ public String richiamaHome(){
 		
 	}
 	
-	public void resetHotel(){
+	private void resetHotel(){
 
 		hotel.setCitta(null);
 		hotel.setDataInizio(null);
@@ -530,7 +538,7 @@ public String richiamaHome(){
 		resetErrore();
 	}
 	
-	public void resetEscursione(){
+	private void resetEscursione(){
 		
 		
 		escursione.setLuogo(null);
@@ -548,11 +556,35 @@ public String richiamaHome(){
 		resetErrore();
 		resetViaggio();
 		modalita = 0;
+		checkPrivacy = false;
 		
 	}
 
 
+	public Boolean getCheckPrivacy() {
+		return checkPrivacy;
+	}
+
+
+	public void setCheckPrivacy(Boolean checkPrivacy) {
+		this.checkPrivacy = checkPrivacy;
+	}
+	
+	public void listenerData(){
+		
+} 
+	public void listenerDataRitorno(){
+		
+		Date arrivo = hotel.getDataInizio();
+		Date ritorno = hotel.getDataFine();
+		
+		if (ritorno.before(arrivo))
+		{
+			hotel.setDataInizio(null);
+		}
+
 	
 	
 	
+} 
 }

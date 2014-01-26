@@ -32,7 +32,11 @@
 				</p:dataList>
                 
             </h:panelGrid>
-
+				
+				<h:outputLabel  />Devi accettare le nostre condizioni sulla privacy:
+				<p:selectBooleanCheckbox value="#{viaggio.checkPrivacy}">  
+           		</p:selectBooleanCheckbox> 
+				
             <p:commandButton id="ajax" value="Conferma"  action="#{viaggio.acquistaViaggio()}" styleClass="ui-priority-primary"/>  
           </p:panel>
 </h:form>
