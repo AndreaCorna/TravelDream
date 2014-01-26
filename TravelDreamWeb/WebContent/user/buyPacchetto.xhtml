@@ -17,12 +17,12 @@
 			<h:panelGrid columns="1" id="regGrid">
 				<h:outputLabel for="partenza" />Seleziona la data di partenza:
 				<p:calendar value="#{pacchetto.partenza}" mode="inline" id="partenza" pattern="dd/MM/yyyy" navigator="true"
-						mindate="#{pacchetto.dataOdierna}" maxdate="#{pacchetto.pacchetto.fine_Validita}">  
+						mindate="#{pacchetto.dataOdierna}" maxdate="#{pacchetto.pacchetto.fine_Validita}" required="true" requiredMessage="Devi selezionare la data di partenza">  
       				  <p:ajax event="dateSelect" listener="#{pacchetto.listenerData}" update="msg,regGrid" />  
     			</p:calendar>  
     			<h:outputLabel for="arrivo" />Seleziona la data di ritorno:
     			<p:calendar value="#{pacchetto.ritorno}" mode="inline" id="ritorno" pattern="dd/MM/yyyy" navigator="true"
-    					mindate="#{pacchetto.dataOdierna}" maxdate="#{pacchetto.pacchetto.fine_Validita}">  
+    					mindate="#{pacchetto.dataOdierna}" maxdate="#{pacchetto.pacchetto.fine_Validita}" required="true" requiredMessage="Devi selezionare la data di ritorno">  
       				  <p:ajax event="dateSelect" listener="#{pacchetto.listenerData}" update="msg,regGrid" />  
     			</p:calendar>
 				<h:outputLabel for="nome" />Destinazione:
@@ -33,7 +33,7 @@
                 <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
                 <h:outputLabel for="fine" />Numero di Persone:
                 <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
-                <p:selectOneListbox value="#{pacchetto.numero}" >
+                <p:selectOneListbox value="#{pacchetto.numero}" required="true" requiredMessage="Devi il numero di persone">
     				<f:selectItems value="#{pacchetto.numeroPersone}" var="numero"
       				  itemValue="#{numero}" />
       				  <p:ajax listener="#{pacchetto.listenerData}" update="msg,regGrid" />
@@ -42,9 +42,9 @@
                 <p:dataList value="#{pacchetto.listaAereiAndataDB}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaDecollo}, #{aereo.costo}  
 				</p:dataList>
-				<p:selectOneListbox value="#{pacchetto.idAereoAndata}" >
+				<p:selectOneListbox value="#{pacchetto.idAereoAndata}" required="true" requiredMessage="Devi selezionare un aereo di andata" >
     				<f:selectItems value="#{pacchetto.listaAereiAndataDB}" var="aereo"
-      				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
+      				  itemValue="#{aereo}" itemLabel="#{aereo.id}"/>
 				</p:selectOneListbox>  
 				
                 <p></p>
@@ -52,7 +52,7 @@
 				<p:dataList value="#{pacchetto.listaAereiRitornoDB}" var="aereo" itemType="circle">  
    				 	#{aereo.id}, #{aereo.data}, #{aereo.cittaAtterraggio}  
 				</p:dataList>  
-				<p:selectOneListbox value="#{pacchetto.idAereoRitorno}" >
+				<p:selectOneListbox value="#{pacchetto.idAereoRitorno}" required="true" requiredMessage="Devi selezionare un aereo di ritorno">
     				<f:selectItems value="#{pacchetto.listaAereiRitornoDB}" var="aereo"
       				  itemValue="#{aereo}" itemLabel="#{aereo.id}" />
 				</p:selectOneListbox>  
@@ -62,7 +62,7 @@
 				<p:dataList value="#{pacchetto.listaHotelDB}" var="hotel" itemType="circle">  
    				 	#{hotel.id}, #{hotel.nome}, #{hotel.citta}, #{hotel.rating}
 				</p:dataList>  
-				<p:selectOneListbox value="#{pacchetto.idHotel}" >
+				<p:selectOneListbox value="#{pacchetto.idHotel}" required="true" requiredMessage="Devi selezionare un hotel">
     				<f:selectItems value="#{pacchetto.listaHotelDB}" var="hotel"
       				  itemValue="#{hotel}" itemLabel="#{hotel.id}" />
 				</p:selectOneListbox>  
@@ -72,7 +72,7 @@
    				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
 				</p:dataList>
 				<p:pickList id="pickList" value="#{pacchetto.listaSelezioneEscursioni}" var="esc"   
-                itemLabel="#{esc}" itemValue="#{esc}" effect="bounce">  
+                itemLabel="#{esc}" itemValue="#{esc}" effect="bounce" required="true" requiredMessage="Devi selezionare almeno un'escursione">  
                 <p:ajax event="transfer" listener="#{pacchetto.onTransfer}" update="msg"/>
                 </p:pickList>
 				<p:growl id="msg" showDetail="true" escape="false" />  
@@ -80,7 +80,11 @@
 				<h:outputLabel for="escursioni" />Descrizione:
 				<p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
 		            <h:outputText value="#{pacchetto.pacchetto.descrizione}" />  
-		        </p:column>  
+		        </p:column> 
+		        <h:outputLabel for="escursioni" />Accetta le condizioni:
+				<p:selectBooleanCheckbox id="box" required="true" value="#{pacchetto.checkCondizione}" validator="#{pacchetto.validaCondizione}">  
+           			 <p:ajax update="msg" listener="#{pacchetto.messaggioCheckBoxCondizione}"/>  
+        		</p:selectBooleanCheckbox>  
 			</h:panelGrid>
 			<p:commandButton value="Prenota" id="ajax"  ajax="false" action="#{pacchetto.prenotaPacchetto}" styleClass="ui-priority-primary"/>  
 			 <p><a href="index.xhtml">Torna alla homepage</a></p>

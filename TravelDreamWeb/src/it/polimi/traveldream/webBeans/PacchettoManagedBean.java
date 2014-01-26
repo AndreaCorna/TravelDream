@@ -1,5 +1,6 @@
 package it.polimi.traveldream.webBeans;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,15 +10,12 @@ import it.polimi.traveldream.dataModels.AereoDataModel;
 import it.polimi.traveldream.dataModels.EscursioneDataModel;
 import it.polimi.traveldream.dataModels.HotelDataModel;
 import it.polimi.traveldream.dataModels.PacchettoDataModel;
-import it.polimi.traveldream.dataModels.PrenotazioneDataModel;
-import it.polimi.traveldream.dataModels.PrenotazioneViaggioDataModel;
 import it.polimi.traveldream.ejb.dto.AereoDTO;
 import it.polimi.traveldream.ejb.dto.CondivisioneDTO;
 import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
-import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.sessionBeans.CondivisioneBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePacchettoBean;
 import it.polimi.traveldream.ejb.sessionBeans.GestionePrenotazioneBean;
@@ -30,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
+import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
@@ -121,6 +120,8 @@ public class PacchettoManagedBean {
 	private boolean modifica;
 	
 	private int idPrenotazione;
+	
+	private boolean checkCondizione = false;
 	/**
 	 * Metodo che si occupa di inizializzare la pagina relativa ai pacchetti 
 	 */
@@ -137,6 +138,7 @@ public class PacchettoManagedBean {
 	 * @param id
 	 */
 	public void initPersonalizza(String id, String pre){
+		resetSelezione();
 		dataOdierna = new Date();
 		prenotazione = new Prenotazione_PacchettoDTO();
 		if(	!id.equals("")){
@@ -467,6 +469,13 @@ public class PacchettoManagedBean {
 		
 	}
 	
+	public void validaCondizione(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		HtmlSelectBooleanCheckbox checkBox = (HtmlSelectBooleanCheckbox) component;
+		if(checkBox.getSubmittedValue().equals(false)){
+			 throw new ValidatorException(new FacesMessage("Devi accettare le condizioni di viaggio"));
+		}
+	}
+	
 	/**
 	 * Metodo che si occupa di validare le date e di verificare se la data di fine validit� � successiva a quella di inizio
 	 * @param context
@@ -653,6 +662,20 @@ public class PacchettoManagedBean {
 		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
 	}
+	
+	public void messaggioCheckBoxCondizione(){
+		String summary;
+		if(checkCondizione){
+			summary = "Condizioni di viaggio Accettate";
+		}
+		else{
+			summary = "Condizioni di viaggio non accettate";
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
+	}
+	
+	
 
 	public void listenerData(){
 		if(ritorno == null || partenza == null){
@@ -694,8 +717,20 @@ public class PacchettoManagedBean {
 		loadListaEscursioni();
 		List<HotelDTO> hotelDisponibili = gestionePacchetto.getListaHotelDip(partenza,ritorno,pacchetto);
 		listaHotelDB = hotelDisponibili;
-		String message = "Selezionata la data";
+		String message = "Selezionate le date e il numero di persone";
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+	}
+	
+	private void resetSelezione(){
+		ritorno = null;
+		partenza = null;
+		numero = null;
+		idAereoAndata = null;
+		idAereoRitorno = null;
+		idHotel = null;
+		listaSelezioneEscursioni = null;
+		checkCondivisione = false;
+		checkCondizione = false;
 	}
 	public Date getRitorno() {
 		return ritorno;
@@ -975,4 +1010,13 @@ public class PacchettoManagedBean {
 		this.idPrenotazione = idPrenotazione;
 	}
 
+	public boolean isCheckCondizione() {
+		return checkCondizione;
 	}
+
+	public void setCheckCondizione(boolean checkCondizione) {
+		this.checkCondizione = checkCondizione;
+	}
+
+	}
+
