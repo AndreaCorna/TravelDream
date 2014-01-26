@@ -55,6 +55,9 @@ public class PrenotazioneManagedBean {
 		setPrenotazioneViaggio(new Prenotazione_ViaggioDTO());
 		
 	}
+	/**
+	 * Costrutture di default
+	 */
 		public void mostraPrenotazioni(){
 		listaPrenotazioni = gestionePrenotazione.getListaPrenotazioni();
 		datiPrenotazione = new PrenotazioneDataModel(listaPrenotazioni);
@@ -63,7 +66,10 @@ public class PrenotazioneManagedBean {
 		datiPrenotazioneViaggio = new PrenotazioneViaggioDataModel(listaPrenotazioniViaggi);
 		}
 	
-	
+	/**
+	 * Metodo che viene richiamato dalla home per mostrare le prenotazioni 
+	 * @return la pagina alla quale effettuare il redirect
+	 */
 	@SuppressWarnings("deprecation")
 	public String modificaPrenotazione(){
 		Date oggi = new Date();
@@ -82,6 +88,8 @@ public class PrenotazioneManagedBean {
 		else
 			return "buyPacchetto?id="+selezione.getPacchetto().getId()+"&pre="+selezione.getId()+"&faces-redirect=true";
 	}
+	
+//METODI GETTER E SETTER
 	
 	public void settaPrenotazione(String id){
 		System.out.println("In setta selezione id "+id);

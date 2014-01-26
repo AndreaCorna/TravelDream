@@ -61,8 +61,8 @@
 		
 		<p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
-                
-                <h:outputLabel  for="nome" />Nome:
+               <h:outputLabel  for="" />
+                 <h:outputLabel  for="nome" />Nome:
                 <h:outputText id="nome" value="#{utente.utente.nome}" />
                 <h:outputLabel for="cognome">Cognome:</h:outputLabel>
                 <h:outputText id="cognome" value="#{utente.utente.cognome}" />
@@ -83,7 +83,7 @@
         </p:tab>
         <p:tab title="Gestione Componenti">
             <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather2.jpg" />
+             
                 <h:outputText value="Gestisci i componenti del database"></h:outputText>
                 <p><a href="addVolo.xhtml">Aggiungi Aereo</a></p>
                 <p><a href="addHotel.xhtml">Aggiungi Hotel</a></p>

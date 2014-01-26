@@ -107,31 +107,7 @@ public class ViaggioManagedBean {
 	 */
 	
 	
-	public AereoDTO getAereoRitorno() {
-		return aereoRitorno;
-	}
-	
 
-	public AereoDTO getAereoAndata() {
-		return aereoAndata;
-	}
-	
-	public HotelDTO getHotel() {
-		return hotel;
-	}
-	
-	
-	public EscursioneDTO getEscursione(){
-		return escursione;
-	}
-	
-	public Prenotazione_ViaggioDTO getViaggio() {
-		return viaggio;
-	}
-
-	public void setViaggio(Prenotazione_ViaggioDTO viaggio) {
-		this.viaggio = viaggio;
-	}
 	
 	
 	@PostConstruct
@@ -147,7 +123,10 @@ public class ViaggioManagedBean {
 		checkPrivacy = false;
 		}
 	
-
+/**
+ * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+ * @return la pagina alla quale si effettua il redirect
+ */
 	public String aggiungiDestinazioneDateAereo(){
 		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
 		String cittaPartenza = aereoAndata.getCittaDecollo().toLowerCase();
@@ -166,6 +145,11 @@ public class ViaggioManagedBean {
 		}
 	}
 	
+
+/**
+ * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+ * @return la pagina alla quale si effettua il redirect
+ */
 	public String aggiungiDestinazioneDateAereoRitorno(){				
 		String destinazioneRitorno = aereoRitorno.getCittaAtterraggio().toLowerCase();
 		String cittaPartenza = aereoRitorno.getCittaDecollo().toLowerCase();
@@ -184,11 +168,16 @@ public class ViaggioManagedBean {
 		
 		}
 	}
-	
+
 	public String passaAHotel(){
 		return "acquistaHotelViaggio?faces-redirect=true";
 	}
 
+
+/**
+ * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+ * @return la pagina alla quale si effettua il redirect
+ */
 	public String aggiungiDestinazioneDateHotel(){
 		
 		String destinazione = hotel.getCitta().toLowerCase();
@@ -209,6 +198,11 @@ public class ViaggioManagedBean {
 		}
 	}
 	
+
+/**
+ * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+ * @return la pagina alla quale si effettua il redirect
+ */
 	public String aggiungiDestinazioneDateEscursione(){
 		
 		String destinazione = escursione.getLuogo().toLowerCase();
@@ -228,7 +222,11 @@ public class ViaggioManagedBean {
 		}
 	}
 	
-	
+	/**
+	 * Setter dell'aereo
+	 * @param scelta = 1 se l'utente vuole acquistare il volo, 2 se vuole acquistare il volo di ritorno, 3 se vuole acquistare anche l'hotel
+	 * @return la pagina alla quale effettuare il redirect
+	 */
 	public String settaAereoScelto(int scelta){
 		
 		if (modalita == 1)
@@ -256,6 +254,11 @@ public class ViaggioManagedBean {
 			return null;
 	}
 	
+	/**
+	 * Setter dell'aereo
+	 * @param scelta = 1 se l'utente vuole acquistare il viaggio, 2 se vuole acquistare un'escursione
+	 * @return la pagina alla quale effettuare il redirect
+	 */
 public String settaHotelScelto(int scelta){
 	
 		if(listaHotel==null)
@@ -279,6 +282,11 @@ public String settaHotelScelto(int scelta){
 			return null;
 	}
 
+/**
+ * Setter dell'aereo
+ * @param scelta = 1 se l'utente vuole acquistare il viaggio
+ * @return la pagina alla quale effettuare il redirect
+ */
 public String settaEscursioneScelta(int scelta){
 	
 	if(listaEscursioni.size()==0)
@@ -304,6 +312,10 @@ public String settaEscursioneScelta(int scelta){
 		return null;
 }
 
+/**
+ * Metodo che viene utilzizato per ultimare l'acquisto
+ * @return alla pagina di congratulazioni del viaggio o di ripilogo a seconda che l'utente ha selezionato il checkbox o meno
+ */
 public String acquistaViaggio(){
 	if(checkPrivacy){
 	gestioneViaggio.creaViaggio(viaggio, modalita);
@@ -313,7 +325,10 @@ public String acquistaViaggio(){
 	return "riepilogo?faces-redirect=true";
 	
 }
-
+/**
+ * Metodo che viene utilizzato per richiamare la homepage resettando quindi tutti i campi settati
+ * @return una stringa che riporta alla homepage
+ */
 public String richiamaHome(){
 	resettaTutto();
 	if(gestioneUtente.isUtente())
@@ -331,6 +346,34 @@ public String richiamaHome(){
 			return "insertEscursione?faces-redirect=true";
 	}
 
+	//METODI GETTER E SETTER
+	
+	public AereoDTO getAereoRitorno() {
+		return aereoRitorno;
+	}
+	
+
+	public AereoDTO getAereoAndata() {
+		return aereoAndata;
+	}
+	
+	public HotelDTO getHotel() {
+		return hotel;
+	}
+	
+	
+	public EscursioneDTO getEscursione(){
+		return escursione;
+	}
+	
+	public Prenotazione_ViaggioDTO getViaggio() {
+		return viaggio;
+	}
+
+	public void setViaggio(Prenotazione_ViaggioDTO viaggio) {
+		this.viaggio = viaggio;
+	}
+	
 	public List<AereoDTO> getListaAereiAndataDB() {
 		return listaAereiAndataDB;
 	}
@@ -489,6 +532,14 @@ public String richiamaHome(){
 	public void setErrore(String errore) {
 		this.errore = errore;
 	}
+	
+	public Boolean getCheckPrivacy() {
+		return checkPrivacy;
+	}
+
+	public void setCheckPrivacy(Boolean checkPrivacy) {
+		this.checkPrivacy = checkPrivacy;
+	}
 
 
 	//Metodi Resetter
@@ -560,19 +611,10 @@ public String richiamaHome(){
 		
 	}
 
-
-	public Boolean getCheckPrivacy() {
-		return checkPrivacy;
-	}
-
-
-	public void setCheckPrivacy(Boolean checkPrivacy) {
-		this.checkPrivacy = checkPrivacy;
-	}
-	
+	//LISTENER
 	public void listenerData(){
-		
-} 
+	} 
+	
 	public void listenerDataRitorno(){
 		
 		Date arrivo = hotel.getDataInizio();
@@ -583,8 +625,6 @@ public String richiamaHome(){
 			hotel.setDataInizio(null);
 		}
 
-	
-	
 	
 } 
 }
