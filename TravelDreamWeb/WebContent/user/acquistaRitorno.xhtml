@@ -35,8 +35,13 @@
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="proseguiAvanti"  update="Grid"
              action="#{viaggio.aggiungiDestinazioneDateAereoRitorno()}" styleClass="ui-priority-primary"/>  
-             <p><a href="index.xhtml">Torna alla homepage</a></p>
             </p:panel>
+	</h:form>
+	<h:form>
+	<p:panel>
+	<p:commandButton value="Torna Alla home (facendo ciò perderai tutti i dati che hai inserito)" id="home" 
+             action="#{viaggio.richiamaHome()}"/>  
+	</p:panel>
 	</h:form>
 </h:body>
 </html>

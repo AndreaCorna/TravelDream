@@ -32,16 +32,17 @@
     			<h:outputText value="#{viaggio.errore}" />  
 				<p></p>
 				
-
- 
-
-
 				
 			</h:panelGrid>
 			<p:commandButton value="Prosegui" id="prosegui"  update="regGrid"
              action="#{viaggio.aggiungiDestinazioneDateAereo()}" styleClass="ui-priority-primary"/>  
-              <p><a href="index.xhtml">Torna alla homepage</a></p>
-           	</p:panel>
+            </p:panel>
+	</h:form>
+	<h:form>
+	<p:panel>
+	<p:commandButton value="Torna Alla home (facendo ciò perderai tutti i dati che hai inserito)" id="home" 
+             action="#{viaggio.richiamaHome()}"/>  
+	</p:panel>
 	</h:form>
 </h:body>
 </html>

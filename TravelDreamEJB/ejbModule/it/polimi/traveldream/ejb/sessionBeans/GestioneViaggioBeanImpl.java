@@ -226,7 +226,9 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 		nuovoViaggio = em.find(Prenotazione_Viaggio.class, nuovoViaggio.getId());
 		viaggio.setId(nuovoViaggio.getId());
 		notificaAcquistoViaggio(nuovoViaggio, messaggio, costo);
+		
 	}
+	
 	
 	/**
 	 * Il metodo notifica all'utente l'acquisto di un viaggio.

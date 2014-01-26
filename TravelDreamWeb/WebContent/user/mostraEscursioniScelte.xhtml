@@ -50,8 +50,13 @@
 </h:form>
 			<p:commandButton value="Acquista la tua escursione" id="prosegui" 
              action="#{viaggio.settaEscursioneScelta(1)}" styleClass="ui-priority-primary"/>
-              <p><a href="index.xhtml">Torna alla homepage</a></p>  
-
+           
+	</h:form>
+	<h:form>
+	<p:panel>
+	<p:commandButton value="Torna Alla home" id="home" 
+             action="#{viaggio.richiamaHome()}"/>  
+	</p:panel>
 	</h:form>
 </h:body>
 </html>

@@ -102,29 +102,6 @@ public class ViaggioManagedBean {
 	 */
 	
 	
-	public void resettaTutto(){
-		aereoAndata = null;
-		listaAereiAndata = null;
-		listaAereiAndataDB = null;
-		datiAereiAndata = null;
-		
-		aereoRitorno = null;
-		listaAereiRitorno = null;
-		listaAereiRitornoDB = null;
-		datiAereiRitorno = null;
-		
-		hotel = null;
-		listaHotel = null;
-		listaHotelDB = null;
-		datiHotel = null;
-		
-		escursione = null;
-		listaEscursioni = null;
-		listaEscursioniDB = null;
-		datiEscursioni = null;
-		
-	}
-	
 	public AereoDTO getAereoRitorno() {
 		return aereoRitorno;
 	}
@@ -151,9 +128,9 @@ public class ViaggioManagedBean {
 		this.viaggio = viaggio;
 	}
 	
+	
 	@PostConstruct
 	public void init(){
-		resettaTutto();
 		minData= new Date();
 		aereoAndata = new AereoDTO();
 		hotel = new HotelDTO();
@@ -178,7 +155,7 @@ public class ViaggioManagedBean {
 		}
 		else
 		{
-			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
 			return "acquistaViaggio?faces-redirect=true";
 		}
 	}
@@ -196,7 +173,7 @@ public class ViaggioManagedBean {
 		}
 		else
 		{
-			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
 			return "acquistaRitorno?faces-redirect=true";
 		
 		}
@@ -220,7 +197,7 @@ public class ViaggioManagedBean {
 		}
 		else
 		{
-			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
 			return "acquistaHotelViaggio?faces-redirect=true";
 		
 		}
@@ -239,7 +216,7 @@ public class ViaggioManagedBean {
 		}
 		else
 		{
-			errore = "La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
 			return "acquistaEscursione?faces-redirect=true";
 		
 		}
@@ -279,6 +256,7 @@ public String settaHotelScelto(int scelta){
 			return "mostraHotelScelti?faces-redirect=true";
 	
 		listaHotel.setDataInizio(hotel.getDataInizio());
+		listaHotel.setDataFine(hotel.getDataFine());
 		viaggio.setHotel(listaHotel);
 		if(modalita == 0)
 			modalita = 5;
@@ -323,14 +301,13 @@ public String settaEscursioneScelta(int scelta){
 public String acquistaViaggio(){
 	
 	gestioneViaggio.creaViaggio(viaggio, modalita);
-	//qua va aggiunto modalita = 0 per resettare
-	resettaTutto();
 	errore = "";
 	return "complimenti?faces-redirect=true";
 	
 }
 
 public String richiamaHome(){
+	resettaTutto();
 	if(gestioneUtente.isUtente())
 		return "index?faces-redirect=true";
 	else
@@ -346,17 +323,6 @@ public String richiamaHome(){
 			return "insertEscursione?faces-redirect=true";
 	}
 
-
-	/*
-	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
-		Date dataInizio = (Date)datainizio.getValue();
-		Date dataFine = (Date)value;
-		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validit� deve essere successiva a quella di inizio"));
-        }
-	}
-*/
 	public List<AereoDTO> getListaAereiAndataDB() {
 		return listaAereiAndataDB;
 	}
@@ -487,22 +453,7 @@ public String richiamaHome(){
 	public void setDatiPacchetti(PacchettoDataModel datiPacchetti) {
 		this.datiPacchetti = datiPacchetti;
 	}
-/*
-	private void caricaDestinazioni(){
-		ArrayList<String> listaDestinazioni = new ArrayList<String>();
-		for(PacchettoDTO pacchetto:listaPacchetti){
-			if (!listaDestinazioni.contains(pacchetto.getDestinazione().toUpperCase())){
-				listaDestinazioni.add(pacchetto.getDestinazione().toUpperCase());
-			}
-		}
-		destinazioni = new SelectItem[listaDestinazioni.size()+1];
-		destinazioni[0]=new SelectItem("", "Seleziona");
-		for(int i=0;i<listaDestinazioni.size();i++){
-			String dest = listaDestinazioni.get(i);
-			destinazioni[i+1] = new SelectItem(dest, dest);
-		}
-	}
-*/
+
 	public SelectItem[] getDestinazioni() {
 		return destinazioni;
 	}
@@ -532,7 +483,73 @@ public String richiamaHome(){
 	}
 
 
+	//Metodi Resetter
+	
+	
+	public void resetErrore(){
+		
+		if (errore.isEmpty())
+			errore = "";
+		
+	}
+	
+	public void resetAndata(){
+		
+		aereoAndata.setCittaAtterraggio(null);
+		aereoAndata.setCittaDecollo(null);
+		aereoAndata.setData(null);
+		
+		resetErrore();
+		
+	}
+	
+	public void resetViaggio(){
+		viaggio.setAereo(null);
+		viaggio.setAereoRitorno(null);
+		viaggio.setData(null);
+		viaggio.setHotel(null);
+		viaggio.setCheckInHotel(null);
+		viaggio.setCheckOutHotel(null);
+		viaggio.setEscursioni(null);
+		
+	}
+	public void resetRitorno(){
+		
+		aereoRitorno.setCittaAtterraggio(null);
+		aereoRitorno.setCittaDecollo(null);
+		aereoRitorno.setData(null);
+		resetErrore();
+		
+	}
+	
+	public void resetHotel(){
 
+		hotel.setCitta(null);
+		hotel.setDataInizio(null);
+		hotel.setDataFine(null);
+		resetErrore();
+	}
+	
+	public void resetEscursione(){
+		
+		
+		escursione.setLuogo(null);
+		escursione.setData(null);
+		resetErrore();
+		
+	}
+	
+	public void resettaTutto(){
+		
+		resetAndata();
+		resetRitorno();
+		resetHotel();
+		resetEscursione();
+		resetErrore();
+		resetViaggio();
+		modalita = 0;
+		
+	}
 
 
 	

@@ -54,8 +54,13 @@
              action="#{viaggio.settaHotelScelto(1)}" styleClass="ui-priority-primary"/>  
              <p:commandButton value="Voglio anche un'escursione" id="proseguiHotel" 
              action="#{viaggio.settaHotelScelto(2)}" styleClass="ui-priority-primary"/>  
-              <p><a href="index.xhtml">Torna alla homepage</a></p>
-
+            
+	</h:form>
+	<h:form>
+	<p:panel>
+	<p:commandButton value="Torna Alla home" id="home" 
+             action="#{viaggio.richiamaHome()}"/>  
+	</p:panel>
 	</h:form>
 </h:body>
 </html>
