@@ -145,7 +145,7 @@ public class PacchettoManagedBean {
 			Integer value = new Integer(id);
 			this.id = value.intValue();
 		}
-		if(!pre.equals("")){
+		if(pre!=null && !pre.equals("")){
 			Integer value = new Integer(pre);
 			this.idPrenotazione = value.intValue();
 		}
