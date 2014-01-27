@@ -92,7 +92,9 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		em.flush();
 		nuova = em.find(Prenotazione_Pacchetto.class, nuova.getId());
 		prenotazione.setId(nuova.getId());
-		notificaAcquistoPacchetto(nuova,false);
+		AcquistoPacchettoMailThread mail = new AcquistoPacchettoMailThread(nuova, false);
+		Thread mailThread = new Thread(mail);
+		mailThread.start();
 	}
 	/**
 	 * Il metodo aggiorna la prenotazione di un pacchetto
@@ -113,7 +115,10 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		nuova.setDataCheckOutHotel(prenotazione.getCheckOutHotel());
 		nuova.setNumeroPersone(prenotazione.getNumeroPersone());
 		em.merge(nuova);
-		notificaAcquistoPacchetto(nuova,true);
+		AcquistoPacchettoMailThread mail = new AcquistoPacchettoMailThread(nuova, true);
+		Thread mailThread = new Thread(mail);
+		mailThread.start();
+	
 	}
 	
 	/**
@@ -149,92 +154,107 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 	}
 
 	/**
-	 * Il metodo carica la mail di notifica da inviare ad un utente nel momento dell'acquisto di un pacchetto 
-	 * o della modifica di una prenotazione.
-	 * @param prenotazione - la prenotazione
-	 * @param modifica - <true> modifica di una prenotazione gia fatta, <false> acquisto
+	 * Inner class che implementa un oggetto Runnable in grado di inviare una mail di notifica
+	 * a seguito dell'acquisto di un pacchetto.
+	 * @author Alessandro Brunitti - Andrea Corna
+	 *
 	 */
-	@SuppressWarnings("deprecation")
-	private void notificaAcquistoPacchetto(Prenotazione_Pacchetto prenotazione, boolean modifica){
-		Session mailSession = createSmtpSession();
-		mailSession.setDebug (true);
-		float costo = 0;
-		try {
-		    Transport transport = mailSession.getTransport ();
+	class AcquistoPacchettoMailThread implements Runnable{
 
-		    MimeMessage message = new MimeMessage (mailSession);
-		    String escursioni = "Escursioni: \n";
-		    for(Escursione escursione:prenotazione.getEscursioni()){
-		    	String add = "\nEscursione: "+escursione.getId()+
-		    			", Luogo: "+escursione.getLuogo()+
-		    			", Descrizione: "+escursione.getDescrizione();
-		    	escursioni = escursioni + add;
-		    	costo += (escursione.getPrezzo()*prenotazione.getNumeroPersone());
-		    }
-		    Date dataCheckIn = prenotazione.getAereo1().getData();
-			Date dataCheckOut = prenotazione.getAereo2().getData();
-			Date in = new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate());
-			Date out = new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate());
-			int diffInDays = (int)( (out.getTime() - in.getTime()) 
-	                 / (1000 * 60 * 60 * 24.0) );
-		    costo = costo + prenotazione.getNumeroPersone()*
-		    		(prenotazione.getAereo1().getCosto()+prenotazione.getAereo2().getCosto()+
-		    				prenotazione.getHotel().getCostoGiornaliero()*diffInDays);
-		    message.setSubject ("Welcome");
-		    message.setFrom (new InternetAddress ("traveldream.com"));
-		    String inizio;
-		    if(!modifica){
-		    	inizio = "Hai appena acquistato un nostro pacchetto \n";
-		    }else{
-		    	inizio = "Hai appena modificato una tua prenotazione\n";
-		    }
-		    message.setContent ("<h1>Caro "+prenotazione.getUtente().getUsername()+"</h1>\n "
-		    		+ inizio
-		    		+ "Di seguito viene riportato il report del tuo acquisto\n "
-		    		+ "<h1>Destinazione "+prenotazione.getPacchetto().getDestinazione()
-		    		+ "</h1>\n "
-		    		+ "<h1>Partenza "+prenotazione.getAereo1().getData()+" con aereo "+prenotazione.getAereo1().getId()
-		    		+ "</h1>\n "
-		    		+ "<h1>Ritorno "+prenotazione.getAereo2().getData()+" con aereo "+prenotazione.getAereo2().getId()
-		    		+ "</h1>\n "
-		    		+ "<h1>Hotel "+prenotazione.getHotel().getNome()+" a "+prenotazione.getHotel().getStelle()+" stelle</h1>\n"
-		    		+ "<h1>"+escursioni
-		    		+ "</h1>\n"
-		    		+ "<h1>Numero Persone: "+prenotazione.getNumeroPersone()
-		    		+ "</h1>\n"
-		    		+ "<h1>Costo: "+costo
-		    		+ "</h1>\n"
-		    		+ "<h1>Descrizione Pacchetto: "+prenotazione.getPacchetto().getDescrizione()
-		    		+ "</h1>\n"
-		    		+ "A Presto.\n"
-		    		+ "<h1>Il Team di TravelDream</h1>\n ", "text/html");
-		    message.addRecipient (Message.RecipientType.TO, new InternetAddress (prenotazione.getUtente().getEmail()));
-
-		    transport.connect ();
-		    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
-		}
-		catch (MessagingException e) {
-		    System.err.println("Cannot Send email");
-		    e.printStackTrace();
-		}
-		}
-
-		private Session createSmtpSession() {
-		final Properties props = new Properties();
-		props.setProperty ("mail.host", "smtp.gmail.com");
-		props.setProperty("mail.smtp.auth", "true");
-		props.setProperty("mail.smtp.port", "" + 587);
-		props.setProperty("mail.smtp.starttls.enable", "true");
-		props.setProperty ("mail.transport.protocol", "smtp");
+		private Prenotazione_Pacchetto prenotazione;
 		
-		return Session.getInstance(props, new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
-				}
-			});
+		private boolean modifica;
+		
+		public AcquistoPacchettoMailThread(){
+			
 		}
+		
+		public AcquistoPacchettoMailThread(Prenotazione_Pacchetto prenotazione, boolean modifica){
+			this.prenotazione = prenotazione;
+			this.modifica = modifica;
+		}
+		
+		@Override
+		public void run() {
+			Session mailSession = createSmtpSession();
+			mailSession.setDebug (true);
+			float costo = 0;
+			try {
+			    Transport transport = mailSession.getTransport ();
 
+			    MimeMessage message = new MimeMessage (mailSession);
+			    String escursioni = "Escursioni: \n";
+			    for(Escursione escursione:prenotazione.getEscursioni()){
+			    	String add = "\nEscursione: "+escursione.getId()+
+			    			", Luogo: "+escursione.getLuogo()+
+			    			", Descrizione: "+escursione.getDescrizione();
+			    	escursioni = escursioni + add;
+			    	costo += (escursione.getPrezzo()*prenotazione.getNumeroPersone());
+			    }
+			    Date dataCheckIn = prenotazione.getAereo1().getData();
+				Date dataCheckOut = prenotazione.getAereo2().getData();
+				Date in = new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate());
+				Date out = new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate());
+				int diffInDays = (int)( (out.getTime() - in.getTime()) 
+		                 / (1000 * 60 * 60 * 24.0) );
+			    costo = costo + prenotazione.getNumeroPersone()*
+			    		(prenotazione.getAereo1().getCosto()+prenotazione.getAereo2().getCosto()+
+			    				prenotazione.getHotel().getCostoGiornaliero()*diffInDays);
+			    message.setSubject ("Welcome");
+			    message.setFrom (new InternetAddress ("traveldream.com"));
+			    String inizio;
+			    if(!modifica){
+			    	inizio = "Hai appena acquistato un nostro pacchetto \n";
+			    }else{
+			    	inizio = "Hai appena modificato una tua prenotazione\n";
+			    }
+			    message.setContent ("<h1>Caro "+prenotazione.getUtente().getUsername()+"</h1>\n "
+			    		+ inizio
+			    		+ "Di seguito viene riportato il report del tuo acquisto\n "
+			    		+ "<h1>Destinazione "+prenotazione.getPacchetto().getDestinazione()
+			    		+ "</h1>\n "
+			    		+ "<h1>Partenza "+prenotazione.getAereo1().getData()+" con aereo "+prenotazione.getAereo1().getId()
+			    		+ "</h1>\n "
+			    		+ "<h1>Ritorno "+prenotazione.getAereo2().getData()+" con aereo "+prenotazione.getAereo2().getId()
+			    		+ "</h1>\n "
+			    		+ "<h1>Hotel "+prenotazione.getHotel().getNome()+" a "+prenotazione.getHotel().getStelle()+" stelle</h1>\n"
+			    		+ "<h1>"+escursioni
+			    		+ "</h1>\n"
+			    		+ "<h1>Numero Persone: "+prenotazione.getNumeroPersone()
+			    		+ "</h1>\n"
+			    		+ "<h1>Costo: "+costo
+			    		+ "</h1>\n"
+			    		+ "<h1>Descrizione Pacchetto: "+prenotazione.getPacchetto().getDescrizione()
+			    		+ "</h1>\n"
+			    		+ "A Presto.\n"
+			    		+ "<h1>Il Team di TravelDream</h1>\n ", "text/html");
+			    message.addRecipient (Message.RecipientType.TO, new InternetAddress (prenotazione.getUtente().getEmail()));
 
+			    transport.connect ();
+			    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
+			}
+			catch (MessagingException e) {
+			    System.err.println("Cannot Send email");
+			    e.printStackTrace();
+			}
+			}
+
+			private Session createSmtpSession() {
+			final Properties props = new Properties();
+			props.setProperty ("mail.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.auth", "true");
+			props.setProperty("mail.smtp.port", "" + 587);
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty ("mail.transport.protocol", "smtp");
+			
+			return Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+			    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
+					}
+				});
+		}
+		
+	}
 	
 		
 }

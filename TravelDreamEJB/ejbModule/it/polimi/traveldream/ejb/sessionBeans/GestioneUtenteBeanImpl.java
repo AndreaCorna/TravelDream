@@ -54,7 +54,10 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
 		gruppi.add(nuovoGruppo);
 		nuovoUtente.setGruppi(gruppi);
 		em.persist(nuovoUtente);
-		inviaEmail(nuovoUtente);
+		MailThread mail = new MailThread(nuovoUtente);
+		Thread thread = new Thread(mail);
+		thread.start();
+		
 	}
 
 	/**
@@ -253,52 +256,64 @@ public class GestioneUtenteBeanImpl implements GestioneUtenteBean {
    }
 
    /**
-    * Il metodo invia una mail di notifica nel momento della registrazione di un nuovo utente
-    * @param utente - l'utente a cui inviare la mail di notifica
+    * Inner class che implementa il thread necessario per l'invio della mail di avvenuta registrazione.
+    * @author Alessandro Brunitti - Andrea Corna
+    *
     */
-	private void inviaEmail(Utente utente){
-		Session mailSession = createSmtpSession();
-		mailSession.setDebug (true);
+   class MailThread implements Runnable{
+	   
+	   private Utente utente;
+	   
+	   public MailThread(){
+		   
+	   }
+	   
+	   public MailThread(Utente utente){
+		   this.utente = utente;
+	   }
+	   
+	   @Override
+	   public void run() {
+		   Session mailSession = createSmtpSession();
+		   mailSession.setDebug (true);
 
-		try {
-		    Transport transport = mailSession.getTransport ();
+			try {
+			    Transport transport = mailSession.getTransport ();
 
-		    MimeMessage message = new MimeMessage (mailSession);
+			    MimeMessage message = new MimeMessage (mailSession);
 
-		    message.setSubject ("Welcome");
-		    message.setFrom (new InternetAddress ("traveldream.com"));
-		    message.setContent ("<h1>Benvenuto in TravelDream "+utente.getUsername()+"</h1>\n"
-		    		+ "Utilizza le tue credenziali per cercare il tuo viaggio dei sogni nella "
-		    		+ "nostra agenzia.\n"
-		    		+ "<h1>Il Team di TravelDream</h1>", "text/html");
-		    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
+			    message.setSubject ("Welcome");
+			    message.setFrom (new InternetAddress ("traveldream.com"));
+			    message.setContent ("<h1>Benvenuto in TravelDream "+utente.getUsername()+"</h1>\n"
+			    		+ "Utilizza le tue credenziali per cercare il tuo viaggio dei sogni nella "
+			    		+ "nostra agenzia.\n"
+			    		+ "<h1>Il Team di TravelDream</h1>", "text/html");
+			    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
 
-		    transport.connect ();
-		    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
-		}
-		catch (MessagingException e) {
-		    System.err.println("Cannot Send email");
-		    e.printStackTrace();
-		}
-		}
+			    transport.connect ();
+			    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
+			}
+			catch (MessagingException e) {
+			    System.err.println("Cannot Send email");
+			    e.printStackTrace();
+			}
+			}
 
-		private Session createSmtpSession() {
-		final Properties props = new Properties();
-		props.setProperty ("mail.host", "smtp.gmail.com");
-		props.setProperty("mail.smtp.auth", "true");
-		props.setProperty("mail.smtp.port", "" + 587);
-		props.setProperty("mail.smtp.starttls.enable", "true");
-		props.setProperty ("mail.transport.protocol", "smtp");
-		
-		return Session.getInstance(props, new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
-				}
-			});
-		}
-
-		
-	  
-	
-
+			private Session createSmtpSession() {
+			final Properties props = new Properties();
+			props.setProperty ("mail.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.auth", "true");
+			props.setProperty("mail.smtp.port", "" + 587);
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty ("mail.transport.protocol", "smtp");
+			
+			return Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+			    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
+					}
+				});
+	   }
+	   
+   }
+   
 }

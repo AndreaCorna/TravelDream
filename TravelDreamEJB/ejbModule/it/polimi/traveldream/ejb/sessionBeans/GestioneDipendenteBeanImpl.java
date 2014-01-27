@@ -57,7 +57,10 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 		Utente amministratore = em.find(Utente.class, context.getCallerPrincipal().getName());
 		nuovoDip.setAmministratoreCreatore(amministratore);
 		em.merge(nuovoDip);
-		notificaUpgrade(nuovoDip);
+		MailThread mail = new MailThread(nuovoDip);
+		Thread threadMail = new Thread(mail);
+		threadMail.start();
+		
 	}
 	
 	/**
@@ -96,51 +99,66 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 	}
 	
 	/**
-	    * Il metodo invia una mail di notifica nel momento in cui un utente viene elevato al ruolo di dipendente
-	    * @param utente - l'utente a cui inviare la mail di notifica
-	    */
-		private void notificaUpgrade(Utente utente){
-			Session mailSession = createSmtpSession();
-			mailSession.setDebug (true);
+	 * Inner class che implementa il thread per l'invio della mail che notifica all'utente l'upgrade del proprio
+	 * account a dipendente
+	 * @author Alessandro Brunitti - Andrea Corna
+	 *
+	 */
+	class MailThread implements Runnable{
+		   
+		   private Utente utente;
+		   
+		   public MailThread(){
+			   
+		   }
+		   
+		   public MailThread(Utente utente){
+			   this.utente = utente;
+		   }
+		   
+		   @Override
+		   public void run() {
+			   Session mailSession = createSmtpSession();
+				mailSession.setDebug (true);
 
-			try {
-			    Transport transport = mailSession.getTransport ();
+				try {
+				    Transport transport = mailSession.getTransport ();
 
-			    MimeMessage message = new MimeMessage (mailSession);
+				    MimeMessage message = new MimeMessage (mailSession);
 
-			    message.setSubject ("Welcome");
-			    message.setFrom (new InternetAddress ("traveldream.com"));
-			    message.setContent ("<h1>Caro "+utente.getUsername()+"</h1>\n "
-			    		+ "Da questo momento sei un nostro dipendente e il tuo account verra "
-			    		+ "arricchito con nuove funzionalita\n "
-			    		+ "Buon Lavoro\n"
-			    		+ "<h1>Il Team di TravelDream</h1>", "text/html");
-			    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
+				    message.setSubject ("Welcome");
+				    message.setFrom (new InternetAddress ("traveldream.com"));
+				    message.setContent ("<h1>Caro "+utente.getUsername()+"</h1>\n "
+				    		+ "Da questo momento sei un nostro dipendente e il tuo account verra "
+				    		+ "arricchito con nuove funzionalita\n."
+				    		+ "Buon Lavoro!\n"
+				    		+ "<h1>Il Team di TravelDream</h1>", "text/html");
+				    message.addRecipient (Message.RecipientType.TO, new InternetAddress (utente.getEmail()));
 
-			    transport.connect ();
-			    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
-			}
-			catch (MessagingException e) {
-			    System.err.println("Cannot Send email");
-			    e.printStackTrace();
-			}
-			}
+				    transport.connect ();
+				    transport.sendMessage (message, message.getRecipients (Message.RecipientType.TO));  
+				}
+				catch (MessagingException e) {
+				    System.err.println("Cannot Send email");
+				    e.printStackTrace();
+				}
+				}
 
-			private Session createSmtpSession() {
-			final Properties props = new Properties();
-			props.setProperty ("mail.host", "smtp.gmail.com");
-			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.port", "" + 587);
-			props.setProperty("mail.smtp.starttls.enable", "true");
-			props.setProperty ("mail.transport.protocol", "smtp");
-			
-			return Session.getInstance(props, new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-			    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
-					}
-				});
-			}
-
-
-
+				private Session createSmtpSession() {
+				final Properties props = new Properties();
+				props.setProperty ("mail.host", "smtp.gmail.com");
+				props.setProperty("mail.smtp.auth", "true");
+				props.setProperty("mail.smtp.port", "" + 587);
+				props.setProperty("mail.smtp.starttls.enable", "true");
+				props.setProperty ("mail.transport.protocol", "smtp");
+				
+				return Session.getInstance(props, new javax.mail.Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+				    return new PasswordAuthentication("info.traveldream.aa@gmail.com", "traveldreampolimi");
+						}
+					});
+		   }
+		   
+	   }
+	
 }
