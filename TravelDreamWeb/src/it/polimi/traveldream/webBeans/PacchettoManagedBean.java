@@ -745,6 +745,13 @@ public class PacchettoManagedBean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 	}
 	
+	public void listenerModificaData(){
+		datiAereiAndata = new AereoDataModel(gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
+		datiAereiRitorno = new AereoDataModel(gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
+		datiHotel = new HotelDataModel(gestionePacchetto.getListaHotel(pacchetto.getDestinazione()));
+		datiEscursioni = new EscursioneDataModel(gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
+	}
+	
 	private void resetSelezione(){
 		ritorno = null;
 		partenza = null;
