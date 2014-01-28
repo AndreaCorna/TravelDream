@@ -72,9 +72,10 @@ public class PrenotazioneManagedBean {
 	 */
 	@SuppressWarnings("deprecation")
 	public String modificaPrenotazione(){
-		Date oggi = new Date();
-		Date dataPrenotazione = new Date(selezione.getData().getYear(),selezione.getData().getMonth(),selezione.getData().getDate());
-		int diffInDays = (int)( (oggi.getTime() - dataPrenotazione.getTime()) 
+		Date date = new Date();
+		Date oggi = new Date(date.getYear(),date.getMonth(),date.getDate());
+		Date dataPrenotazione = new Date(selezione.getAereoAndata().getData().getYear(),selezione.getAereoAndata().getData().getMonth(),selezione.getAereoAndata().getData().getDate());
+		int diffInDays = (int)( (dataPrenotazione.getTime() - oggi.getTime())
                 / (1000 * 60 * 60 * 24.0) );
 		if(selezione.getPacchetto().getValido() == 0){
 			String message = "Non puoi modificare questa prenotazione, il pacchetto non e piu valido";

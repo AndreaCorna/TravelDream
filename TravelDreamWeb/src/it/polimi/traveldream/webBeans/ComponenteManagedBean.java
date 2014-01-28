@@ -1,5 +1,6 @@
 package it.polimi.traveldream.webBeans;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,16 +135,24 @@ public class ComponenteManagedBean {
 	/**
 	 * Il metodo carica dal database l'escursione che deve essere modificata
 	 * @param id - id dell'escursione
+	 * @throws IOException 
 	 */
-	public void initModificaEscursione(String id){
+	public void initModificaEscursione(String id) throws IOException{
 		escursione = gestioneComp.getEscursioneById(id);
+		if(escursione == null){
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}
 	}
 	/**
 	 * Il metodo carica dal database l'hotel che deve essere modificato
 	 * @param id - id dell'hotel
+	 * @throws IOException 
 	 */
-	public void initModificaHotel(String id){
+	public void initModificaHotel(String id) throws IOException{
 		hotel = gestioneComp.getHotelById(id);
+		if(hotel == null){
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}
 	}
 	/**
 	 * Metodo per salvare le modifiche all'hotel selezionato
@@ -187,9 +196,13 @@ public class ComponenteManagedBean {
 	/**
 	 * Il metodo setta l'aereo che è stato selezionato per la modifica
 	 * @param id - id aereo selezionato
+	 * @throws IOException 
 	 */
-	public void initModificaAereo(String id){
+	public void initModificaAereo(String id) throws IOException{
 		aereo = gestioneComp.getAereoById(id);
+		if(aereo == null){
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}
 	}
 	
 	

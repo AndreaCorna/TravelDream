@@ -128,6 +128,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public AereoDTO getAereoById(String id) {
 		Integer value = new Integer(id);
 		Aereo aereo = em.find(Aereo.class, value.intValue());
+		if(aereo == null){
+			return null;
+		}
 		return ConverterDTO.convertToDTO(aereo);
 	}
 	
@@ -138,6 +141,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public HotelDTO getHotelById(String id) {
 		Integer value = new Integer(id);
 		Hotel hotel = em.find(Hotel.class, value.intValue());
+		if(hotel == null){
+			return null;
+		}
 		return ConverterDTO.convertToDTO(hotel);
 	}
 	
@@ -148,6 +154,9 @@ public class GestioneComponenteBeanImpl implements GestioneComponenteBean {
 	public EscursioneDTO getEscursioneById(String id) {
 		Integer value = new Integer(id);
 		Escursione escursione = em.find(Escursione.class, value.intValue());
+		if(escursione == null){
+			return null;
+		}
 		return ConverterDTO.convertToDTO(escursione);
 	}
 

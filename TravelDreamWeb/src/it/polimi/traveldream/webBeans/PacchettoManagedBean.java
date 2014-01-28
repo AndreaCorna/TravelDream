@@ -1,6 +1,7 @@
 package it.polimi.traveldream.webBeans;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -135,9 +136,11 @@ public class PacchettoManagedBean {
 	
 	/**
 	 * Metodo che si occupa di inizializzare la pagina relativa alla personalizzazione dei pacchetti 
-	 * @param id
+	 * @param id - id del pacchetto
+	 * @param pre - id della prenotazione
+	 * @throws IOException - eccezione lanciata se il pacchetto non viene trovato
 	 */
-	public void initPersonalizza(String id, String pre){
+	public void initPersonalizza(String id, String pre) throws IOException{
 		resetSelezione();
 		dataOdierna = new Date();
 		prenotazione = new Prenotazione_PacchettoDTO();
@@ -159,20 +162,30 @@ public class PacchettoManagedBean {
 				found = true;
 			}
 		}
-		
-		listaAereiAndataDB = pacchetto.getAereiAndata();
-		listaAereiRitornoDB = pacchetto.getAereiRitorno();
-		listaHotelDB = pacchetto.getHotels();
-		listaEscursioniDB = pacchetto.getEscursioni();
-		loadListaEscursioni();
-		ArrayList<String> lista = new ArrayList<String>();
-		for(int i=1;i<=pacchetto.getNumeroPersone();i++){
-			Integer value = new Integer(i);
-			String numero = value.toString();
-			lista.add(numero);
-			
+		if(pacchetto == null){
+			throw new IOException();
 		}
-		numeroPersone = lista;
+		//if(pacchetto != null){*/
+		try{
+			listaAereiAndataDB = pacchetto.getAereiAndata();
+			listaAereiRitornoDB = pacchetto.getAereiRitorno();
+			listaHotelDB = pacchetto.getHotels();
+			listaEscursioniDB = pacchetto.getEscursioni();
+			loadListaEscursioni();
+			ArrayList<String> lista = new ArrayList<String>();
+			for(int i=1;i<=pacchetto.getNumeroPersone();i++){
+				Integer value = new Integer(i);
+				String numero = value.toString();
+				lista.add(numero);
+				
+			}
+			numeroPersone = lista;
+		}catch(NullPointerException e){
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}
+		/**}else{
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}*/
 	}
 	
 	/**
@@ -189,9 +202,18 @@ public class PacchettoManagedBean {
 	}
      
        
-	
-	public void initModifica(String id){
-		initPersonalizza(id,null);
+	/**
+	 * Il metodo carica le informazioni per la modifica del pacchetto
+	 * @param id - id del pacchetto
+	 * @throws IOException - eccezione lanciata se non viene trovato
+	 */
+	public void initModifica(String id) throws IOException{
+		try {
+			initPersonalizza(id,null);
+		} catch (IOException e) {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+			return;
+		}
 		datiAereiAndata = new AereoDataModel(pacchetto.getAereiAndata());
 		datiAereiRitorno = new AereoDataModel(pacchetto.getAereiRitorno());
 		datiHotel = new HotelDataModel(pacchetto.getHotels());
@@ -731,6 +753,7 @@ public class PacchettoManagedBean {
 		listaSelezioneEscursioni = null;
 		checkCondivisione = false;
 		checkCondizione = false;
+		pacchetto = null;
 	}
 	public Date getRitorno() {
 		return ritorno;
