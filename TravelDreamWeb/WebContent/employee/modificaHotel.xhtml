@@ -18,22 +18,22 @@
 				<h:outputLabel for="id">Id: #{componente.hotel.id}</h:outputLabel>
 				
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
-				<p:inputText id="nome" value="#{componente.hotel.nome}" />
+				<p:inputText id="nome" value="#{componente.hotel.nome}" required="true"/>
 				<p:message for="nome"/>
 				
 				<h:outputLabel for="decollo">Città:</h:outputLabel>
-				<p:inputText id="citta" value="#{componente.hotel.citta}" />
+				<p:inputText id="citta" value="#{componente.hotel.citta}" required="true"/>
 				<p:message for="citta" />
 										
 				<h:outputLabel for="camere">Camere Disponibili:</h:outputLabel>
-				<p:inputText id="camere" value="#{componente.hotel.camereDisponibili}" validator="#{componente.validaNumero}"/>
+				<p:inputText id="camere" value="#{componente.hotel.camereDisponibili}" required="true" validator="#{componente.validaNumero}"/>
 				<p:message for="camere" />
 				
 				 <h:outputLabel for="rating">Stelle:</h:outputLabel>
-        			<p:rating value="#{componente.hotel.rating}" />
+        			<p:rating value="#{componente.hotel.rating}" required="true"/>
         			
         		<h:outputLabel for="costo">Costo:</h:outputLabel>
-				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}" />
+				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}"  required="true"/>
 				<p:message for="costo" />  
 												
 			</h:panelGrid>

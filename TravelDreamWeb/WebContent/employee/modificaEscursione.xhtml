@@ -18,19 +18,19 @@
 				<h:outputLabel for="id">Id: #{componente.escursione.id}</h:outputLabel>
 								
 				<h:outputLabel for="luogo">Luogo:</h:outputLabel>
-				<p:inputText id="luogo" value="#{componente.escursione.luogo}" />
+				<p:inputText id="luogo" value="#{componente.escursione.luogo}" required="true"/>
 				<p:message for="luogo" />
 										
 				<h:outputLabel for="prezzo">Prezzo:</h:outputLabel>
-				<p:inputText id="prezzo" value="#{componente.escursione.prezzo}" validator="#{componente.validaNumero}"/>
+				<p:inputText id="prezzo" value="#{componente.escursione.prezzo}" required="true" validator="#{componente.validaNumero}"/>
 				<p:message for="prezzo" />
 				
 				<h:outputLabel for="data">Data:</h:outputLabel>
-				<p:calendar id="data" value="#{componente.escursione.data}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar id="data" value="#{componente.escursione.data}" required="true" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
 				
 				<h:outputLabel for="descrizione">Descrizione</h:outputLabel>
-				<p:inputText id="descrizione" value="#{componente.escursione.descrizione}" />
+				<p:inputText id="descrizione" value="#{componente.escursione.descrizione}" required="true"/>
 				<p:message for="descrizione" />
 				
 				

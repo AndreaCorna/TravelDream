@@ -13,13 +13,13 @@
 	<h:form>
 		<p:panel header="Aggiungi un hotel">
 			<h:panelGrid columns="1" id="aereiAndata">
-			
+				<p:growl id="msg" showDetail="true" escape="false" />  
 				<h:outputLabel for="nome">Nome:</h:outputLabel>
-				<p:inputText id="nome" value="#{componente.hotel.nome}" />
+				<p:inputText id="nome" value="#{componente.hotel.nome}" required="true" requireMessage="Devi inserire il nome dell'hotel"/>
 				<p:message for="nome"/>
 				
 				<h:outputLabel for="decollo">Città:</h:outputLabel>
-				<p:inputText id="citta" value="#{componente.hotel.citta}" />
+				<p:inputText id="citta" value="#{componente.hotel.citta}" required="true" requireMessage="Devi inserire la città dell'hotel"/>
 				<p:message for="citta" />
 										
 				<h:outputLabel for="camere">Camere Disponibili:</h:outputLabel>
@@ -27,12 +27,12 @@
 				<p:message for="camere" />
 				
 				<h:outputLabel for="costo">Costo:</h:outputLabel>
-				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}" />
+				<p:inputText id="costo" value="#{componente.hotel.costoGiornaliero}" required="true" />
 				<p:message for="costo" />
 				
 								
 				 <h:outputLabel for="rating">Stelle:</h:outputLabel>
-        			<p:rating value="#{componente.hotel.rating}" />  
+        			<p:rating value="#{componente.hotel.rating}" required="true"/>  
 												
 			</h:panelGrid>
 			<p:commandButton value="Aggiungi" id="ajax"  update="aereiAndata"
