@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb.sessionBeans;
 
 
 
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import it.polimi.traveldream.ejb.entities.Aereo;
@@ -11,6 +12,8 @@ import it.polimi.traveldream.ejb.entities.Pacchetto;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Pacchetto;
 import it.polimi.traveldream.ejb.entities.Prenotazione_Viaggio;
 import it.polimi.traveldream.ejb.entities.Utente;
+
+
 
 
 
@@ -34,6 +37,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -152,6 +156,24 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		List<Prenotazione_ViaggioDTO> listaUtenti = ConverterDTO.convertListaUtentiOnlineViaggiToDTO(prenotazioniUtente, utenteOnline.getUsername());
 		return listaUtenti;
 	}
+	
+	@Override
+	@RolesAllowed({"DIPENDENTE","UTENTE"})
+	public boolean esistePrenotazione(int idPrenotazione, PacchettoDTO pacchetto) {
+		Pacchetto pacchettoDB = em.find(Pacchetto.class, pacchetto.getId());
+		Utente utente = em.find(Utente.class, gestioneUtente.getUtenteDTO().getUsername());
+		boolean trovata = true;
+		try{
+			Prenotazione_Pacchetto prenotazione = (Prenotazione_Pacchetto) em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.id =:id and p.pacchetto =:pacchetto "
+				+ "and p.utente =:utente")
+				.setParameter("id", idPrenotazione)
+				.setParameter("pacchetto", pacchettoDB).setParameter("utente", utente).getSingleResult();
+		
+		}catch(NoResultException e){
+			trovata = false;
+		}
+		return trovata;
+	}
 
 	/**
 	 * Inner class che implementa un oggetto Runnable in grado di inviare una mail di notifica
@@ -255,6 +277,8 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		}
 		
 	}
+
+	
 	
 		
 }

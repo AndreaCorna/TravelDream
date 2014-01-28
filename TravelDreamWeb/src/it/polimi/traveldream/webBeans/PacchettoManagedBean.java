@@ -34,6 +34,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import org.glassfish.api.ActionReport.ExitCode;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
@@ -123,6 +124,8 @@ public class PacchettoManagedBean {
 	private int idPrenotazione;
 	
 	private boolean checkCondizione = false;
+	
+	private boolean initModifica = false;
 	/**
 	 * Metodo che si occupa di inizializzare la pagina relativa ai pacchetti 
 	 */
@@ -131,7 +134,7 @@ public class PacchettoManagedBean {
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
-			
+		
 	}
 	
 	/**
@@ -156,17 +159,18 @@ public class PacchettoManagedBean {
 		if(listaPacchetti == null){
 			listaPacchetti = gestionePacchetto.getListaPacchetti();
 		}
+		pacchetto = null;
 		for(int i=0; i<listaPacchetti.size() && !found; i++){
 			if(listaPacchetti.get(i).getId() == this.id){
 				pacchetto = listaPacchetti.get(i);
 				found = true;
 			}
 		}
-		if(pacchetto == null){
+		if(pacchetto == null && initModifica){// || modifica && !gestionePrenotazione.esistePrenotazione(idPrenotazione,pacchetto)){
+			initModifica = false;
 			throw new IOException();
 		}
-		//if(pacchetto != null){*/
-		try{
+		//if(found && ( modifica == gestionePrenotazione.esistePrenotazione(idPrenotazione,pacchetto) )){
 			listaAereiAndataDB = pacchetto.getAereiAndata();
 			listaAereiRitornoDB = pacchetto.getAereiRitorno();
 			listaHotelDB = pacchetto.getHotels();
@@ -180,12 +184,7 @@ public class PacchettoManagedBean {
 				
 			}
 			numeroPersone = lista;
-		}catch(NullPointerException e){
-			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-		}
-		/**}else{
-			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-		}*/
+		
 	}
 	
 	/**
@@ -208,6 +207,7 @@ public class PacchettoManagedBean {
 	 * @throws IOException - eccezione lanciata se non viene trovato
 	 */
 	public void initModifica(String id) throws IOException{
+		setInitModifica(true);
 		try {
 			initPersonalizza(id,null);
 		} catch (IOException e) {
@@ -219,6 +219,7 @@ public class PacchettoManagedBean {
 		datiHotel = new HotelDataModel(pacchetto.getHotels());
 		datiEscursioni = new EscursioneDataModel(pacchetto.getEscursioni());
 		resetSelezioni();
+		initModifica = false;
 	}
 	
 	/**
@@ -1039,6 +1040,14 @@ public class PacchettoManagedBean {
 
 	public void setCheckCondizione(boolean checkCondizione) {
 		this.checkCondizione = checkCondizione;
+	}
+
+	public boolean isInitModifica() {
+		return initModifica;
+	}
+
+	public void setInitModifica(boolean initModifica) {
+		this.initModifica = initModifica;
 	}
 
 	}

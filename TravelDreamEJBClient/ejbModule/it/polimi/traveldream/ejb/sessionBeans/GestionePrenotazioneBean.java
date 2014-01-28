@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.sessionBeans;
 
+import it.polimi.traveldream.ejb.dto.PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
+
 
 
 import java.util.List;
@@ -39,4 +41,12 @@ public interface GestionePrenotazioneBean {
 	 * @param prenotazione - la prenotazione da aggiornare.
 	 */
 	void aggiornaPrenotazionePacchetto(Prenotazione_PacchettoDTO prenotazione);
+
+	/**
+	 * Il metodo verifica che la prenotazione riferita al pacchetto sia stata effettuata dall'utente corrente
+	 * @param idPrenotazione - la prenotazione da ricercare
+	 * @param pacchetto - il pacchetto a cui è riferita la prenotazione
+	 * @return <true> se la prenotazione è stata trovata, <false> altrimenti
+	 */
+	boolean esistePrenotazione(int idPrenotazione, PacchettoDTO pacchetto);
 }
