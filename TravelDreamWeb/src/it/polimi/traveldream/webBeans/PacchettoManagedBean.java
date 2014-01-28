@@ -677,8 +677,7 @@ public class PacchettoManagedBean {
 			Date date = new Date();
 			String utente = gestioneUtente.getUtenteDTO().getUsername();
 			summary = "Condivisione Prenotazione Attivata";
-			linkCondivisione = "cond"+pacchetto.getId()+"user"+utente+
-					"date"+date.getYear()+date.getMonth()+date.getDay()+DigestUtils.sha256Hex(utente);
+			linkCondivisione = "cond"+pacchetto.getId()+"user"+"date"+date.getYear()+date.getMonth()+date.getDay()+DigestUtils.sha256Hex(utente);
 		}
 		else{
 			summary = "Condivisione Prenotazione Disattivata";
