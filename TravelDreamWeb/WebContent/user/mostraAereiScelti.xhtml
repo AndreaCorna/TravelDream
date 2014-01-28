@@ -54,6 +54,9 @@
 			</h:panelGrid>
 			
 </h:form>
+	<h:outputText value="#{viaggio.errore}" />  
+				<p></p>
+				
 			<p:commandButton value="Acquista il tuo volo" id="prosegui" 
              action="#{viaggio.settaAereoScelto(1)}" styleClass="ui-priority-primary"/>  
              <p:commandButton value="Voglio anche un volo di ritorno" id="proseguiHotel" 
