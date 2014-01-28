@@ -232,15 +232,23 @@ public class ViaggioManagedBean {
 		if (modalita == 1)
 		{
 			if(listaAereiRitorno==null)
+			{
+				errore = "Per favore effettua una scelta";
 				return "mostraAereiSceltiRitorno?faces-redirect=true";
+			}
 			viaggio.setAereoRitorno(listaAereiRitorno);
+			errore = "";
 			modalita = 8;
 		}
 		if(modalita == 0)
 			{
 			if(listaAereiAndata==null)
+			{
+				errore = "Per favore effettua una scelta";
 				return "mostraAereiScelti?faces-redirect=true";
+			}
 			viaggio.setAereo(listaAereiAndata);
+			errore = "";
 			modalita = 1;
 			}
 		
@@ -262,8 +270,11 @@ public class ViaggioManagedBean {
 public String settaHotelScelto(int scelta){
 	
 		if(listaHotel==null)
+		{
+			errore = "Per favore effettua una scelta";
 			return "mostraHotelScelti?faces-redirect=true";
-	
+		}
+		errore ="";	
 		listaHotel.setDataInizio(hotel.getDataInizio());
 		listaHotel.setDataFine(hotel.getDataFine());
 		viaggio.setHotel(listaHotel);
@@ -290,8 +301,12 @@ public String settaHotelScelto(int scelta){
 public String settaEscursioneScelta(int scelta){
 	
 	if(listaEscursioni.size()==0)
+		{
+		errore = "Per favore effettua una scelta";
 		return "mostraEscursioniScelte?faces-redirect=true";
+		}
 	
+	errore = "";	
 	viaggio.setEscursioni(listaEscursioni);
 	if(modalita == 0)
 		modalita = 6;
@@ -547,7 +562,7 @@ public String richiamaHome(){
 	
 	public void resetErrore(){
 		
-		if (errore.isEmpty())
+		if (errore!="")
 			errore = "";
 		
 	}
