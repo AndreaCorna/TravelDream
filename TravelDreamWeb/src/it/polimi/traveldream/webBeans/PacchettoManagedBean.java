@@ -34,6 +34,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.glassfish.api.ActionReport.ExitCode;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
@@ -674,9 +675,10 @@ public class PacchettoManagedBean {
 		String summary;
 		if(checkCondivisione){
 			Date date = new Date();
+			String utente = gestioneUtente.getUtenteDTO().getUsername();
 			summary = "Condivisione Prenotazione Attivata";
-			linkCondivisione = "cond"+pacchetto.getId()+"user"+gestioneUtente.getUtenteDTO().getUsername()+
-					"date"+date.getYear()+date.getMonth()+date.getDay();
+			linkCondivisione = "cond"+pacchetto.getId()+"user"+utente+
+					"date"+date.getYear()+date.getMonth()+date.getDay()+DigestUtils.sha256Hex(utente);
 		}
 		else{
 			summary = "Condivisione Prenotazione Disattivata";
