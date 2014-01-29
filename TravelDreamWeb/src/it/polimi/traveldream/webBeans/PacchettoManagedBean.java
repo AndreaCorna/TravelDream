@@ -39,7 +39,11 @@ import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
-
+/**
+ * La classe implementa il managed bean che permette di richiamare tutte le funzioni disponibili riguardanti un pacchetto
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @ManagedBean(name="pacchetto")
 @SessionScoped
 public class PacchettoManagedBean {
@@ -126,11 +130,11 @@ public class PacchettoManagedBean {
 	private boolean checkCondizione = false;
 	
 	private boolean initModifica = false;
+	
+
 	/**
 	 * Metodo che si occupa di inizializzare la pagina relativa ai pacchetti 
 	 */
-	
-	
 	@PostConstruct
 	public void init(){
 		pacchetto = new PacchettoDTO();
@@ -198,8 +202,9 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che si occupa di inizializzare la pagina di modifiche del pacchetto 
-	 * @param id
+	 * A seguito della transizione da una tab all'altra, il metodo verifica se si è nella
+	 * sezione "Mostra Prenotazioni"
+	 * @param id - id della tab selezionata
 	 */
 	public void attivaModifica(TabChangeEvent event) {  
 		if (event.getTab().getId().equals("tabPrenotazione")) {
@@ -207,7 +212,6 @@ public class PacchettoManagedBean {
 		      resetSelezioni();
 		}else
 			modifica = false;
-		System.out.print(modifica);
 	}
      
        
@@ -233,7 +237,8 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che si occupa di mostrare le offerte all'interno delle pagine 
+	 * Il metodo carica la lista di pacchetti validi presenti nel database in modo che possano 
+	 * essere mostrati nelle varie pagine.
 	 */
 	public void mostraOfferte(){
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
@@ -250,11 +255,11 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che si occupa di aggiungere tutte le informazioni relative agli aerei che l'utente ha inserito, all'interno del database
-	 * @return
+	 * Il metodo setta la destinazione, la data di inizio e fine validità di un pacchetto. Successivamente 
+	 * carica la lista di aerei di andata e di ritorno disponibili in quelle date e che decollano
+	 * o atterrano nella città scelta come destinazione del pacchetto. 
+	 * @return redirect alla pagina per la selezione degli aerei
 	 */
-	
-
 	public String aggiungiDestinazioneDate(){
 		String destinazione = pacchetto.getDestinazione();
 		Date inizioValidita = pacchetto.getInizio_Validita();
@@ -268,8 +273,9 @@ public class PacchettoManagedBean {
 
 	
 	/**
-	 * Metodo che aggiunge gli aerei all'interno di un pacchetto nel database 
-	 * @return
+	 * Il metodo setta nel pacchetto che si sta creando la lista di aerei selezionati. Successivamente carica la 
+	 * lista di hotel che sono presenti nella destinazione del pacchetto.
+	 * @return redirect alla pagina per la selezione degli hotel, null se la selezione non è valida
 	 */
 	public String aggiungiAerei(){
 		
@@ -287,8 +293,9 @@ public class PacchettoManagedBean {
 	
 	
 	/**
-	 * Metodo che aggiunge gli hotel all'interno di un pacchetto nel database
-	 * @return
+	 * Il metodo setta la lista degli hotel scelti nel pacchetto che si sta creando. Successivamente carica la lista di 
+	 * escursioni che soddisfano i requisiti riguardo il luogo e le date.
+	 * @return redirect alla pagina per la selezione delle escursioni, null se la selezione degli hotel è vuota
 	 */
 	public String aggiungiHotel(){
 		if ( listaHotel.size()>0 ){
@@ -304,8 +311,8 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che aggiunge le escursione all'interno di un pacchetto nel database
-	 * @return
+	 * Il metodo setta le escursioni selezionate nel pacchetto che si sta creando. 
+	 * @return redirect alla pagina di riepilogo, null se la lista delle escursioni selezionate non ha alcun elemento
 	 */
 	public String aggiungiEscursioni(){
 		if ( listaEscursioni.size()>0 ){
@@ -317,8 +324,8 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che presi tutti i dati che l'utente ha inserito li mette all'interno del pacchetto nel database 
-	 * @return
+	 * Il metodo comunica all'EJB la volontà di rendere persistente il pacchetto appena creato
+	 * @return redirect alla homepage dell'utente
 	 */
 	public String creaPacchetto(){
 		gestionePacchetto.creaPacchetto(pacchetto);
@@ -327,7 +334,7 @@ public class PacchettoManagedBean {
 	
 	/**
 	 * Metodo che viene chiamato per modificare un pacchetto all'interno del database
-	 * @return
+	 * @return redirect alla homepage dell'utente, reload della pagina se le modifiche non sono valide
 	 */
 	public String modificaPacchetto(){
 		if(validaModifiche()){
@@ -343,8 +350,8 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che elmina un pacchetto all'interno del database
-	 * @return
+	 * Metodo che elimina un pacchetto all'interno del database
+	 * @return redirect alla homepage dell'utente
 	 */
 	public String eliminaPacchetto(){
 		pacchetto.setId(id);
@@ -353,8 +360,9 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che viene utilizzato per effettuare la prenotazione di un pacchetto
-	 * @return
+	 * Il metodo setta tutti i parametri della personalizzazione del pacchetto che
+	 * l'utente sta acquistando.
+	 * @return redirect alla pagina di riepilogo, null se la selezione è scorretta
 	 */
 	@SuppressWarnings("deprecation")
 	public String prenotaPacchetto(){
@@ -383,6 +391,194 @@ public class PacchettoManagedBean {
 		}
 		return null;
 	}
+	
+	/**
+	 * Il metodo rende persistente la nuova prenotazione, oppure, in caso di modifica, aggiorna la prenotazione.
+	 * Di seguito verifica la necessità di rendere persistente anche la condivisione che può essere richiesta
+	 * o meno
+	 * @return redirect alla homepage utente
+	 */
+	public String confermaPrenotazione(){
+		if(!modifica)
+			gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
+		else{
+			prenotazione.setId(idPrenotazione);
+			gestionePrenotazione.aggiornaPrenotazionePacchetto(prenotazione);
+			
+		}
+		if(checkCondivisione){
+			setCondivisione();
+			gestioneCondivisione.creaCondivisione(condivisione, prenotazione);
+		}
+		return "index?faces-redirect=true";
+	}
+	
+	/**
+	 * Checkbox che genera il link di condivisione della prenotazione e mostra un popup che mostra lo stato di 
+	 * accettazione della condivisione.
+	 */
+	@SuppressWarnings("deprecation")
+	public void messaggioCheckBox(){
+		String summary;
+		if(checkCondivisione){
+			Date date = new Date();
+			String utente = gestioneUtente.getUtenteDTO().getUsername();
+			summary = "Condivisione Prenotazione Attivata";
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("cond");
+			stringBuilder.append(pacchetto.getId());
+			stringBuilder.append("user");
+			stringBuilder.append("date");
+			stringBuilder.append(date.getYear());
+			stringBuilder.append(date.getMonth());
+			stringBuilder.append(date.getDay());
+			stringBuilder.append(date.getTime());
+			stringBuilder.append(DigestUtils.sha256Hex(utente));
+			linkCondivisione = stringBuilder.toString();
+		}
+		else{
+			summary = "Condivisione Prenotazione Disattivata";
+			linkCondivisione =null;
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
+	}
+	
+	/**
+	 * Metodo che aggiorna il popup per mostrare la selezione o l'eliminazione di un'escursione
+	 * dalla personalizzazione di un pacchetto che si sta acquistando
+	 */
+	public void messaggioCheckBoxCondizione(){
+		String summary;
+		if(checkCondizione){
+			summary = "Condizioni di viaggio Accettate";
+		}
+		else{
+			summary = "Condizioni di viaggio non accettate";
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
+	}
+	
+	/**
+	 * Il metodo rappresenta un linester che viene chiamato durante la personalizzazione del pacchetto
+	 * e permette di verificare che i campi di data partenza, ritorno e numero di persone siano state selezionate.
+	 * Fatto ciò mostra la lista dei componenti del pacchetto che soddisfano le condizioni impostate dall'utente.
+	 */
+	public void listenerData(){
+		if(ritorno == null || partenza == null){
+			String message = "Seleziona sia la data della partenza che del ritorno";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return;
+		}
+		if(numero == null){
+			String message = "Seleziona il numero di persone";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return;
+		}
+		ArrayList<AereoDTO> listaAndata = new ArrayList<AereoDTO>();
+		Integer value = new Integer(numero);
+		List<AereoDTO> aereiPossibili = gestionePacchetto.getListaAereiAndataDisp(partenza, ritorno, pacchetto, value);
+		for(AereoDTO aereo:aereiPossibili){
+			if((aereo.getData().after(partenza) || aereo.getData().equals(partenza)) && 
+					aereo.getData().before(ritorno)){
+				listaAndata.add(aereo);
+			}
+		}
+		listaAereiAndataDB = listaAndata;
+		ArrayList<AereoDTO> listaRitorno = new ArrayList<AereoDTO>();
+		aereiPossibili = gestionePacchetto.getListaAereiRitornoDisp(partenza, ritorno, pacchetto, value);
+		for(AereoDTO aereo:aereiPossibili){
+			if(aereo.getData().after(partenza) && 
+					(aereo.getData().before(ritorno) || aereo.getData().equals(ritorno))){
+				listaRitorno.add(aereo);
+			}
+		}
+		listaAereiRitornoDB = listaRitorno;
+		ArrayList<EscursioneDTO> lista = new ArrayList<EscursioneDTO>();
+		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
+			if((escursione.getData().after(partenza)) && escursione.getData().before(ritorno)){
+				lista.add(escursione);
+			}
+		}
+		listaEscursioniDB = lista;
+		loadListaEscursioni();
+		List<HotelDTO> hotelDisponibili = gestionePacchetto.getListaHotelDip(partenza,ritorno,pacchetto);
+		listaHotelDB = hotelDisponibili;
+		String message = "Selezionate le date e il numero di persone";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+	}
+	
+	/**
+	 * Il metodo carica tutti i componenti del pacchetto che si vuole eliminare.
+	 */
+	public void listenerModificaData(){
+		datiAereiAndata = new AereoDataModel(gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
+		datiAereiRitorno = new AereoDataModel(gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
+		datiHotel = new HotelDataModel(gestionePacchetto.getListaHotel(pacchetto.getDestinazione()));
+		datiEscursioni = new EscursioneDataModel(gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
+	}
+	
+	/**
+	 * Metodo che gestisce l'interfaccia utente
+	 * @param event
+	 */
+	public void onTransfer(TransferEvent event){
+		StringBuilder builder = new StringBuilder();  
+        for(Object item : event.getItems()) {  
+            builder.append(item.toString()).append("<br />");  
+        }  
+		FacesMessage msg = new FacesMessage();  
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);  
+        msg.setSummary("Escursione selezionata");  
+        msg.setDetail(builder.toString());  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+		
+	}
+	
+	/**
+	 * Validator che verifica che siano state selezionate le condizioni delle privacy
+	 * @param context - il contesto attivo
+	 * @param component - il componente a cui appartiene l'oggetto
+	 * @param value - l'oggetto da verificare
+	 * @throws ValidatorException - eccezione lanciata se la verifica non va a buon fine
+	 */
+	public void validaCondizione(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		HtmlSelectBooleanCheckbox checkBox = (HtmlSelectBooleanCheckbox) component;
+		if(checkBox.getSubmittedValue().equals(false)){
+			 throw new ValidatorException(new FacesMessage("Devi accettare le condizioni di viaggio"));
+		}
+	}
+	
+	/**
+	 * Metodo che si occupa di validare le date e di verificare se la data di fine validit� � successiva a quella di inizio
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
+	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
+		Date dataInizio = (Date)datainizio.getValue();
+		Date dataFine = (Date)value;
+		if (dataFine.before(dataInizio)){
+                throw new ValidatorException(new FacesMessage("La data di fine validit�� deve essere successiva a quella di inizio"));
+        }
+	}
+	
+	/**
+	 * Metodo che valida l'id se non � gi� utilizzato 
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
+	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
+        if (gestionePacchetto.esisteIdPacchetto(value.toString())){
+                throw new ValidatorException(new FacesMessage("Id gi�� utilizzato. Scegline un altro"));
+        }
+	}
+	
 	
 	/**
 	 * Metodo che ritorna true se una data selezione � possibile false altrimenti  
@@ -457,24 +653,7 @@ public class PacchettoManagedBean {
 		return true;
 	}
 		
-	/**
-	 * Metodo che conferma la prenotazione 
-	 * @return
-	 */
-	public String confermaPrenotazione(){
-		if(!modifica)
-			gestionePrenotazione.inserisciPrenotazionePacchetto(prenotazione);
-		else{
-			prenotazione.setId(idPrenotazione);
-			gestionePrenotazione.aggiornaPrenotazionePacchetto(prenotazione);
-			
-		}
-		if(checkCondivisione){
-			setCondivisione();
-			gestioneCondivisione.creaCondivisione(condivisione, prenotazione);
-		}
-		return "index?faces-redirect=true";
-	}
+	
 	
 	/**
 	 * Metodo setter della condivisione
@@ -487,63 +666,8 @@ public class PacchettoManagedBean {
 	}
 	
 	/**
-	 * Metodo che gestisce l'interfaccia utente
-	 * @param event
-	 */
-	public void onTransfer(TransferEvent event){
-		StringBuilder builder = new StringBuilder();  
-        for(Object item : event.getItems()) {  
-            builder.append(item.toString()).append("<br />");  
-        }  
-		FacesMessage msg = new FacesMessage();  
-        msg.setSeverity(FacesMessage.SEVERITY_INFO);  
-        msg.setSummary("Escursione selezionata");  
-        msg.setDetail(builder.toString());  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-		
-	}
-	
-	public void validaCondizione(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		HtmlSelectBooleanCheckbox checkBox = (HtmlSelectBooleanCheckbox) component;
-		if(checkBox.getSubmittedValue().equals(false)){
-			 throw new ValidatorException(new FacesMessage("Devi accettare le condizioni di viaggio"));
-		}
-	}
-	
-	/**
-	 * Metodo che si occupa di validare le date e di verificare se la data di fine validit� � successiva a quella di inizio
-	 * @param context
-	 * @param component
-	 * @param value
-	 * @throws ValidatorException
-	 */
-	public void validaDate(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
-		Date dataInizio = (Date)datainizio.getValue();
-		Date dataFine = (Date)value;
-		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validit�� deve essere successiva a quella di inizio"));
-        }
-	}
-	
-	/**
-	 * Metodo che valida l'id se non � gi� utilizzato 
-	 * @param context
-	 * @param component
-	 * @param value
-	 * @throws ValidatorException
-	 */
-	public void validaId(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-        if (gestionePacchetto.esisteIdPacchetto(value.toString())){
-                throw new ValidatorException(new FacesMessage("Id gi�� utilizzato. Scegline un altro"));
-        }
-	}
-	
-	
-	/**
 	 * Metodo che si occupa di caricare le destinazioni
 	 */
-
 	private void caricaDestinazioni(){
 		ArrayList<String> listaDestinazioni = new ArrayList<String>();
 		for(PacchettoDTO pacchetto:listaPacchetti){
@@ -620,11 +744,9 @@ public class PacchettoManagedBean {
 	}
 	
 	
-	/*
-	 * Metodi getter e setter dei dati e dell'interfaccia 
+	/**
+	 * Il metodo setta la selezione delle escursioni scelte nella personalizzazione del pacchetto
 	 */
-	
-
 	private void setSelezioneEscursioni(){
 		boolean trovato = false;
 		List<String> selezioneEscursioni = listaSelezioneEscursioni.getTarget();
@@ -643,6 +765,9 @@ public class PacchettoManagedBean {
 		prenotazione.setEscursioni(escursioni);		
 	}
 
+	/**
+	 * Il metodo setta la selezione degli aerei scelti nella personalizzazione del pacchetto
+	 */
 	private void setSelezioneAerei(){
 		boolean aereoTrovato= false;
 		for(int i=0;i<listaAereiAndataDB.size() & !aereoTrovato; i++){
@@ -668,7 +793,9 @@ public class PacchettoManagedBean {
 		
 	}
 	
-	
+	/**
+	 * Il metodo setta la selezione degli hotel scelti nella personalizzazione del pacchetto
+	 */
 	private void setSelezioneHotel(){
 		boolean hotelTrovato = false;
 		for(int i=0;i<listaHotelDB.size() & !hotelTrovato; i++){
@@ -681,98 +808,9 @@ public class PacchettoManagedBean {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
-	public void messaggioCheckBox(){
-		String summary;
-		if(checkCondivisione){
-			Date date = new Date();
-			String utente = gestioneUtente.getUtenteDTO().getUsername();
-			summary = "Condivisione Prenotazione Attivata";
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append("cond");
-			stringBuilder.append(pacchetto.getId());
-			stringBuilder.append("user");
-			stringBuilder.append("date");
-			stringBuilder.append(date.getYear());
-			stringBuilder.append(date.getMonth());
-			stringBuilder.append(date.getDay());
-			stringBuilder.append(date.getTime());
-			stringBuilder.append(DigestUtils.sha256Hex(utente));
-			linkCondivisione = stringBuilder.toString();
-		}
-		else{
-			summary = "Condivisione Prenotazione Disattivata";
-			linkCondivisione =null;
-		}
-		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
-	}
-	
-	public void messaggioCheckBoxCondizione(){
-		String summary;
-		if(checkCondizione){
-			summary = "Condizioni di viaggio Accettate";
-		}
-		else{
-			summary = "Condizioni di viaggio non accettate";
-		}
-		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));  
-	}
-	
-	
-
-	public void listenerData(){
-		if(ritorno == null || partenza == null){
-			String message = "Seleziona sia la data della partenza che del ritorno";
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			return;
-		}
-		if(numero == null){
-			String message = "Seleziona il numero di persone";
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			return;
-		}
-		ArrayList<AereoDTO> listaAndata = new ArrayList<AereoDTO>();
-		Integer value = new Integer(numero);
-		List<AereoDTO> aereiPossibili = gestionePacchetto.getListaAereiAndataDisp(partenza, ritorno, pacchetto, value);
-		for(AereoDTO aereo:aereiPossibili){
-			if((aereo.getData().after(partenza) || aereo.getData().equals(partenza)) && 
-					aereo.getData().before(ritorno)){
-				listaAndata.add(aereo);
-			}
-		}
-		listaAereiAndataDB = listaAndata;
-		ArrayList<AereoDTO> listaRitorno = new ArrayList<AereoDTO>();
-		aereiPossibili = gestionePacchetto.getListaAereiRitornoDisp(partenza, ritorno, pacchetto, value);
-		for(AereoDTO aereo:aereiPossibili){
-			if(aereo.getData().after(partenza) && 
-					(aereo.getData().before(ritorno) || aereo.getData().equals(ritorno))){
-				listaRitorno.add(aereo);
-			}
-		}
-		listaAereiRitornoDB = listaRitorno;
-		ArrayList<EscursioneDTO> lista = new ArrayList<EscursioneDTO>();
-		for(EscursioneDTO escursione:pacchetto.getEscursioni()){
-			if((escursione.getData().after(partenza)) && escursione.getData().before(ritorno)){
-				lista.add(escursione);
-			}
-		}
-		listaEscursioniDB = lista;
-		loadListaEscursioni();
-		List<HotelDTO> hotelDisponibili = gestionePacchetto.getListaHotelDip(partenza,ritorno,pacchetto);
-		listaHotelDB = hotelDisponibili;
-		String message = "Selezionate le date e il numero di persone";
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-	}
-	
-	public void listenerModificaData(){
-		datiAereiAndata = new AereoDataModel(gestionePacchetto.getListaAereiAndata(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
-		datiAereiRitorno = new AereoDataModel(gestionePacchetto.getListaAereiRitorno(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
-		datiHotel = new HotelDataModel(gestionePacchetto.getListaHotel(pacchetto.getDestinazione()));
-		datiEscursioni = new EscursioneDataModel(gestionePacchetto.getListaEscursioni(pacchetto.getDestinazione(), pacchetto.getInizio_Validita(), pacchetto.getFine_Validita()));
-	}
-	
+	/**
+	 * Il metodo effettua un reset di tutte le selezioni 
+	 */
 	private void resetSelezione(){
 		ritorno = null;
 		partenza = null;
@@ -785,6 +823,9 @@ public class PacchettoManagedBean {
 		checkCondizione = false;
 		pacchetto = null;
 	}
+	
+/*METODI GETTER E SETTER*/	
+	
 	public Date getRitorno() {
 		return ritorno;
 	}
@@ -1079,5 +1120,5 @@ public class PacchettoManagedBean {
 		this.initModifica = initModifica;
 	}
 
-	}
+}
 

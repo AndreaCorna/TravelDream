@@ -1,8 +1,6 @@
 package it.polimi.traveldream.webBeans;
 
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +17,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 
-
+/**
+ * Il managed bean fornisce tutte le funzioni disponibili per la gestione delle varie prenotazioni
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @ManagedBean(name="prenotazione")
 @SessionScoped
 public class PrenotazioneManagedBean {
@@ -48,27 +49,31 @@ public class PrenotazioneManagedBean {
 	private Prenotazione_PacchettoDTO selezione;
 	
 	
-		
+	/**
+	 * Il metodo effettua l'inizializzazione delle variabili	
+	 */
 	@PostConstruct
 	public void init(){
 		setPrenotazionePacchetto(new Prenotazione_PacchettoDTO());
 		setPrenotazioneViaggio(new Prenotazione_ViaggioDTO());
 		
 	}
+	
 	/**
 	 * Costrutture di default
 	 */
-		public void mostraPrenotazioni(){
+	public void mostraPrenotazioni(){
 		listaPrenotazioni = gestionePrenotazione.getListaPrenotazioni();
 		datiPrenotazione = new PrenotazioneDataModel(listaPrenotazioni);
 		
 		listaPrenotazioniViaggi = gestionePrenotazione.getListaPrenotazioniViaggio();
 		datiPrenotazioneViaggio = new PrenotazioneViaggioDataModel(listaPrenotazioniViaggi);
-		}
+	}
 	
 	/**
-	 * Metodo che viene richiamato dalla home per mostrare le prenotazioni 
-	 * @return la pagina alla quale effettuare il redirect
+	 * Il metodo verifica se sia possibile modificare una prenotazione.
+	 * @return redirect alla pagina di modifica, null se il pacchetto non è più valido oppure la partenza  è imminente
+	 * quindi non può essere modificata
 	 */
 	@SuppressWarnings("deprecation")
 	public String modificaPrenotazione(){
@@ -90,8 +95,10 @@ public class PrenotazioneManagedBean {
 			return "buyPacchetto?id="+selezione.getPacchetto().getId()+"&pre="+selezione.getId()+"&faces-redirect=true";
 	}
 	
-//METODI GETTER E SETTER
-	
+	/**
+	 * Il metodo seleziona la prenotazione che corrisponde all'id ricevuto
+	 * @param id - id della prenotazione da selezionare
+	 */
 	public void settaPrenotazione(String id){
 		System.out.println("In setta selezione id "+id);
 		int value = (new Integer(id)).intValue();
@@ -103,6 +110,8 @@ public class PrenotazioneManagedBean {
 			}
 		}
 	}
+	
+	/*METODI GETTER E SETTER*/
 	
 	public Prenotazione_PacchettoDTO getPrenotazionePacchetto() {
 		return prenotazionePacchetto;
