@@ -239,13 +239,14 @@ public class PacchettoManagedBean {
 		listaPacchetti = gestionePacchetto.getListaPacchetti();
 		caricaDestinazioni();
 		Random random = new Random();
-		int high = listaPacchetti.size();
-		int numeroCasuale = random.nextInt(high)+ 0;
-		if (numeroCasuale==0)
-			numeroCasuale = 1;
-		datiPacchettiCasuali = new PacchettoDataModel(listaPacchetti.subList(numeroCasuale-1, numeroCasuale));
-		datiPacchetti = new PacchettoDataModel(listaPacchetti);
-		
+		if(listaPacchetti.size() !=0){
+			int high = listaPacchetti.size();
+			int numeroCasuale = random.nextInt(high)+ 0;
+			if (numeroCasuale==0)
+				numeroCasuale = 1;
+			datiPacchettiCasuali = new PacchettoDataModel(listaPacchetti.subList(numeroCasuale-1, numeroCasuale));
+			datiPacchetti = new PacchettoDataModel(listaPacchetti);
+		}
 	}
 	
 	/**
