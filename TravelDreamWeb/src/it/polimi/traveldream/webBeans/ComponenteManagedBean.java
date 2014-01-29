@@ -135,7 +135,7 @@ public class ComponenteManagedBean {
 	/**
 	 * Il metodo carica dal database l'escursione che deve essere modificata
 	 * @param id - id dell'escursione
-	 * @throws IOException 
+	 * @throws IOException - eccezione generata a seguito della forzatura di una redirect alla homepage
 	 */
 	public void initModificaEscursione(String id) throws IOException{
 		escursione = gestioneComp.getEscursioneById(id);
@@ -143,10 +143,11 @@ public class ComponenteManagedBean {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 		}
 	}
+
 	/**
 	 * Il metodo carica dal database l'hotel che deve essere modificato
 	 * @param id - id dell'hotel
-	 * @throws IOException 
+	 * @throws IOException - eccezione generata a seguito della forzatura di una redirect alla homepage
 	 */
 	public void initModificaHotel(String id) throws IOException{
 		hotel = gestioneComp.getHotelById(id);
@@ -154,6 +155,7 @@ public class ComponenteManagedBean {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 		}
 	}
+	
 	/**
 	 * Metodo per salvare le modifiche all'hotel selezionato
 	 * @return redirect alla index
@@ -162,6 +164,7 @@ public class ComponenteManagedBean {
 		gestioneComp.modificaHotel(hotel);
 		return "index?faces-redirect=true";
 	}
+	
 	/**
 	 * Metodo per salvare le modifiche all'aereo selezionato
 	 * @return redirect alla index
@@ -170,6 +173,7 @@ public class ComponenteManagedBean {
 		gestioneComp.modificaAereo(aereo);
 		return "index?faces-redirect=true";
 	}
+	
 	/**
 	 * Metodo per salvare le modifiche all'escursione selezionata
 	 * @return redirect alla index
@@ -179,24 +183,37 @@ public class ComponenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo chiede all'EJB di eliminare l'aereo che è stato settato in precendenza
+	 * @return redirect alla homepage
+	 */
 	public String eliminaAereo(){
 		gestioneComp.eliminaAereo(aereo);
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo chiede all'EJB di eliminare l'hotel che è stato settato in precendenza
+	 * @return redirect alla homepage
+	 */
 	public String eliminaHotel(){
 		gestioneComp.eliminaHotel(hotel);
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo chiede all'EJB di eliminare l'escursione che è stata settata in precendenza
+	 * @return redirect alla homepage
+	 */
 	public String eliminaEscursione(){
 		gestioneComp.eliminaEscursione(escursione);
 		return "index?faces-redirect=true";
 	}
+	
 	/**
 	 * Il metodo setta l'aereo che è stato selezionato per la modifica
 	 * @param id - id aereo selezionato
-	 * @throws IOException 
+	 * @throws IOException - eccezione generata a seguito della forzatura di una redirect alla homepage
 	 */
 	public void initModificaAereo(String id) throws IOException{
 		aereo = gestioneComp.getAereoById(id);
@@ -213,32 +230,17 @@ public class ComponenteManagedBean {
 	
 	/**
 	 * Validator chiamato per la verifica del campo numerico
-	 * @param context
-	 * @param component
-	 * @param value
-	 * @throws ValidatorException
+	 * @param context - il contesto attuale
+	 * @param component - il componente che contiene l'oggetto
+	 * @param value - l'oggetto che deve essere controllato
+	 * @throws ValidatorException - eccezione lanciata se la condizione non viene verificata
 	 */
 	public void validaNumero(FacesContext context,UIComponent component,Object value) throws ValidatorException{
 		if (!isNumeroCorretto(value.toString())){
             throw new ValidatorException(new FacesMessage("Il campo può contenere solo numeri"));
 		}
 	}
-	/*/**
-	 * Validator chiamato per controllare la coerenza tra le date dell'hotel
-	 * @param context
-	 * @param component
-	 * @param value
-	 * @throws ValidatorException
-	 
-	public void validaDateHotel(FacesContext context,UIComponent component,Object value) throws ValidatorException{
-		UIInput datainizio = (UIInput)component.getAttributes().get("data_inizio");
-		Date dataInizio = (Date)datainizio.getValue();
-		Date dataFine = (Date)value;
-		if (dataFine.before(dataInizio)){
-                throw new ValidatorException(new FacesMessage("La data di fine validità deve essere successiva a quella di inizio"));
-        }
-	}*/
-	
+		
 	/**
 	 * Il metodo verifica che la stringa contenga solo numeri
 	 * @param id - la stringa da verificare

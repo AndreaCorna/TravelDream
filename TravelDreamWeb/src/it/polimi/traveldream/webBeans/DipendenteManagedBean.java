@@ -12,7 +12,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-
+/**
+ * Il managed bean fornisce alla user interface i metodi necessari per l'interazione con l'application business 
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @ManagedBean(name="dipendente")
 @ViewScoped
 public class DipendenteManagedBean {
@@ -67,6 +71,15 @@ public class DipendenteManagedBean {
 		return "index?faces-redirect=true";
 	}
 	
+	/**
+	 * Il metodo chiama il metodo del session bean per elevare un utente al ruolo di dipendente.
+	 * @return redirect alla homepage
+	 */
+	public String creaDipendente(){
+		gestioneDip.creaDipendente(utenteTrovato);
+		return "index?faces-redirect=true";
+	}
+	
 	/*
 	 * Metodi GETTER E SETTER
 	 */
@@ -95,12 +108,6 @@ public class DipendenteManagedBean {
 		this.listaUtenti = listaUtenti;
 	}
 	
-	public String creaDipendente(){
-		gestioneDip.creaDipendente(utenteTrovato);
-		return "index?faces-redirect=true";
-	}
-	
-
 	public UtenteDataModel getDatiUtenti() {
 		return datiUtenti;
 	}
