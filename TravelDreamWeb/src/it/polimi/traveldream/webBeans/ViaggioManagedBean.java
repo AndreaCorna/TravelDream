@@ -181,27 +181,33 @@ public class ViaggioManagedBean {
  * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
  * @return la pagina alla quale si effettua il redirect
  */
+	@SuppressWarnings("deprecation")
 	public String aggiungiDestinazioneDateHotel(){
 		
 		String destinazione = hotel.getCitta().toLowerCase();
 		Date dataAndata = hotel.getDataInizio();
 		Date dataRitorno = hotel.getDataFine();
 		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataAndata, dataRitorno);
-		if(listaHotelDB.size()!=0&&dataRitorno.before(dataAndata)==false)
-		{
-		setDatiHotel(new HotelDataModel(listaHotelDB));	
-		errore ="";
-		return "mostraHotelScelti?faces-redirect=true";
-		}
+		//if(dataRitorno.before(dataAndata)==true)
+		//	errore = "Non puoi tornare prima di essere partito";
+		if((dataRitorno.getMonth()==dataAndata.getMonth())&&(dataRitorno.getYear()==dataAndata.getYear())&&(dataAndata.getDate()==dataRitorno.getDate()))
+			errore ="Non puoi partire lo stesso giorno in cui dovresti tornare";
 		else
 		{
-			if(dataRitorno.before(dataAndata)==true)
-				errore = "Non puoi tornare prima di essere partito";
+			if(listaHotelDB.size()!=0)
+				{
+				setDatiHotel(new HotelDataModel(listaHotelDB));	
+				errore ="";
+				return "mostraHotelScelti?faces-redirect=true";
+				}
 			else
+			{
 				errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+			}
+		}
 		return "acquistaHotelViaggio?faces-redirect=true";
 		
-		}
+		
 	}
 	
 
@@ -637,7 +643,6 @@ public String richiamaHome(){
 		
 	}
 
-	//LISTENER
 	public void listenerData()
 	{
 		minData = hotel.getDataInizio();
