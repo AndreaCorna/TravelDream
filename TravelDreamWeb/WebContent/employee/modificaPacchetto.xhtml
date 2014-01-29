@@ -10,32 +10,34 @@
 #{pacchetto.initModifica(param['id'])}
 </h:head> 
 <body> 
-<p:panel header="Modifica il pacchetto">
+<p:panel header="Modifica il pacchetto #{pacchetto.pacchetto.id}">
 <h:form>
 	<p:tabView effect="drop" effectDuration="normal">
 		<p:tab title="Info di base">
 			<h:panelGrid columns="3" id="regGrid">
 				
-				<h:outputLabel for="dest">Destinazione:</h:outputLabel>
-				<p:inputText id="dest" value="#{pacchetto.pacchetto.destinazione}" />
-				<p:message for="dest" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="data_inizio">Data di Inizio Validità:</h:outputLabel>
-				<p:calendar binding="#{data_inizio}" required="true" value="#{pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar binding="#{data_inizio}" required="true" value="#{pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline">
+					<p:ajax event="dateSelect" listener="#{pacchetto.listenerModificaData}" update="regGrid,aereiAndata,aereiRitorno,hotel,escursioni" />
+				</p:calendar>
 				<p></p>
 				
 				<h:outputLabel for="data_fine">Data di Fine Validità</h:outputLabel>
 				<p:calendar id="data_fine" value="#{pacchetto.pacchetto.fine_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
-								validator="#{pacchetto.validaDate}" >
+								validator="#{pacchetto.validaDate}" mindate="#{pacchetto.pacchetto.inizio_Validita}">
 								<f:attribute name="data_inizio" value="#{data_inizio}" />
+							<p:ajax event="dateSelect" listener="#{pacchetto.listenerModificaData}" update="regGrid,aereiAndata,aereiRitorno,hotel,escursioni" />
 				</p:calendar>
 				<p></p>
 				
 				<h:outputLabel for="numero">Numero di Persone:</h:outputLabel>
 				<p:inputText id="numero" value="#{pacchetto.pacchetto.numeroPersone}"  />
 				<p:message for="numero" />
-				<h:outputLabel for="dest">Id:</h:outputLabel>#{pacchetto.id}
+				<h:outputLabel for="desti" >Destinazione:</h:outputLabel>
+				<h:outputText value= "#{pacchetto.pacchetto.destinazione}" />
 			</h:panelGrid>
+			
 		</p:tab>
 		<p:tab title="Aerei">
 			<h:panelGrid columns="3" id="aereiAndata">
@@ -189,7 +191,8 @@
 		
 	
 	</p:tabView>
-	<p:commandButton value="Modifica" id="ajax"  ajax="false" action="#{pacchetto.modificaPacchetto()}" />  
+	<p:growl id="msg" showDetail="true" escape="false" />  
+	<p:commandButton value="Modifica" id="ajax"  ajax="false" action="#{pacchetto.modificaPacchetto()}" update="msg"/>  
 	<p:commandButton value="Elimina" id="ajax1"  ajax="false" action="#{pacchetto.eliminaPacchetto()}" />  
 	
 	<p><a href="index.xhtml">Torna alla homepage</a></p>
