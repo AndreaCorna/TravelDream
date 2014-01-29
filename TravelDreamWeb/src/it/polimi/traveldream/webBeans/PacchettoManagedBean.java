@@ -35,7 +35,6 @@ import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.glassfish.api.ActionReport.ExitCode;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
@@ -167,11 +166,15 @@ public class PacchettoManagedBean {
 				found = true;
 			}
 		}
-		if(pacchetto == null && initModifica){// || modifica && !gestionePrenotazione.esistePrenotazione(idPrenotazione,pacchetto)){
+		if(initModifica && pacchetto == null){// || modifica && !gestionePrenotazione.esistePrenotazione(idPrenotazione,pacchetto)){
 			initModifica = false;
 			throw new IOException();
 		}
-		//if(found && ( modifica == gestionePrenotazione.esistePrenotazione(idPrenotazione,pacchetto) )){
+		boolean exception = false;
+		try{
+			if(modifica && !gestionePrenotazione.esistePrenotazione(idPrenotazione,pacchetto) ){
+				exception = true;
+			}
 			listaAereiAndataDB = pacchetto.getAereiAndata();
 			listaAereiRitornoDB = pacchetto.getAereiRitorno();
 			listaHotelDB = pacchetto.getHotels();
@@ -185,6 +188,12 @@ public class PacchettoManagedBean {
 				
 			}
 			numeroPersone = lista;
+		}catch(Exception e){
+			exception = true;
+		}finally{
+			if(exception)
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}
 		
 	}
 	
@@ -677,7 +686,7 @@ public class PacchettoManagedBean {
 			Date date = new Date();
 			String utente = gestioneUtente.getUtenteDTO().getUsername();
 			summary = "Condivisione Prenotazione Attivata";
-			linkCondivisione = "cond"+pacchetto.getId()+"user"+"date"+date.getYear()+date.getMonth()+date.getDay()+DigestUtils.sha256Hex(utente);
+			linkCondivisione = "cond"+pacchetto.getId()+"user"+"date"+date.getYear()+date.getMonth()+date.getDay()+date.getTime()+DigestUtils.sha256Hex(utente);
 		}
 		else{
 			summary = "Condivisione Prenotazione Disattivata";

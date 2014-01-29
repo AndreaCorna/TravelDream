@@ -12,7 +12,7 @@
 #{prenotazione.mostraPrenotazioni()}
 </h:head>
 <h:body>
-<h:form id="form">
+<h:form id="form" onkeypress="if (event.keyCode == 13) {return false; }">
 
     	<p:tabView effect="drop" effectDuration="normal">
     	<p:ajax event="tabChange" listener="#{pacchetto.attivaModifica}"/>  
@@ -218,7 +218,7 @@
        			 </f:facet>  
   
 		         
-		        <p:column id="pacchetto" filterBy="pacchetto"   
+		        <p:column id="pacchetto" filterBy="pacchetto.id"   
 		                headerText="pacchetto" footerText="pacchetto"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.pacchetto.id}" />  
@@ -231,24 +231,23 @@
 		        </p:column> 
 		        
 		       
-		        <p:column id="aereoAndata" filterBy="aereoAndata"   
+		        <p:column id="aereoAndata" filterBy="aereoAndata.data"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.aereoAndata.data}" />  
 		        </p:column>   
-		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
+		         <p:column id="aereoRitorno" filterBy="aereoRitorno.data"   
 		                headerText="aereo Ritorno" footerText="aereoRItorno"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.aereoRitorno.data}" />  
 		        </p:column> 
-		        <p:column id="hotel" filterBy="hotel"   
-		                headerText="hotel" footerText="hotel"  
+		        <p:column id="hotel" filterBy="hotel.nome"   
+		                headerText="hotel" footerText="hotel.nome"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
-		         <p:column id="escursioni" filterBy="escursioni"   
-		                headerText="escursioni" footerText="escursioni"  
-		                filterMatchMode="contains">  
+		         <p:column id="escursioni"    
+		                headerText="escursioni" footerText="escursioni"  >  
 		        		<p:dataList value="#{pac.escursioni}" var="escur" itemType="circle">  
    				 			#{escur.luogo}, #{escur.data}  
 						</p:dataList>   
@@ -292,21 +291,27 @@
 		            <h:outputText value="#{pacV.data}" />  
 		        </p:column> 
 		       
-		        <p:column id="aereoAndata" filterBy="aereoAndata"   
+		        <p:column id="aereoAndata" filterBy="aereoAndata.data"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.aereoAndata.getData()}" />  
+		            <h:outputText value="#{pacV.aereoAndata.data}" />  
 		        </p:column>   
-		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
+		         <p:column id="aereoRitorno" filterBy="aereoRitorno.data"   
 		                headerText="aereo Ritorno" footerText="aereoRitorno"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{pacV.aereoRitorno.getData()}" />  
+		            <h:outputText value="#{pacV.aereoRitorno.data}" />  
 		        </p:column> 
-		        <p:column id="hotel" filterBy="hotel"   
+		        <p:column id="hotel" filterBy="hotel.nome"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
-		            <h:outputText value="#{paVc.hotel.getNome}" />  
+		            <h:outputText value="#{pacV.hotel.nome}" />  
 		        </p:column> 
+		        <p:column id="escursioni"    
+		                headerText="escursioni" footerText="escursioni"  >  
+		        		<p:dataList value="#{pacV.escursioni}" var="escur" itemType="circle">  
+   				 			#{escur.luogo}, #{escur.data}  
+						</p:dataList>   
+				</p:column> 
   
 		        	 </p:dataTable>  
       	<p></p>
