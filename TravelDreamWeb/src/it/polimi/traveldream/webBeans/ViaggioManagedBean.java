@@ -24,6 +24,11 @@ import javax.faces.model.SelectItem;
 
 
 
+/**
+ * IL managed bean fornisce tutte le funzioni necessarie per la gestione del viaggio
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @ManagedBean(name="viaggio")
 @SessionScoped
 public class ViaggioManagedBean {
@@ -119,10 +124,10 @@ public class ViaggioManagedBean {
 		checkPrivacy = false;
 		}
 	
-/**
- * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
- * @return la pagina alla quale si effettua il redirect
- */
+	/**
+	 * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+	 * @return la pagina alla quale si effettua il redirect
+	 */
 	public String aggiungiDestinazioneDateAereo(){
 		String destinazione = aereoAndata.getCittaAtterraggio().toLowerCase();
 		String cittaPartenza = aereoAndata.getCittaDecollo().toLowerCase();
@@ -142,10 +147,10 @@ public class ViaggioManagedBean {
 	}
 	
 
-/**
- * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
- * @return la pagina alla quale si effettua il redirect
- */
+	/**
+	 * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+	 * @return la pagina alla quale si effettua il redirect
+	 */
 	public String aggiungiDestinazioneDateAereoRitorno(){				
 		String destinazioneRitorno = aereoRitorno.getCittaAtterraggio().toLowerCase();
 		String cittaPartenza = aereoRitorno.getCittaDecollo().toLowerCase();
@@ -171,10 +176,10 @@ public class ViaggioManagedBean {
 	}
 
 
-/**
- * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
- * @return la pagina alla quale si effettua il redirect
- */
+	/**
+	 * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+	 * @return la pagina alla quale si effettua il redirect
+	 */
 	@SuppressWarnings("deprecation")
 	public String aggiungiDestinazioneDateHotel(){
 		
@@ -205,10 +210,10 @@ public class ViaggioManagedBean {
 	}
 	
 
-/**
- * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
- * @return la pagina alla quale si effettua il redirect
- */
+	/**
+	 * Metodo che si occupa di acquisire i dati da interfaccia e di settarli nelle variabili locali
+	 * @return la pagina alla quale si effettua il redirect
+	 */
 	public String aggiungiDestinazioneDateEscursione(){
 		
 		String destinazione = escursione.getLuogo().toLowerCase();
@@ -277,7 +282,7 @@ public class ViaggioManagedBean {
 	 * @param scelta = 1 se l'utente vuole acquistare il viaggio, 2 se vuole acquistare un'escursione
 	 * @return la pagina alla quale effettuare il redirect
 	 */
-public String settaHotelScelto(int scelta){
+	public String settaHotelScelto(int scelta){
 	
 		if(listaHotel==null)
 		{
@@ -303,65 +308,71 @@ public String settaHotelScelto(int scelta){
 			return null;
 	}
 
-/**
- * Setter dell'aereo
- * @param scelta = 1 se l'utente vuole acquistare il viaggio
- * @return la pagina alla quale effettuare il redirect
- */
-public String settaEscursioneScelta(int scelta){
-	
-	if(listaEscursioni.size()==0)
-		{
-		errore = "Per favore effettua una scelta";
-		return "mostraEscursioniScelte?faces-redirect=true";
-		}
-	
-	errore = "";	
-	viaggio.setEscursioni(listaEscursioni);
-	if(modalita == 0)
-		modalita = 6;
-	else if (modalita == 1)
-		modalita = 2;
-	else if (modalita == 5)
-		modalita = 4;
-	else if (modalita == 3)
-		modalita = 7;
-	else if (modalita == 8)
-		modalita = 9;
-	else if (modalita == 10)
-		modalita = 11;
-	
-	if (scelta==1)
-		return "riepilogo?faces-redirect=true";
-	else
-		return null;
-}
-
-/**
- * Metodo che viene utilzizato per ultimare l'acquisto
- * @return alla pagina di congratulazioni del viaggio o di ripilogo a seconda che l'utente ha selezionato il checkbox o meno
- */
-public String acquistaViaggio(){
-	if(checkPrivacy){
-	gestioneViaggio.creaViaggio(viaggio, modalita);
-	errore = "";
-	return "complimenti?faces-redirect=true";
+	/**
+	 * Setter dell'aereo
+	 * @param scelta = 1 se l'utente vuole acquistare il viaggio
+	 * @return la pagina alla quale effettuare il redirect
+	 */
+	public String settaEscursioneScelta(int scelta){
+		
+		if(listaEscursioni.size()==0)
+			{
+			errore = "Per favore effettua una scelta";
+			return "mostraEscursioniScelte?faces-redirect=true";
+			}
+		
+		errore = "";	
+		viaggio.setEscursioni(listaEscursioni);
+		if(modalita == 0)
+			modalita = 6;
+		else if (modalita == 1)
+			modalita = 2;
+		else if (modalita == 5)
+			modalita = 4;
+		else if (modalita == 3)
+			modalita = 7;
+		else if (modalita == 8)
+			modalita = 9;
+		else if (modalita == 10)
+			modalita = 11;
+		
+		if (scelta==1)
+			return "riepilogo?faces-redirect=true";
+		else
+			return null;
 	}
-	return "riepilogo?faces-redirect=true";
+
+	/**
+	 * Metodo che viene utilzizato per ultimare l'acquisto
+	 * @return alla pagina di congratulazioni del viaggio o di ripilogo a seconda che l'utente ha selezionato il checkbox o meno
+	 */
+	public String acquistaViaggio(){
+		if(checkPrivacy){
+		gestioneViaggio.creaViaggio(viaggio, modalita);
+		errore = "";
+		return "complimenti?faces-redirect=true";
+		}
+		return "riepilogo?faces-redirect=true";
+		
+	}
+	/**
+	 * Metodo che viene utilizzato per richiamare la homepage resettando quindi tutti i campi settati
+	 * @return una stringa che riporta alla homepage
+	 */
+	public String richiamaHome(){
+		resettaTutto();
+		if(gestioneUtente.isUtente())
+			return "index?faces-redirect=true";
+		else
+			return "/employee/index?faces-redirect=true";
+	}
 	
-}
-/**
- * Metodo che viene utilizzato per richiamare la homepage resettando quindi tutti i campi settati
- * @return una stringa che riporta alla homepage
- */
-public String richiamaHome(){
-	resettaTutto();
-	if(gestioneUtente.isUtente())
-		return "index?faces-redirect=true";
-	else
-		return "/employee/index?faces-redirect=true";
-}
-	
+	/**
+	 * Il metodo setta le escursioni che sono state selezionate dall'utente all'interno del viaggio che
+	 * si sta creando
+	 * @return redirect alla pagina di riepilogo se la selezione è corretta, altrimenti si 
+	 * chiede nuovamente di inserire le escursioni
+	 */
 	public String aggiungiEscursioni(){
 		if ( listaEscursioni.size()>0 ){
 			viaggio.setEscursioni(listaEscursioni);
@@ -370,6 +381,73 @@ public String richiamaHome(){
 		else
 			return "insertEscursione?faces-redirect=true";
 	}
+	
+	//Metodi Resetter
+	
+	
+	public void resetErrore(){		
+		if (errore!="")
+			errore = "";
+			
+	}
+		
+	public void resetAndata(){
+		aereoAndata.setCittaAtterraggio(null);
+		aereoAndata.setCittaDecollo(null);
+		aereoAndata.setData(null);
+		resetErrore();		
+	}
+		
+	private void resetViaggio(){
+		viaggio.setAereo(null);
+		viaggio.setAereoRitorno(null);
+		viaggio.setData(null);
+		viaggio.setHotel(null);
+		viaggio.setCheckInHotel(null);
+		viaggio.setCheckOutHotel(null);
+		viaggio.setEscursioni(null);			
+	}
+
+	private void resetRitorno(){		
+		aereoRitorno.setCittaAtterraggio(null);
+		aereoRitorno.setCittaDecollo(null);
+		aereoRitorno.setData(null);
+		resetErrore();		
+	}
+		
+	private void resetHotel(){
+		hotel.setCitta(null);
+		hotel.setDataInizio(null);
+		hotel.setDataFine(null);			
+		resetErrore();
+	}
+		
+	private void resetEscursione(){			
+		escursione.setLuogo(null);
+		escursione.setData(null);
+		resetErrore();
+	}
+		
+	public void resettaTutto(){
+		resetAndata();
+		resetRitorno();
+		resetHotel();
+		resetEscursione();
+		resetErrore();
+		resetViaggio();
+		modalita = 0;
+		checkPrivacy = false;
+		minData = new Date();
+	}
+
+	public void listenerData(){
+		minData = hotel.getDataInizio();
+	} 
+		
+	public void listenerDataRitorno(){
+
+	}
+
 
 	//METODI GETTER E SETTER
 	
@@ -565,87 +643,6 @@ public String richiamaHome(){
 	public void setCheckPrivacy(Boolean checkPrivacy) {
 		this.checkPrivacy = checkPrivacy;
 	}
-
-
-	//Metodi Resetter
-	
-	
-	public void resetErrore(){
-		
-		if (errore!="")
-			errore = "";
-		
-	}
-	
-	public void resetAndata(){
-		
-		aereoAndata.setCittaAtterraggio(null);
-		aereoAndata.setCittaDecollo(null);
-		aereoAndata.setData(null);
-		
-		resetErrore();
-		
-	}
-	
-	private void resetViaggio(){
-		viaggio.setAereo(null);
-		viaggio.setAereoRitorno(null);
-		viaggio.setData(null);
-		viaggio.setHotel(null);
-		viaggio.setCheckInHotel(null);
-		viaggio.setCheckOutHotel(null);
-		viaggio.setEscursioni(null);
-		
-	}
-	private void resetRitorno(){
-		
-		aereoRitorno.setCittaAtterraggio(null);
-		aereoRitorno.setCittaDecollo(null);
-		aereoRitorno.setData(null);
-		resetErrore();
-		
-	}
-	
-	private void resetHotel(){
-
-		hotel.setCitta(null);
-		hotel.setDataInizio(null);
-		hotel.setDataFine(null);
-		resetErrore();
-	}
-	
-	private void resetEscursione(){
-		
-		
-		escursione.setLuogo(null);
-		escursione.setData(null);
-		resetErrore();
-		
-	}
-	
-	public void resettaTutto(){
-		
-		resetAndata();
-		resetRitorno();
-		resetHotel();
-		resetEscursione();
-		resetErrore();
-		resetViaggio();
-		modalita = 0;
-		checkPrivacy = false;
-		minData = new Date();
-		
-	}
-
-	public void listenerData()
-	{
-		minData = hotel.getDataInizio();
-	} 
-	
-	public void listenerDataRitorno(){
-
-	
-}
 
 	public Boolean getOk() {
 		return ok;
