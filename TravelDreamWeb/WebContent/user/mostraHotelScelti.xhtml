@@ -18,7 +18,7 @@
 		<h:form>
 			
 				<h:panelGrid columns="3" id="hotel">
-				<p:dataTable id="datiHotel" var="hotel" value="#{viaggio.datiHotel}" paginator="true" rows="30"  
+				<p:dataTable id="datiHotel" var="hotels" value="#{viaggio.datiHotel}" paginator="true" rows="30"  
 		                 selection="#{viaggio.listaHotel}">  
 		  		<f:facet name="header">  
 		            Seleziona l'hotel che preferisci
@@ -27,22 +27,22 @@
 		        <p:column selectionMode="single" style="width:2%" />  
 		  
 		        <p:column headerText="nome" style="width:25%">  
-		            #{hotel.nome}  
+		            #{hotels.nome}  
 		        </p:column>  
 		  
 		        <p:column headerText="città" style="width:25%">  
-		            #{hotel.citta}  
+		            #{hotels.citta}  
 		        </p:column> 
 		  
 		        <p:column headerText="Data Inizio" style="width:24%">  
-		            #{hotel.dataInizio}  
+		            #{viaggio.hotel.dataInizio}  
 		        </p:column>  
 		           <p:column headerText="Data Fine" style="width:24%">  
-		            #{hotel.dataFine}  
+		            #{viaggio.hotel.dataFine}  
 		        </p:column> 
 		        
 		        <p:column headerText="Costo" style="width:24%">  
-		            #{hotel.costoGiornaliero}  
+		            #{hotels.costoGiornaliero}  
 		        </p:column> 
 		    
 		    </p:dataTable>  
