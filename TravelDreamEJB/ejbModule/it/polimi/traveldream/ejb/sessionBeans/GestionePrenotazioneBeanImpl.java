@@ -20,6 +20,9 @@ import it.polimi.traveldream.ejb.entities.Utente;
 
 
 
+
+
+
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -164,6 +167,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 		Utente utente = em.find(Utente.class, gestioneUtente.getUtenteDTO().getUsername());
 		boolean trovata = true;
 		try{
+			@SuppressWarnings("unused")
 			Prenotazione_Pacchetto prenotazione = (Prenotazione_Pacchetto) em.createQuery("SELECT p FROM Prenotazione_Pacchetto p WHERE p.id =:id and p.pacchetto =:pacchetto "
 				+ "and p.utente =:utente")
 				.setParameter("id", idPrenotazione)
@@ -215,7 +219,9 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			    }
 			    Date dataCheckIn = prenotazione.getAereo1().getData();
 				Date dataCheckOut = prenotazione.getAereo2().getData();
+				@SuppressWarnings("deprecation")
 				Date in = new Date(dataCheckIn.getYear(), dataCheckIn.getMonth(), dataCheckIn.getDate());
+				@SuppressWarnings("deprecation")
 				Date out = new Date(dataCheckOut.getYear(), dataCheckOut.getMonth(), dataCheckOut.getDate());
 				int diffInDays = (int)( (out.getTime() - in.getTime()) 
 		                 / (1000 * 60 * 60 * 24.0) );

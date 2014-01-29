@@ -1,6 +1,6 @@
 package it.polimi.traveldream.webBeans;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,16 +18,10 @@ import it.polimi.traveldream.ejb.sessionBeans.GestioneViaggioBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.faces.validator.ValidatorException;
 
-import org.primefaces.event.TransferEvent;
 
 
 @ManagedBean(name="viaggio")

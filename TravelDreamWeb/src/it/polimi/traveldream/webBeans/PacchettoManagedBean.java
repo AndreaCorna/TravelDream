@@ -681,13 +681,24 @@ public class PacchettoManagedBean {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void messaggioCheckBox(){
 		String summary;
 		if(checkCondivisione){
 			Date date = new Date();
 			String utente = gestioneUtente.getUtenteDTO().getUsername();
 			summary = "Condivisione Prenotazione Attivata";
-			linkCondivisione = "cond"+pacchetto.getId()+"user"+"date"+date.getYear()+date.getMonth()+date.getDay()+date.getTime()+DigestUtils.sha256Hex(utente);
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("cond");
+			stringBuilder.append(pacchetto.getId());
+			stringBuilder.append("user");
+			stringBuilder.append("date");
+			stringBuilder.append(date.getYear());
+			stringBuilder.append(date.getMonth());
+			stringBuilder.append(date.getDay());
+			stringBuilder.append(date.getTime());
+			stringBuilder.append(DigestUtils.sha256Hex(utente));
+			linkCondivisione = stringBuilder.toString();
 		}
 		else{
 			summary = "Condivisione Prenotazione Disattivata";
