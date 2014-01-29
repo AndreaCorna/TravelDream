@@ -9,7 +9,12 @@ import it.polimi.traveldream.ejb.dto.Prenotazione_ViaggioDTO;
 import java.util.List;
 
 import javax.ejb.Local;
-
+/**
+ * Interfaccia locale che permette la comunicazione con il session bean che fornisce i metodi 
+ * necessari per la prenotazione di viaggi e pacchetti
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @Local
 public interface GestionePrenotazioneBean {
 	/**

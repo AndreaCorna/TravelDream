@@ -5,7 +5,12 @@ import it.polimi.traveldream.ejb.dto.EscursioneDTO;
 import it.polimi.traveldream.ejb.dto.HotelDTO;
 
 import javax.ejb.Local;
-
+/**
+ * Interfaccia locale che viene implementata dal session bean che gestisce i componenti base offerti
+ * dall'agenzia
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @Local
 public interface GestioneComponenteBean {
 

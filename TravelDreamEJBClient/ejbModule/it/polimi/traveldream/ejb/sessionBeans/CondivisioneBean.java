@@ -5,6 +5,11 @@ import it.polimi.traveldream.ejb.dto.Prenotazione_PacchettoDTO;
 
 import javax.ejb.Local;
 
+/**
+ * Interfaccia locale per il session bean che gestisce la condivisione
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @Local
 public interface CondivisioneBean {
 	/**

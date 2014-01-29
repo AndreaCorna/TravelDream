@@ -9,7 +9,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
-
+/**
+ * Interfaccia locale che permette la comunicazione con il session bean che fornisce i metodi necessari alla gestione del
+ * pacchetto
+ * @author Alessandro Brunitti - Andrea Corna
+ *
+ */
 @Local
 public interface GestionePacchettoBean {
 

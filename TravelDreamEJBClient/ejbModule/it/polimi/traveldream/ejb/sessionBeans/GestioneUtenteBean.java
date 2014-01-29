@@ -5,7 +5,12 @@ import java.util.List;
 import it.polimi.traveldream.ejb.dto.UtenteDTO;
 
 import javax.ejb.Local;
-
+/**
+ * Interfaccia locale che permette la comunicazione con il session bean che si occupa di fornire
+ * i metodi necessaari per la gestione dell'utente
+ * @author Aleessandro Brunitti - Andrea Corna
+ *
+ */
 @Local
 public interface GestioneUtenteBean {
 
