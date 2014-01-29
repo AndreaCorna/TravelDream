@@ -11,7 +11,7 @@
 </h:head>
 <h:body>
 	
-<h:form id="form">
+<h:form id="form" onkeypress="if (event.keyCode == 13){return false;}">
    
 	<p:graphicImage value="../immagini/principale.jpg" />
                
@@ -114,25 +114,25 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
             			</p:outputPanel>  
        			 </f:facet>  
   
-		        <p:column id="aereoAndata" filterBy="aereoAndata"   
+		        <p:column id="aereoAndata" filterBy="aereoAndata.data"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.aereoAndata.data}" />  
 		        </p:column>   
-		         <p:column id="aereoRitorno" filterBy="aereoRitorno"   
+		         <p:column id="aereoRitorno" filterBy="aereoRitorno.data"   
 		                headerText="aereo Ritorno" footerText="aereoRItorno"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.aereoRitorno.data}" />  
 		        </p:column> 
-		        <p:column id="hotel" filterBy="hotel"   
+		        <p:column id="hotel" filterBy="hotel.nome"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pac.hotel.nome}" />  
 		        </p:column> 
 		        
-		        		        <p:column id="escursioni" filterBy="escursioni"   
+		        		        <p:column id="escursioni"  
 		                headerText="escursioni" footerText="escursioni"  
-		                filterMatchMode="contains">  
+		              >  
 		        		<p:dataList value="#{pac.escursioni}" var="escur" itemType="circle">  
    				 			#{escur.luogo}, #{escur.data}  
 				</p:dataList>   
@@ -166,35 +166,35 @@ acquista una delle nostre offerte speciali scelte per te e personalizzala come v
             			</p:outputPanel>  
        			 </f:facet>  
 		       
-		        <p:column id="partenza" filterBy="partenza"   
+		        <p:column id="partenza" filterBy="aereoAndata.data"   
 		                headerText="aereo Andata" footerText="aereo Andata"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoAndata.data}" />  
 		        </p:column>   
-		       	<p:column id="destinazionea" filterBy="aereoAndata"   
+		       	<p:column id="aereoAndata" filterBy="aereoAndata.cittaAtterraggio"   
 		                headerText="destinazione " footerText="destinazione"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoAndata.cittaAtterraggio}" />  
 		        </p:column>   
-				 <p:column id="ritorno" filterBy="partenza"   
+				 <p:column id="ritorno" filterBy="aereoRitorno.data"   
 		                headerText="aereo Ritorno" footerText="aereo Ritorno"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoRitorno.data}" />  
 		        </p:column>   
-		       	<p:column id="destinazione" filterBy="aereoRitorno"   
+		       	<p:column id="aereoRitorno" filterBy="aereoRitorno.cittaAtterraggio"   
 		                headerText="destinazione " footerText="destinazione"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.aereoRitorno.cittaAtterraggio}" />  
 		        </p:column>
 		      
-		        <p:column id="hotel" filterBy="hotel"   
+		        <p:column id="hotel" filterBy="hotel.nome"   
 		                headerText="hotel" footerText="hotel"  
 		                filterMatchMode="contains">  
 		            <h:outputText value="#{pacV.hotel.nome}" />  
 		        </p:column> 
-		        		        <p:column id="escursioni" filterBy="escursioni"   
+		        		        <p:column id="escursioni"
 		                headerText="escursioni" footerText="escursioni"  
-		                filterMatchMode="contains">  
+>  
 		        		<p:dataList value="#{pacV.escursioni}" var="escur" itemType="circle">  
    				 			#{escur.luogo}, #{escur.data}  
 				</p:dataList>   
