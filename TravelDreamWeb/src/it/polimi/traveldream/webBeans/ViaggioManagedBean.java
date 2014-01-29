@@ -91,6 +91,8 @@ public class ViaggioManagedBean {
 	
 	private Boolean checkPrivacy;
 	
+	private Boolean ok;
+	
 	
 	/*	LEGENDA DELLE MODALIT�
 	 * 1		solo aereo
@@ -159,6 +161,7 @@ public class ViaggioManagedBean {
 		{
 			setDatiAereiRitorno(new AereoDataModel(listaAereiRitornoDB));
 			errore ="";
+			setOk(true);
 			return "mostraAereiSceltiRitorno?faces-redirect=true";
 		}
 		else
@@ -231,14 +234,18 @@ public class ViaggioManagedBean {
 		
 		if (modalita == 1)
 		{
-			if(listaAereiRitorno==null)
+			if(listaAereiRitorno==null&&ok==true)
 			{
 				errore = "Per favore effettua una scelta";
 				return "mostraAereiSceltiRitorno?faces-redirect=true";
 			}
-			viaggio.setAereoRitorno(listaAereiRitorno);
-			errore = "";
-			modalita = 8;
+			if(listaAereiRitorno!=null&&ok==true)
+			{
+				viaggio.setAereoRitorno(listaAereiRitorno);
+				errore = "";
+				modalita = 8;
+				setOk(false);
+			}
 		}
 		if(modalita == 0)
 			{
@@ -641,5 +648,13 @@ public String richiamaHome(){
 		}
 
 	
-} 
+}
+
+	public Boolean getOk() {
+		return ok;
+	}
+
+	public void setOk(Boolean ok) {
+		this.ok = ok;
+	} 
 }
