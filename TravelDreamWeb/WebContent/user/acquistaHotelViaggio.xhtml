@@ -32,8 +32,8 @@
 				
 				<h:outputLabel for="data_fine">Data di fine soggiorno:</h:outputLabel>
 				<p:calendar id="data_fine" binding="#{data_fine}" required="true" value="#{viaggio.hotel.dataFine}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
-						mindate="#{viaggio.hotel.dataInizio}">  
-					<p:ajax event="dateSelect" listener="#{viaggio.listenerDataRitorno}" update="data_inizio" />   
+						mindate="#{viaggio.minData}">  
+					<p:ajax event="dateSelect" listener="#{viaggio.listenerDataRitorno}" update="data_inizio, data_fine" />   
       			</p:calendar>  
     			<h:outputText value="#{viaggio.errore}" />  
 				<p></p>

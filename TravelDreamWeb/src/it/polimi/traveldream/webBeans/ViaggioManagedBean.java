@@ -187,7 +187,7 @@ public class ViaggioManagedBean {
 		Date dataAndata = hotel.getDataInizio();
 		Date dataRitorno = hotel.getDataFine();
 		listaHotelDB = gestioneViaggio.getListaHotel(destinazione, dataAndata, dataRitorno);
-		if(listaHotelDB.size()!=0)
+		if(listaHotelDB.size()!=0&&dataRitorno.before(dataAndata)==false)
 		{
 		setDatiHotel(new HotelDataModel(listaHotelDB));	
 		errore ="";
@@ -195,8 +195,11 @@ public class ViaggioManagedBean {
 		}
 		else
 		{
-			errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
-			return "acquistaHotelViaggio?faces-redirect=true";
+			if(dataRitorno.before(dataAndata)==true)
+				errore = "Non puoi tornare prima di essere partito";
+			else
+				errore = " La tua ricerca non ha conseguito alcun risultato per favore rieseguila";
+		return "acquistaHotelViaggio?faces-redirect=true";
 		
 		}
 	}
@@ -630,22 +633,17 @@ public String richiamaHome(){
 		resetViaggio();
 		modalita = 0;
 		checkPrivacy = false;
+		minData = new Date();
 		
 	}
 
 	//LISTENER
-	public void listenerData(){
+	public void listenerData()
+	{
+		minData = hotel.getDataInizio();
 	} 
 	
 	public void listenerDataRitorno(){
-		
-		Date arrivo = hotel.getDataInizio();
-		Date ritorno = hotel.getDataFine();
-		
-		if (ritorno.before(arrivo))
-		{
-			hotel.setDataInizio(null);
-		}
 
 	
 }
