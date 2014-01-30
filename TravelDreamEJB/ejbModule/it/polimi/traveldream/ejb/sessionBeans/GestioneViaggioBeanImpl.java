@@ -270,7 +270,7 @@ public class GestioneViaggioBeanImpl implements GestioneViaggioBean {
 			    	messaggio = messaggio + add;
 			    	costo += escursione.getPrezzo();
 			    }
-			    message.setSubject ("Welcome");
+			    message.setSubject ("Conferma acquisto viaggio");
 			    message.setFrom (new InternetAddress ("traveldream.com"));
 			    String inizio = "Hai appena creato un tuo viaggio \n";
 			    message.setContent ("<h1>Caro "+prenotazione.getUtente().getUsername()+"</h1>\n "

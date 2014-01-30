@@ -662,6 +662,7 @@ public class PacchettoManagedBean {
 		condivisione = new CondivisioneDTO();
 		condivisione.setData(new Date());
 		condivisione.setLink(linkCondivisione);
+		condivisione.setPrenotazione(prenotazione);
 		condivisione.setUtente(gestioneUtente.getUtenteDTO());
 	}
 	

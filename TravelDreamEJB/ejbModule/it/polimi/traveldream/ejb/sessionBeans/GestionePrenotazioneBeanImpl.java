@@ -228,7 +228,7 @@ public class GestionePrenotazioneBeanImpl implements it.polimi.traveldream.ejb.s
 			    costo = costo + prenotazione.getNumeroPersone()*
 			    		(prenotazione.getAereo1().getCosto()+prenotazione.getAereo2().getCosto()+
 			    				prenotazione.getHotel().getCostoGiornaliero()*diffInDays);
-			    message.setSubject ("Welcome");
+			    message.setSubject ("Conferma acquisto pacchetto");
 			    message.setFrom (new InternetAddress ("traveldream.com"));
 			    String inizio;
 			    if(!modifica){

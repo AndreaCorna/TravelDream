@@ -19,12 +19,12 @@
 				<p:message for="dest" value="Inserisci il nome"/>
 				
 				<h:outputLabel for="data_inizio">Data di Inizio Validità:</h:outputLabel>
-				<p:calendar binding="#{data_inizio}" required="true" value="#{pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
+				<p:calendar binding="#{data_inizio}" mindate="#{pacchetto.dataOdierna}" required="true" value="#{pacchetto.pacchetto.inizio_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"/>
 				<p></p>
 				
 				<h:outputLabel for="data_fine">Data di Fine Validità</h:outputLabel>
 				<p:calendar id="data_fine" value="#{pacchetto.pacchetto.fine_Validita}" pattern="dd/MM/yyyy HH:mm:ss" navigator="true" display="inline"
-								validator="#{pacchetto.validaDate}" >
+								validator="#{pacchetto.validaDate}"  mindate="#{pacchetto.dataOdierna}">
 								<f:attribute name="data_inizio" value="#{data_inizio}" />
 				</p:calendar>
 				<p></p>

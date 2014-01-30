@@ -126,7 +126,7 @@ public class GestioneDipendenteBeanImpl implements GestioneDipendenteBean {
 
 				    MimeMessage message = new MimeMessage (mailSession);
 
-				    message.setSubject ("Welcome");
+				    message.setSubject ("Upgrade profilo");
 				    message.setFrom (new InternetAddress ("traveldream.com"));
 				    message.setContent ("<h1>Caro "+utente.getUsername()+"</h1>\n "
 				    		+ "Da questo momento sei un nostro dipendente e il tuo account verra "
