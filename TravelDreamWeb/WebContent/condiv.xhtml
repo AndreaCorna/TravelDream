@@ -37,7 +37,7 @@ alert(first);
 				<p:outputLabel value="Aereo Ritorno"/> <p:outputLabel value="#{condivisione.prenotazione.aereoRitorno.id}"/>
 				<p:outputLabel value="Hotel"/> <p:outputLabel value="#{condivisione.prenotazione.hotel.nome}"/>
 				<h:outputLabel value="Escursioni"/>
-				<p:dataList value="#{pacchetto.prenotazione.escursioni}" var="escur" itemType="circle">  
+				<p:dataList value="#{condivisione.prenotazione.escursioni}" var="escur" itemType="circle">  
    				 	#{escur.id}, #{escur.luogo}, #{escur.data}  
 				</p:dataList>
 

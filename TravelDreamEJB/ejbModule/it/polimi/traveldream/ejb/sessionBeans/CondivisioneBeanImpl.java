@@ -59,12 +59,15 @@ public class CondivisioneBeanImpl implements CondivisioneBean {
 	@Override
 	public void creaCondivisione(CondivisioneDTO condivisione, Prenotazione_PacchettoDTO prenotazione){
 		Condivisione nuova = new Condivisione(condivisione);
-		nuova.setPrenotazionePacchetto(em.find(Prenotazione_Pacchetto.class, 
-				prenotazione.getId()));
+		Prenotazione_Pacchetto pre = em.find(Prenotazione_Pacchetto.class, 
+				prenotazione.getId());
+		nuova.setPrenotazionePacchetto(pre);
 		nuova.setUtente(em.find(Utente.class, condivisione.getUtente().getUsername()));
 		nuova.setData(condivisione.getData());
 		nuova.setLink(condivisione.getLink());
 		em.persist(nuova);
+		pre.addCondivisioni(nuova);
+		em.persist(pre);
 	}
 
 	

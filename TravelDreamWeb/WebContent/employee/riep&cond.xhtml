@@ -45,8 +45,8 @@
         		</p:selectBooleanCheckbox> 
         		<h:outputLabel for="costo" />Costo:
 				<h:outputText value="#{pacchetto.costo}" />
-        		
-			    <p:inputTextarea id="link" value="#{pacchetto.linkCondivisione}" rows="1" cols="60" />
+        		<h:outputLabel for="linkCond" />Link:
+			    <h:outputText id="link" value="#{pacchetto.linkCondivisione}"/>
 			 </h:panelGrid>
 			 <p:commandButton value="Conferma" id="ajax"  ajax="false" action="#{pacchetto.confermaPrenotazione}" styleClass="ui-priority-primary"/>  
 			 <p><a href="buyPacchetto.xhtml">Torna Indietro</a></p>
