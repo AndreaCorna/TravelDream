@@ -11,13 +11,12 @@
 </h:head>
 <h:body>
 <h:form>
-	<p:outputLabel value="Benvenuto " />#{utente.getUsername()}
+	
     	<p:tabView effect="drop" effectDuration="normal">
 
 		
        <p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather1.jpg" />
                 <h:outputLabel for="nome" />Nome:
                 <h:outputText value="#{utente.utente.nome}" />
                 <h:outputLabel for="cognome">Cognome:</h:outputLabel>
@@ -39,7 +38,6 @@
         </p:tab>
         <p:tab title="Gestione Dipendenti">
             <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage value="/images/godfather/godfather2.jpg" />
                 <h:outputText value="Gestisci i dipendenti"></h:outputText>
                 <p><a href="addDip.xhtml">Aggiungi un dipendente</a></p>
                 <p><a href="modificaDip.xhtml">Modifica un dipendente</a></p>

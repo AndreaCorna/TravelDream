@@ -121,7 +121,7 @@ public class PacchettoManagedBean {
 	
 	private String numero;
 	
-	private Date dataOdierna;
+	private Date dataOdierna = new Date();
 	
 	private boolean modifica;
 	
