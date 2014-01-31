@@ -101,6 +101,59 @@ Acquista una delle nostre offerte speciali scelte per te e personalizzala come v
 		</h:panelGrid>
 		
 		</p:tab>
+		
+		<p:tab title="Lista Offerte">
+        	<h:panelGrid columns="4" id="regOff2">
+    			<p:dataTable id="tabellaOff2" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
+          			  emptyMessage="Nessuna offerta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
+          			  		selectionMode="single" >  
+  
+         		<f:facet name="header">  
+          			  <p:outputPanel>  
+              		  		<h:outputText value="Cerca  su tutti i campi:" />  
+               		 		<p:inputText id="globalFilter" onkeyup="tabellaOfferte.filter()" style="width:150px" />  
+            			</p:outputPanel>  
+       			 </f:facet>  
+       			 
+       			  <p:column id="idPacchetto" filterBy="id"   
+		                headerText="Id" footerText="Id"
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.id}" />  
+		        </p:column>
+  
+		        <p:column id="dest" filterBy="destinazione"   
+		                headerText="Destinazione" footerText="Destinazione"
+		                filterOptions="#{pacchetto.destinazioni}"
+		                filterMatchMode="exact">  
+		            <h:outputText value="#{pac.destinazione}" />  
+		        </p:column> 
+		        
+		        <p:column id="inizio_Validita" filterBy="inizio_Validita"   
+		                headerText="Inizio Offerta" footerText="Inizio Offerta"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.inizio_Validita}" />  
+		        </p:column>
+		        
+		        <p:column id="fine_Validita" filterBy="fine_Validita"   
+		                headerText="Fine Offerta" footerText="Fine Offerta"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.fine_Validita}" />  
+		        </p:column> 
+		        
+		        <p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
+		            <h:outputText value="#{pac.descrizione}" />  
+		        </p:column>  
+		        
+		        <p:column headerText="Personalizza" style="width:24%" >  
+                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Personalizza"/>
+         </p:column>  
+  
+		        	 </p:dataTable>  
+      	<p></p>
+      	</h:panelGrid>
+		
+			</p:tab>
+		
 		<p:tab title="Mostra Prenotazioni">
         	<h:panelGrid columns="4" id="regGrid">
     			<p:dataTable id="tabella" var="pac" value="#{prenotazione.datiPrenotazione}" widgetVar="tabellaPrenotazioni"   
@@ -113,6 +166,12 @@ Acquista una delle nostre offerte speciali scelte per te e personalizzala come v
                		 		<p:inputText id="globalFilter" onkeyup="tabellaPrenotazioni.filter()" style="width:150px" />  
             			</p:outputPanel>  
        			 </f:facet>  
+       			 
+       			 <p:column id="pacchetto" filterBy="pacchetto.id"   
+		                headerText="pacchetto" footerText="pacchetto"  
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.pacchetto.id}" />  
+		        </p:column>
   
 		        <p:column id="aereoAndata" filterBy="aereoAndata.data"   
 		                headerText="aereo Andata" footerText="aereoAndata"  
@@ -205,57 +264,7 @@ Acquista una delle nostre offerte speciali scelte per te e personalizzala come v
       	<p></p>
       	</h:panelGrid>
 			</p:tab>
-			<p:tab title="Lista Offerte">
-        	<h:panelGrid columns="4" id="regOff2">
-    			<p:dataTable id="tabellaOff2" var="pac" value="#{pacchetto.datiPacchetti}" widgetVar="tabellaOfferte"   
-          			  emptyMessage="Nessuna offerta soddisfa i requisiti di ricerca" filteredValue="#{pacchetto.listaPacchettiSelezionati}"
-          			  		selectionMode="single" >  
-  
-         		<f:facet name="header">  
-          			  <p:outputPanel>  
-              		  		<h:outputText value="Cerca  su tutti i campi:" />  
-               		 		<p:inputText id="globalFilter" onkeyup="tabellaOfferte.filter()" style="width:150px" />  
-            			</p:outputPanel>  
-       			 </f:facet>  
-       			 
-       			  <p:column id="idPacchetto" filterBy="id"   
-		                headerText="Id" footerText="Id"
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.id}" />  
-		        </p:column>
-  
-		        <p:column id="dest" filterBy="destinazione"   
-		                headerText="Destinazione" footerText="Destinazione"
-		                filterOptions="#{pacchetto.destinazioni}"
-		                filterMatchMode="exact">  
-		            <h:outputText value="#{pac.destinazione}" />  
-		        </p:column> 
-		        
-		        <p:column id="inizio_Validita" filterBy="inizio_Validita"   
-		                headerText="Inizio Offerta" footerText="Inizio Offerta"  
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.inizio_Validita}" />  
-		        </p:column>
-		        
-		        <p:column id="fine_Validita" filterBy="fine_Validita"   
-		                headerText="Fine Offerta" footerText="Fine Offerta"  
-		                filterMatchMode="contains">  
-		            <h:outputText value="#{pac.fine_Validita}" />  
-		        </p:column> 
-		        
-		        <p:column id="descri" headerText="Descrizione" footerText="Descrizione"  >  
-		            <h:outputText value="#{pac.descrizione}" />  
-		        </p:column>  
-		        
-		        <p:column headerText="Personalizza" style="width:24%" >  
-                <h:link outcome = "buyPacchetto?id=#{pac.id}"  value="Personalizza"/>
-         </p:column>  
-  
-		        	 </p:dataTable>  
-      	<p></p>
-      	</h:panelGrid>
-		
-			</p:tab>
+			
 	
     </p:tabView>
     <p:dialog  header="Dettagli Prenotazione" widgetVar="dlg2" modal="true" height="500">  
@@ -273,6 +282,8 @@ Acquista una delle nostre offerte speciali scelte per te e personalizzala come v
 	    <h:outputText value="#{prenotazione.selezione.aereoRitorno.id}" style="font-weight:bold"/>   
 	    <h:outputText value="Hotel" />
 	    <h:outputText value="#{prenotazione.selezione.hotel.nome}" style="font-weight:bold"/> 
+	    <h:outputText value="Numero di Persone" />
+	    <h:outputText value="#{prenotazione.selezione.numeroPersone}" style="font-weight:bold"/>
 	    <h:outputText value="Link per la condivisione" />
 	    <h:outputText value="#{prenotazione.selezione.link}" style="font-weight:bold"/> 
 	    <h:outputLabel value="Escursioni" />
