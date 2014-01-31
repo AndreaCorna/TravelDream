@@ -17,22 +17,23 @@
 		
        <p:tab title="Profilo">
             <h:panelGrid columns="2" cellpadding="10">
-                <h:outputLabel for="nome" />Nome:
-                <h:outputText value="#{utente.utente.nome}" />
+               <h:outputLabel  for="" />
+                 <h:outputLabel  for="nome" />Nome:
+                <h:outputText id="nome" value="#{utente.utente.nome}" />
                 <h:outputLabel for="cognome">Cognome:</h:outputLabel>
-                <h:outputText value="#{utente.utente.cognome}" />
-                <h:outputLabel for="residenza">Residenza:</h:outputLabel>
-                <h:outputText value="#{utente.utente.residenza}" />
-                <h:outputLabel for="data_nascita">Data di Nascita:</h:outputLabel>
-                <h:outputText value="#{utente.utente.dataNascita}" />
+                <h:outputText id="cognome" value="#{utente.utente.cognome}" />
+                <h:outputLabel  for="residenza">Residenza:</h:outputLabel>
+                <h:outputText id="residenza" value="#{utente.utente.residenza}" />
+                <h:outputLabel  for="data_nascita">Data di Nascita:</h:outputLabel>
+                <h:outputText id="data_nascita" value="#{utente.utente.dataNascita}" />
                 <h:outputLabel for="luogo_nascita">Luogo di Nascita:</h:outputLabel>
-                <h:outputText value="#{utente.utente.luogoNascita}" />
-                <h:outputLabel for="cf">Codice Fiscale:</h:outputLabel>
-                <h:outputText value="#{utente.utente.codiceFiscale}" />
-                <h:outputLabel for="telefono">Telefono:</h:outputLabel>
-                <h:outputText value="#{utente.utente.telefono}" />
-                <h:outputLabel for="email">Email:</h:outputLabel>
-                <h:outputText value="#{utente.utente.email}" />
+                <h:outputText id="luogo_nascita" value="#{utente.utente.luogoNascita}" />
+                <h:outputLabel  for="cf">Codice Fiscale:</h:outputLabel>
+                <h:outputText id = "cf" value="#{utente.utente.codiceFiscale}" />
+                <h:outputLabel  for="telefono">Telefono:</h:outputLabel>
+                <h:outputText id = "telefono" value="#{utente.utente.telefono}" />
+                <h:outputLabel  for="email">Email:</h:outputLabel>
+                <h:outputText id = "email" value="#{utente.utente.email}" />
                 <p><a href="modificaProfilo.xhtml">Modifica il tuo profilo</a></p>
             </h:panelGrid>
         </p:tab>
