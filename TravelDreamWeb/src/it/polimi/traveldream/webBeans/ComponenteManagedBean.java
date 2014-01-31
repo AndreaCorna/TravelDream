@@ -1,6 +1,7 @@
 package it.polimi.traveldream.webBeans;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,6 +53,7 @@ public class ComponenteManagedBean {
 	
 	private List<EscursioneDTO> escursioniSelezionate;
 	
+	private Date oggi = new Date();
 	/**
 	 * Costruttore di default
 	 */
@@ -324,6 +326,14 @@ public class ComponenteManagedBean {
 
 	public void setEscursione(EscursioneDTO escursione) {
 		this.escursione = escursione;
+	}
+
+	public Date getOggi() {
+		return oggi;
+	}
+
+	public void setOggi(Date oggi) {
+		this.oggi = oggi;
 	}
 	
 
