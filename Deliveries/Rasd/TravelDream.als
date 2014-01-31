@@ -39,14 +39,6 @@ sig Citta{
 città:one NostraStringa
 }
 
-
-abstract sig Trasporto{
-citta_partenza: one Citta,
-citta_arrivo: one Citta,
-t_costo: one PosInt,
-t_data: one Data
-}
-
 sig Utente_non_Registrato extends Persona{}{#credenziali=0}
 
 sig Amministratore extends Persona{}{#credenziali=1}
@@ -60,9 +52,13 @@ sig Dipendente extends Utente_Registrato{
 pacchetti: set Pacchetto
 }
 
-sig Aereo extends Trasporto{
+sig Aereo{
 a_id:  one PosInt,
-posti:one PosInt
+posti:one PosInt,
+citta_partenza: one Citta,
+citta_arrivo: one Citta,
+t_costo: one PosInt,
+t_data: one Data
 
 }
 
@@ -103,10 +99,10 @@ pre_data:one Data
 sig Viaggio{
 v_id:one PosInt,
 v_hotel: lone Hotel,
-v_trasporto: set Trasporto,
+v_aerei: set Aereo,
 v_autore: lone Utente_Registrato,
 v_escursione: set Escursione
-}//{#v_trasporto<=2}
+}//{#v_aerei<=2}
 
 sig Pacchetto extends Viaggio{ 
 p_hotel: some Hotel,
@@ -119,7 +115,7 @@ p_data_fine:one Data,
 destinazione: one Citta
 }{#v_autore=0
 	#v_hotel = 0
-	#v_trasporto= 0
+	#v_aerei= 0
 	#v_escursione= 0
 }
 
@@ -341,11 +337,11 @@ check viaggioAutore
 
 //UNA VIAGGIO DEVE CONTENERE ALMENO UNO TRA AEREO,HOTEL ED ESCURSIONE
 fact viaggioMinimo{
-all v:Viaggio{#v.v_autore=1 implies (#v.v_trasporto + #v.v_hotel + #v.v_escursione)>=1}
+all v:Viaggio{#v.v_autore=1 implies (#v.v_aerei + #v.v_hotel + #v.v_escursione)>=1}
 }
 
 assert viaggioMinimo{
-no v:Viaggio | #v.v_autore=1 and (#v.v_trasporto + #v.v_hotel + #v.v_escursione)=0
+no v:Viaggio | #v.v_autore=1 and (#v.v_aerei + #v.v_hotel + #v.v_escursione)=0
 }
 
 check viaggioMinimo
