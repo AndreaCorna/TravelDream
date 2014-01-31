@@ -20,19 +20,19 @@
 						mindate="#{pacchetto.dataOdierna}" maxdate="#{pacchetto.pacchetto.fine_Validita}" required="true" requiredMessage="Devi selezionare la data di partenza">  
       				  <p:ajax event="dateSelect" listener="#{pacchetto.listenerData}" update="msg,regGrid" />  
     			</p:calendar>  
-    			<h:outputLabel for="arrivo" />Seleziona la data di ritorno:
+    			<h:outputLabel for="ritorno" />Seleziona la data di ritorno:
     			<p:calendar value="#{pacchetto.ritorno}" mode="inline" id="ritorno" pattern="dd/MM/yyyy" navigator="true"
     					mindate="#{pacchetto.dataOdierna}" maxdate="#{pacchetto.pacchetto.fine_Validita}" required="true" requiredMessage="Devi selezionare la data di ritorno">  
       				  <p:ajax event="dateSelect" listener="#{pacchetto.listenerData}" update="msg,regGrid" />  
     			</p:calendar>
 				<h:outputLabel for="nome" />Destinazione:
-                <h:outputText value="#{pacchetto.pacchetto.destinazione}" />
+                <h:outputText id="nome" value="#{pacchetto.pacchetto.destinazione}" />
                 <h:outputLabel for="inizio" />Inizio Validita:
-                <h:outputText value="#{pacchetto.pacchetto.inizio_Validita}" />
+                <h:outputText id="inizio" value="#{pacchetto.pacchetto.inizio_Validita}" />
                 <h:outputLabel for="fine" />Fine Validita:
-                <h:outputText value="#{pacchetto.pacchetto.fine_Validita}" />
-                <h:outputLabel for="fine" />Numero di Persone:
-                <h:outputText value="#{pacchetto.pacchetto.numeroPersone}" />
+                <h:outputText id="fine" value="#{pacchetto.pacchetto.fine_Validita}" />
+                <h:outputLabel for="persone" />Numero di Persone:
+                <h:outputText id="persone" value="#{pacchetto.pacchetto.numeroPersone}" />
                 <p:selectOneListbox value="#{pacchetto.numero}" required="true" requiredMessage="Devi il numero di persone">
     				<f:selectItems value="#{pacchetto.numeroPersone}" var="numero"
       				  itemValue="#{numero}" />
