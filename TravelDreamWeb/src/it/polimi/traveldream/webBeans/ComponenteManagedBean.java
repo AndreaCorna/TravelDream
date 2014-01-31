@@ -53,7 +53,7 @@ public class ComponenteManagedBean {
 	
 	private List<EscursioneDTO> escursioniSelezionate;
 	
-	private Date oggi = new Date();
+	private Date oggi;
 	/**
 	 * Costruttore di default
 	 */
@@ -69,6 +69,7 @@ public class ComponenteManagedBean {
 		setAereo(new AereoDTO());
 		setHotel(new HotelDTO());
 		setEscursione(new EscursioneDTO());
+		oggi = new Date();
 	}
 
 	/**
