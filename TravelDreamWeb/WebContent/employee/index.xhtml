@@ -107,6 +107,13 @@
                		 		<p:inputText id="globalFilter" onkeyup="tabellaPacchetti.filter()" style="width:150px" />  
             			</p:outputPanel>  
        			 </f:facet>  
+       			 
+       			 <p:column id="id" filterBy="id"   
+		                headerText="Id" footerText="Id"
+		               
+		                filterMatchMode="contains">  
+		            <h:outputText value="#{pac.id}" />  
+		        </p:column>
   
 		        <p:column id="dest" filterBy="destinazione"   
 		                headerText="Destinazione" footerText="Destinazione"
