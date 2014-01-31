@@ -356,6 +356,11 @@ public class PacchettoManagedBean {
 	public String eliminaPacchetto(){
 		pacchetto.setId(id);
 		gestionePacchetto.eliminaPacchetto(pacchetto);
+		listaPacchetti = null;
+		listaPacchettiSelezionati = null;
+		datiPacchetti = null;
+		datiPacchettiCasuali = null;
+		mostraOfferte();
 		return "index?faces-redirect=true";
 	}
 	
